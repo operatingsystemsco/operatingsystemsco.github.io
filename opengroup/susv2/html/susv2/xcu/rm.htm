@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>rm</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1878">&nbsp;</a>NAME</h4><blockquote>
+rm - remove directory entries
+</blockquote><h4><a name = "tag_001_014_1879">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+rm <b>[</b>-fiRr<b>]</b><i> file</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1880">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>rm</i>
+utility removes the directory entry specified by each
+<i>file</i>
+argument.
+<p>
+If either of the files dot or dot-dot are specified as the
+basename portion of an operand
+(that is, the final pathname component),
+<i>rm</i>
+will write a diagnostic
+message to standard error and do nothing more with such operands.
+<p>
+For each
+<i>file</i>
+the following steps are taken:
+<ol>
+<p>
+<li>
+If the
+<i>file</i>
+does not exist:
+<ol type = a>
+<p>
+<li>
+If the
+<b>-f</b>
+option is not specified, write a diagnostic message
+to standard error.
+<p>
+<li>
+Go on to any remaining
+<i>files</i>.
+<p>
+</ol>
+<p>
+<li>
+If
+<i>file</i>
+is of type directory, the following steps are taken:
+<ol type = a>
+<p>
+<li>
+If neither the
+<b>-R</b>
+option nor the
+<b>-r</b>
+option is specified,
+write a diagnostic message to standard error, do nothing
+more with
+<i>file</i>,
+and go on to any remaining files.
+<p>
+<li>
+If the
+<b>-f</b>
+option is not specified,
+and either the permissions of
+<i>file</i>
+do not permit
+writing and the standard input is a terminal or the
+<b>-i</b>
+option is specified, write a prompt to
+standard error
+and read a line from the standard input.
+If the response
+is not affirmative, do nothing more with the current file
+and go on to any remaining files.
+<p>
+<li>
+For each entry contained in
+<i>file</i>,
+other than dot or dot-dot,
+the four steps listed here (1-4) are taken
+with the entry as
+if it were a
+<i>file</i>
+operand.
+<p>
+<li>
+If the
+<b>-i</b>
+option is specified, write a prompt to
+standard error
+and read a line from the standard input.
+If the response is not affirmative, do nothing more with the
+current file, and go on to any remaining files.
+<p>
+</ol>
+<p>
+<li>
+If
+<i>file</i>
+is not of type directory, the
+<b>-f</b>
+option is not specified,
+and either the permissions of
+<i>file</i>
+do not permit writing
+and the standard input is a terminal or the
+<b>-i</b>
+option is specified,
+write a prompt to the standard error and read a line from
+the standard input.
+If the response is not affirmative, do
+nothing more with the current file and go on to any remaining files.
+<p>
+<li>
+If the current file is a directory,
+<i>rm</i>
+will perform actions equivalent to the <b>XSH</b> specification
+<i><a href="../xsh/rmdir.htm">rmdir()</a></i>
+function called with a pathname of the current file used as the
+<i>path</i>
+argument.
+If the current file is not a directory,
+<i>rm</i>
+will perform actions equivalent to the <b>XSH</b> specification
+<i><a href="../xsh/unlink.htm">unlink()</a></i>
+function called with a pathname of the current file used as the
+<i>path</i>
+argument.
+<p>
+If this fails for any reason,
+<i>rm</i>
+will write a diagnostic message to standard error,
+do nothing more with the current file,
+and go on to any remaining files.
+<p>
+</ol>
+<p>
+The
+<i>rm</i>
+utility is able to descend to arbitrary depths in a file
+hierarchy, and will not fail due to path length limitations (unless an
+operand specified by the user exceeds system limitations).
+</blockquote><h4><a name = "tag_001_014_1881">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>rm</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+The following options are supported:
+<dl compact>
+
+<dt><b>-f</b>
+<dd>Do not prompt for confirmation.
+Do not write diagnostic messages
+or modify the exit status in the case of non-existent operands.
+Any previous occurrences of the
+<b>-i</b>
+option will be ignored.
+
+<dt><b>-i</b>
+<dd>Prompt for confirmation as described previously.
+Any previous occurrences of the
+<b>-f</b>
+option will be ignored.
+
+<dt><b>-R</b>
+<dd>Remove file hierarchies.
+See the DESCRIPTION section.
+
+<dt><b>-r</b>
+<dd>Equivalent to
+<b>-R</b>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1882">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a directory entry to be removed.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1883">&nbsp;</a>STDIN</h4><blockquote>
+Used to read an input line in response to each prompt specified in
+the STDOUT section.
+Otherwise, the standard input will not be used.
+</blockquote><h4><a name = "tag_001_014_1884">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1885">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>rm</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes,
+and multi-character collating elements
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single-
+versus multi-byte characters in arguments) and
+the behaviour of character classes within regular expressions
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale for the processing of affirmative responses
+that should be used to affect the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1886">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1887">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1888">&nbsp;</a>STDERR</h4><blockquote>
+Prompts are written to standard error under the conditions
+specified in the DESCRIPTION and OPTIONS sections.
+The prompts will contain the
+<i>file</i>
+pathname, but their format is otherwise unspecified.
+The standard error is also used for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1889">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1890">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1891">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>If the
+<b>-f</b>
+option was not specified, all the named directory
+entries were removed; otherwise, all the existing named directory
+entries were removed.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1892">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1893">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>rm</i>
+utility is forbidden to remove the names dot and dot-dot
+in order to avoid the consequences of inadvertently doing something
+like:
+<pre>
+<code>
+rm -r .*
+</code>
+</pre>
+<p>
+Some systems do not permit the removal of
+the last link to an executable binary file that is being executed;
+see the
+[EBUSY]
+error in the <b>XSH</b> specification
+<i><a href="../xsh/unlink.htm">unlink()</a></i>
+description.
+Thus, the
+<i>rm</i>
+utility can fail to remove such files.
+<p>
+The
+<b>-i</b>
+option causes
+<i>rm</i>
+to prompt and read the standard input even if the standard input is
+not a terminal, but in the absence of
+<b>-i</b>
+the mode prompting is not done when the standard input is not a terminal.
+</blockquote><h4><a name = "tag_001_014_1894">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+The following command:
+<pre>
+<code>
+rm a.out core
+</code>
+</pre>
+removes the directory entries:
+<b>a.out</b>
+and
+<b>core</b>.
+<p>
+<li>
+The following command:
+<pre>
+<code>
+rm -Rf junk
+</code>
+</pre>
+removes the directory
+<b>junk</b>
+and all its contents, without prompting.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_1895">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_1896">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="rmdir.htm">rmdir</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/remove.htm">remove()</a></i>,
+<i><a href="../xsh/unlink.htm">unlink()</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

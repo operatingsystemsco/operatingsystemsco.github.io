@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getpass</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_635">&nbsp;</a>NAME</h4><blockquote>
+getpass - read a string of characters without echo
+(<b>LEGACY</b>)
+</blockquote><h4><a name = "tag_000_005_636">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+char *getpass(const char *<i>prompt</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_637">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getpass()</i>
+function opens the process' controlling terminal,
+writes to that device the null-terminated string
+<i>prompt,</i>
+disables echoing,
+reads a string of characters up to the next newline character or EOF,
+restores the terminal state and closes the terminal.
+<p>
+This interface need not be reentrant.
+</blockquote><h4><a name = "tag_000_005_638">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>getpass()</i>
+returns a pointer to a null-terminated string of at most {PASS_MAX} bytes
+that were read from the terminal device.
+If an error is encountered, the terminal state is restored and
+a null pointer is returned.
+</blockquote><h4><a name = "tag_000_005_639">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>getpass()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINTR]<dd>
+The
+<i>getpass()</i>
+function was interrupted by a signal.
+
+<dt>[EIO]<dd>
+The process is a member
+of a background process attempting to read from its controlling
+terminal, the process is ignoring or blocking the SIGTTIN signal
+or the process group is orphaned. This error may also be generated for
+implementation-dependent reasons.
+
+<dt>[EMFILE]<dd>
+{OPEN_MAX} file descriptors are currently open in the calling process.
+
+<dt>[ENFILE]<dd>
+The maximum allowable number of files is currently open in the system.
+
+<dt>[ENXIO]<dd>
+The process does not have a controlling terminal.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_640">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_641">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The return value points to static data
+whose content may be overwritten by each call.
+<p>
+This function was marked <b>LEGACY</b> since it provides no functionality
+which a user could not easily implement, and its name is misleading.
+</blockquote><h4><a name = "tag_000_005_642">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_643">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="limit88.htm">&lt;limits.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from System V Release 2.0.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

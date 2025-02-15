@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pause</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_946">&nbsp;</a>NAME</h4><blockquote>
+pause - suspend the thread until signal is received
+</blockquote><h4><a name = "tag_000_007_947">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int pause(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_948">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pause()</i>
+function suspends the calling thread 
+until delivery of a signal
+whose action is either to execute a signal-catching function or
+to terminate the process.
+<p>
+If the action is to terminate the process,
+<i>pause()</i>
+will not return.
+<p>
+If the action is to execute a signal-catching function,
+<i>pause()</i>
+will return after the signal-catching function returns.
+</blockquote><h4><a name = "tag_000_007_949">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Since
+<i>pause()</i>
+suspends thread 
+execution indefinitely unless interrupted by a signal, there
+is no successful completion return value.  A value of -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_950">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>pause()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINTR]<dd>
+A signal is caught by the calling process and control is returned
+from the signal-catching function.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_951">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_952">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_953">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_954">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sigsu252.htm">sigsuspend()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

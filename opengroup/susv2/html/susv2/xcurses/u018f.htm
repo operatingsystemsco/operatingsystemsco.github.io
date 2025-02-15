@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<title>Corrigendum: U018</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2>Corrigendum: U018</h2>
+
+<p><em>Document: C610</em></p>
+
+<h1>X/Open Curses, Issue 4, Version 2</h1>
+
+<p><em>Date: February 1997</em></p>
+
+<p> See <a href="http://www.opengroup.org/corrigenda">http://www.opengroup.org/corrigenda</a> for the latest corrigenda.
+<p>
+<ul>
+    <li>Note: X/Open Curses, Issue 4, Version 2 can exist in
+        either or both of the following environments:<br>
+        - System Interfaces and Headers, Issue 4, Version 2<br>
+        - System Interfaces and Headers, Issue 5</li>
+</ul>
+
+<p>The Base Environment section of each change denotes the
+environment to which the change is applicable.</p>
+
+<hr>
+
+<h3>Change Number: 1</h3>
+
+<h4>Source: XoTGBase</h4>
+
+<p>Base Environment: System Interfaces and Headers, Issue 4,
+Version 2<br>
+System Interfaces and Headers, Issue 5</p>
+
+<h4>Change:</h4>
+
+<p>On the getn_wstr() manual page (page 96), replace the
+prototypes for getn_wstr() and get_wstr() with:</p>
+
+<p>int getn_wstr(wint_t *wstr, int n);<br>
+int get_wstr(wint_t *wstr);</p>
+
+<hr>
+
+<h3>Change Number: 2</h3>
+
+<h4>Source: XoTGBase</h4>
+
+<h4>Base Environment: System Interfaces and Headers, Issue 5<br>
+<br>
+Change:</h4>
+
+<p>On environments supporting System Interfaces and Headers,
+Issue 5 replace Section 2.2 with the following text:</p>
+
+<p>2.2 The Compilation Environment</p>
+
+<p>Applications should ensure that the feature test macro
+_XOPEN_SOURCE is defined before inclusion of any header. This is
+needed to enable the functionality described in this document,
+and possibly to enable functionality defined elsewhere in the
+Common Applications Environment.</p>
+
+<p>The _XOPEN_SOURCE macro may be defined automatically by the
+compilation process, but to ensure maximum portability,
+applications should make sure that _XOPEN_SOURCE is defined by
+using either compiler options or #define directives in the source
+files, before any #include directives. Identifiers in this
+document may only be undefined using the #undef directive as
+described in Chapter 2 on page 11 or Section 2.2.1 on page 14.
+These #undef directives must follow all #include directives of
+any XSI headers.</p>
+
+<p>Most strictly conforming POSIX and ISO C applications will
+compile on systems conformant with this specification. However,
+an application which uses any of the items marked as an extension
+to POSIX and ISO C, for any purpose other than that shown here,
+may not compile. In such cases, it may be necessary to alter
+those applications to use alternative identifiers.</p>
+
+<p>Since this document is aligned with the ISO C standard, and
+since all functionality enabled by _POSIX_C_SOURCE set greater
+than zero and less than or equal to 199506L should be enabled by
+_XOPEN_SOURCE, there should be no need to define either
+_POSIX_SOURCE or _POSIX_C_SOURCE if _XOPEN_SOURCE is defined.
+Therefore, if _XOPEN_SOURCE is defined and _POSIX_SOURCE is
+defined, or _POSIX_C_SOURCE is set greater than zero and less
+than or equal to 199506L, the behaviour is the same as if only
+_XOPEN_SOURCE is defined. However, should _POSIX_C_SOURCE be set
+to a value greater than 199506L, the behaviour is undefined.</p>
+
+<p>The c89 and cc utilities recognise the additional -l operand
+for standard libraries: </p>
+
+<p>-l curses This operand makes visible all library functions
+referenced in this specification (except for those labelled
+ENHANCED CURSES and except for portions marked with the EC margin
+legend).</p>
+
+<p>EC If the implementation defines _XOPEN_CURSES and if the
+application defines the _XOPEN_SOURCE feature test macro with the
+value 500 before including any header, then -l curses also makes
+visible all library functions referenced in this specification
+and labelled ENHANCED CURSES and portions marked with the EC
+margin legend. [EC-OFF]</p>
+
+<p>It is unspecified whether the library libcurses.a exists as a
+regular file. </p>
+
+<p>EC An application that uses any API specified as ENHANCED
+CURSES or relies on any portion of this specification marked with
+the EC margin legend must define _XOPEN_SOURCE = 500 in each
+source file or as | part of its compilation environment. [EC-OFF]</p>
+
+<p>If the implementation supports the utilities marked
+DEVELOPMENT in the XCU specification, the lint utility recognises
+the additional -l curses operand for standard libraries:</p>
+
+<p>-l curses Names the library llib-lcurses.ln, which will
+contain functions specified in this document.</p>
+
+<p>It is unspecified whether the library llib-lcurses.ln exists
+as a regular file.</p>
+
+<hr>
+
+<p>Change Number: 3</p>
+
+<p>Source: XoTGBase</p>
+
+<p>Base Environment: System Interfaces and Headers, Issue 4,
+Version 2<br>
+System Interfaces and Headers, Issue 5</p>
+
+<p>Change:</p>
+
+<p>On environments supporting System Interfaces and Headers,
+Issue 5 change the following text within the &lt;curses.h&gt;
+manual page:</p>
+
+<p><em>From:</em></p>
+
+<p>These attribute flags need not be distinct [EC shading on]
+except when _XOPEN_CURSES is defined and the application sets
+_XOPEN_SOURCE_EXTENDED to 1. [EC shading off]</p>
+
+<p><em>To:</em></p>
+
+<p>These attribute flags need not be distinct [EC shading on]
+except when _XOPEN_CURSES is defined and the application sets
+_XOPEN_SOURCE=500. [EC shading off]</p>
+
+<hr>
+
+<h3>Change Number: 4</h3>
+
+<h4>Source: XoTGBase</h4>
+
+<h4>Base Environment: System Interfaces and Headers, Issue 4,
+Version 2<br>
+System Interfaces and Headers, Issue 5<br>
+<br>
+Change:</h4>
+
+<p>Replace the first three paragraphs of Section 3.2, Windows,
+with the following:</p>
+
+<p>The Curses functions permit manipulation of window objects
+which can be thought of as two-dimensional arrays of characters
+and their renditions representing all or part of a terminal's
+physical screen. Windows do not have to correspond to the entire
+screen. It is possible to create smaller windows and also to
+indicate that a window is only partially visible on the screen.
+It is possible to create windows larger than the terminal screen
+using pads. A default window called stdscr, which is the size of
+the terminal screen, is supplied. Others may be created with
+newterm().</p>
+
+<p>Data structures declared as WINDOW refer to windows (and to
+subwindows, derived windows, pads and subpads, as described
+elsewhere). These data structures are manipulated with functions
+described in Chapter 6.</p>
+
+<p>Among the most basic functions are move() and addch() which
+manipulate the default window stdscr, and refresh() which tells
+Curses to update the user's screen from stdscr. More general
+versions of these functions enable specific windows to be
+manipulated and refreshed.</p>
+
+<p>Replace the definition of a pad with the following:</p>
+
+<p>A pad is a specialised case of a window which can be bigger
+than the actual screen size and is not necessarily associated
+with a particular part of the screen. Pads should be used
+whenever a window larger than the terminal screen is required.</p>
+
+<p>Add a definition of a subpad as follows:</p>
+
+<p>Subpad<br>
+A subpad is a specialised case of a window created within another
+pad.</p>
+
+<p>Page 74 (newwin()):</p>
+
+<p>Add the following to the end of the 2nd paragraph of the
+DESCRIPTION:</p>
+
+<p>The size of a window cannot be greater than the physical size
+of the screen, or that defined using the environment variables
+LINES and COLUMNS. The behaviour of a window which extends
+outside the terminal screen is undefined.</p>
+
+<p>Add the following paragraph to APPLICATION USAGE:</p>
+
+<p>Pads should be used whenever a window larger than the terminal
+screen is required.</p>
+
+<p>Page 150 (newpad()):</p>
+
+<p>Replace the first two paragraphs of the DESCRIPTION with the
+following:</p>
+
+<p>The newpad() function creates a specialised window called a
+pad with nlines lines and ncols columns. A pad is like a window,
+except that it is not restricted by the screen size and is not
+necessarily associated with a particular part of the screen.
+Automatic refreshes of pads (e.g., from scrolling or echoing of
+input) do not occur.</p>
+
+<p>The subpad() function creates a specialised window within a
+pad (called the parent pad) called a subpad with nlines lines and
+ncols columns. Unlike subwin() which uses screen coordinates, the
+subpad is created at position (begin_y, begin_x) within the
+parent pad. Changes made to either the parent pad or the subpad
+affect the other. The subpad must fit totally within the parent
+pad.</p>
+
+<p>Delete the second sentence in APPLICATION USAGE.</p>
+
+<p>Add the following paragraph to APPLICATION USAGE:</p>
+
+<p>Pads should be used whenever a window larger than the terminal
+screen is required.</p>
+
+<hr>
+
+<h3>Change Number: 5</h3>
+
+<h4>Source: XoTGBase</h4>
+
+<p>Base Environment: System Interfaces and Headers, Issue 4,
+Version 2<br>
+System Interfaces and Headers, Issue 5</p>
+
+<h4>Change:</h4>
+
+<p>The prototypes for vwprintw(), vw_printw(), vwscanw() and
+vw_scanw() differ between the manual pages and the
+&lt;curses.h&gt; header page. </p>
+
+<p>The correct prototypes are as per the manual pages. The
+&lt;curses.h&gt; should be updated as follows:</p>
+
+<p>int vwprintw(WINDOW *, char *, va_list);<br>
+int vw_printw(WINDOW *, char *, va_list);<br>
+int vwscanw(WINDOW *, char *, va_list);<br>
+int vw_scanw(WINDOW *, char *, va_list);<br>
+<br>
+<br>
+</p>
+</body>
+</html>

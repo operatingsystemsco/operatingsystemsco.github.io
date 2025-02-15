@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>gettimeofday</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_758">&nbsp;</a>NAME</h4><blockquote>
+gettimeofday - get the date and time
+</blockquote><h4><a name = "tag_000_005_759">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systi275.htm">sys/time.h</a>&gt;
+
+int gettimeofday(struct timeval *<i>tp</i>, void *<i>tzp</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_760">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>gettimeofday()</i>
+function obtains the current time, expressed as seconds and microseconds
+since 00:00 Coordinated Universal Time (UTC), January 1, 1970, and stores
+it in the
+<b>timeval</b>
+structure pointed to by
+<i>tp.</i>
+The resolution of the system clock is unspecified.
+<p>
+If <i>tzp</i> is not a null pointer, the behaviour is unspecified.
+</blockquote><h4><a name = "tag_000_005_761">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>gettimeofday()</i>
+function returns 0 and no value is reserved to indicate an error.
+</blockquote><h4><a name = "tag_000_005_762">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_005_763">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_764">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_765">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_766">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ctime.htm">ctime()</a></i>,
+<i><a href="ftime.htm">ftime()</a></i>,
+<i><a href="systi275.htm">&lt;sys/time.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,470 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fort77</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_776">&nbsp;</a>NAME</h4><blockquote>
+fort77 - FORTRAN compiler (<b>FORTRAN</b>)
+</blockquote><h4><a name = "tag_001_014_777">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+fort77 <b>[</b>-c<b>][</b>-g<b>][</b>-L <i>directory</i><b>]</b>... <b>[</b>-O <i>optlevel</i><b>][</b>-o <i>outfile</i><b>][</b>-s<b>][</b>-w<b>]
+</b><i>operand</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_778">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fort77</i>
+utility is the interface to the FORTRAN compilation system;
+it will accept
+the full FORTRAN-77 language defined by
+the ANSI&nbsp;X3.9-1978 standard.
+The system conceptually consists of a compiler and link editor.
+The files referenced by
+<i>operand</i>s
+are compiled and linked to produce an executable file.
+It is unspecified whether the linking occurs
+entirely within the operation of
+<i>fort77</i>;
+some systems may produce objects that are
+not fully resolved until the file is executed.
+<p>
+If the
+<b>-c</b>
+option is present,
+for all pathname operands of the form
+<i>file</i>.f
+the files:
+<pre>
+<code>
+$(basename <i>pathname</i> .f).o
+</code>
+</pre>
+will be created or overwritten as the result of successful compilation.
+If the
+<b>-c</b>
+option is not specified,
+it is unspecified whether such
+.o
+files are created or deleted for the
+<i>file</i>.f
+operands.
+<p>
+If there are no options that prevent link editing (such as
+<b>-c</b>)
+and all operands compile and
+link without error, the resulting executable file will be
+written into the
+file named by the
+<b>-o</b>
+option (if present) or to the file
+<b>a.out</b>.
+The executable file will be created as specified in the <b>XSH</b> specification,
+except that the file permissions will be set to:
+<pre>
+<dl compact><dt> <dd>
+S_IRWXO | S_IRWXG | S_IRWXU
+</dl>
+</pre>
+and that the bits
+specified by the
+<i>umask</i>
+of the process will be cleared.
+</blockquote><h4><a name = "tag_001_014_779">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>fort77</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that:
+<ul>
+<p>
+<li>
+The
+<b>-l</b>&nbsp;<i>library</i>
+operands have the format of options, but their position
+within a list of operands affects the order in which libraries
+are searched.
+<p>
+<li>
+The order of specifying the multiple
+<b>-L</b>
+options is significant.
+<p>
+<li>
+Portable applications must specify
+each option separately; that is, grouping option letters
+(for example,
+<b>-cg</b>)
+need not be recognised by all implementations.
+<p>
+</ul>
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-c</b>
+<dd>Suppress the link-edit phase of the compilation, and
+do not remove any object files that are produced.
+
+<dt><b>-g</b>
+<dd>Produce symbolic information in the object or executable
+files; the nature of this information is unspecified,
+and may be modified by implementation-dependent
+interactions with other options.
+
+<dt><b>-s</b>
+<dd>Produce object or executable files, or both, from which
+symbolic and other information not required for proper
+execution using the <b>XSH</b> specification
+<i>exec</i>
+family has been removed (stripped).
+If both
+<b>-g</b>
+and
+<b>-s</b>
+options are present, the action taken is unspecified.
+
+<dt><b>-o&nbsp;</b><i>outfile</i>
+<dd>
+Use the pathname
+<i>outfile</i>,
+instead of the default
+<b>a.out</b>,
+for the executable file produced.
+If the
+<b>-o</b>
+option is present with
+<b>-c</b>,
+the result is unspecified.
+
+<dt><b>-L&nbsp;</b><i>directory</i>
+<dd>
+Change the algorithm of searching for the libraries named in
+<b>-l</b>
+operands
+to look in the directory named by the
+<i>directory</i>
+pathname before looking in the
+usual places.
+Directories named in
+<b>-L</b>
+options will be searched
+in the specified order.
+At least ten
+instances of this option will be supported in a single
+<i>fort77</i>
+command invocation.
+If a directory specified by a
+<b>-L</b>
+option contains a file named
+<b>libf.a</b>,
+the results are unspecified.
+
+<dt><b>-O&nbsp;</b><i>optlevel</i>
+<dd>
+Specify the level of code optimisation.
+If the
+<i>optlevel</i>
+option-argument is the digit
+0,
+all special code optimisations will be disabled.
+If it is the digit
+1,
+the nature of the optimisation is unspecified.
+If the
+<b>-O</b>
+option is omitted,
+the nature of the system's default optimisation is unspecified.
+It is unspecified whether code generated
+in the presence of the
+<b>-O 0</b>
+option is the same as that generated when
+<b>-O</b>
+is omitted.
+Other
+<i>optlevel</i>
+values may be supported.
+
+<dt><b>-w</b>
+<dd>Suppress warnings.
+
+</dl>
+<p>
+Multiple instances of
+<b>-L</b>
+options can be specified.
+</blockquote><h4><a name = "tag_001_014_780">&nbsp;</a>OPERANDS</h4><blockquote>
+An
+<i>operand</i>
+is either in the form of a pathname or the form
+<b>-l</b>&nbsp;<i>library</i>.
+At least one operand of the pathname form will be specified.
+The following operands are supported:
+<dl compact>
+
+<dt><i>file.</i><b>f</b><dd>The pathname of a FORTRAN source file to be
+compiled and optionally passed to the link editor.
+The filename operand will be of this form if the
+<b>-c</b>
+option is used.
+
+<dt><i>file.</i><b>a</b><dd>A library of object files typically produced by
+<i><a href="ar.htm">ar</a></i>,
+and passed directly to the link editor.
+Implementations may recognise implementation-dependent suffixes other than
+<b>.a</b>
+as denoting object file libraries.
+
+<dt><i>file.</i><b>o</b><dd>An object file produced by
+<i>fort77</i>
+<b>-c</b>
+and passed directly to the link editor.
+Implementations may recognise
+implementation-dependent
+suffixes other than
+<b>.o</b>
+as denoting object files.
+
+</dl>
+<p>
+The processing of other files is implementation-dependent.
+<dl compact>
+
+<dt><b>-l&nbsp;</b><i>library</i>
+<dd>
+(The letter ell.)
+Search the library named:
+<pre>
+<code>
+lib<i>library</i>.a
+</code>
+</pre>
+
+A library is searched when its name is
+encountered, so the placement of a
+<b>-l</b>
+operand is significant.
+Several standard libraries can be specified in this manner,
+as described in the EXTENDED DESCRIPTION section.
+Implementations may recognise implementation-dependent
+suffixes other than
+<b>.a</b>
+as denoting libraries.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_781">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_782">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file must be
+one of the following:
+a text file containing FORTRAN source code;
+an object file in the format produced by
+<i>fort77</i>
+<b>-c</b>;
+or a library of object files, in the format produced by
+archiving zero or more object files, using
+<i><a href="ar.htm">ar</a></i>.
+Implementations may supply additional utilities
+that produce files in these formats.
+Additional input files are implementation-dependent.
+<p>
+A
+tab
+character encountered within the first six characters
+on a line of source code will cause the compiler to
+interpret the following character as if it
+were the seventh character on the line
+(that is, in column 7).
+</blockquote><h4><a name = "tag_001_014_783">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>fort77</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TMPDIR</i><dd>
+Determine the pathname that
+should override the default directory for temporary files,
+if any.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_784">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_785">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_786">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+If more than one file operand ending in
+<b>.f</b>
+(or possibly other unspecified suffixes) is given,
+for each such file:
+<p><code>
+<tt>"%s:\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+may be written to allow identification of the diagnostic
+message with the appropriate input file.
+<p>
+This utility may produce warning messages about certain
+conditions that do not warrant returning an error (non-zero)
+exit value.
+</blockquote><h4><a name = "tag_001_014_787">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+Object files, listing files and executable files are produced
+in unspecified formats.
+<br>
+</blockquote><h4><a name = "tag_001_014_788">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+<h5><a name = "tag_001_014_788_001">&nbsp;</a>Standard Libraries</h5>
+The
+<i>fort77</i>
+utility recognises the following
+<b>-l</b>
+operand for the standard library:
+<dl compact>
+
+<dt><b>-l&nbsp;f</b>
+<dd>This library contains all library functions
+referenced in the ANSI&nbsp;X3.9-1978 standard.
+This operand is not required to be present
+to cause a search of this library.
+
+</dl>
+<p>
+In the absence of options that inhibit invocation
+of the link editor, such as
+<b>-c,</b>
+the
+<i>fort77</i>
+utility will cause the equivalent of a
+<b>-l&nbsp;f</b>
+operand to be passed to the link editor as the last
+<b>-l</b>
+operand, causing it to be searched after
+all other object files
+and libraries are loaded.
+<p>
+It is unspecified whether the library
+<b>libf.a</b>
+exists as a regular file.
+The implementation may accept as
+<b>-l</b>
+operands names of objects that do not exist as regular files.
+<h5><a name = "tag_001_014_788_002">&nbsp;</a>External Symbols</h5>
+The FORTRAN compiler and link editor
+support the significance of external symbols up to a
+length of at least 31 bytes; case folding is permitted.
+The action taken upon encountering
+symbols exceeding the implementation-dependent
+maximum symbol length is unspecified.
+<p>
+The compiler and link editor
+support a minimum of 511 external
+symbols per source or object file,
+and a minimum of 4095 external symbols total.
+A diagnostic message is written to standard output
+if the implementation-dependent limit is exceeded;
+other actions are unspecified.
+</blockquote><h4><a name = "tag_001_014_789">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful compilation or link edit.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_790">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+When
+<i>fort77</i>
+encounters a compilation error,
+it will write a diagnostic to standard error
+and continue to compile other source code operands.
+It will return a non-zero exit status, but
+it is implementation-dependent whether an object module is created.
+If the link edit is unsuccessful,
+a diagnostic message will be written to standard error, and
+<i>fort77</i>
+will exit with a non-zero status.
+</blockquote><h4><a name = "tag_001_014_791">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_792">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following are examples of usage:
+<dl compact>
+
+<dt>fort77&nbsp;-o&nbsp;foo&nbsp;xyz.f<dd>
+Compiles
+<b>xyz.f</b>
+and creates the executable file
+<b>foo</b>.
+
+<dt>fort77&nbsp;-c&nbsp;xyz.f<dd>
+Compiles
+<b>xyz.f</b>
+and creates the object file
+<b>xyz.o</b>.
+
+<dt>fort77&nbsp;xyz.f<dd>
+Compiles
+<b>xyz.f</b>
+and creates the executable file
+<b>a.out</b>.
+
+<dt>fort77&nbsp;xyz.f&nbsp;b.o<dd>
+Compiles
+<b>xyz.f</b>,
+links it with
+<b>b.o</b>
+and creates the
+executable
+<b>a.out</b>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_793">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+A compilation system based on FORTRAN-90 (ISO/IEC&nbsp;1539:1991)
+will be considered for a future issue;
+it may have a different utility name from
+<i>fort77</i>.
+</blockquote><h4><a name = "tag_001_014_794">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ar.htm">ar</a></i>,
+<i><a href="asa.htm">asa</a></i>,
+<i><a href="c89.htm">c89</a></i>,
+<i><a href="umask.htm">umask</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

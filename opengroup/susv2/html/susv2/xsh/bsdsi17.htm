@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>bsd_signal</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_305">&nbsp;</a>NAME</h4><blockquote>
+bsd_signal - simplified signal facilities
+</blockquote><h4><a name = "tag_000_001_306">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="signa248.htm">signal.h</a>&gt;
+
+void (*bsd_signal(int <i>sig</i>, void (*<i>func</i>)(int)))(int);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_307">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>bsd_signal()</i>
+function provides a partially compatible interface for programs written to
+historical system interfaces (see APPLICATION USAGE below).
+<p>
+The function call <i>bsd_signal</i>(<i>sig</i>, <i>func</i>)
+has an effect as if implemented as:
+<pre>
+<code>
+void (*bsd_signal(int sig, void (*func)(int)))(int)
+{
+     struct sigaction act, oact;
+
+     act.sa_handler = <i>func</i>;
+     act.sa_flags = SA_RESTART;
+     sigemptyset(&amp;act.sa_mask);
+     sigaddset(&amp;act.sa_mask, <i>sig</i>);
+     if (sigaction(<i>sig</i>, &amp;act, &amp;oact) == -1)
+          return(SIG_ERR);
+     return(oact.sa_handler);
+}
+</code>
+</pre>
+The handler function should be declared:
+<pre>
+<code>
+void handler(int <i>sig</i>);
+</code>
+</pre>
+where <i>sig</i> is the signal number.  The behaviour is undefined if
+<i>func</i>
+is a function that takes more than one argument, or an argument of a different
+type.
+</blockquote><h4><a name = "tag_000_001_308">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>bsd_signal()</i>
+returns the previous action for <i>sig</i>.
+Otherwise, SIG_ERR is returned and <i>errno</i> is set to indicate the error.
+</blockquote><h4><a name = "tag_000_001_309">&nbsp;</a>ERRORS</h4><blockquote>
+Refer to
+<i><a href="sigac238.htm">sigaction()</a></i>.
+</blockquote><h4><a name = "tag_000_001_310">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_311">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+This function is a direct replacement for the BSD
+<i><a href="signal.htm">signal()</a></i>
+function for simple applications that are installing a single-argument signal
+handler function.  If a BSD signal handler function is being installed that
+expects more than one argument, the application has to be modified to use
+<i><a href="sigac238.htm">sigaction()</a></i>.
+The
+<i>bsd_signal()</i>
+function differs from
+<i><a href="signal.htm">signal()</a></i>
+in that the SA_RESTART flag is set and the SA_RESETHAND will be clear when
+<i>bsd_signal()</i>
+is used.  The state of these flags is not specified for
+<i><a href="signal.htm">signal()</a></i>.
+</blockquote><h4><a name = "tag_000_001_312">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_313">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sigad239.htm">sigaddset()</a></i>,
+<i><a href="sigem242.htm">sigemptyset()</a></i>,
+<i><a href="signal.htm">signal()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

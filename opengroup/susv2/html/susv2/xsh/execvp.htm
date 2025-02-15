@@ -1,0 +1,547 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>exec</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_004_056">&nbsp;</a>NAME</h4><blockquote>
+environ, execl, execv, execle, execve, execlp, execvp - execute a file
+</blockquote><h4><a name = "tag_000_004_057">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+extern char **environ;
+int execl(const char *<i>path</i>, const char *<i>arg0</i>, ... /*, (char *)0 */);
+int execv(const char *<i>path</i>, char *const <i>argv</i>[]);
+int execle(const char *<i>path</i>,
+    const char *<i>arg0</i>, ... /*, (char *)0, char *const <i>envp</i>[]*/);
+int execve(const char *<i>path</i>, char *const <i>argv</i>[], char *const <i>envp</i>[]);
+int execlp(const char *<i>file</i>, const char *<i>arg0</i>, ... /*, (char *)0 */);
+int execvp(const char *<i>file</i>, char *const <i>argv</i>[]);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_004_058">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>exec</i>
+functions replace the current process image with a
+new process image.
+The new image is constructed from a regular, executable file
+called the
+<i>new process image file</i>.
+There is no return from a successful
+<i>exec</i>,
+because the calling process image is overlaid by the new process
+image.
+<p>
+When a C-language program is executed as a result of this call, it is
+entered as a C-language function call as follows:
+<pre>
+<code>
+int main (<i>int argc, char *argv</i>[]);
+</code>
+</pre>
+where
+<i>argc</i>
+is the argument count and
+<i>argv</i>
+is an array of character pointers to the arguments themselves.
+In addition, the following variable:
+<pre>
+<code>
+extern char **environ;
+</code>
+</pre>
+is initialised as a pointer to an array of character pointers to
+the environment strings.
+The
+<i>argv</i>
+and
+<i>environ</i>
+arrays are each terminated by a null pointer.
+The null pointer terminating the
+<i>argv</i>
+array is not counted in
+<i>argc</i>.
+<p>
+Conforming multi-threaded applications will not use the
+<i>environ</i>
+variable to access or modify any environment variable
+while any other thread is concurrently modifying any environment
+variable.
+A call to any function dependent on any environment variable
+is considered a use of the
+<i>environ</i>
+variable to access that environment variable.
+<p>
+The arguments specified by a program with one of the
+<i>exec</i>
+functions are passed on to the new process image in the
+corresponding
+<i>main()</i>
+arguments.
+<p>
+The argument
+<i>path</i>
+points to a pathname that identifies the new process image file.
+<p>
+The argument
+<i>file</i>
+is used to construct a pathname that identifies the new process
+image file.
+If the
+<i>file</i>
+argument contains a slash character, the
+<i>file</i>
+argument is used as the pathname for this file.
+Otherwise, the
+path prefix for
+this file is obtained by a search of the directories passed as
+the environment variable
+(see <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> ).
+If this environment variable is not present, the results of the
+search are implementation-dependent.
+<p>
+If the process image file is not a valid executable object,
+<i><a href="exec.htm">execlp()</a></i>
+and
+<i><a href="exec.htm">execvp()</a></i>
+use the contents of that file as standard input to a
+command interpreter conforming to
+<i><a href="system.htm">system()</a></i>.
+In this case, the command interpreter becomes the new process image.
+<p>
+The arguments represented by
+<i>arg0, ...</i>
+are pointers to null-terminated character strings.
+These strings constitute the argument list available to the new
+process image.
+The list is terminated by a null pointer.
+The argument
+<i>arg0</i>
+should point to a filename that is associated with the process
+being started by one of the
+<i>exec</i>
+functions.
+<p>
+The argument
+<i>argv</i>
+is an array of character pointers to null-terminated strings.
+The last member of this array must be a null pointer.
+These strings constitute the argument list available to the new
+process image.
+The value in
+<i>argv[0]</i>
+should point to a filename that is associated with the process
+being started by one of the
+<i>exec</i>
+functions.
+<p>
+The argument
+<i>envp</i>
+is an array of character pointers to null-terminated strings.
+These strings constitute the environment for the new process
+image.
+The
+<i>envp</i>
+array is terminated by a null pointer.
+<p>
+For those forms not containing an
+<i>envp</i>
+pointer (.Fn execl ,
+<i><a href="exec.htm">execv()</a></i>,
+<i><a href="exec.htm">execlp()</a></i>
+and
+<i><a href="exec.htm">execvp()</a></i>),
+the environment for the new process image is taken from the
+external variable
+<i>environ</i>
+in the calling process.
+<p>
+The number of bytes available for the new process' combined
+argument and environment lists is {ARG_MAX}.
+It is implementation-dependent
+whether null terminators, pointers, and/or any alignment
+bytes are included in this total.
+<p>
+File descriptors open in the calling process image remain open in
+the new process image, except for those whose close-on-exec flag
+FD_CLOEXEC is set.
+For those file descriptors that remain open, all attributes of
+the open file description, including file locks remain
+unchanged.
+<p>
+Directory streams open in the calling process image are closed
+in the new process image.
+<p>
+The state of conversion descriptors
+and message catalogue descriptors
+in the new process image is undefined.
+For the new process, the equivalent of:
+<pre>
+<code>
+setlocale(LC_ALL, "C")
+</code>
+</pre>
+<p>
+is executed at startup.
+<p>
+Signals set to the default action (SIG_DFL) in the calling process image
+are set to the default action in the new process image. Signals set to be
+ignored (SIG_IGN) by the calling process image are set to be
+ignored by the new
+process image. Signals set to be caught by the calling process image are
+set to the default action in the new process image (see
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>).
+&nbsp;After a successful call to any of the
+<i>exec</i>
+functions, alternate signal stacks are not preserved and the SA_ONSTACK flag
+is cleared for all signals.
+<p>
+After a successful call to any of the
+<i>exec</i>
+functions, any functions previously registered by
+<i><a href="atexit.htm">atexit()</a></i>
+are no longer registered.
+<p>
+If the ST_NOSUID bit is set for the file system containing the new process
+image file, then the effective user ID, effective group ID, saved set-user-ID
+and saved set-group-ID are unchanged in the new process image.  Otherwise,
+if the set-user-ID mode bit of the new process image file is set,
+the effective user ID of the new process image is set to the user ID
+of the new process image file. Similarly, if the set-group-ID mode bit of
+the new process image file is set, the effective group ID of the new
+process image is set to the group ID of the new process image file. The
+real user ID, real group ID, and supplementary group IDs of the new process
+image remain the same as those of the calling process image.
+The effective user ID and effective group
+ID of the new process image are saved (as the saved set-user-ID and the
+saved set-group-ID for use by
+<i><a href="setuid.htm">setuid()</a></i>.
+<p>
+Any shared memory segments attached to the calling process image
+will not be attached to the new process image.
+<p>
+Any mappings established through
+<i><a href="mmap.htm">mmap()</a></i>
+are not preserved across an
+<i>exec</i>.
+<p>
+If _XOPEN_REALTIME is defined
+and has a value other than -1,
+any named semaphores
+open in the calling process are closed
+as if by appropriate calls to
+<i><a href="semcl218.htm">sem_close()</a></i>.
+<p>
+If the Process Memory Locking option is supported,
+memory locks established by the calling process via calls to
+<i><a href="mlockall.htm">mlockall()</a></i>
+or
+<i><a href="mlock.htm">mlock()</a></i>
+are removed.
+If locked pages in the address space of the calling process
+are also mapped into the address spaces
+of other processes and are locked by those processes,
+the locks established by the other processes will be unaffected
+by the call by this process to the
+<i>exec</i>
+function.
+If the
+<i>exec</i>
+function fails, the effect on memory locks is unspecified.
+<p>
+Memory mappings created in the process are unmapped before the
+address space is rebuilt for the new process image.
+<p>
+If the Process Scheduling option is supported,
+for the SCHED_FIFO and SCHED_RR scheduling policies,
+the policy and priority settings are not changed by a call to an
+<i>exec</i>
+function.
+For other scheduling policies, the policy and priority settings on
+<i>exec</i>
+are implementation-dependent.
+<p>
+If the Timers option is supported,
+per-process timers created by the calling process
+are deleted before replacing the current process image
+with the new process image.
+<p>
+If the Message Passing option is supported, all open message queue 
+descriptors in the calling process are closed, as described in
+<i><a href="mqclo98.htm">mq_close()</a></i>.
+<p>
+If the Asynchronous Input and Output option is supported,
+any outstanding asynchronous I/O operations may be canceled.
+Those asynchronous I/O operations that are not canceled will complete
+as if the
+<i>exec</i>
+function had not yet occurred,
+but any associated signal notifications are suppressed.
+It is unspecified whether the
+<i>exec</i>
+function itself blocks awaiting such I/O completion.
+In no event, however, will the new process image created by the
+<i>exec</i>
+function be affected by the presence of outstanding asynchronous I/O
+operations
+at the time the
+<i>exec</i>
+function is called.
+Whether any I/O is cancelled, and which I/O may be cancelled upon
+<i>exec</i>,
+is implementation-dependent.
+<p>
+The new process also inherits at least the following
+attributes from the calling process image:
+<p>
+nice value (see
+<i><a href="nice.htm">nice()</a></i>)
+<br>
+<i>semadj</i> values (see
+<i><a href="semop.htm">semop()</a></i>)
+<br>
+process ID
+<br>
+parent process ID
+<br>
+process group ID
+<br>
+session membership
+<br>
+real user ID
+<br>
+real group ID
+<br>
+supplementary group IDs
+<br>
+time left until an alarm clock signal (see
+<i><a href="alarm.htm">alarm()</a></i>)
+<br>
+current working directory
+<br>
+root directory
+<br>
+file mode creation mask (see
+<i><a href="umask.htm">umask()</a></i>)
+<br>
+file size limit (see
+<i><a href="ulimit.htm">ulimit()</a></i>)
+<br>
+process signal mask (see
+<i><a href="sigpr250.htm">sigprocmask()</a></i>)
+<br>
+pending signal (see
+<i><a href="sigpe249.htm">sigpending()</a></i>)
+<br>
+<i>tms_utime</i>,
+<i>tms_stime</i>,
+<i>tms_cutime</i>,
+and
+<i>tms_cstime</i>
+(see
+<i><a href="times.htm">times()</a></i>)
+<br>
+resource limits
+<br>
+controlling terminal
+<br>
+interval timers
+<p>
+All other process attributes defined in this document will be the same
+in the new and old process images.
+The inheritance of process attributes not defined by this specification
+is implementation-dependent.
+<p>
+A call to any
+<i>exec</i>
+function from a process with more than one thread results
+in all threads being terminated
+and the new executable image being loaded and executed.
+No destructor functions will be called.
+<p>
+Upon successful completion, the
+<i>exec</i>
+functions mark for update the
+<i>st_atime</i>
+field of the file. If an
+<i>exec</i>
+function failed but was able to locate the
+<i>process image file</i>,
+whether the
+<i>st_atime</i>
+field is marked for update is unspecified. Should the
+<i>exec</i>
+function succeed, the process image file is considered to have been opened
+with
+<i><a href="open.htm">open()</a></i>.
+The corresponding
+<i><a href="close.htm">close()</a></i>
+is considered to occur at a time after this open, but before
+process termination or successful completion of a subsequent call to
+one of the
+<i>exec</i>
+functions.
+The argv[] and envp[]
+arrays of pointers and the strings to which those
+arrays point will not be modified by a call to one of the
+<i>exec</i>
+functions, except as a consequence of replacing the process image.
+<p>
+The saved resource limits in the new process image are set to be a copy
+of the process's corresponding hard and soft limits.
+</blockquote><h4><a name = "tag_000_004_059">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If one of the
+<i>exec</i>
+functions returns to the calling process image, an error has occurred;
+the return value is -1, and
+<i>errno</i>
+is set to indicate the error.
+<br>
+</blockquote><h4><a name = "tag_000_004_060">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>exec</i>
+functions
+will fail
+if:
+<dl compact>
+
+<dt>[E2BIG]<dd>
+The number of bytes used by the new process image's
+argument list and environment list is greater than the system-imposed
+limit of {ARG_MAX} bytes.
+
+
+<dt>[EACCES]<dd>
+Search permission is denied for a directory listed in the new
+process image file's path prefix, or the new process image file
+denies execution permission, or the new process image file
+is not a regular file and the implementation does not support
+execution of files of its type.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>path</i>
+or
+<i>file</i>
+arguments, or an element of the environment variable
+prefixed to a file, exceeds {PATH_MAX}, or a pathname component
+is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> or <i>file</i> does not name an existing file
+or <i>path</i> or <i>file</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the new process image file's path prefix is
+not a directory.
+
+</dl>
+<p>
+The
+<i>exec</i>
+functions, except for
+<i><a href="exec.htm">execlp()</a></i>
+and
+<i><a href="exec.htm">execvp()</a></i>,
+will fail if:
+<dl compact>
+
+<dt>[ENOEXEC]<dd>
+The new process image file has the appropriate access permission but
+is not in the proper format.
+
+</dl>
+<p>
+The
+<i>exec</i>
+functions
+may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[ENOMEM]<dd>
+The new process image requires more memory than is allowed by
+the hardware or system-imposed memory management constraints.
+
+<dt>[ETXTBSY]<dd>
+The new process image
+file is a pure procedure (shared text) file that is
+currently open for writing by some process.
+
+</dl>
+</blockquote><h4><a name = "tag_000_004_061">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_062">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+As the state of conversion descriptors and message catalogue
+descriptors in the new process image is undefined, portable
+applications should not rely on their use and should close
+them prior to calling one of the
+<i>exec</i>
+functions.
+<p>
+Applications that require other than the default POSIX locale
+should call
+<i><a href="setlo231.htm">setlocale()</a></i>
+with the appropriate parameters to establish the locale of the
+new process.
+<p>
+The
+<i>environ</i>
+array should not be accessed directly by the application.
+</blockquote><h4><a name = "tag_000_004_063">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_064">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="alarm.htm">alarm()</a></i>,
+<i><a href="atexit.htm">atexit()</a></i>,
+<i><a href="chmod.htm">chmod()</a></i>,
+<i><a href="exit.htm">exit()</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="fstatvfs.htm">fstatvfs()</a></i>,
+<i><a href="getenv.htm">getenv()</a></i>,
+<i><a href="getit62.htm">getitimer()</a></i>,
+<i><a href="getrl68.htm">getrlimit()</a></i>,
+<i><a href="mmap.htm">mmap()</a></i>,
+<i><a href="nice.htm">nice()</a></i>,
+<i><a href="putenv.htm">putenv()</a></i>,
+<i><a href="semop.htm">semop()</a></i>,
+<i><a href="setlo231.htm">setlocale()</a></i>,
+<i><a href="shmat.htm">shmat()</a></i>,
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sigal240.htm">sigaltstack()</a></i>,
+<i><a href="sigpe249.htm">sigpending()</a></i>,
+<i><a href="sigpr250.htm">sigprocmask()</a></i>,
+<i><a href="system.htm">system()</a></i>,
+<i><a href="times.htm">times()</a></i>,
+<i><a href="ulimit.htm">ulimit()</a></i>,
+<i><a href="umask.htm">umask()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>,
+<b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a>.
+<br>
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

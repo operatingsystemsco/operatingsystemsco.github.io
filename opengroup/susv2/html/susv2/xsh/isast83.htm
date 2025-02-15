@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>isastream</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_029">&nbsp;</a>NAME</h4><blockquote>
+isastream - test a file descriptor
+</blockquote><h4><a name = "tag_000_007_030">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="strop263.htm">stropts.h</a>&gt;
+
+int isastream(int <i>fildes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_031">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>isastream()</i>
+function tests whether
+<i>fildes</i>,
+an open file descriptor, is associated with a STREAMS-based file.
+</blockquote><h4><a name = "tag_000_007_032">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>isastream()</i>
+returns 1 if <i>fildes</i> refers to a STREAMS-based file and 0 if not.
+Otherwise,
+<i>isastream()</i>
+returns -1 and sets <i>errno</i> to indicate the error.
+</blockquote><h4><a name = "tag_000_007_033">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>isastream()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not a valid open file descriptor.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_034">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_035">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_036">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_037">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="strop263.htm">&lt;stropts.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

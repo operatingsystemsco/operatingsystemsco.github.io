@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>catopen</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_368">&nbsp;</a>NAME</h4><blockquote>
+catopen - open a message catalogue
+</blockquote><h4><a name = "tag_000_001_369">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="nltyp112.htm">nl_types.h</a>&gt;
+
+nl_catd catopen(const char *<i>name</i>, int <i>oflag</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_370">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>catopen()</i>
+function opens a message catalogue and returns a message catalogue descriptor.
+The
+<i>name</i>
+argument specifies the name of the message catalogue to be opened.
+If
+<i>name</i>
+contains a "/", then
+<i>name</i>
+specifies a complete name for the message catalogue.
+Otherwise, the environment variable
+is used with
+<i>name</i>
+substituted for
+<i>%N</i>
+(see the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a>).
+If
+does not exist in the environment,
+or if a message catalogue cannot be found
+in any of the components specified by
+<i>NLSPATH</i>,
+then an implementation-dependent default path is used.
+This default may be affected by the setting of LC_MESSAGES
+if the value of
+<i>oflag</i>
+is NL_CAT_LOCALE, or the
+environment variable if
+<i>oflag</i>
+is 0.
+<p>
+A message catalogue descriptor remains valid in a process until
+that process closes it,
+or a successful call to one of the
+<i>exec</i>
+functions.
+A change in the setting of the LC_MESSAGES category may invalidate
+existing open catalogues.
+<p>
+If a file descriptor is used to implement message catalogue descriptors,
+the FD_CLOEXEC flag will be set; see
+<i><a href="fcntl43.htm">&lt;fcntl.h&gt;</a></i>.
+<p>
+If the value of the
+<i>oflag</i>
+argument is 0, the
+environment variable is used to locate the catalogue without regard to the
+LC_MESSAGES category.  If the
+<i>oflag</i>
+argument is NL_CAT_LOCALE, the LC_MESSAGES category is used to locate the
+message catalogue (see the <b>XBD</b> specification, <a href="../xbd/envvar.htm#tag_002_002"><b>Environment Variables</b>&nbsp;</a>).
+</blockquote><h4><a name = "tag_000_001_371">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>catopen()</i>
+returns a message catalogue descriptor for use on
+subsequent calls to
+<i><a href="catgets.htm">catgets()</a></i>
+and
+<i><a href="catclose.htm">catclose()</a></i>.
+Otherwise
+<i>catopen()</i>
+returns (<b>nl_catd</b> )
+-1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_001_372">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>catopen()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for the component of the path prefix of
+the message catalogue or read permission is denied for
+the message catalogue.
+
+<dt>[EMFILE]<dd>
+{OPEN_MAX} file descriptors are currently open in the calling process.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the pathname of the message catalogue exceeds {PATH_MAX},
+or a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENAMETOOLONG]<dd><br>
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[ENFILE]<dd>
+Too many files are currently open in the system.
+
+<dt>[ENOENT]<dd>
+The message catalogue does not exist or the
+<i>name</i>
+argument points to an empty string.
+
+<dt>[ENOMEM]<dd>
+Insufficient storage space is available.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix of the message catalogue is not a directory.
+
+</dl>
+</blockquote><h4><a name = "tag_000_001_373">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_374">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Some implementations of
+<i>catopen()</i>
+use
+<i><a href="malloc.htm">malloc()</a></i>
+to allocate space for internal buffer areas.
+The
+<i>catopen()</i>
+function may fail if there is insufficient storage space available
+to accommodate these buffers.
+<p>
+Portable applications must assume that message catalogue
+descriptors are not valid after a call to one of the
+<i>exec</i>
+functions.
+<p>
+Application writers should be aware that guidelines for the location of
+message catalogues have not yet been developed.  Therefore they should take
+care to avoid conflicting with catalogues used by other applications and the
+standard utilities.
+</blockquote><h4><a name = "tag_000_001_375">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_376">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="catclose.htm">catclose()</a></i>,
+<i><a href="catgets.htm">catgets()</a></i>,
+<i><a href="fcntl43.htm">&lt;fcntl.h&gt;</a></i>,
+<i><a href="nltyp112.htm">&lt;nl_types.h&gt;</a></i>,
+the <b>XCU</b> specification,
+<i><a href="../xcu/gencat.htm">gencat</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

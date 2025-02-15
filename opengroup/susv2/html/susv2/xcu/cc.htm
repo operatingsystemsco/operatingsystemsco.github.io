@@ -1,0 +1,814 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>cc</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_286">&nbsp;</a>NAME</h4><blockquote>
+cc - a C-language compilation system (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_000_000_287">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+cc <b>[</b>-c<b>][</b>-C<b>][</b>-e <i>epsym</i><b>] [</b>-D <i>name</i><b>[</b>=value<b>]]</b>... <b>[</b>-E<b>][</b>-f<b>][</b>-F<b>][</b>-g<b>]
+[</b>-I <i>directory</i><b>]</b>... <b>[</b>-L <i>directory</i><b>]</b>... <b>[</b>-o <i>outfile</i><b>][</b>-O<b>][</b>-p<b>][</b>-P<b>]
+[</b>-q<b>][</b>-r<b>][</b>-s<b>][</b>-S<b>][</b>-u <i>symname</i><b>]</b>... <b>[</b>-U <i>name</i><b>]</b>... <b>[</b>-W <i>options</i><b>]</b>... <i>operand</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_288">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>cc</i>
+utility is an interface to an unspecified C-language compilation system.
+The system conceptually consists of a preprocessor,
+compiler, optimiser, assembler and link editor.
+The
+<i>cc</i>
+utility processes the supplied options and then executes
+the various tools with the appropriate arguments.
+<p>
+The suffix of the pathname versions of an
+<i>operand</i>
+indicates how it is to be treated.
+See the OPERANDS section.
+<p>
+The files referenced by
+<i>operand</i>s
+will be compiled/assembled and
+linked to produce an executable file.
+(It is unspecified whether the linking occurs
+entirely within the operation of
+<i>cc</i>;
+some systems may produce objects that are
+not fully resolved until the file is executed.)
+<p>
+If the
+<b>-c</b>
+option is specified,
+for all pathname operands of the form
+<i>file</i><b>.c</b>
+the files:
+<pre>
+<code>
+$(basename <i>pathname</i> .c).o
+</code>
+</pre>
+will be created as the result of successful compilation.
+Similar results occur for pathname operands of the form
+<i>file</i><b>.i</b>
+and
+<b>.s</b>.
+If the
+<b>-c</b>
+option is not specified,
+it is unspecified whether such
+<b>.o</b>
+files are created or deleted for these operands.
+<p>
+If there are no options that prevent link editing (such as
+<b>-c</b>
+or
+<b>-E</b>),
+and all operands compile and
+link without error, the resulting executable file will be
+written according to the
+<b>-o</b>&nbsp;<i>outfile</i>
+option (if present) or to the file
+<b>a.out</b>.
+<p>
+The executable file will be created as specified in the <b>XSH</b> specification,
+except that the file permissions will be set to:
+<pre>
+<dl compact><dt> <dd>
+S_IRWXO | S_IRWXG | S_IRWXU
+</dl>
+</pre>
+and that the bits
+specified by the
+<i>umask</i>
+of the process will be cleared.
+</blockquote><h4><a name = "tag_000_000_289">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>cc</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> , except that:
+<ul>
+<p>
+<li>
+The
+<b>-l</b>&nbsp;<i>library</i>
+operands have the format of options, but their position
+within a list of operands affects the order in which libraries
+are searched.
+<p>
+<li>
+The order of specifying the
+<b>-I</b>
+and
+<b>-L</b>
+options is significant.
+<p>
+<li>
+Portable applications must specify
+each option separately; that is, grouping option letters
+(for example,
+<b>-cO</b>)
+need not be recognised by all implementations.
+<p>
+</ul>
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-c</b>
+<dd>Suppress the link-edit phase of the compilation, and
+do not remove any object files that are produced.
+
+<dt><b>-E</b>
+<dd>Run only the preprocessor
+on the named C-language programs and send the result to standard output.
+
+<dt><b>-f</b>
+<dd>Include floating-point support for systems without an automatically
+included floating point implementation.
+This option is ignored on systems that do not need it.
+
+<dt><b>-F</b>
+<dd>This option is reserved for implementation-dependent
+optimisation directives.
+
+<dt><b>-g</b>
+<dd>Cause the compiler
+to generate additional information
+needed for use by a debugger (possibly
+<i>sdb</i>).
+
+<dt><b>-o&nbsp;</b><i>outfile</i>
+<dd>
+Use the name
+<i>outfile</i>
+instead of the default
+<b>a.out</b>
+for the executable file produced.
+This is a link-edit option.
+
+<dt><b>-O</b>
+<dd>Do compilation phase optimisation.
+This option will not affect
+<b>.s</b>
+files.
+
+<dt><b>-p</b>
+<dd>This option is reserved for invoking implementation-dependent
+profiling procedures.
+
+<dt><b>-P</b>
+<dd>Run only the preprocessor
+on the named C-language programs and leave the result
+on corresponding files suffixed
+<b>.i</b>.
+
+<dt><b>-q</b>
+<dd>This option is reserved for specifying implementation-dependent
+profiling directives.
+
+<dt><b>-S</b>
+<dd>Compile and do not assemble the named C-language programs, and leave the
+assembler-language output on corresponding files suffixed
+.s.
+
+<dt><b>-W</b> <i>c</i>,<i>arg</i><b>[</b>,<i>arg</i> ...<b>]</b>
+<dd>
+Pass the arguments
+<i>arg</i>
+to phase
+<i>c</i>
+where
+<i>c</i>
+is one of
+[p02al]
+indicating preprocessing, compiling, optimising, assembling
+or link editing phases, respectively.
+For example,
+<b>-Wa,-m</b>
+passes
+<b>-m</b>
+to the assembler phase.
+
+</dl>
+<p>
+The
+<i>cc</i>
+utility
+also recognises a number of options that it will pass
+(with their associated arguments)
+directly to another phase of the
+<i>cc</i>
+utility.
+The use of the
+<b>-W</b>
+option is not required for these options.
+<p>
+The following options are passed by
+<i>cc</i>
+(with their associated arguments)
+to the preprocessor phase:
+<dl compact>
+
+<dt><b>-C</b>
+<dd>By default, the preprocessor strips C-language style comments.
+If the
+<b>-C</b>
+option is specified, all comments
+(except those found on preprocessor directive lines)
+are passed along.
+
+<dt><b>-D</b><i> name</i><b>[=</b><i>value</i><b>]</b><dd>
+Define
+<i>name</i>
+as if by a C-language
+<b>#define</b>
+directive.
+If no
+<i>=value</i>
+is given,
+a value of 1 will be used.
+The
+<b>-D</b>
+option has lower precedence than the
+<b>-U</b>
+option.
+That is, if
+<i>name</i>
+is used in both a
+<b>-U</b>
+and a
+<b>-D</b>
+option,
+<i>name</i>
+will be undefined regardless of the order of the options.
+Additional implementation-dependent
+<i>names</i>
+may be provided by the compiler.
+Implementations support at least 2048 bytes of
+<b>-D</b>
+definitions
+and 256
+<i>names</i>.
+
+<dt><b>-I&nbsp;</b><i>directory</i>
+<dd>
+Change the algorithm for searching for headers
+whose names
+are not absolute pathnames
+to look in the directory named by the
+<i>directory</i>
+pathname before looking in the usual places.
+Thus, headers
+whose names are enclosed in double-quotes (<b>""</b>)
+will be searched for first in
+the directory of the file with the
+<b>#include</b>
+line,
+then in directories
+named in
+<b>-I</b>
+options, and last in the
+usual places.
+For headers
+whose names are enclosed in
+angle brackets
+(&lt;&gt;),
+the header will be searched for only
+in directories named in
+<b>-I</b>
+options and then in the
+usual places.
+Directories named in
+<b>-I</b>
+options will be searched
+in the order specified.
+Implementations support at least ten
+instances of this option in a single
+<i>cc</i>
+command invocation.
+
+<dt><b>-U&nbsp;</b><i>name</i>
+<dd>
+Remove any initial definition of
+<i>name</i>,
+where
+<i>name</i>
+is a reserved symbol that is predefined
+by the particular preprocessor.
+
+</dl>
+<p>
+The following options are passed by
+<i>cc</i>
+(with their associated arguments)
+to the link-edit phase:
+<dl compact>
+
+<dt><b>-e&nbsp;</b><i>epsym</i>
+<dd>
+Set the default entry point address for the output file
+to be that of the symbol
+<i>epsym</i>.
+
+<dt><b>-L&nbsp;</b><i>dir</i>
+<dd>
+Change the algorithm of searching for the libraries named in the
+<b>-l</b>
+objects to look in the directory named
+by the
+<i>directory</i>
+pathname before looking in the
+usual places.
+Directories named in
+<b>-L</b>
+options will be searched in the order specified.
+Implementations support at least ten
+instances of this option in a single
+<i>cc</i>
+command invocation.
+If a directory specified by a
+<b>-L</b>
+option contains files named
+<b>libc.a</b>,
+<b>libm.a</b>,
+<b>libl.a</b>,
+or
+<b>liby.a</b>,
+the results are unspecified.
+This option is only effective if it precedes the
+<b>-l</b>
+option on the command line.
+
+<dt><b>-r</b>
+<dd>Retain relocation entries in the output object file.
+Relocation entries must be saved if the output is
+to become the input of a subsequent
+<i>cc</i>
+run.
+The link-edit phase will not complain
+about unresolved references and will not make
+the object output executable.
+
+<dt><b>-s</b>
+<dd>Produce object or executable files, or both, from which
+symbolic and other information not required for proper
+execution using the <b>XSH</b> specification
+<i>exec</i>
+family has been removed (stripped).
+If both
+<b>-g</b>
+and
+<b>-s</b>
+options are present, the action taken is unspecified.
+
+<dt><b>-u&nbsp;</b><i>symname</i>
+<dd>
+Enter
+<i>symname</i>
+as an undefined symbol into the symbol table.
+This is useful for loading entirely from a library,
+since initially the symbol table is empty
+and an unresolved reference is needed to
+force loading of the first routine.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_290">&nbsp;</a>OPERANDS</h4><blockquote>
+An
+<i>operand</i>
+is either in the form of a pathname or the form
+<b>-l</b>&nbsp;<i>library</i>.
+At least one operand of the pathname form must be specified.
+The following operands are supported:
+<dl compact>
+
+<dt><i>file.</i><b>c</b><dd>A C-language source file that may be preprocessed,
+compiled, optimised and link edited.
+
+<dt><i>file.</i><b>i</b><dd>A C-language source file that has been preprocessed,
+and may be compiled, optimised and link edited.
+
+<dt><i>file.</i><b>s</b><dd>An assembly language source file that may be assembled
+and link edited.
+
+<dt><i>file.</i><b>a</b><dd>A library of object files typically produced by the
+<i><a href="ar.htm">ar</a></i>
+utility,
+and passed directly to the link editor.
+
+</dl>
+<p>
+The operand must be one of the forms
+<i>file</i>.c
+<i>file</i>.i
+or
+<i>file</i>.s
+if the
+<b>-c</b>
+option is used.
+<dl compact>
+
+<dt><b>-l&nbsp;</b><i>library</i>
+<dd>
+(The letter ell.)
+Search the library named:
+<pre>
+<code>
+lib<i>library</i>.a
+</code>
+</pre>
+
+A library will be searched when its name is
+encountered, so the placement of a
+<b>-l</b>
+operand is significant.
+Several standard libraries can be specified in this manner,
+as described in the EXTENDED DESCRIPTION section.
+
+</dl>
+<p>
+Other arguments are taken to be C-language compatible
+object programs, typically produced by an earlier
+<i>cc</i>
+run, or perhaps libraries of C-language compatible routines,
+and are passed directly to the link editor.
+These programs, together with the results of any
+compilations specified, are linked (in the order
+given) to produce an executable program with the name
+<b>a.out</b>
+(unless the
+<b>-o</b>
+link-edit option is used).
+<p>
+The standard C-language library is automatically available to the
+C-language program.
+Other libraries may be specified
+explicitly using the
+<b>-l</b>
+option with
+<i>cc</i>.
+</blockquote><h4><a name = "tag_000_000_291">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_000_000_292">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file will be one of the following:
+a text file containing a C-language source program;
+a text file containing an (implementation-dependent)
+assembly-language source program;
+an object file in the format produced by
+<i>cc</i>
+<b>-c</b>
+or a library of object files, in the format produced by
+archiving zero or more object files, using
+<i><a href="ar.htm">ar</a></i>.
+Additional input file formats are implementation-dependent.
+</blockquote><h4><a name = "tag_000_000_293">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variable affects the execution of
+<i>cc</i>:
+<dl compact>
+
+<dt><i>TMPDIR</i><dd>
+Provide a pathname that
+will override
+the default directory for temporary files, if any.
+
+</dl>
+<p>
+The following environment variables may affect the execution of
+<i>cc</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_000_000_294">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_295">&nbsp;</a>STDOUT</h4><blockquote>
+If more than one file operand ending in
+.c,
+.i
+or
+.s
+is given, for each such file:
+<p><code>
+<tt>"%s:\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+may be written.
+These messages, if written, will precede the processing of each input file;
+they will not be written to standard output if they are
+written to standard error, as described in the STDERR section.
+<p>
+If the
+<b>-E</b>
+option is specified, the standard output will be a text file
+that represents the results of the preprocessing stage of the language;
+it may contain extra information appropriate for subsequent
+compilation passes.
+</blockquote><h4><a name = "tag_000_000_296">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+If more than one file operand ending in
+.c
+(or possibly other unspecified suffixes) is given,
+for each such file:
+<p><code>
+<tt>"%s:\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+may be written to allow identification of the diagnostic
+and warning messages with the appropriate input file.
+These messages, if written, will precede the processing of each input file;
+they will not be written to standard error if they are
+written to standard output, as described in the STDOUT section.
+<p>
+This utility may produce warning messages about certain
+conditions that do not warrant returning an error (non-zero)
+exit value.
+</blockquote><h4><a name = "tag_000_000_297">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+If the
+<b>-P</b>
+option is specified, text files are created
+that represent the results of the preprocessing stage of the language.
+<p>
+Object files or executable files or both are produced in unspecified formats.
+</blockquote><h4><a name = "tag_000_000_298">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+All implementations will support standard libraries as described in
+<i><a href="c89.htm">c89</a></i>,
+EXTENDED DESCRIPTION.
+<h5><a name = "tag_000_000_298_001">&nbsp;</a>External Symbols</h5>
+The C compiler and link editor
+support the significance of external symbols up to a
+length of at least 31 bytes;
+the action taken upon encountering
+symbols exceeding the implementation-dependent
+maximum symbol length is unspecified.
+<p>
+The compiler and link editor
+support a minimum of 511 external
+symbols per source or object file,
+and a minimum of 4095 external symbols total.
+A diagnostic message will be written to the standard error
+if the implementation-dependent limit is exceeded;
+other actions are unspecified.
+<h5><a name = "tag_000_000_298_002">&nbsp;</a>Programming Environment</h5>
+<p>
+All implementations will support one or more programming environments
+with
+<i>cc</i>
+as specified in
+<i><a href="c89.htm">c89</a></i>,
+EXTENDED DESCRIPTION.
+</blockquote><h4><a name = "tag_000_000_299">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful compilation or link edit.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_300">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+When
+<i>cc</i>
+encounters a compilation error that causes an object file not to
+be created, it will write a diagnostic to standard error
+and continue to compile other source code operands, but it
+will not perform the link phase and will return a non-zero exit status.
+If the link edit is unsuccessful,
+a diagnostic message will be written to standard error and
+<i>cc</i>
+will exit with a non-zero status.
+A portable application must rely on the exit status of
+<i>cc</i>,
+rather than on the existence or mode of the executable file.
+</blockquote><h4><a name = "tag_000_000_301">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i><a href="c89.htm">c89</a></i>
+utility provides an interface to the ISO&nbsp;C standard,
+but the
+<i>cc</i>
+utility accepts an unspecified dialect of the C language:
+it may be Standard C, common-usage C or some other variant.
+Portable C programs should be written to conform to the ISO&nbsp;C standard
+and compiled with
+<i><a href="c89.htm">c89</a></i>.
+<p>
+Since the
+<i>cc</i>
+utility
+usually creates files in the current
+directory during the compilation process, it is typically
+necessary to run the
+<i>cc</i>
+utility
+in a directory in which a file can be created.
+<p>
+Some historical implementations have created
+.o
+files when
+<b>-c</b>
+is not specified and more than one source file is given.
+Since this area is left unspecified, the application cannot
+rely on
+.o
+files being created, but it also must be prepared
+for any related
+.o
+files that already exist being deleted at the
+completion of the link edit.
+<p>
+Some historical implementations have permitted
+<b>-L</b>
+options to be interspersed with
+<b>-l</b>
+operands on the command line.
+For an application to compile consistently on systems
+that do not behave like this, it is necessary for a
+portable application to supply all
+<b>-L</b>
+options before
+any of the
+<b>-l</b>
+options.
+<p>
+There is the possible implication that if a user supplies versions
+of the standard library functions (before they would be encountered
+by an implicit
+<b>-l c</b>
+or explicit
+<b>-l m</b>),
+that those versions would
+be used in place of the standard versions.
+There are various reasons
+this might not be true (functions defined as macros, manipulations
+for clean name space, and so on), so the existence of files named
+in the same manner as the standard libraries within the
+<b>-L</b>
+directories is explicitly stated to produce unspecified behaviour.
+<p>
+All of the interfaces specified in the <b>XSH</b> specification may be made visible by
+implementations when the Standard C Library is searched.
+Portable applications must explicitly request searching the other
+standard libraries when functions made visible by those
+libraries are used.
+<p>
+Applications should migrate to the
+<i><a href="c89.htm">c89</a></i>
+utility.
+</blockquote><h4><a name = "tag_000_000_302">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following are examples of usage:
+<dl compact>
+
+<dt>cc -o foo foo.c bar.s<dd>
+Compiles
+<b>foo.c</b>,
+assembles bar.s
+and creates the executable file
+<b>foo</b>.
+
+<dt>cc -c foo.c<dd>
+Compiles
+<b>foo.c</b>
+and creates the object file
+<b>foo.o</b>.
+
+<dt>cc foo.c<dd>
+Compiles
+<b>foo.c</b>
+and creates the executable file
+<b>a.out</b>.
+
+<dt>cc foo.c bar.o<dd>
+Compiles
+<b>foo.c</b>,
+links it with
+<b>bar.o</b>,
+and creates the
+executable
+<b>a.out</b>.
+Also creates and leaves
+<b>foo.o</b>.
+
+</dl>
+<p>
+The following examples clarify the use and interactions of
+<b>-L</b>
+options and
+<b>-l</b>
+operands:
+<ol>
+<p>
+<li>
+Consider the case in which module
+<b>a.c</b>
+calls function
+<i>f()</i>
+in library
+<b>libQ.a</b>,
+and module
+<b>b.c</b>
+calls function
+<i>g()</i>
+in library
+<b>libp.a</b>.
+Assume that both libraries reside in
+<b>/a/b/c</b>.
+The command
+line to compile and link in the desired way is:
+<pre>
+<code>
+cc -L /a/b/c main.o a.c -l Q b.c -l p
+</code>
+</pre>
+In this case the
+<b>-l Q</b>
+operand need only precede the first
+<b>-l p</b>
+operand, since both
+<b>libQ.a</b>
+and
+<b>libp.a</b>
+reside in the same directory.
+<p>
+<li>
+Multiple
+<b>-L</b>
+operands can be used when library name collisions occur.
+Building on the previous example,
+suppose that the user now wants to use
+a new
+<b>libpa.</b>,
+in
+<b>/a/a/a</b>,
+but still wants
+<i>f()</i>
+from
+<b>/a/b/c/libQ.a</b>:
+<pre>
+<code>
+cc -L /a/a/a -L /a/b/c main.o a.c -l Q b.c -l p
+</code>
+</pre>
+<p>
+In this example,
+the linker searches the
+<b>-L</b>
+options in the order specified,
+and finds
+<b>/a/a/a/libp.a</b>
+before
+<b>/a/b/c/libp.a</b>
+when resolving references for
+<b>b.c</b>.
+The order of the
+<b>-l</b>
+operands is still important, however.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_000_000_303">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_304">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ar.htm">ar</a></i>,
+<i><a href="c89.htm">c89</a></i>,
+<i><a href="nm.htm">nm</a></i>,
+<i><a href="strip.htm">strip</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

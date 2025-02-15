@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>iconv</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_947">&nbsp;</a>NAME</h4><blockquote>
+iconv - codeset conversion
+</blockquote><h4><a name = "tag_001_014_948">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+iconv -f <i>fromcode</i> -t <i>tocode</i><b> [</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_949">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>iconv</i>
+utility converts the encoding of characters in
+<i>file</i>
+from one codeset to another
+and writes the results to standard output.
+<p>
+Character encodings in either codeset may include single-byte values
+(for example, for the ISO 8859-1:1987 standard characters) or
+multi-byte values (for example,
+for certain characters in the ISO 6937:1983 standard).
+The results of
+specifying invalid characters in the input stream
+(either those that are not valid members of the
+<i>fromcode</i>
+or those that have no corresponding value in
+<i>tocode</i>)
+are specified in the system documentation.
+</blockquote><h4><a name = "tag_001_014_950">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>iconv</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+The following options are supported:
+<dl compact>
+
+<dt><b>-f&nbsp;</b><i>fromcode</i>
+<dd>
+Identify the codeset of the input file.
+Valid values for
+<i>fromcode</i>
+are specified in the system documentation.
+
+<dt><b>-t&nbsp;</b><i>tocode</i>
+<dd>
+Identify the codeset to be used for the output file.
+Valid values for
+<i>tocode</i>
+are specified in the system documentation.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_951">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of the input file to be translated.
+If
+<i>file</i>
+is omitted, the standard input is used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_952">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is used only if the
+<i>file</i>
+operand is omitted.
+</blockquote><h4><a name = "tag_001_014_953">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file is a text file.
+</blockquote><h4><a name = "tag_001_014_954">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>iconv</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+During translation of the file, this variable is superseded
+by the use of the
+<i>fromcode</i>
+option-argument.
+
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_955">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_956">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output is a text file containing the translated data.
+</blockquote><h4><a name = "tag_001_014_957">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_958">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_959">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_960">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_961">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_962">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_963">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following example converts the contents of file
+<b>mail.x400</b>
+from the ISO 6937:1983 standard codeset to the ISO 8859-1:1987 standard codeset,
+and stores the results in file
+<b>mail.local</b>:
+<pre>
+<code>
+iconv -f IS6937 -t IS8859 mail.x400 &gt; mail.local
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_964">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_965">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="gencat.htm">gencat</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

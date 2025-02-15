@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>compress</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_168">&nbsp;</a>NAME</h4><blockquote>
+compress - compress data
+</blockquote><h4><a name = "tag_001_014_169">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+compress <b>[</b>-fv<b>][</b>-b <i>bits</i><b>][</b><i>file</i> ...<b>]</b> 
+
+compress <b>[</b>-cfv<b>][</b>-b <i>bits</i><b>][</b><i>file</i><b>]</b> 
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_170">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>compress</i>
+utility will attempt to
+reduce the size of the named files by
+using adaptive Lempel-Ziv coding.
+Except when the output is to the standard output, each file
+will be replaced by one with the extension
+.Z.
+If the invoking process has appropriate privileges, the ownership, modes,
+access time, and modification time of the original file are preserved.  If
+appending the
+.Z
+to the filename would make the
+name exceed
+{NAME_MAX}
+bytes, the command will fail.
+If no files are specified, the standard input will be compressed to the
+standard output.
+</blockquote><h4><a name = "tag_001_014_171">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>compress</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-b&nbsp;</b><i>bits</i>
+<dd>Specify the maximum number of bits to use in a code.
+For a portable application, the
+<i>bits</i>
+argument must be:
+<pre>
+<dl compact><dt> <dd>
+9 &gt;= <i>bits</i> &lt;=  14
+</dl>
+</pre>
+<p>
+The implementation may allow
+<i>bits</i>
+values of greater than 14.
+The default will be 14, 15 or 16.
+<br>
+<dt><b>-c</b>
+<dd>Cause
+<i>compress</i>
+to write to the standard output;
+the input file will not be changed, and no
+.Z
+files will be created.
+<br>
+<dt><b>-f</b>
+<dd>Force compression of
+<i>file</i>,
+even if it does not actually
+reduce the size of the file,
+or if the corresponding
+<i>file</i>.Z
+file already exists.
+If the
+<b>-f</b>
+option is not given, and the process is not
+running in the background, the user will be prompted as to
+whether an existing
+<i>file</i>.Z
+file should be overwritten.
+<br>
+<dt><b>-v</b>
+<dd>Write the percentage reduction of each file to standard error.
+<p>
+</dl>
+</blockquote><h4><a name = "tag_001_014_172">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to be compressed.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_173">&nbsp;</a>STDIN</h4><blockquote>
+The standard input will be used only if no
+<i>file</i>
+operands are specified, or if a
+<i>file</i>
+operand is "-".
+</blockquote><h4><a name = "tag_001_014_174">&nbsp;</a>INPUT FILES</h4><blockquote>
+If
+<i>file</i>
+operands are specified, the input files contain the data to be compressed.
+</blockquote><h4><a name = "tag_001_014_175">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>compress</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_176">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_177">&nbsp;</a>STDOUT</h4><blockquote>
+If no
+<i>file</i>
+operands are specified, or if a
+<i>file</i>
+operand is "-", or if the
+<b>-c</b>
+option is specified, the standard output will contain the compressed output.
+</blockquote><h4><a name = "tag_001_014_178">&nbsp;</a>STDERR</h4><blockquote>
+Used for all diagnostic and prompt messages
+and the output from
+<b>-v</b>.
+</blockquote><h4><a name = "tag_001_014_179">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output files will contain
+the compressed output.
+</blockquote><h4><a name = "tag_001_014_180">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_181">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>1<dd>An error occurred.
+
+<dt>2<dd>One or more files were not compressed
+because they would have increased in size (and the
+<b>-f</b>
+option was not specified).
+
+<dt>&gt;2<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_182">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+The input file will remain unmodified.
+</blockquote><h4><a name = "tag_001_014_183">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The amount of compression obtained depends on the size of the
+input, the number of
+<i>bits</i>
+per code, and the distribution of common substrings.
+Typically, text such as source code or English
+is reduced by 50-60%.
+Compression is generally much better than that achieved by
+Huffman coding (as used in
+<i><a href="pack.htm">pack</a></i>),
+or adaptive Huffman coding
+(<i>compact</i>),
+and takes less time to compute.
+<p>
+Although
+<i>compress</i>
+strictly follows the default actions upon receipt of a
+signal or when an error occurs, some unexpected results may occur.
+In some implementations it is likely that a partially compressed file will be
+left in place, alongside its uncompressed input file.
+Since the general operation of
+<i>compress</i>
+is to delete the uncompressed file only after the
+.Z
+file has been successfully filled, an application should always
+carefully check the exit status of
+<i>compress</i>
+before arbitrarily deleting
+files that have like-named neighbours with
+.Z
+suffixes.
+<p>
+Compressed files are not necessarily portable to other systems.
+<p>
+The limit of 14 on the
+<i>bits</i>
+option-argument is to achieve portability to all systems
+(within the restrictions imposed by the lack of an explicit published
+file format).
+Some systems based on 16-bit architectures cannot support
+15- or 16-bit uncompression.
+</blockquote><h4><a name = "tag_001_014_184">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_185">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_186">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="uncom2.htm">uncompress</a></i>,
+<i><a href="zcat.htm">zcat</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

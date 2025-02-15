@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>qsort</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1843">&nbsp;</a>NAME</h4><blockquote>
+qsort - sort a table of data
+</blockquote><h4><a name = "tag_000_007_1844">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+void qsort(void *<i>base</i>, size_t <i>nel</i>, size_t <i>width</i>
+    int (*<i>compar</i>)(const void *, const void *));
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1845">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>qsort()</i>
+function sorts an array of
+<i>nel</i>
+objects, the initial element of which is pointed to by
+<i>base</i>.
+The size of each object, in bytes,
+is specified by the
+<i>width</i>
+argument.
+<p>
+The contents of the array are sorted in ascending order according to a
+comparison function.  The
+<i>compar</i>
+argument is a pointer to the comparison function, which is called with two
+arguments that point to the elements being compared.  The function must return
+an integer less than, equal to, or greater than 0, if the first argument is
+considered respectively less than, equal to, or greater than the second.  If
+two members compare as equal, their order in the sorted array is unspecified.
+</blockquote><h4><a name = "tag_000_007_1846">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>qsort()</i>
+function returns no value.
+</blockquote><h4><a name = "tag_000_007_1847">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_007_1848">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1849">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The comparison function need not compare every byte,
+so arbitrary data may be contained in the elements in
+addition to the values being compared.
+</blockquote><h4><a name = "tag_000_007_1850">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1851">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

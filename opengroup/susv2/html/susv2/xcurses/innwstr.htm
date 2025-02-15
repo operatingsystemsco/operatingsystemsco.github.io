@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>innwstr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_567">&nbsp;</a>NAME</h4><blockquote>
+innwstr, inwstr, mvinnwstr, mvinwstr, mvwinnwstr, mvwinwstr, winnwstr, winwstr
+- input a string of wide characters from a window
+</blockquote><h4><a name = "tag_002_001_568">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int innwstr(wchar_t *<i>wstr</i>, int <i>n</i>);
+
+int inwstr(wchar_t *<i>wstr</i>);
+
+int mvinnwstr(int <i>y</i>, int <i>x</i>, wchar_t *<i>wstr</i>, int <i>n</i>);
+
+int mvinwstr(int <i>y</i>, int <i>x</i>, wchar_t *<i>wstr</i>);
+
+int mvwinnwstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, wchar_t *<i>wstr</i>, int <i>n</i>);
+
+int mvwinwstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, wchar_t *<i>wstr</i>);
+
+int winnwstr(WINDOW *<i>win</i>, wchar_t *<i>wstr</i>, int <i>n</i>);
+
+int winwstr(WINDOW *<i>win</i>, wchar_t *<i>wstr</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_569">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions place a string of <b>wchar_t</b> characters from the current or
+specified window into the array pointed to by <i>wstr</i> starting at the
+current or specified cursor position and ending at the end of the line.
+<p>
+These functions will only store the entire wide character
+sequence associated with a spacing complex character. If the array is large
+enough to contain at least one complete spacing complex character, the array
+is filled with complete characters. If the array is not large enough to
+contain any complete characters this is an error.
+<p>
+The
+<i>innwstr()</i>,
+<i>mvinnwstr()</i>,
+<i>mvwinnwstr()</i>
+and
+<i>winnwstr()</i>
+functions store at most <i>n</i> characters in the array pointed to by
+<i>wstr</i>.
+</blockquote><h4><a name = "tag_002_001_570">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i><a href="inwstr.htm">inwstr()</a></i>,
+<i>mvinwstr()</i>,
+<i>mvwinwstr()</i>
+and
+<i>winwstr()</i>
+return OK.
+<p>
+Upon successful completion,
+<i>innwstr()</i>,
+<i>mvinnwstr()</i>,
+<i>mvwinnwstr()</i>
+and
+<i>winnwstr()</i>
+return the number of characters actually read into the string.
+<p>
+Otherwise, all these functions return ERR.
+</blockquote><h4><a name = "tag_002_001_571">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_572">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Reading a line that overflows the array pointed to by <i>wstr</i> with
+<i><a href="inwstr.htm">inwstr()</a></i>,
+<i>mvinwstr()</i>,
+<i>mvwinwstr()</i>
+or
+<i>winwstr()</i>
+causes undefined results.  The use of
+<i>innwstr()</i>,
+<i>mvinnwstr()</i>,
+<i>mvwinnwstr()</i>
+or
+<i>winnwstr()</i>,
+respectively, is recommended.
+<p>
+These functions do not return rendition information.
+</blockquote><h4><a name = "tag_002_001_573">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

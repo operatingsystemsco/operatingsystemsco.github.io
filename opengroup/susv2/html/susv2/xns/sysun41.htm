@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;sys/un.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+sys/un.h - definitions for UNIX-domain sockets
+<xref type="10" name="sys_unh"></xref>
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;sys/un.h&gt;
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;sys/un.h&gt;</i>
+header defines the
+<B>sockaddr_un</B>
+structure that includes at least the following members:
+<pre>
+<code>
+sa_family_t sun_family    address family
+char        sun_path[]    socket pathname
+</code>
+</pre>
+The
+<B>sockaddr_un</B>
+structure is used to store addresses for UNIX domain sockets.
+Values of this type must be cast to
+<B>struct sockaddr</B>
+for use with the socket interfaces defined in this document.
+<p>
+The
+<i>&lt;sys/un.h&gt;</i>
+header defines the type
+<B>sa_family_t</B>
+as described in
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+<p>
+<p>
+The size of sun_path 
+has intentionally been left
+undefined.  This was done for good reasons.
+Different implementations have used different sizes.
+For example, BSD4.3 uses a size of 108. BSD4.4 uses a
+size of 104. Since most of the implementations today
+originated from BSD versions, most of the  major vendors today use
+a size that ranges from 92 to 108. Applications should not
+assume a particular length for sun_path or assume that it can
+hold _POSIX_PATH_MAX characters (255).
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="bind.htm">bind()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="socke37.htm">socketpair()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,1225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>Interface Overview</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font>
+</center>
+<hr size=2 noshade><blockquote>
+<center>
+<h2><a name = "tag_001">&nbsp;</a>Interface Overview</h2>
+</center>
+<xref type="1" name="intoverview"></xref>
+<h3><a name = "tag_001_001">&nbsp;</a>Components</h3>
+A Curses initialisation function, usually
+<i><a href="initscr.htm">initscr()</a></i>,
+determines the terminal model in use, by reference to either an argument or an
+environment variable.  If that model is defined in <b>terminfo</b>, then the
+same <b>terminfo</b> entry tells Curses
+exactly how to operate the terminal.
+<p>
+In this case, a comprehensive API lets the application perform terminal
+operations.  The Curses run-time system receives each terminal request and
+sends appropriate commands to the terminal to achieve the desired effect.
+<h5><a name = "tag_001_001_000_001">&nbsp;</a>Relationship to the XBD Specification</h5>
+Applications using Curses
+should not also control the terminal using capabilities of the
+general terminal interface defined in the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a> .
+<p>
+There is no requirement that the paradigms that exist while in Curses
+mode be carried over outside the Curses environment (see
+<xref href=defshell><a href="defpr21.htm#tag_000_000">
+
+</a></xref>).
+<h5><a name = "tag_001_001_000_002">&nbsp;</a>Relationship to Signals</h5>
+Curses implementations may provide for special handling of the SIGINT,
+SIGQUIT and SIGTSTP signals if their disposition is SIGDFL at the time
+<i><a href="initscr.htm">initscr()</a></i>
+is called (see
+<xref href=initscr><a href="initscr.htm#tag_000_000">
+
+</a></xref>).
+<p>
+Any special handling for these signals may remain in effect for the life of
+the process or until the process changes the disposition of the signal.
+<p>
+None of the Curses functions are required to be safe with respect to signals
+(see
+<i><a href="../xsh/sigac238.htm">sigaction()</a></i>
+in the <b>XSH</b> specification).
+<p>
+The behaviour of Curses with respect to signals not defined by the
+<b>XSH</b> specification is unspecified.
+<h3><a name = "tag_001_002">&nbsp;</a>Screens, Windows and Terminals</h3>
+<xref type="2" name="concepts"></xref>
+<h5><a name = "tag_001_002_000_001">&nbsp;</a>Screen</h5>
+A screen is the physical output device of the terminal.  In Curses,
+a <b>SCREEN</b> data type is an opaque data type associated with a terminal.
+Each window (see below) is associated with a <b>SCREEN</b>.
+<h5><a name = "tag_001_002_000_002">&nbsp;</a>Windows</h5>
+The Curses functions permit manipulation of
+<i>window</i>
+objects, which can be thought of as two-dimensional arrays of characters and
+their renditions.  A default window called
+<i>stdscr</i>,
+which is the size of the terminal screen, is supplied.  Others may be created
+with
+<i><a href="newwin.htm">newwin()</a></i>.
+<p>
+Variables declared as <b>WINDOW *</b> refer to windows (and to subwindows,
+derived windows, and pads, as described below).  These data structures are
+manipulated with functions described on the reference manual pages in
+<xref href=chapTERMINFO><a href="terminfo.htm#tag_002">
+Terminfo Source Format (ENHANCED CURSES)
+</a></xref>.
+Among the most basic functions are
+<i><a href="move.htm">move()</a></i>
+and
+<i><a href="addch.htm">addch()</a></i>.
+More general versions of these functions are included that allow a process to
+specify a window.
+<p>
+After using functions to manipulate a window,
+<i><a href="refresh.htm">refresh()</a></i>
+is called, telling Curses to make the CRT screen look like
+<i>stdscr</i>.
+<p>
+Line drawing characters may be specified to be output.  On input, Curses
+is also able to translate arrow and function keys that transmit escape
+sequences into single values.  The line drawing characters
+and input values use names defined in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+<p>
+Each window has a flag that indicates that the information in the window could
+differ from the information displayed on the terminal device.
+Making any change to the contents of the window, moving or modifying the
+window, or setting the window's cursor position, sets this flag (<I>touches</I>
+the window).  Refreshing the window clears this flag.  (For further
+information, see
+<xref href=manpage_touch><a href="islin48.htm#tag_001_009">
+Synchronous and Networked Asynchronous Terminals
+</a></xref>.)
+<h5><a name = "tag_001_002_000_003">&nbsp;</a>Subwindows</h5>
+A
+<i>subwindow</i>
+is a window, created within another window (called the
+<i>parent window</i>),
+and positioned relative to the parent window.
+A subwindow can be created by calling
+<i><a href="derwin.htm">derwin()</a></i>,
+<i><a href="newpad.htm">newpad()</a></i>
+or
+<i><a href="subwin.htm">subwin()</a></i>.
+<p>
+Subwindows can be created from a parent window by calling
+<i><a href="subwin.htm">subwin()</a></i>.
+The position and size of subwindows on the screen must be identical to or
+totally within the parent window.  Changes to either the parent window or the
+subwindow affect both.  Window clipping is not a property of subwindows.
+<h5><a name = "tag_001_002_000_004">&nbsp;</a>Ancestors</h5>
+The term
+<i>ancestor</i>
+refers to a window's parent, or its parent, and so on.
+<h5><a name = "tag_001_002_000_005">&nbsp;</a>Derived Windows</h5>
+Derived windows are subwindows whose position is defined by reference to the
+parent window rather than in absolute screen coordinates.  Derived windows are
+otherwise no different from subwindows.
+<h5><a name = "tag_001_002_000_006">&nbsp;</a>Pads</h5>
+A pad is a specialised case of subwindow that is not necessarily associated
+with a viewable part of a screen.  Functions that deal with pads are all
+discussed in
+<xref href=newpad><a href="newpad.htm#tag_001_009">
+Synchronous and Networked Asynchronous Terminals
+</a></xref>.
+<h5><a name = "tag_001_002_000_007">&nbsp;</a>Terminal</h5>
+A terminal is the logical input and output device through which
+character-based applications interact with the user.
+<b>TERMINAL</b>
+is an opaque data type associated with a terminal.  A
+<b>TERMINAL</b>
+data structure primarily contains information about the capabilities of the
+terminal, as defined by
+<b>terminfo</b>.
+A
+<b>TERMINAL</b>
+also contains information about the terminal modes and current state for input
+and output operations.  Each screen (see above) is associated with a
+<b>TERMINAL</b>.
+<h3><a name = "tag_001_003">&nbsp;</a>Characters</h3>
+<xref type="2" name="char_overview"></xref>
+<h4><a name = "tag_001_003_001">&nbsp;</a>Character Storage Size</h4>
+Historically, a position on the screen has corresponded to a single stored
+byte.  This correspondence is no longer true for several reasons:
+<ul>
+<p>
+<li>
+Some characters may occupy several columns when displayed on the screen (see
+<xref href=multicolumn><a href="#tag_001_003_002">
+Multi-column Characters
+</a></xref>).
+<p>
+<li>
+Some characters may be non-spacing characters, defined only in association with
+a spacing character (see
+<xref href=zerowidth><a href="#tag_001_003_005">
+Non-spacing Characters
+</a></xref>).
+<p>
+<li>
+The number of bytes to hold a character from the
+extended character sets depends on the LC_CTYPE locale category.
+<p>
+</ul>
+<p>
+The internal storage format of characters and renditions is unspecified.
+There is no implied correspondence between the internal storage format and
+the external representation of characters and renditions in objects of type
+<b>chtype</b>
+and
+<b>cchar_t</b>.
+<h4><a name = "tag_001_003_002">&nbsp;</a>Multi-column Characters</h4>
+<xref type="3" name="multicolumn"></xref>
+Some character sets define
+<i>multi-column characters</i>
+that occupy more than one column position when displayed on the screen.
+<p>
+Writing a character whose width is greater than the width of the destination
+window is an error.
+<h4><a name = "tag_001_003_003">&nbsp;</a>Attributes</h4>
+<xref type="3" name="rendition"></xref>
+Each character can be displayed with
+<i>attributes</i>
+such as underlining, reverse video or colour on terminals that support such
+display enhancements.  Current attributes of a window are applied to all
+characters that are written into the window with
+<i><a href="waddch.htm">waddch()</a></i>,
+<i><a href="waddw158.htm">wadd_wch()</a></i>,
+<i><a href="waddstr.htm">waddstr()</a></i>,
+<i><a href="waddc162.htm">waddchstr()</a></i>,
+<i><a href="waddwstr.htm">waddwstr()</a></i>,
+<i><a href="waddw160.htm">wadd_wchstr()</a></i>
+and
+<i><a href="wprintw.htm">wprintw()</a></i>.
+Attributes can be combined.
+<p>
+Attributes can be specified using constants with the A_ prefix specified in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+The A_ constants manipulate attributes in objects of type
+<b>chtype</b>.
+&nbsp;Additional attributes can be specified using constants with the WA_
+prefix.  The WA_ constants manipulate attributes in objects of type
+<b>attr_t</b>.
+<p>
+Two constants that begin with A_ and WA_ and that represent the same
+terminal capability refer to the same attribute in the
+<b>terminfo</b>
+database and in the window data structure.  The effect on a window does not
+differ depending on whether the application specifies A_ or WA_
+constants.  For example, when an application updates window attributes
+using the interfaces that support the A_ values, a query of the window
+attribute using the function that returns WA_ values reflects this
+update.  When it updates window attributes using the interfaces that
+support the WA_ values, for which corresponding A_ values exist, a query
+of the window attribute using the function that returns A_ values
+reflects this update.
+<h4><a name = "tag_001_003_004">&nbsp;</a>Rendition</h4>
+<xref type="3" name="rendnew"></xref>
+The
+<i>rendition</i>
+of a character displayed on the screen is its attributes
+&nbsp;and a colour pair.
+<p>
+The rendition of a character written to the screen
+becomes a property of the character and moves with
+the character through any scrolling and insert/delete line/character
+operations.  To the extent possible on a particular terminal, a character's
+rendition corresponds to the graphic rendition of the character
+put on the screen.
+<p>
+If a given terminal does not support a rendition that an application
+program is trying to use, Curses may substitute a different rendition for it.
+<p>
+Colours are always used in pairs (referred to as colour-pairs).
+A colour-pair consists of a foreground colour (for characters) and
+a background colour (for the field on which the characters are displayed).
+<br>
+<h4><a name = "tag_001_003_005">&nbsp;</a>Non-spacing Characters</h4>
+<xref type="3" name="zerowidth"></xref>
+The requirements in this section are in effect only for implementations
+that claim Enhanced Curses compliance.
+<p>
+Some character sets may contain
+<i>non-spacing</i>
+characters.  (Non-spacing characters are those,
+other than the '\0' character,
+for which
+<i><a href="../xsh/wcwidth.htm">wcwidth()</a></i>
+returns a width of zero.) The application may write non-spacing characters to
+a window.  Every non-spacing character in a window is associated with a
+spacing character and modifies the spacing character.  Non-spacing characters
+in a window cannot be addressed separately.  A non-spacing character is
+implicitly addressed whenever a Curses operation affects the spacing character
+with which the non-spacing character is associated.
+<p>
+Non-spacing characters
+do not support attributes.  For interfaces that use wide characters and
+attributes, the attributes are ignored if the wide character is a non-spacing
+character.
+Multi-column characters have a single set of attributes for all columns.  The
+association of non-spacing characters with spacing characters can be
+controlled by the application using the wide character interfaces.  The wide
+character string functions provide codeset-dependent association.
+<p>
+Two typical effects of a non-spacing character associated with a spacing
+character called <i>c</i>, are as follows:
+<ul>
+<p>
+<li>
+The non-spacing character may modify the appearance
+of <i>c</i>.  (For instance, there may be non-spacing characters that add
+diacritical marks to characters.  However, there may also be spacing
+characters with built-in diacritical marks.)
+<p>
+<li>
+The non-spacing character may bridge <i>c</i> to the character following
+<i>c</i>.  (Examples of this usage are the formation of ligatures and the
+conversion of characters into compound display forms, words, or ideograms.)
+<p>
+</ul>
+<p>
+Implementations may limit the number of non-spacing characters that can be
+associated with a spacing character, provided any limit is at least 5.
+<h5><a name = "tag_001_003_005_001">&nbsp;</a>Complex Characters</h5>
+<xref type="5" name="complexchar"></xref>
+A
+<i>complex character</i>
+is a set of associated characters, which may include a spacing character
+and may include any non-spacing characters associated with it.  A
+<i>spacing complex character</i>
+is a spacing character followed by any non-spacing characters associated with
+it.  That is, a spacing complex character is a complex character that includes
+one spacing character.  An example of a code set that has complex characters
+is ISO/IEC 10646-1:1993.
+<p>
+A complex character can be written to the screen; if it does not include a
+spacing character, any non-spacing characters are associated with the
+spacing complex character that exists at the specified screen position.  When
+the application reads information back from the screen, it obtains spacing
+complex characters.
+<p>
+The
+<b>cchar_t</b>
+data type represents a complex character and its rendition.
+When a
+<b>cchar_t</b>
+represents a non-spacing complex character (that is, when there is no spacing
+character within the complex character), then its rendition is not used; when
+it is written to the screen, it uses the rendition specified by the spacing
+character already displayed.
+<p>
+An object of type <b>cchar_t</b> can be initialised using
+<i><a href="setcchar.htm">setcchar()</a></i>
+and its contents can be extracted using
+<i><a href="getcchar.htm">getcchar()</a></i>.
+The behaviour of functions that take a <b>cchar_t</b> input argument is
+undefined if the application provides a <b>cchar_t</b> value that was not
+initialised in this way or obtained from a Curses
+function that has a <b>cchar_t</b> output argument.
+<h4><a name = "tag_001_003_006">&nbsp;</a>Window Properties</h4>
+<xref type="3" name="wprops"></xref>
+Associated with each window are the following properties that affect the
+placing of characters into the window (see
+<xref href=wrendition><a href="#tag_001_004_004">
+Rendition of Characters Placed into a Window
+</a></xref>).
+<h5><a name = "tag_001_003_006_001">&nbsp;</a>Window Rendition</h5>
+Each window has a rendition, which is combined with the rendition component of
+the window's background property described below.
+<h5><a name = "tag_001_003_006_002">&nbsp;</a>Window Background</h5>
+Each window has a background property.  The background property specifies:
+<ul>
+<p>
+<li>
+A spacing complex character (the background character) that will be used in a
+variety of situations where visible information is deleted from the screen.
+<p>
+<li>
+A rendition to use in displaying the background character in those
+situations, and in other situations specified in
+<xref href=wrendition><a href="#tag_001_004_004">
+Rendition of Characters Placed into a Window
+</a></xref>.
+<p>
+</ul>
+<h3><a name = "tag_001_004">&nbsp;</a>Conceptual Operations</h3>
+<xref type="2" name="displaymodel"></xref>
+<h4><a name = "tag_001_004_001">&nbsp;</a>Screen Addressing</h4>
+Many Curses functions use a coordinate pair.  In the
+<b>DESCRIPTION</b>,
+coordinate locations are represented as (<i>y</i>, <i>x</i>) since the <i>y</i>
+argument always precedes the <i>x</i> argument in the function call.
+These coordinates denote a line/column position, not a character position.
+<p>
+The coordinate <i>y</i> always refers to the row (of the window), and <i>x</i>
+always refers to the column.  The first row and the first column is number 0,
+not 1.
+The position (0, 0) is the window's
+<i>origin</i>.
+<p>
+For example, for terminals that display the ISO 8859-1 character set (with
+left-to-right writing), (0, 0) represents the upper left-hand corner of the
+screen.
+<p>
+Functions that start with
+<i>mv</i>
+take arguments that specify a (<i>y</i>, <i>x</i>) position and move the cursor
+(as though
+<i><a href="move.htm">move()</a></i>
+were called) before performing the requested action.  As part of the requested
+action, further cursor movement may occur, specified on the respective
+reference manual page.
+<h4><a name = "tag_001_004_002">&nbsp;</a>Basic Character Operations</h4>
+<h5><a name = "tag_001_004_002_001">&nbsp;</a>Adding (Overwriting)</h5>
+The Curses functions that contain the word add, such as
+<i><a href="addch.htm">addch()</a></i>,
+actually specify one or more characters to replace (overwrite) characters
+already in the window.
+If these functions specify only non-spacing
+characters, they are appended to a spacing character already in the window;
+see also
+<xref href=zerowidth><a href="#tag_001_003_005">
+Non-spacing Characters
+</a></xref>.
+<p>
+When replacing a multi-column character with a character that requires fewer
+columns, the new character is added starting at the specified or implied
+column position.  All columns that the former multi-column character
+occupied that the new character does not require are <i>orphaned columns</i>,
+which are filled using the background character and rendition.
+<p>
+Replacing a character with a character that requires more columns also
+replaces one or more subsequent characters on the line.  This process may also
+produce orphaned columns.
+<h5><a name = "tag_001_004_002_002">&nbsp;</a>Truncation, Wrapping and Scrolling</h5>
+<xref type="5" name="truncation"></xref>
+<p>
+If the application specifies a character or a string of characters
+such that writing them to a window would extend beyond the end of the line
+(for example, if the application tries to deposit any multi-column character
+at the last column in a line),
+&nbsp;the behaviour depends on whether the function supports line wrapping:
+<ul>
+<p>
+<li>
+If the function does not wrap, it fails.
+<p>
+<li>
+If the function wraps, then it places one or more characters in the window at
+the start of the next line, beginning with the first character
+that would not completely fit on the original line.
+<p>
+If the final character on the line is a multi-column character that does not
+completely fit on the line, the entire character wraps to the next line and
+columns at the end of the original line may be orphaned.
+<p>
+If the original line was the last line in the window, the wrap may cause a
+scroll to occur:
+<ul>
+<p>
+<li>
+If scrolling is enabled, a scroll occurs.  The contents of the first line of
+the window are lost.  The contents of each remaining line in the window move
+to the previous line.  The last line of the window is filled with any
+characters that wrapped.  Any remaining space on the last line is
+filled with the background character and rendition.
+<p>
+<li>
+If scrolling is disabled, any characters that would extend beyond
+the last column of the last line are truncated.
+<p>
+</ul>
+<p>
+The
+<i><a href="scrollok.htm">scrollok()</a></i>
+function enables and disables scrolling.
+<p>
+</ul>
+<p>
+Some <i>add</i> functions move the cursor just beyond the end of the last
+character added.  If this position is beyond the end of a line, it causes
+wrapping and scrolling under the conditions specified in the second bullet
+above.
+<h5><a name = "tag_001_004_002_003">&nbsp;</a>Insertion</h5>
+Insertion functions (such as
+<i><a href="insch.htm">insch()</a></i>)
+insert characters immediately before the character at the specified or implied
+cursor position.
+<p>
+The insertion shifts all characters that were formerly at or beyond the
+cursor position on the cursor line toward the end of that line.  The
+disposition of the characters that would thus extend beyond the end of the
+line depends on whether the function supports wrapping:
+<ul>
+<p>
+<li>
+If the function does not wrap, those characters are removed from the window.
+This may produce orphaned columns.
+<p>
+<li>
+If the function supports wrapping, the effect is as described above in
+<xref href=truncation><a href="#tag_001_004_002_002">
+Truncation, Wrapping and Scrolling
+</a></xref>
+(except that the overwriting discussed in the final dash is an insertion).
+<p>
+</ul>
+<p>
+If multi-column characters are displayed, some cursor positions are within a
+multi-column character but not at the beginning of a character.  Any request
+to insert data at a position that is not the beginning of a multi-column
+character will be adjusted so that the actual cursor position is at the
+beginning of the multi-column character in which the requested position occurs.
+<p>
+There are no warning indications relative to cursor relocation.
+The application should not maintain an image of the cursor position, since
+this constitutes placing terminal-specific information in the application and
+defeats the purpose of using Curses.
+<p>
+Portable applications cannot assume that a cursor position specified in an
+insert function is a reusable indication of the actual cursor position.
+<h5><a name = "tag_001_004_002_004">&nbsp;</a>Deletion</h5>
+Deletion functions (such as
+<i><a href="delch.htm">delch()</a></i>)
+delete the simple
+&nbsp;or complex
+&nbsp;character at the specified or implied cursor position,
+&nbsp;no matter which column of the character this is.
+&nbsp;All column positions are replaced by
+the background character and rendition and the cursor is not relocated.
+If a character-deletion operation would cause a previous wrapping operation to
+be undone, then the results are unspecified.
+<h5><a name = "tag_001_004_002_005">&nbsp;</a>Window Operations</h5>
+Overlapping a window (that is, placing one window on top of another)
+and overwriting a window
+(that is, copying the contents of one window into another) follows
+the operation of overwriting
+&nbsp;multi-column
+&nbsp;glyphs around its edge.  Any orphaned columns are handled as in the
+character operations.
+<h5><a name = "tag_001_004_002_006">&nbsp;</a>Characters that Straddle the Subwindow Border</h5>
+A subwindow can be defined such that multi-column characters straddle the
+subwindow border.  The character operations deal with these straddling
+characters as follows:
+<ul>
+<p>
+<li>
+Reading the subwindow with a function such as
+<i><a href="inwch39.htm">in_wch()</a></i>
+reads the entire straddling character.
+<p>
+<li>
+Adding, inserting or deleting in the subwindow deletes the entire straddling
+character before the requested operation begins and does not relocate the
+cursor.
+<p>
+<li>
+Scrolling lines in the subwindow has the following effects:
+<ul>
+<p>
+<li>
+A straddling character at the start of the line is completely erased before
+the scroll operation begins.
+<p>
+<li>
+A straddling character at the end of the line moves in the direction of the
+scroll and continues to straddle the subwindow border.  Column positions
+outside the subwindow at the straddling character's former position are
+orphaned unless another straddling character scrolls into those positions.
+<p>
+</ul>
+<p>
+</ul>
+<p>
+If the application calls a function such as
+<i><a href="border.htm">border()</a></i>,
+the above situations do not occur because writing the border on the subwindow
+deletes any straddling characters.
+<p>
+In the above cases involving multi-column characters, operations confined to a
+subwindow can modify the screen outside the subwindow.  Therefore, saving a
+subwindow, performing operations within the subwindow, and then restoring the
+subwindow may disturb the appearance of the screen.  To overcome these
+effects (for example, for pop-up windows), the application should refresh
+the entire screen.
+<h4><a name = "tag_001_004_003">&nbsp;</a>Special Characters</h4>
+<xref type="3" name="specialchars"></xref>
+Some functions process special characters as specified below.
+<p>
+In functions that do not move the cursor based on the
+information placed in the window, these special characters would only be used
+within a string in order to affect the placement of subsequent characters; the
+cursor movement specified below does not persist in the visible cursor beyond
+the end of the operation.  In functions that do move the cursor, these special
+characters can be used to affect the placement of subsequent characters and to
+achieve movement of the visible cursor.
+<dl compact>
+
+<dt>&lt;backspace&gt;<dd><index term="backspace, special processing"></index>
+Unless the cursor was already in column 0, &lt;backspace&gt; moves the cursor one
+column toward the start of the current line and any characters after the
+&lt;backspace&gt; are added or inserted starting there.
+
+<dt>&lt;carriage return&gt;<dd><br>
+Unless the cursor was already in column 0, &lt;carriage return&gt; moves the cursor
+to the start of the current line.  Any characters after the &lt;carriage return&gt;
+are added or inserted starting there.
+
+<dt>&lt;newline&gt;<dd><index term="newline, special processing"></index>
+In an add operation, Curses adds the background character into successive
+columns until reaching the end of the line.  Scrolling occurs as described in
+<xref href=truncation><a href="#tag_001_004_002_002">
+Truncation, Wrapping and Scrolling
+</a></xref>.
+Any characters after the &lt;newline&gt; character are added, starting at the
+start of the new line.
+
+In an insert operation, &lt;newline&gt; erases the remainder of the current
+line with the background character, effectively a
+<i><a href="wclrt171.htm">wclrtoeol()</a></i>,
+and
+moves the cursor to the start of a new line.  When scrolling is 
+enabled, advancing the cursor to a new line may cause scrolling as
+described in
+<xref href=truncation><a href="#tag_001_004_002_002">
+Truncation, Wrapping and Scrolling
+</a></xref>.
+Any characters after the &lt;newline&gt; character are inserted at the start of the new
+line.
+
+The
+<i><a href="filter.htm">filter()</a></i>
+function may inhibit this processing.
+
+<dt>&lt;tab&gt;<dd>Tab characters in text move subsequent characters to the next horizontal tab
+stop.  By default, tab stops are in column 0, 8, 16, and so on.
+
+In an insert or add operation, Curses inserts or adds, respectively, the
+background character into successive columns until reaching the next tab stop.
+If there are no more tab stops in the current line, wrapping and scrolling
+occur as described in
+<xref href=truncation><a href="#tag_001_004_002_002">
+Truncation, Wrapping and Scrolling
+</a></xref>.
+
+</dl>
+<h5><a name = "tag_001_004_003_001">&nbsp;</a>Control Characters</h5>
+The Curses functions that perform special-character processing conceptually
+convert control characters to the caret ('^') character followed by
+a second character (which is an upper-case letter if it is alphabetic) and
+write this string to the window in place of the control character.  The
+functions that retrieve text from the window will not retrieve the original
+control character.
+<h4><a name = "tag_001_004_004">&nbsp;</a>Rendition of Characters Placed into a Window</h4>
+<xref type="3" name="wrendition"></xref>
+When the application adds or inserts characters into a window, the effect is
+as follows:
+<p>
+If the character is not the space character, then the window receives:
+<ul>
+<p>
+<li>
+the character that the application specifies
+<p>
+<li>
+the colour that the application specifies; or the window colour, if the
+application does not specify a colour
+<p>
+<li>
+the attributes specified, OR-ed with the window attributes.
+<p>
+</ul>
+<p>
+If the character is the space character, then the window receives:
+<ul>
+<p>
+<li>
+the background character
+<p>
+<li>
+the colour that the application specifies; or the window colour, if
+the application does not specify a colour
+<p>
+<li>
+the attributes specified, OR-ed with the window attributes.
+<p>
+</ul>
+<h3><a name = "tag_001_005">&nbsp;</a>Input Processing</h3>
+<xref type="2" name="terminalinput"></xref>
+The Curses input model provides a variety of ways to obtain input from the
+keyboard.
+<h4><a name = "tag_001_005_001">&nbsp;</a>Keypad Processing</h4>
+<xref type="3" name="keypadproc"></xref>
+The application can enable or disable
+keypad translation
+by calling
+<i><a href="keypad.htm">keypad()</a></i>.
+When translation is enabled, Curses attempts to translate a sequence of
+terminal input that represents the pressing of a function key into a single
+key code.  When translation is disabled, Curses passes terminal input to the
+application without such translation, and any interpretation of the input as
+representing the pressing of a keypad key must be done by the application.
+<p>
+The complete set of key codes for keypad keys that Curses can process is
+specified by the constants defined in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>
+whose names begin with &quot;KEY_&quot;.
+<br>
+Each terminal type described in the
+<b>terminfo</b>
+database may support some or all of these key codes.
+The
+<b>terminfo</b>
+database specifies the sequence of input characters from the terminal type
+that correspond to each key code (see
+<xref href=keypad></xref>).
+<p>
+The Curses implementation cannot translate keypad keys on terminals where
+pressing the keys does not transmit a unique sequence.
+<p>
+When translation is enabled and a character that could be the beginning of a
+function key (such as escape) is received, Curses notes the time and begins
+accumulating characters.  If Curses receives additional characters that
+represent the pressing of a keypad key, within an unspecified interval from
+the time the first character was received, then Curses converts this input to
+a key code for presentation to the application.  If such characters are not
+received during this interval, translation of this input does not occur and
+the individual characters are presented to the application separately.
+(Because Curses waits for this interval to accumulate a key code, many
+terminals experience a delay between the time a user presses the escape key
+and the time the escape is returned to the application.)
+<p>
+In addition, No Timeout Mode provides that in any case where Curses has
+received part of a function key sequence, it waits indefinitely for the
+complete key sequence.  The &quot;unspecified interval&quot; in the previous paragraph
+becomes infinite in No Timeout Mode.  No Timeout Mode allows the use of
+function keys over slow communication lines.  No Timeout Mode lets the user
+type the individual characters of a function key sequence, but also delays
+application response when the user types a character (not a function key) that
+begins a function key sequence.  For this reason, in No Timeout Mode many
+terminals will appear to hang between the time a user presses the escape key
+and the time another key is pressed.  No Timeout Mode is switchable by calling
+<i><a href="notim107.htm">notimeout()</a></i>.
+<p>
+If any special characters (see
+<xref href=specialchars><a href="#tag_001_004_003">
+Special Characters
+</a></xref>)
+are defined or redefined to be characters that are members of a function key
+sequence, then Curses will be unable to recognise and translate those function
+keys.
+<p>
+Several of the modes discussed below are described in terms of availability of
+input.  If keypad translation is enabled, then input is not available once
+Curses has begun receiving a keypad sequence until the sequence is completely
+received or the interval has elapsed.
+<br>
+<h4><a name = "tag_001_005_002">&nbsp;</a>Input Mode</h4>
+<xref type="3" name="inputmode"></xref>
+The <b>XBD</b> specification (<b>Special Characters</b>) defines flow-control characters, the
+interrupt character, the erase character, and the kill character.  Four
+mutually-exclusive Curses
+modes let the application control the effect of these input characters:
+<p><table  bordercolor=#000000 border=1<tr valign=top><th align=center><b>Input Mode</b>
+<th align=center><b>Effect</b>
+<tr valign=top><td align=left>Cooked Mode
+<td align=left> This achieves normal line-at-a-time processing with all special characters handled outside the application.  This achieves the same effect as canonical-mode input processing as specified in the <b>XBD</b> specification. The state of the ISIG and IXON flags are not changed upon entering this mode by calling and are set upon entering this mode by calling 
+<tr valign=top><td align=left>&nbsp;
+<td align=left> The implementation supports erase and kill characters from any supported locale, no matter what the width of the character is. 
+<tr valign=top><td align=left>cbreak Mode
+<td align=left> Characters typed by the user are immediately available to the application and Curses does not perform special processing on either the erase character or the kill character.  An application can select cbreak mode to do its own line editing but to let the abort character be used to abort the task.  This mode achieves the same effect as non-canonical-mode, Case B input processing (with MIN set to 1 and ICRNL cleared) as specified in the <b>XBD</b> specification. The state of the ISIG and IXON flags are not changed upon entering this mode. 
+<tr valign=top><td align=left>Half-Delay Mode
+<td align=left> The effect is the same as cbreak, except that input functions wait until a character is available or an interval defined by the application elapses, whichever comes first.  This mode achieves the same effect as non-canonical-mode, Case C input processing (with TIME set to the value specified by the application) as specified in the <b>XBD</b> specification. The state of the ISIG and IXON flags are not changed upon entering this mode. 
+<tr valign=top><td align=left>Raw Mode
+<td align=left> Raw mode gives the application maximum control over terminal input.  The application sees each character as it is typed.  This achieves the same effect as non-canonical mode, Case D input processing as specified in the <b>XBD</b> specification.  The ISIG and IXON flags are cleared upon entering this mode. 
+</table>
+<p>
+The terminal interface settings are recorded when the process calls
+<i><a href="initscr.htm">initscr()</a></i>
+or
+<i><a href="newterm.htm">newterm()</a></i>
+to initialise Curses and restores these settings when
+<i><a href="endwin.htm">endwin()</a></i>
+is called.  The initial input mode for Curses
+operations is unspecified
+&nbsp;unless the implementation supports Enhanced Curses compliance,
+in which the initial input mode is cbreak mode.
+<p>
+The behaviour of the BREAK key depends on other bits in the display driver
+that are not set by Curses.
+<br>
+<h4><a name = "tag_001_005_003">&nbsp;</a>Delay Mode</h4>
+Two mutually-exclusive delay modes specify how quickly certain Curses
+functions return to the application when there is no terminal input waiting
+when the function is called:
+<dl compact>
+
+<dt>No Delay<dd>The function fails.
+
+<dt>Delay<dd>The application waits until the implementation passes text through to the
+application.  If cbreak or Raw Mode is set, this is after one character.
+Otherwise, this is after the first &lt;newline&gt; character, end-of-line character,
+or end-of-file character.
+
+</dl>
+<p>
+The effect of No Delay Mode on function key processing is unspecified.
+<h4><a name = "tag_001_005_004">&nbsp;</a>Echo Processing</h4>
+Echo mode determines whether Curses echoes typed characters to the screen.
+The effect of Echo mode is analogous to the effect of the ECHO flag in the
+local mode field of the <b>termios</b> structure associated with the terminal
+device connected to the window.  However, Curses always clears the ECHO flag
+when invoked,
+to inhibit the operating system from performing
+echoing.  The method of echoing characters is not identical to the operating
+system's method of echoing characters, because Curses performs additional
+processing of terminal input.
+<p>
+If in Echo mode, Curses performs its own echoing:  Any visible input character
+is stored in the current or specified window by the input function that the
+application called, at that window's cursor position, as though
+<i><a href="addch.htm">addch()</a></i>
+were called, with all consequent effects such as cursor movement and wrapping.
+<p>
+If not in Echo mode, any echoing of input must be performed by the
+application.  Applications often perform their own echoing in a controlled
+area of the screen, or do not echo at all, so they disable Echo mode.
+<p>
+It may not be possible to turn off echo processing for
+synchronous and networked asynchronous terminals
+because echo processing is done directly by the
+terminals.  Applications running on such terminals 
+should be aware that any characters typed will
+appear on the screen at wherever the cursor is
+positioned.
+<h3><a name = "tag_001_006">&nbsp;</a>The Set of Curses Functions</h3>
+The Curses functions allow:  overall screen, window and pad manipulation;
+output to windows and pads; reading terminal input; control over terminal and
+Curses input and output options; environment query functions; colour
+manipulation; use of soft label keys; access to the </i><b>terminfo</b> database of
+terminal capabilities; and access to low-level functions.
+<h4><a name = "tag_001_006_001">&nbsp;</a>Function Name Conventions</h4>
+The reference manual pages in
+<xref href=manpages></xref>
+present families of multiple Curses functions.  Most function families have
+different functions that give the programmer the following options:
+<ul>
+<p>
+<li>
+A function with the basic name operates on the window
+<i>stdscr</i>.
+A function with the same name plus the <i>w</i> prefix operates on a window
+specified by the <i>win</i> argument.
+<p>
+When the reference manual page for a function family refers to the
+<i>current or specified window</i>,
+it means
+<i>stdscr</i>
+for the basic functions and the window specified by
+<i>win</i> for any <i>w</i> function.
+<p>
+Functions whose names have the <i>p</i> prefix require an argument that is a
+pad instead of a window.
+<p>
+<li>
+A function with the basic name operates based on the current cursor position
+(of the current or specified window, as described above).
+A function with the same name plus the <i>mv</i> prefix moves the cursor to a
+position specified by the <i>y</i> and <i>x</i> arguments before performing the
+specified operation.
+<p>
+When the reference manual page for a function family refers to the
+<i>current or specified position</i>,
+it means the cursor position for the basic functions and the position
+(<i>y</i>, <i>x</i>) for any <i>mv</i> function.
+<p>
+The <i>mvw</i> prefix exists and combines the <i>mv</i> semantics discussed here
+with the <i>w</i> semantics discussed above.  The window argument is always
+specified before the coordinates.
+<p>
+<li>
+A function with the basic name is often provided for historical compatibility
+and operates only on single-byte characters.  A function with the same name
+plus the <i>w</i> infix operates on wide (multi-byte) characters.  A function
+with the same name plus the <i>_w</i> infix operates on complex characters and
+their renditions.
+<p>
+<li>
+When a function with the basic name operates on a single character, there is
+sometimes a function with the same name plus the <i>n</i> infix that operates
+on multiple characters.  An <i>n</i> argument specifies the number of
+characters to process.  The respective manual page specifies the outcome if
+the value of <i>n</i> is inappropriate.
+<p>
+</ul>
+<hr size=2 noshade>
+<h4><a name = "tag_001_006_002">&nbsp;</a>Function Families Provided</h4>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Function Names</b>
+<th align=center><b>Description</b>
+<th align=center>s
+<th align=center>w
+<th align=center>c
+<th align=center><b>Refer to</b>
+<tr valign=top><td align=left>&nbsp;
+<td align=left><b>Add (Overwrite)</b>
+<th align=center>&nbsp;
+<th align=center>&nbsp;
+<th align=center>&nbsp;
+<th align=center>&nbsp;
+<tr valign=top><td align=left><i>[<i>mv</i>][<i>w</i>]<i>addch()</i>
+<td align=left>add a character
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="addch.htm">addch()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>addch</i>[<i>n</i>]<i>str()</i>
+<td align=left>add a character string
+<td align=center>N
+<td align=center>N
+<td align=center>N
+<td align=left><i><a href="addchstr.htm">addchstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>add</i>[<i>n</i>]<i>str()</i>
+<td align=left>add a string
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="addnstr.htm">addnstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>add</i>[<i>n</i>]<i>wstr()</i>
+<td align=left>add a wide character string
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="addnwstr.htm">addnwstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>add_wch()</i>
+<td align=left>add a wide character and rendition
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="addwc4.htm">add_wch()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>add_wch</i>[<i>n</i>]<i>str()</i>
+<td align=left>add an array of wide characters and renditions
+<td align=center>?
+<td align=center>N
+<td align=center>N
+<td align=left><i><a href="addwc5.htm">add_wchnstr()</a></i>
+<tr valign=top><td align=left>&nbsp;
+<td align=left></i><b>Change Renditions</b><i>
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>chgat()</i>
+<td align=left>change renditions of characters in a window
+<td align=center>-
+<td align=center>N
+<td align=center>N
+<td align=left><i><a href="chgat.htm">chgat()</a></i>
+<tr valign=top><td align=left>&nbsp;
+<td align=left></i><b>Delete</b><i>
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>delch()</i>
+<td align=left>delete a character
+<td align=center>-
+<td align=center>-
+<td align=center>N
+<td align=left><i><a href="delch.htm">delch()</a></i>
+<tr valign=top><td align=left>&nbsp;
+<td align=left></i><b>Get (Input from Keyboard to Window)</b><i>
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>getch()</i>
+<td align=left>get a character
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="getch.htm">getch()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>get</i>[<i>n</i>]<i>str()</i>
+<td align=left>get a character string
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="getnstr.htm">getnstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>get_wch()</i>
+<td align=left>get a wide character
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="getwc29.htm">get_wch()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>get</i>[<i>n</i>]<i>_wstr()</i>
+<td align=left>get an array of wide characters and key codes
+<td align=center>Y
+<td align=center>Y
+<td align=center>Y
+<td align=left><i><a href="getws30.htm">get_wstr()</a></i>
+<tr valign=top><td align=left>&nbsp;
+<td align=left></i><b>Explicit Cursor Movement</b><i>
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<tr valign=top><td align=left><i></i>[<i>w</i>]<i>move()</i>
+<td align=left>move the cursor
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="move.htm">move()</a></i>
+<tr valign=top><td align=left>&nbsp;
+<td align=left></i><b>Input (Read Back from Window)</b><i>
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>inch()</i>
+<td align=left>input a character
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="inch.htm">inch()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>inch</i>[<i>n</i>]<i>str()</i>
+<td align=left>input an array of characters and attributes
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="inchnstr.htm">inchnstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>in</i>[<i>n</i>]<i>str()</i>
+<td align=left>input a string
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="innstr.htm">innstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>in</i>[<i>n</i>]<i>wstr()</i>
+<td align=left>input a string of wide characters
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="innwstr.htm">innwstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>in_wch()</i>
+<td align=left>input a wide character and rendition
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="inwch39.htm">in_wch()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>in_wch</i>[<i>n</i>]<i>str()</i>
+<td align=left>input an array of wide characters and renditions
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="inchnstr.htm">inchnstr()</a></i>
+<tr valign=top><td align=left>&nbsp;
+<td align=left></i><b>Insert</b><i>
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>insch()</i>
+<td align=left>insert a character
+<td align=center>Y
+<td align=center>N
+<td align=center>N
+<td align=left><i><a href="insch.htm">insch()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>ins</i>[<i>n</i>]<i>str()</i>
+<td align=left>insert a character string
+<td align=center>Y
+<td align=center>N
+<td align=center>N
+<td align=left><i><a href="insnstr.htm">insnstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>ins_</i>[<i>n</i>]<i>wstr()</i>
+<td align=left>insert a wide-character string
+<td align=center>Y
+<td align=center>N
+<td align=center>N
+<td align=left><i><a href="insnw44.htm">ins_nwstr()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>ins_wch()</i>
+<td align=left>insert a wide character
+<td align=center>Y
+<td align=center>N
+<td align=center>N
+<td align=left><i><a href="inswc45.htm">ins_wch()</a></i>
+<tr valign=top><td align=left>&nbsp;
+<td align=left></i><b>Print and Scan</b><i>
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<td align=center>&nbsp;
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>printw()</i>
+<td align=left>print formatted output
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="mvprintw.htm">mvprintw()</a></i>
+<tr valign=top><td align=left><i></i>[<i>mv</i>][<i>w</i>]<i>scanw()</i>
+<td align=left>convert formatted output
+<td align=center>-
+<td align=center>-
+<td align=center>-
+<td align=left><i><a href="mvscanw.htm">mvscanw()</a></i>
+</table>
+<p>
+<h5><a name = "tag_001_006_002_001">&nbsp;</a>Legend</h5>
+The following notation indicates the effect when characters are moved to the
+screen.  (For the Get functions, this applies only when echoing is enabled.)
+<dl compact>
+
+<dt>s<dd>Y means these functions perform special-character processing (see
+<xref href=specialchars><a href="#tag_001_004_003">
+Special Characters
+</a></xref>).
+N means they do not.  ? means the results are unspecified when these
+functions are applied to special characters.
+
+<dt>w<dd>Y means these functions perform wrapping (see
+<xref href=truncation><a href="#tag_001_004_002_002">
+Truncation, Wrapping and Scrolling
+</a></xref>).
+N means they do not.
+
+<dt>c<dd>Y means these functions advance the cursor (see
+<xref href=truncation><a href="#tag_001_004_002_002">
+Truncation, Wrapping and Scrolling
+</a></xref>).
+N means they do not.
+
+<dt>-<dd>The attribute specified by this column does not apply to these functions.
+
+</dl>
+<h3><a name = "tag_001_007">&nbsp;</a>Interfaces Implemented as Macros</h3>
+The following interfaces with arguments must be implemented as macros.  The
+relevance to the application programmer is that the `&amp;</i>' character
+cannot be used before the arguments.
+<p>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Macros</b>
+<th align=center><b>Chapter 4 Entry</b>
+<tr valign=top><td align=left><i>getbegyx</i>(), <i>getmaxyx</i>(), <i>getparyx</i>(), <i>getyx</i>()
+<td align=left><i>getbegyx</i>()
+</table>
+<p>
+The header file reference manual pages list other macros, like COLOR_BLACK,
+that do not take arguments.
+<h3><a name = "tag_001_008">&nbsp;</a>Initialised Curses Environment</h3>
+Before executing an application that uses Curses, 
+the terminal must be prepared as follows:
+<ul>
+<p>
+<li>
+If the terminal has hardware tab stops, they should be set.
+<p>
+<li>
+Any initialisation strings defined for the terminal must be output to the
+terminal.
+<p>
+</ul>
+<p>
+The resulting state of the terminal must be compatible with the model of the
+terminal that Curses has, as reflected in the terminal's entry in the
+<b>terminfo</b>
+database (see
+<xref href=chapTERMINFO><a href="terminfo.htm#tag_002">
+Terminfo Source Format (ENHANCED CURSES)
+</a></xref>).
+<p>
+To initialise Curses, the application must call
+<i><a href="initscr.htm">initscr()</a></i>
+or
+<i><a href="newterm.htm">newterm()</a></i>
+before calling any of the other functions that deal with windows and
+screens, and it must call
+<i><a href="endwin.htm">endwin()</a></i>
+before exiting.  To get character-at-a-time input
+without echoing (most interactive, screen-oriented programs want this), the
+following sequence should be used:
+<p>
+<pre>
+<dl compact><dt> <dd>
+<i><a href="initscr.htm">initscr()</a></i>
+<i><a href="cbreak.htm">cbreak()</a></i>
+<i><a href="noecho.htm">noecho()</a></i>
+</dl>
+</pre>
+<p>
+Most programs would additionally use the sequence:
+<p>
+<pre>
+<dl compact><dt> <dd>
+<i><a href="nonl.htm">nonl()</a></i>
+<i>intrflush</i>(<i>stdscr</i>, FALSE)
+<i>keypad</i>(<i>stdscr</i>, TRUE)
+</dl>
+</pre>
+<h3><a name = "tag_001_009">&nbsp;</a>Synchronous and Networked Asynchronous Terminals</h3>
+<xref type="2" name="oldchapter13"></xref>
+This section indicates to the application writer some considerations to be
+borne in mind when driving synchronous, networked asynchronous (NWA) or
+non-standard directly-connected asynchronous terminals.
+<p>
+Such terminals are often used in a mainframe environment and communicate to
+the host in block mode.  That is, the user types characters at the terminal
+then presses a special key to initiate transmission of the characters to the
+host.
+<p>
+Frequently, although it may be possible to send arbitrary sized blocks to the
+host, it is not possible or desirable to cause a character to be
+transmitted with only a single keystroke.
+<p>
+This can cause severe problems to an application wishing to make use of
+single-character input; see
+<xref href=terminalinput><a href="#tag_001_005">
+Input Processing
+</a></xref>.
+<h5><a name = "tag_001_009_000_001">&nbsp;</a>Output</h5>
+The Curses interface can be used in the normal way for all operations
+pertaining to output to the terminal, with the possible exception that on some
+terminals the
+<i><a href="refresh.htm">refresh()</a></i>
+routine may have to redraw the entire screen contents in order to perform any
+update.
+<p>
+If it is additionally necessary to clear the screen before each such
+operation, the result could be undesirable.
+<h5><a name = "tag_001_009_000_002">&nbsp;</a>Input</h5>
+Because of the nature of operation of synchronous (block-mode) and NWA
+terminals, it might not be possible to support all or any of the Curses
+input functions.  In particular, the following points should be noted:
+<ul>
+<p>
+<li>
+Single-character input might not be possible.  It may be necessary to press a
+special key to cause all characters typed at the terminal to be transmitted to
+the host.
+<p>
+<li>
+It is sometimes not possible to disable echo.  Character echo may be performed
+directly by the terminal.  On terminals that behave in this way, any Curses
+application that performs input should be aware that any characters typed will
+appear on the screen at wherever the cursor is positioned.  This does not
+necessarily correspond to the position of the cursor in the window.
+<p>
+</ul>
+<p>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

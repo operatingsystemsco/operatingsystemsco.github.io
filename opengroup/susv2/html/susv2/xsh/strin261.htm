@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;strings.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_117">&nbsp;</a>NAME</h4><blockquote>
+strings - string operations
+</blockquote><h4><a name = "tag_000_009_118">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;strings.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_119">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The following are declared as functions and may also be defined as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int    <a href="bcmp.htm">bcmp</a>(const void *, const void *, size_t);
+void   <a href="bcopy.htm">bcopy</a>(const void *, void *, size_t);
+void   <a href="bzero.htm">bzero</a>(void *, size_t);
+int    <a href="ffs.htm">ffs</a>(int);
+char   *<a href="index.htm">index</a>(const char *, int);
+char   *<a href="rindex.htm">rindex</a>(const char *, int);
+int    <a href="strca259.htm">strcasecmp</a>(const char *, const char *);
+int    <a href="strnc262.htm">strncasecmp</a>(const char *, const char *, size_t);
+</code>
+</pre>
+<p>
+The 
+<b>size_t</b>
+type is defined through 
+<b>typedef</b>
+as described in
+<i><a href="stdde256.htm">&lt;stddef.h&gt;</a></i>.
+</blockquote><h4><a name = "tag_000_009_120">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_121">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_122">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="bcmp.htm">bcmp()</a></i>,
+<i><a href="bcopy.htm">bcopy()</a></i>,
+<i><a href="bzero.htm">bzero()</a></i>,
+<i><a href="ffs.htm">ffs()</a></i>,
+<i><a href="index.htm">index()</a></i>,
+<i><a href="rindex.htm">rindex()</a></i>,
+<i><a href="strca259.htm">strcasecmp()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

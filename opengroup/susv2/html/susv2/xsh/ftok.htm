@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ftok</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_356">&nbsp;</a>NAME</h4><blockquote>
+ftok - generate an IPC key
+</blockquote><h4><a name = "tag_000_005_357">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysip266.htm">sys/ipc.h</a>&gt;
+
+key_t ftok(const char *<i>path</i>, int <i>id</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_358">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ftok()</i>
+function returns a key based on
+<i>path</i>
+and <i>id</i> that is usable in subsequent calls to
+<i><a href="msgget.htm">msgget()</a></i>,
+<i><a href="semget.htm">semget()</a></i>
+and
+<i><a href="shmget.htm">shmget()</a></i>.
+The
+<i>path</i>
+argument must be the pathname of an existing file that the process is able to
+<i><a href="stat.htm">stat()</a></i>.
+<p>
+The
+<i>ftok()</i>
+function will return the same key value for all paths that name the same file,
+when called with the same <i>id</i> value, and will return different key values
+when called with different <i>id</i> values or with paths that name different
+files existing on the same file system at the same time.
+It is unspecified whether
+<i>ftok()</i>
+returns the same key value when called again after the file named by
+<i>path</i>
+is removed and recreated with the same name.
+<p>
+Only the low order 8-bits of <i>id</i> are significant.  The behaviour of
+<i>ftok()</i>
+is unspecified if these bits are 0.
+</blockquote><h4><a name = "tag_000_005_359">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>ftok()</i>
+returns a key.  Otherwise,
+<i>ftok()</i>
+returns (<b>key_t</b>)-1 and sets <i>errno</i> to indicate the error.
+</blockquote><h4><a name = "tag_000_005_360">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>ftok()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for a component of the path prefix.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the <i>path</i> argument exceeds {PATH_MAX} or a
+pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file
+or <i>path</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+</dl>
+<p>
+The
+<i>ftok()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_361">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_362">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+For maximum portability,
+<i>id</i>
+should be a single-byte character.
+</blockquote><h4><a name = "tag_000_005_363">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_364">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="msgget.htm">msgget()</a></i>,
+<i><a href="semget.htm">semget()</a></i>,
+<i><a href="shmget.htm">shmget()</a></i>,
+<i><a href="sysip266.htm">&lt;sys/ipc.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

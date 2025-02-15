@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>remainder</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_075">&nbsp;</a>NAME</h4><blockquote>
+remainder - remainder function
+</blockquote><h4><a name = "tag_000_008_076">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+double remainder(double <i>x</i>, double <i>y</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_077">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>remainder()</i>
+function returns the floating point remainder
+<i>r</i> = <i>x</i> - <i>ny</i> when <i>y</i> is non-zero.
+The value <i>n</i> is the integral value nearest
+the exact value <i>x</i>/<i>y</i>.
+When |&nbsp;<i>n</i> - <i>x</i>/<i>y</i>&nbsp;|&nbsp; = &frac12; ,
+the value <i>n</i> is chosen to be even.
+<p>
+The behaviour of
+<i>remainder()</i>
+is independent of the rounding mode.
+</blockquote><h4><a name = "tag_000_008_078">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>remainder()</i>
+function returns the floating point remainder
+<i>r</i> = <i>x</i> - <i>ny</i> when <i>y</i> is non-zero.
+<p>
+When <i>y</i> is 0,
+<i>remainder()</i>
+returns (NaN or equivalent if available) and sets <i>errno</i> to [EDOM].
+<p>
+If the value of <i>x</i> is &plusmn;Inf,
+<i>remainder()</i>
+returns NaN and sets <i>errno</i> to [EDOM].
+<p>
+If
+<i>x</i>
+or
+<i>y</i>
+is NaN, then the function returns NaN and <i>errno</i> may be set to [EDOM].
+</blockquote><h4><a name = "tag_000_008_079">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>remainder()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>The <i>y</i> argument is 0 or the <i>x</i> argument is positive or negative
+infinity.
+
+</dl>
+<p>
+The
+<i>remainder()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>The <i>x</i> or <i>y</i> argument is NaN.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_080">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_081">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_082">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_083">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="abs.htm">abs()</a></i>,
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

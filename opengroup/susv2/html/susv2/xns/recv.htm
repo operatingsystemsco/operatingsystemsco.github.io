@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>recv</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+recv - receive a message from a connected socket
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+ssize_t recv(int <I>socket</I>, void *<I>buffer</I>, size_t <I>length</I>, int <I>flags</I>);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The 
+<i>recv()</i>
+function receives a message from a connection-mode
+or connectionless-mode socket. It is normally used
+with connected sockets because it does not permit the
+application to retrieve the source address of received data.
+The function takes the following arguments:
+<dl compact>
+
+<dt><I>socket</I><dd>Specifies the socket file descriptor.
+
+<dt><I>buffer</I><dd>Points to a buffer where the message should be stored.
+
+<dt><I>length</I><dd>Specifies the length in bytes of the buffer pointed to by the
+<I>buffer</I> argument.
+
+<dt><I>flags</I><dd>Specifies the type of message reception.  Values of this argument are formed
+by logically OR'ing zero or more of the following values:
+<dl compact>
+
+<dt>MSG_PEEK<dd>Peeks at an incoming message.  The data is treated as unread and the next
+<i>recv()</i>
+or similar function will still return this data.
+
+<dt>MSG_OOB<dd>Requests out-of-band data.
+The significance and semantics of out-of-band data are protocol-specific.
+
+<dt>MSG_WAITALL<dd>Requests that the function block until the full amount of data requested can
+be returned.  The function may return a smaller amount of data if a signal is
+caught, if the connection is terminated, 
+if MSG_PEEK was specified,
+or if an error is pending for the socket.
+
+</dl>
+<p>
+</dl>
+<p>
+The
+<i>recv()</i>
+function returns the length of the message written to the buffer pointed to by
+the <I>buffer</I> argument.  For message-based sockets such as SOCK_DGRAM and
+SOCK_SEQPACKET, the entire message must be read in a single operation.  If a
+message is too long to fit in the supplied buffer, and MSG_PEEK is not set in
+the <I>flags</I> argument, the excess bytes are discarded.  For stream-based
+sockets such as SOCK_STREAM, message boundaries are ignored.  In this case,
+data is returned to the user as soon as it becomes available, and no data is
+discarded.
+<p>
+If the MSG_WAITALL flag is not set, data will be returned
+only up to the end of the first message.
+<p>
+If no messages are available at the socket and O_NONBLOCK is
+not set on the socket's file descriptor,
+<i>recv()</i>
+blocks until a message arrives.  If no messages are available at the socket
+and O_NONBLOCK is set on the socket's file descriptor,
+<i>recv()</i>
+fails and sets <I>errno</I> to [EAGAIN] or [EWOULDBLOCK].
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>recv()</i>
+returns the length of the message in bytes.  If no messages are available to
+be received and the peer has performed an orderly shutdown,
+<i>recv()</i>
+returns 0.  Otherwise, -1 is returned and <I>errno</I> is set
+to indicate the error.
+<br>
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>recv()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAGAIN] or [EWOULDBLOCK]<dd><br>
+The socket's file descriptor is marked O_NONBLOCK and no data is waiting to
+be received; or MSG_OOB is set and no out-of-band data is available and either
+the socket's file descriptor is marked O_NONBLOCK or the socket does not
+support blocking to await out-of-band data.
+
+<dt>[EBADF]<dd>The <I>socket</I> argument is not a valid file descriptor.
+
+<dt>[ECONNRESET]<dd>A connection was forcibly closed by a peer.
+
+<dt>[EFAULT]<dd>The 
+<I>buffer</I>
+parameter can not be accessed or written.
+
+<dt>[EINTR]<dd>The
+<i>recv()</i>
+function was interrupted by a signal that was caught, before any data was
+available.
+
+<dt>[EINVAL]<dd>The MSG_OOB flag is set and no out-of-band data is available.
+
+<dt>[ENOTCONN]<dd>A receive is attempted on a connection-mode socket that is not connected.
+
+<dt>[ENOTSOCK]<dd>The <I>socket</I> argument does not refer to a socket.
+
+<dt>[EOPNOTSUPP]<dd>The specified flags are not supported for this socket type or protocol.
+
+<dt>[ETIMEDOUT]<dd>The connection timed out during connection establishment, or due to a
+transmission timeout on active connection.
+
+</dl>
+<p>
+The
+<i>recv()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EIO]<dd>An I/O error occurred while reading from or writing to the file system.
+
+<dt>[ENOBUFS]<dd>Insufficient resources were available in the system to perform the operation.
+
+<dt>[ENOMEM]<dd>Insufficient memory was available to fulfill the request.
+
+<dt>[ENOSR]<dd>There were insufficient STREAMS resources available for the operation to
+complete.
+
+</dl>
+</blockquote><h4>APPLICATION USAGE</h4><blockquote>
+The
+<i>recv()</i>
+function is identical to
+<i><a href="recvfrom.htm">recvfrom()</a></i>
+with a zero <I>address_len</I> argument, and to
+<i><a href="read.htm">read()</a></i>
+if no flags are used.
+<p>
+The
+<i><a href="select.htm">select()</a></i>
+and
+<i><a href="poll.htm">poll()</a></i>
+functions can be used to determine when data is available to be received.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="poll.htm">poll()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="recvmsg.htm">recvmsg()</a></i>,
+<i><a href="recvfrom.htm">recvfrom()</a></i>,
+<i><a href="select.htm">select()</a></i>,
+<i><a href="send.htm">send()</a></i>,
+<i><a href="sendmsg.htm">sendmsg()</a></i>,
+<i><a href="sendto.htm">sendto()</a></i>,
+<i><a href="shutdown.htm">shutdown()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

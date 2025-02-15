@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>log1p</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_430">&nbsp;</a>NAME</h4><blockquote>
+log1p - compute a natural logarithm
+</blockquote><h4><a name = "tag_000_007_431">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+double log1p (double <i>x</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_432">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>log1p()</i>
+function computes log<sub><small>e</small></sub>(1.0 + <i>x</i>).  The value of
+<i>x</i>
+must be greater than -1.0.
+</blockquote><h4><a name = "tag_000_007_433">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>log1p()</i>
+returns the natural logarithm of 1.0 +
+<i>x.</i>
+<p>
+If <i>x</i> is NaN,
+<i>log1p()</i>
+returns NaN and may set <i>errno</i> to [EDOM].
+<p>
+If <i>x</i> is less than -1.0,
+<i>log1p()</i>
+returns -HUGE_VAL or NaN and sets <i>errno</i> to [EDOM].
+<p>
+If <i>x</i> is  -1.0,
+<i>log1p()</i>
+returns -HUGE_VAL and may set <i>errno</i> to [ERANGE].
+</blockquote><h4><a name = "tag_000_007_434">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>log1p()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>
+The value of <i>x</i> is less than -1.0.
+
+</dl>
+<p>
+The
+<i>log1p()</i>
+function may fail and set <i>errno</i> to:
+<dl compact>
+
+<dt>[EDOM]<dd>
+The value of <i>x</i> is NaN.
+
+<dt>[ERANGE]<dd>
+The value of <i>x</i> is -1.0.
+
+</dl>
+<p>
+No other errors will occur.
+</blockquote><h4><a name = "tag_000_007_435">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_436">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_437">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_438">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="log.htm">log()</a></i>,
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

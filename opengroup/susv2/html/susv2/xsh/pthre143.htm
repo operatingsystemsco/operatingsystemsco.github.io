@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_condattr_init</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1297">&nbsp;</a>NAME</h4><blockquote>
+pthread_condattr_init, pthread_condattr_destroy
+- initialise and destroy condition variable attributes object
+</blockquote><h4><a name = "tag_000_007_1298">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_condattr_init(pthread_condattr_t *<i>attr</i>);
+int pthread_condattr_destroy(pthread_condattr_t *<i>attr</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1299">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The function
+<i>pthread_condattr_init()</i>
+initialises a condition variable attributes object
+<i>attr</i>
+with the default value for all of the attributes
+defined by the implementation.
+<p>
+Attempting to initialise an already initialised
+condition variable attributes object
+results in undefined behaviour.
+<p>
+After a condition variable
+attributes object has been used to initialise one or more
+condition variables, any function affecting the attributes object (including
+destruction) does not affect any previously initialised condition variables.
+<p>
+The
+<i>pthread_condattr_destroy()</i>
+function destroys a condition variable attributes object;
+the object becomes, in effect, uninitialised.
+An implementation may cause
+<i>pthread_condattr_destroy()</i>
+to set the object referenced by
+<i>attr</i>
+to an invalid value.
+A destroyed condition variable attributes object
+can be re-initialised using
+<i>pthread_condattr_init()</i>;
+the results of otherwise referencing the object after it has been destroyed
+are undefined.
+<p>
+Additional attributes, their default values, and the names
+of the associated functions to get and set those attribute values are
+implementation-dependent.
+</blockquote><h4><a name = "tag_000_007_1300">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>pthread_condattr_init()</i>
+and
+<i>pthread_condattr_destroy()</i>
+functions return zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1301">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_condattr_init()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ENOMEM]<dd>
+Insufficient memory exists to initialise the condition variable
+attributes object.
+
+</dl>
+<p>
+The
+<i>pthread_condattr_destroy()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value specified by
+<i>attr</i>
+is invalid.
+
+</dl>
+<p>
+These functions will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1302">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1303">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1304">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1305">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre144.htm">pthread_condattr_getpshared()</a></i>,
+<i><a href="pthre147.htm">pthread_create()</a></i>,
+<i><a href="pthre160.htm">pthread_mutex_init()</a></i>,
+<i><a href="pthre139.htm">pthread_cond_init()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+<br>
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

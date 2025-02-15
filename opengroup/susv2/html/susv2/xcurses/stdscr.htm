@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>stdscr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_996">&nbsp;</a>NAME</h4><blockquote>
+stdscr - default window
+</blockquote><h4><a name = "tag_001_009_997">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+extern WINDOW *stdscr;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_998">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The external variable
+<i>stdscr</i>
+specifies the default window used by functions that do not specify a window
+using an argument of type
+<b>WINDOW *</b>.
+Other windows may be created using
+<i><a href="newwin.htm">newwin()</a></i>.
+</blockquote><h4><a name = "tag_001_009_999">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="derwin.htm">derwin()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

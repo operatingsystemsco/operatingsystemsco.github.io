@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;sys/types.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_387">&nbsp;</a>NAME</h4><blockquote>
+sys/types.h - data types
+</blockquote><h4><a name = "tag_000_009_388">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;sys/types.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_389">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;sys/types.h&gt;</i>
+header includes definitions for at least the following types:
+<dl compact>
+
+<dt><b>blkcnt_t</b><dd>Used for file block counts
+
+<dt><b>blksize_t</b><dd>Used for block sizes
+
+<dt><b>clock_t</b><dd><index term="data types, defined in &lt;sys/types.h&gt;"></index>
+Used for system times in clock ticks or CLOCKS_PER_SEC (see
+<i><a href="timeh289.htm">&lt;time.h&gt;</a></i>).
+
+<dt><b>clockid_t</b><dd>Used for clock ID type in the clock and timer functions.
+
+<dt><b>dev_t</b><dd>Used for device IDs.
+
+<dt><b>fsblkcnt_t</b><dd>Used for file system block counts
+
+<dt><b>fsfilcnt_t</b><dd>Used for file system file counts
+
+<dt><b>gid_t</b><dd>Used for group IDs.
+
+<dt><b>id_t</b><dd>Used as a general identifier; can be used to contain at least a
+<b>pid_t</b>, <b>uid_t</b> or a <b>gid_t</b>.
+
+<dt><b>ino_t</b><dd>Used for file serial numbers.
+
+<dt><b>key_t</b><dd>Used for interprocess communication.
+
+<dt><b>mode_t</b><dd>Used for some file attributes.
+
+<dt><b>nlink_t</b><dd>Used for link counts.
+
+<dt><b>off_t</b><dd>Used for file sizes.
+
+<dt><b>pid_t</b><dd>Used for process IDs and process group IDs.
+
+<dt><b>pthread_attr_t</b><dd>Used to identify a thread attribute object.
+
+<dt><b>pthread_cond_t</b><dd>Used for condition variables.
+
+<dt><b>pthread_condattr_t</b><dd>Used to identify a condition attribute object.
+
+<dt><b>pthread_key_t</b><dd>Used for thread-specific data keys.
+
+<dt><b>pthread_mutex_t</b><dd>Used for mutexes.
+
+<dt><b>pthread_mutexattr_t</b><dd>Used to identify a mutex attribute object.
+
+<dt><b>pthread_once_t</b><dd>Used for dynamic package initialisation.
+
+<dt><b>pthread_rwlock_t</b><dd>Used for read-write locks.
+
+<dt><b>pthread_rwlockattr_t</b><dd>Used for read-write lock attributes.
+
+<dt><b>pthread_t</b><dd>Used to identify a thread.
+
+<dt><b>size_t</b><dd>Used for sizes of objects.
+
+<dt><b>ssize_t</b><dd>Used for a count of bytes or an error indication.
+
+<dt><b>suseconds_t</b><dd>Used for time in microseconds
+
+<dt><b>time_t</b><dd>Used for time in seconds.
+
+<dt><b>timer_t</b><dd>Used for timer ID returned by
+<i><a href="timer290.htm">timer_create()</a></i>.
+
+<dt><b>uid_t</b><dd>Used for user IDs.
+
+
+<dt><b>useconds_t</b><dd>Used for time in microseconds.
+
+</dl>
+<p>
+All of the types are defined as arithmetic types of an appropriate length,
+with the following exceptions:
+<b>key_t</b>,
+<b>pthread_attr_t</b>,
+<b>pthread_cond_t</b>,
+<b>pthread_condattr_t</b>,
+<b>pthread_key_t</b>,
+<b>pthread_mutex_t</b>,
+<b>pthread_mutexattr_t</b>,
+<b>pthread_once_t</b>,
+<b>pthread_rwlock_t</b> and
+<b>pthread_rwlockattr_t</b>.
+Additionally,
+<b>blkcnt_t</b>
+and
+<b>off_t</b>
+are
+&nbsp;extended
+signed integral types,
+<b>fsblkcnt_t,</b>
+<b>fsfilcnt_t</b>
+and
+<b>ino_t</b>
+are defined as
+&nbsp;extended
+unsigned integral types,
+<b>size_t</b>
+is an unsigned integral type, and
+<b>blksize_t</b>,
+<b>pid_t</b>
+and
+<b>ssize_t</b>
+are signed integral types.
+The type
+<b>ssize_t</b>
+is capable of storing values at least in the range [-1, SSIZE_MAX].
+&nbsp;The type
+<b>useconds_t</b>
+is an unsigned integral type capable of storing values at least in the range
+[0, 1,000,000].
+The type
+<b>suseconds_t</b>
+is a signed integral type capable of storing values at least in the range
+[-1, 1,000,000].
+<p>
+There are no defined comparison or assignment operators for the types
+<b>pthread_attr_t</b>, <b>pthread_cond_t</b>, <b>pthread_condattr_t</b>,
+<b>pthread_mutex_t</b>, <b>pthread_mutexattr_t</b>,
+<b>pthread_rwlock_t</b> and <b>pthread_rwlockattr_t</b>.
+</blockquote><h4><a name = "tag_000_009_390">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_391">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_392">&nbsp;</a>SEE ALSO</h4><blockquote>
+None.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

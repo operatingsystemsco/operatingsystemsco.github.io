@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dlsym</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_151">&nbsp;</a>NAME</h4><blockquote>
+dlsym - obtain the address of a symbol from a dlopen() object
+</blockquote><h4><a name = "tag_000_003_152">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="dlfcn40.htm">dlfcn.h</a>&gt;
+
+void *dlsym(void *<i>handle</i>, const char *<i>name</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_153">&nbsp;</a>DESCRIPTION</h4><blockquote>
+<i>dlsym()</i>
+allows a process to obtain the address of a symbol defined
+within an object made accessible through a
+<i><a href="dlopen.htm">dlopen()</a></i>
+call.
+<i>handle</i>
+is the value returned from a call to
+<i><a href="dlopen.htm">dlopen()</a></i>
+(and which has not since been released via a call to
+<i><a href="dlclose.htm">dlclose()</a></i>),
+<i>name</i>
+is the symbol's name as a character string.
+<p>
+<i>dlsym()</i>
+will search for the named symbol in all 
+objects loaded automatically as a result of loading the
+object referenced by <i>handle</i> (see
+<i><a href="dlopen.htm">dlopen()</a></i>).
+<i>Load</i> ordering is used in 
+<i>dlsym()</i>
+operations upon the global symbol object.
+The symbol resolution algorithm used will be
+<i>dependency</i> order as described in 
+<i><a href="dlopen.htm">dlopen()</a></i>.
+</blockquote><h4><a name = "tag_000_003_154">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If 
+<i>handle</i>
+does not refer to a valid object opened by
+<i><a href="dlopen.htm">dlopen()</a></i>,
+or if the named symbol cannot be found within any of the
+objects associated with
+<i>handle</i>,
+<i>dlsym()</i>
+will return NULL.
+More detailed diagnostic information will be
+available through
+<i><a href="dlerror.htm">dlerror()</a></i>.
+</blockquote><h4><a name = "tag_000_003_155">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_003_156">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following example shows how one can use 
+<i><a href="dlopen.htm">dlopen()</a></i>
+and
+<i>dlsym()</i>
+to access either function or data objects.  For simplicity,
+error checking has been omitted.
+<pre>
+<code>
+void    *handle;
+int     *iptr, (*fptr)(int);
+
+/* open the needed object */
+handle = dlopen("/usr/home/me/libfoo.so.1", RTLD_LAZY);
+
+/* find the address of function and data objects */
+fptr = (int (*)(int))dlsym(handle, "my_function");
+iptr = (int *)dlsym(handle, "my_object");
+
+/* invoke function, passing value of integer as a parameter */
+(*fptr)(*iptr);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_157">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Special purpose values for
+<i>handle</i>
+are reserved for future use.  These values and their meanings are:
+<dl compact>
+
+<dt>RTLD_NEXT<dd>
+Specifies the next object after this one that defines <i>name</i>.
+<i>This one</i> refers to the object containing the invocation of
+<i>dlsym()</i>.
+The <i>next</i> object is the one found upon the application of a <i>load</i>
+order symbol resolution algorithm (see
+<i><a href="dlopen.htm">dlopen()</a></i>).
+The next object is either one of global scope (because it was
+introduced as part of the original process image or because it
+was added with a
+<i><a href="dlopen.htm">dlopen()</a></i>
+operation including the RTLD_GLOBAL
+flag), or is an object that was included in the same
+<i><a href="dlopen.htm">dlopen()</a></i>
+operation that loaded this one.
+
+The RTLD_NEXT flag is useful to
+navigate an intentionally created hierarchy of multiply defined symbols
+created through <i>interposition</i>.  For example, if a program wished to
+create an implementation of
+<i><a href="malloc.htm">malloc()</a></i>
+that embedded some statistics
+gathering about memory allocations, such an implementation could use the
+real
+<i><a href="malloc.htm">malloc()</a></i>
+definition to perform the memory allocation - and
+itself only embed the necessary logic to implement the statistics gathering
+function.
+
+</dl>
+</blockquote><h4><a name = "tag_000_003_158">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_159">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="dlclose.htm">dlclose()</a></i>,
+<i><a href="dlerror.htm">dlerror()</a></i>,
+<i><a href="dlopen.htm">dlopen()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

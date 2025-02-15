@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>clock_settime</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_503">&nbsp;</a>NAME</h4><blockquote>
+clock_settime, clock_gettime, clock_getres - clock and timer functions
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_001_504">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="timeh289.htm">time.h</a>&gt;
+
+int clock_settime(clockid_t <i>clock_id</i>, const struct timespec *<i>tp</i>);
+int clock_gettime(clockid_t <i>clock_id</i>, struct timespec *<i>tp</i>);
+int clock_getres(clockid_t <i>clock_id</i>, struct timespec *<i>res</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_505">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>clock_settime()</i>
+function sets the specified clock,
+<i>clock_id</i>,
+to the value specified by
+<i>tp</i>.
+Time values that are between two consecutive non-negative integer
+multiples of the resolution of the specified clock are truncated down to
+the smaller multiple of the resolution.
+<p>
+The
+<i>clock_gettime()</i>
+function returns the current value
+<i>tp</i>
+for the specified clock,
+<i>clock_id</i>.
+<p>
+The resolution of any clock can be obtained by calling
+<i>clock_getres()</i>.
+Clock resolutions are implementation-dependent and cannot be set by a process.
+If the argument
+<i>res</i>
+is not NULL,
+the resolution of the specified clock is stored
+in the location pointed to by
+<i>res</i>.
+If
+<i>res</i>
+is NULL,
+the clock resolution is not returned.
+If the time argument of
+<i>clock_settime()</i>
+is not a multiple of
+<i>res</i>,
+then the value is truncated to a multiple of
+<i>res</i>.
+<p>
+A clock may be systemwide (that is, visible to all processes)
+or per-process (measuring time that is meaningful only within a
+process).
+All implementations support a
+<i>clock_id</i>
+of CLOCK_REALTIME defined in
+<i><a href="timeh289.htm">&lt;time.h&gt;</a></i>.
+This clock represents the realtime clock for the system.
+For this clock, the values returned by
+<i>clock_gettime()</i>
+and specified by
+<i>clock_settime()</i>
+represent the amount of time
+(in seconds and nanoseconds) since the Epoch.
+An implementation may also support additional clocks.
+The interpretation of time values for these clocks is
+unspecified.
+<p>
+The effect of setting a clock via
+<i>clock_settime()</i>
+on armed per-process timers associated
+with that clock is implementation-dependent.
+<p>
+The appropriate privilege to set a particular clock is
+implementation-dependent.
+</blockquote><h4><a name = "tag_000_001_506">&nbsp;</a>RETURN VALUE</h4><blockquote>
+A return value of 0 indicates that the call succeeded.
+A return value of -1 indicates that an error occurred, and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_001_507">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>clock_settime()</i>,
+<i>clock_gettime()</i>
+and
+<i>clock_getres()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>clock_id</i>
+argument does not specify a known clock.
+
+<dt>[ENOSYS]<dd>
+The functions
+<i>clock_settime()</i>,
+<i>clock_gettime()</i>,
+and
+<i>clock_getres()</i>
+are not supported by this implementation.
+
+</dl>
+<p>
+The
+<i>clock_settime()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>tp</i>
+argument to
+<i>clock_settime()</i>
+is outside the range for the given clock id.
+
+<dt>[EINVAL]<dd>The
+<i>tp</i>
+argument specified a nanosecond
+value less than zero or greater than or equal to 1000 million.
+
+</dl>
+<p>
+The
+<i>clock_settime()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EPERM]<dd>
+The requesting process does not have the appropriate privilege
+to set the specified clock.
+
+</dl>
+</blockquote><h4><a name = "tag_000_001_508">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_509">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_510">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_511">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="timer293.htm">timer_gettime()</a></i>,
+<i><a href="time.htm">time()</a></i>,
+<i><a href="ctime.htm">ctime()</a></i>,
+<i><a href="timeh289.htm">&lt;time.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>rint</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_132">&nbsp;</a>NAME</h4><blockquote>
+rint - round-to-nearest integral value
+</blockquote><h4><a name = "tag_000_008_133">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+double rint(double <i>x</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_134">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>rint()</i>
+function returns the integral value (represented as a <b>double</b>) nearest
+<i>x</i> in the direction of the current rounding mode.  The current
+rounding mode is implementation-dependent.
+<p>
+If the current rounding mode rounds toward negative infinity,
+then
+<i>rint()</i>
+is identical to
+<i><a href="floor.htm">floor()</a></i>.
+If the current rounding mode rounds toward positive infinity, then
+<i>rint()</i>
+is identical to
+<i><a href="ceil.htm">ceil()</a></i>.
+</blockquote><h4><a name = "tag_000_008_135">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the
+<i>rint()</i>
+function returns the integer (represented as a double precision number)
+nearest <i>x</i> in the direction of the current rounding mode.
+<p>
+When <i>x</i> is &plusmn;Inf,
+<i>rint()</i>
+returns <i>x</i>.
+<p>
+If the value of <i>x</i> is NaN, NaN is returned and <i>errno</i> may be
+set to [EDOM].
+</blockquote><h4><a name = "tag_000_008_136">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>rint()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>
+The <i>x</i> argument is NaN.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_137">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_138">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_139">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_140">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="abs.htm">abs()</a></i>,
+<i><a href="isnan.htm">isnan()</a></i>,
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

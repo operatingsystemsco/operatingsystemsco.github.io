@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>border_set</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_318">&nbsp;</a>NAME</h4><blockquote>
+border_set, wborder_set, - draw borders from complex characters and renditions
+</blockquote><h4><a name = "tag_002_001_319">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int border_set(const cchar_t *<i>ls</i>, const cchar_t *<i>rs</i>, const cchar_t *<i>ts</i>,
+               const cchar_t *<i>bs</i>, const cchar_t *<i>tl</i>, const cchar_t *<i>tr</i>,
+               const cchar_t *<i>bl</i>, const cchar_t *<i>br</i>);
+
+int wborder_set(WINDOW *<i>win</i>, const cchar_t *<i>ls</i>, const cchar_t *<i>rs</i>,
+                const cchar_t *<i>ts</i>, const cchar_t *<i>bs</i>, 
+                const cchar_t *<i>tl</i>, const cchar_t *<i>tr</i>, 
+                const cchar_t *<i>bl</i>, const cchar_t *<i>br</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_320">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>border_set()</i>
+and
+<i>wborder_set()</i>
+functions draw a border around the edges of the current or specified window.
+These functions do not advance the cursor position.
+These functions do not perform special character processing.
+These functions do not perform wrapping.
+<p>
+The arguments in the left-hand column of the following table contain
+spacing complex characters with renditions, which have the following uses in
+drawing the border:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Argument</b>
+<th align=center><b></b>
+<th align=center><b>Default</b>
+<tr valign=top><th align=center><b>Name</b>
+<th align=center><b>Usage</b>
+<th align=center><b>Value</b>
+<tr valign=top><td align=left><i>ls</i>
+<td align=left>Starting-column side
+<td align=left>WACS_VLINE
+<tr valign=top><td align=left><i>rs</i>
+<td align=left>Ending-column side
+<td align=left>WACS_VLINE
+<tr valign=top><td align=left><i>ts</i>
+<td align=left>First-line side
+<td align=left>WACS_HLINE
+<tr valign=top><td align=left><i>bs</i>
+<td align=left>Last-line side
+<td align=left>WACS_HLINE
+<tr valign=top><td align=left><i>tl</i>
+<td align=left>Corner of the first line and the starting column
+<td align=left>WACS_ULCORNER
+<tr valign=top><td align=left><i>tr</i>
+<td align=left>Corner of the first line and the ending column
+<td align=left>WACS_URCORNER
+<tr valign=top><td align=left><i>bl</i>
+<td align=left>Corner of the last line and the starting column
+<td align=left>WACS_BLCORNER
+<tr valign=top><td align=left><i>br</i>
+<td align=left>Corner of the last line and the ending column
+<td align=left>WACS_BRCORNER
+</table>
+If the value of any argument in the left-hand column is a null pointer,
+then the default value in the right-hand column is used.
+If the value of any argument in the left-hand column is a multi-column
+character, the results are undefined.
+</blockquote><h4><a name = "tag_002_001_321">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_322">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_323">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="boxse14.htm">box_set()</a></i>,
+<i><a href="hline37.htm">hline_set()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

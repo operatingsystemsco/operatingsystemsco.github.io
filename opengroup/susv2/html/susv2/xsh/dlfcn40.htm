@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;dlfcn.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_136">&nbsp;</a>NAME</h4><blockquote>
+dlfcn.h - dynamic linking
+</blockquote><h4><a name = "tag_000_003_137">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;dlfcn.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_138">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;dlfcn.h&gt;</i>
+header defines at least the following macros for use in the
+construction of a
+<i><a href="dlopen.htm">dlopen()</a></i>
+mode argument:
+<dl compact>
+
+<dt>RTLD_LAZY<dd>
+Relocations are performed at an implementation-dependent time.
+
+<dt>RTLD_NOW<dd>
+Relocations are performed when the object is loaded.
+
+<dt>RTLD_GLOBAL<dd>
+All symbols are available for relocation processing of other modules.
+
+<dt>RTLD_LOCAL<dd>
+All symbols are not made available for relocation processing by other
+modules.
+
+</dl>
+<p>
+The header 
+<i>&lt;dlfcn.h&gt;</i>
+declares the following functions which may also
+be defined as macros.  Function prototypes must be provided
+for use with an ISO C compiler.
+<pre>
+<code>
+void  *<a href="dlopen.htm">dlopen</a>(const char *, int);
+void  *<a href="dlsym.htm">dlsym</a>(void *, const char *);
+int    <a href="dlclose.htm">dlclose</a>(void *);
+char  *<a href="dlerror.htm">dlerror</a>(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_139">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_140">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_141">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="dlopen.htm">dlopen()</a></i>,
+<i><a href="dlclose.htm">dlclose()</a></i>,
+<i><a href="dlsym.htm">dlsym()</a></i>,
+<i><a href="dlerror.htm">dlerror()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

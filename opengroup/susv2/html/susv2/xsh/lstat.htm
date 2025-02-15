@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>lstat</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_478">&nbsp;</a>NAME</h4><blockquote>
+lstat - get symbolic link status
+</blockquote><h4><a name = "tag_000_007_479">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysst273.htm">sys/stat.h</a>&gt;
+
+int lstat(const char *<i>path</i>, struct stat *<i>buf</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_480">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>lstat()</i>
+function has the same effect as
+<i><a href="stat.htm">stat()</a></i>,
+except when
+<i>path</i>
+refers to a symbolic link.  In that case
+<i>lstat()</i>
+returns information about the link, while
+<i><a href="stat.htm">stat()</a></i>
+returns information about the file the link references.
+<p>
+For symbolic links, the <b>st_mode</b> member will contain meaningful
+information when used with the file type macros, and the <b>st_size</b> member
+will contain the length of the pathname contained in the symbolic link.
+File mode bits and the contents of the remaining members of the stat
+structure are unspecified.  The value returned in the <b>st_size</b> member
+is the length of the contents of the symbolic link, and does
+not count any trailing null.
+</blockquote><h4><a name = "tag_000_007_481">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>lstat()</i>
+returns 0.  Otherwise, it returns -1 and sets <i>errno</i> to indicate the
+error.
+</blockquote><h4><a name = "tag_000_007_482">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>lstat()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+A component of the path prefix denies search permission.
+
+<dt>[EIO]<dd>
+An error occurred while reading from the file system.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of a pathname exceeds {PATH_MAX}, or pathname
+component is longer than {NAME_MAX}.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file
+or <i>path</i> is an empty string.
+
+<dt>[EOVERFLOW]<dd>
+The file size in bytes or the number of blocks allocated to the file
+or the file serial number cannot be represented correctly in the
+structure pointed to by 
+<i>buf</i>.
+
+</dl>
+<p>
+The
+<i>lstat()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[EOVERFLOW]<dd>
+One of the members is too large to store into the structure pointed to by the
+<i>buf</i> argument.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_483">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_484">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_485">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_486">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fstat.htm">fstat()</a></i>,
+<i><a href="readlink.htm">readlink()</a></i>,
+<i><a href="stat.htm">stat()</a></i>,
+<i><a href="symlink.htm">symlink()</a></i>,
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

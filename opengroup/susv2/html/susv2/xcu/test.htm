@@ -1,0 +1,710 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>test</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2258">&nbsp;</a>NAME</h4><blockquote>
+test - evaluate expression
+</blockquote><h4><a name = "tag_001_014_2259">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+test <b>[</b><i>expression</i><b>]</b>
+
+[ <b>[</b><i>expression</i><b>]</b> ]
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2260">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>test</i>
+utility evaluates the
+<i>expression</i>
+and indicates the result
+of the evaluation by its exit status.
+An exit status of zero indicates
+that the expression evaluated as true and an exit status of 1 indicates
+that the expression evaluated as false.
+<p>
+In the second form of the utility,
+which uses [] rather than
+<i>test</i>,
+the square brackets must be separate arguments.
+</blockquote><h4><a name = "tag_001_014_2261">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>test</i>
+utility does not recognise the
+--
+argument in the manner specified by guideline 10 in
+the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+No options are supported.
+</blockquote><h4><a name = "tag_001_014_2262">&nbsp;</a>OPERANDS</h4><blockquote>
+All operators and elements of primaries
+must be presented as separate arguments to the
+<i>test</i>
+utility.
+<p>
+The following primaries can be used to construct
+<i>expression</i>:
+<dl compact>
+
+<dt><b>-b&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and is a block special file.
+
+<dt><b>-c&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and is a character special file.
+
+<dt><b>-d&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and is a directory.
+
+<dt><b>-e&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists.
+
+<dt><b>-f&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and is a regular file.
+
+<dt><b>-g&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and its set group ID flag is set.
+
+<dt><b>-n&nbsp;</b><i>string</i>
+<dd>
+True if the length of
+<i>string</i>
+is non-zero.
+
+<dt><b>-p&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+is a named pipe (FIFO).
+
+<dt><b>-r&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and is readable.
+
+<dt><b>-s&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and has a size greater than zero.
+
+<dt><b>-t&nbsp;</b><i>file_descriptor</i>
+<dd>
+True if the file whose file descriptor number is
+<i>file_descriptor</i>
+is open and is associated with a terminal.
+
+<dt><b>-u&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and its set-user-ID flag is set.
+
+<dt><b>-w&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and is writable.
+True will indicate only that the write flag is on.
+The
+<i>file</i>
+will not be writable on a read-only file system
+even if this test indicates true.
+
+<dt><b>-x&nbsp;</b><i>file</i>
+<dd>True if
+<i>file</i>
+exists and is executable.
+True will indicate only that the execute flag is on.
+If
+<i>file</i>
+is a directory, true indicates that
+<i>file</i>
+can be searched.
+
+<dt><b>-z&nbsp;</b><i>string</i>
+<dd>
+True if the length of string
+<i>string</i>
+is zero.
+
+<dt><i>string</i><dd>True if the string
+<i>string</i>
+is not the null string.
+
+<dt><i>s1 </i><b>= </b><i>s2</i><dd>True if the strings
+<i>s1</i>
+and
+<i>s2</i>
+are identical.
+
+<dt><i>s1 </i><b>!= </b><i>s2</i><dd>True if the strings
+<i>s1</i>
+and
+<i>s2</i>
+are not identical.
+
+<dt><i>n1 </i><b>-eq </b><i>n2</i><dd>
+True if the integers
+<i>n1</i>
+and
+<i>n2</i>
+are algebraically equal.
+
+<dt><i>n1 </i><b>-ne </b><i>n2</i><dd>
+True if the integers
+<i>n1</i>
+and
+<i>n2</i>
+are not algebraically equal.
+
+<dt><i>n1 </i><b>-gt </b><i>n2</i><dd>
+True if the integer
+<i>n1</i>
+is algebraically greater than the integer
+<i>n2</i>.
+
+<dt><i>n1 </i><b>-ge </b><i>n2</i><dd>
+True if the integer
+<i>n1</i>
+is algebraically greater than or equal to the integer
+<i>n2.</i>
+
+<dt><i>n1 </i><b>-lt </b><i>n2</i><dd>
+True if the integer
+<i>n1</i>
+is algebraically less than the integer
+<i>n2</i>.
+
+<dt><i>n1 </i><b>-le </b><i>n2</i><dd>
+True if the integer
+<i>n1</i>
+is algebraically less than or equal to the integer
+<i>n2</i>.
+
+<dt><i>expression1</i> <b>-a</b> <i>expression2</i><dd>
+True if both
+<i>expression1</i>
+and
+<i>expression2</i>
+are true.
+The
+<b>-a</b>
+binary primary is left associative.
+It has a higher precedence than
+<b>-o</b>.
+
+<dt><i>expression1</i> <b>-o</b> <i>expression2</i><dd>
+True if either
+<i>expression1</i>
+or
+<i>expression2</i>
+is true.
+The
+<b>-o</b>
+binary primary is left associative.
+
+</dl>
+<p>
+These primaries can be combined with the following operators:
+<dl compact>
+
+<dt><b>! </b><i>expression</i><dd>
+True if
+<i>expression</i>
+is false.
+
+<dt><b>( </b><i>expression </i><b>)</b><dd>
+True if
+<i>expression</i>
+is true.
+The parentheses
+can be used to alter the normal precedence and associativity.
+
+</dl>
+<p>
+<p>
+The primaries with two elements of the form:
+<p><code>
+<b>-</b><i>primary_operator</i>
+
+<i>primary_operand</i>
+</code>
+<br>
+are known as
+<i>unary primaries.</i>
+The primaries with three elements in either of the two forms:
+<p><code>
+<i>primary_operand</i>
+<b>-</b><i>primary_operator</i>
+<i>primary_operand</i>
+<p>
+<i>primary_operand</i>
+<i>primary_operator</i>
+<i>primary_operand</i>
+</code>
+<p>
+are known as
+<i>binary primaries.</i>
+Additional implementation-dependent operators and
+<i>primary_operator</i>s
+may be provided by implementations.
+They will be of the form
+<b>-</b><i>operator</i>
+where the first character of
+<i>operator</i>
+is not a digit.
+<p>
+The algorithm for determining the precedence of the operators
+and the return value that will be generated
+is based on the number of arguments presented to
+<i>test</i>.
+(However, when using the
+[...]
+form, the right-bracket final argument
+will not be counted in this algorithm.)
+<p>
+In the following list,
+$1,
+$2,
+$3
+and
+$4
+represent the arguments presented to
+<i>test</i>.
+<dl compact>
+
+<dt>0&nbsp;arguments:<dd>Exit false (1).
+
+<dt>1&nbsp;argument:<dd>Exit true (0) if
+$1
+is not null;
+otherwise, exit false.
+
+
+<dt>2&nbsp;arguments:<dd><ul>
+
+<li>
+If
+$1
+is
+"!",
+exit true if
+$2
+is null,
+false if
+$2
+is not null.
+
+<li>
+If
+$1
+is a unary primary,
+exit true if the unary test is true,
+false if the unary test is false.
+
+<li>
+Otherwise, produce unspecified results.
+
+</ul>
+
+<dt>3&nbsp;arguments:<dd><ul>
+
+<li>
+If
+$2
+is a binary primary,
+perform the binary test of
+$1
+and
+$3.
+
+<li>
+If
+$1
+is
+"!",
+negate the two-argument test of
+$2
+and
+$3.
+
+<li>
+If
+$1
+is
+"("
+and
+$3
+is
+")",
+perform the unary test of
+$2.
+
+<li>
+Otherwise, produce unspecified results.
+
+</ul>
+
+<dt>4&nbsp;arguments:<dd><ul>
+
+<li>
+If
+$1
+is
+"!",
+negate the three-argument test of
+$2,
+$3
+and
+$4.
+
+<li>
+If
+$1
+is
+"("
+and
+$4
+is
+")",
+perform the two-argument test of
+$2
+and
+$3.
+
+<li>
+Otherwise, the results are unspecified.
+
+</ul>
+
+<dt>&gt;4&nbsp;arguments:<dd>Combinations of primaries and operators
+are evaluated using the precedence and associativity rules
+described previously.
+In addition, the string comparison binary primaries "=" and
+!=
+have a higher precedence than any unary primary.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2263">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2264">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2265">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>test</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2266">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2267">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2268">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2269">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2270">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2271">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd><i>expression</i>
+evaluated to true.
+
+<dt>1<dd><i>expression</i>
+evaluated to false or
+<i>expression</i>
+was missing.
+
+<dt>&gt;1<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2272">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2273">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Scripts should be careful when dealing with user-supplied
+input that could be confused with primaries and operators.
+Unless the application writer knows all the cases
+that produce input to the script, invocations like:
+<pre>
+<code>
+test "$1" -a "$2"
+</code>
+</pre>
+should be written as:
+<pre>
+<code>
+test "$1" &amp;&amp; test "$2"
+</code>
+</pre>
+to avoid problems if a user supplied values such as
+$1
+set to
+"!"
+and
+$2
+set to the null string.
+That is, in cases where maximal portability is of concern, replace:
+<pre>
+<code>
+test expr1 -a expr2
+</code>
+</pre>
+with:
+<pre>
+<code>
+test expr1 &amp;&amp; test expr2
+</code>
+</pre>
+and replace:
+<pre>
+<code>
+test expr1 -o expr2
+</code>
+</pre>
+with:
+<pre>
+<code>
+test expr1 || test expr2
+</code>
+</pre>
+but note that, in
+<i>test</i>,
+<b>-a</b>
+has higher precedence than
+<b>-o</b>
+while
+&amp;&amp;
+and
+||
+have equal precedence in the shell.
+<p>
+Parentheses or braces can be used
+in the shell command language to effect grouping.
+<p>
+Parentheses must be escaped when using
+<i><a href="sh.htm">sh</a></i>;
+for example:
+<pre>
+<code>
+test \( expr1 -a expr2 \) -o expr3
+</code>
+</pre>
+<p>
+This command is not always portable outside XSI-conformant systems.
+The following form can be used instead:
+<pre>
+<code>
+( test expr1 &amp;&amp; test expr2 ) || test expr3
+</code>
+</pre>
+<p>
+The two commands:
+<pre>
+<code>
+test "$1"
+test ! "$1"
+</code>
+</pre>
+could not be used reliably on some historical systems.
+Unexpected results would occur if such a
+<i>string</i>
+expression were used and
+$1
+expanded to "!", "(" or a known unary primary.
+Better constructs are:
+<pre>
+<code>
+test -n "$1"
+test -z "$1"
+</code>
+</pre>
+respectively.
+<p>
+Historical systems have also been unreliable given the
+common construct:
+<pre>
+<code>
+test "$response" = "expected string"
+</code>
+</pre>
+One of the following is a more reliable form:
+<pre>
+<code>
+test "X$response" = "Xexpected string"
+test "expected string" = "$response"
+</code>
+</pre>
+<p>
+Note that the second form assumes that
+expected string
+could not be confused with any unary primary.
+If
+expected string
+starts with "-", "(", "!"
+or even "=", the first form should be used instead.
+Using the preceding rules without the marked extensions,
+any of the three comparison
+forms is reliable, given any input.
+(However, note that the strings are quoted in all cases.)
+<p>
+Because the string comparison binary primaries,
+"="
+and
+!=,
+have a higher precedence than any unary primary in the greater than
+4 argument case,
+unexpected results can occur if arguments are not properly prepared.
+For example, in:
+<pre>
+<code>
+test -d $1 -o -d $2
+</code>
+</pre>
+<p>
+If
+$1
+evaluates to a possible directory name of <b>=</b>,
+the first three arguments are considered a string comparison,
+which causes a syntax error when the second
+<b>-d</b>
+is encountered.
+One of the following forms prevents this; the second is preferred:
+<pre>
+<code>
+test \( -d "$1" \) -o \( -d "$2" \)
+test -d "$1" || test -d "$2"
+</code>
+</pre>
+<p>
+Also in the greater than 4 argument case:
+<pre>
+<code>
+test "$1" = "bat" -a "$2" = "ball"
+</code>
+</pre>
+Syntax errors will occur if
+$1
+evaluates to "(" or "!".
+One of the following forms prevents this; the third is preferred:
+<pre>
+<code>
+test "X$1" = "Xbat" -a "X$2" = "Xball"
+test "$1" = "bat" &amp;&amp; test "$2" = "ball"
+test "X$1" = "Xbat" &amp;&amp; test "X$2" = "Xball"
+</code>
+</pre>
+<br>
+</blockquote><h4><a name = "tag_001_014_2274">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+Exit if there are not two or three arguments (two variations):
+<pre>
+<code>
+if [ $# -ne 2 -a $# -ne 3 ]; then exit 1; fi 
+if [ $# -lt 2 -o $# -gt 3 ]; then exit 1; fi 
+</code>
+</pre>
+<br>
+<p>
+<li>
+Perform a
+<i><a href="mkdir.htm">mkdir</a></i>
+if a directory does not exist:
+<pre>
+<code>
+test ! -d tempdir &amp;&amp; mkdir tempdir
+</code>
+</pre>
+<p>
+<li>
+Wait for a file to become non-readable:
+<pre>
+<code>
+while test -r thefile
+do
+    sleep 30
+done
+echo '"thefile" is no longer readable'
+</code>
+</pre>
+<p>
+<li>
+Perform a command if the argument is one of three strings (two variations):
+<pre>
+<code>
+if [ "$1" = "pear" ] || [ "$1" = "grape" ] || [ "$1" = "apple" ]
+then
+    <i>command</i>
+fi
+
+case "$1" in
+    pear|grape|apple) <i>command</i> ;;
+esac
+</code>
+</pre>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_2275">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_2276">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="find.htm">find</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

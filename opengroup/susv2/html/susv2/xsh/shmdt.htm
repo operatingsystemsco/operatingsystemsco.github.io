@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>shmdt</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_561">&nbsp;</a>NAME</h4><blockquote>
+shmdt - shared memory detach operation
+</blockquote><h4><a name = "tag_000_008_562">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="syssh272.htm">sys/shm.h</a>&gt;
+
+int shmdt(const void *<i>shmaddr</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_563">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>shmdt()</i>
+function detaches the shared memory segment located at the address
+specified by
+<i>shmaddr</i>.
+from the address space of the calling process.
+</blockquote><h4><a name = "tag_000_008_564">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>shmdt()</i>
+will decrement the value of
+<i>shm_nattch</i>
+in the data structure associated with the shared memory ID of the attached
+shared memory segment and return 0.
+<p>
+Otherwise, the shared memory segment will not be detached,
+<i>shmdt()</i>
+will return -1 and
+<i>errno</i>
+will be set to indicate the error.
+</blockquote><h4><a name = "tag_000_008_565">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>shmdt()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of
+<i>shmaddr</i>
+is not the data segment start address of a shared memory segment.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_566">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_567">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The POSIX Realtime Extension defines alternative interfaces for interprocess communication.
+Application developers who need to use IPC should design their
+applications so that modules using the IPC routines described in
+<a href="ipc.htm">IPC</a>
+can be easily modified to use the alternative interfaces.
+</blockquote><h4><a name = "tag_000_008_568">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_569">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="exit.htm">exit()</a></i>,
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="shmat.htm">shmat()</a></i>,
+<i><a href="shmctl.htm">shmctl()</a></i>,
+<i><a href="shmget.htm">shmget()</a></i>,
+<i><a href="shmop236.htm">shm_open()</a></i>,
+<i><a href="shmun237.htm">shm_unlink()</a></i>,
+<i><a href="syssh272.htm">&lt;sys/shm.h&gt;</a></i>,
+<a href="ipc.htm">IPC</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 2 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,111 @@
+Open Motif Patch #5
+7 July 2000
+
+Patch #5 updates imake, makedepend, and the imake configuration files located
+in the "config" directory.  By applying this patch, your Open Motif source
+tree will contain all of the configuration information needed to build on
+current Open Source platforms.  This patch was created by Metro Link
+Incorporated, based on the configuration files distributed by XFree86.
+
+Applying this patch is optional.  If you link in the configuration files that
+are installed on your system (as recommended by ICS), then you do not need to
+apply this patch.
+
+To apply this patch, first make sure that Open Motif patches #1 and #2 are
+applied to your source tree.
+
+Then, cd to the top of the source tree (to the directory containing the
+"motif" subdirectory) and do:
+
+        patch -p0 -s < patchfile
+
+Patch will work silently unless an error occurs.  If you want to watch patch
+do its thing, leave out the "-s" argument to patch.
+
+
+The following files are created or updated by this patch:
+
+config/cf/Amoeba.cf
+config/cf/bsdi.cf
+config/cf/bsdLib.rules
+config/cf/bsdLib.tmpl
+config/cf/cde.rules
+config/cf/DGUX.cf
+config/cf/FreeBSD.cf
+config/cf/gnu.cf
+config/cf/gnuLib.rules
+config/cf/gnuLib.tmpl
+config/cf/host.def
+config/cf/hp.cf
+config/cf/ibm.cf
+config/cf/Imake.cf
+config/cf/Imakefile
+config/cf/Imake.rules
+config/cf/Imake.tmpl
+config/cf/isc.cf
+config/cf/Library.tmpl
+config/cf/linux.cf
+config/cf/lnxdoc.rules
+config/cf/lnxdoc.tmpl
+config/cf/lnxLib.rules
+config/cf/lnxLib.tmpl
+config/cf/lynx.cf
+config/cf/mach.cf
+config/cf/minix.cf
+config/cf/ncr.cf
+config/cf/NetBSD.cf
+config/cf/nto.cf
+config/cf/nto.rules
+config/cf/OpenBSD.cf
+config/cf/os2.cf
+config/cf/os2Lib.rules
+config/cf/os2Lib.tmpl
+config/cf/os2.rules
+config/cf/osf1.cf
+config/cf/QNX.cf
+config/cf/QNX.rules
+config/cf/README
+config/cf/sco5.cf
+config/cf/sco.cf
+config/cf/scoLib.rules
+config/cf/sequent.cf
+config/cf/ServerLib.tmpl
+config/cf/Server.tmpl
+config/cf/sgi.cf
+config/cf/site.def
+config/cf/sun.cf
+config/cf/sunLib.tmpl
+config/cf/sv3Lib.rules
+config/cf/sv3Lib.tmpl
+config/cf/sv4Lib.rules
+config/cf/sv4Lib.tmpl
+config/cf/svr3.cf
+config/cf/svr4.cf
+config/cf/Threads.tmpl
+config/cf/usl.cf
+config/cf/Win32.cf
+config/cf/Win32.rules
+config/cf/X11.rules
+config/cf/X11.tmpl
+config/cf/x386.cf
+config/cf/xf86.rules
+config/cf/xf86site.def
+config/cf/xf86.tmpl
+config/cf/xfree86.cf
+config/imake/ccimake.c
+config/imake/imake.c
+config/imake/Imakefile
+config/imake/imake.man
+config/imake/imakemdep.h
+config/imake/Makefile.ini
+config/makedepend/cppsetup.c
+config/makedepend/def.h
+config/makedepend/ifparser.c
+config/makedepend/ifparser.h
+config/makedepend/Imakefile
+config/makedepend/include.c
+config/makedepend/main.c
+config/makedepend/mkdepend.man
+config/makedepend/parse.c
+config/makedepend/pr.c
+config/util/makestrs.c

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_sndrel</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_sndrel - initiate an orderly release
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_sndrel(
+    int fd)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+</table>
+</pre>
+<p>
+For transport providers of type T_COTS_ORD,
+this function is used to initiate an orderly release of the outgoing
+direction of data transfer
+and indicates to the transport provider that
+the transport user has no more data to send.
+The argument
+<I>fd</I>
+identifies the local transport endpoint where the connection exists.
+After calling
+<i>t_sndrel()</i>,
+the user may not send any more data over the connection.
+However, a user may continue to receive data if an
+orderly release indication has not been received.
+For transport providers of types other than T_COTS_ORD,
+this function fails with error [TNOTSUPPORT].
+</blockquote><h4>VALID STATES</h4><blockquote>
+T_DATAXFER,T_INREL
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure,
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TBADF]<dd>The specified file descriptor does not refer to a transport endpoint.
+
+<dt>[TFLOW]<dd>O_NONBLOCK
+was set, but
+the flow control mechanism prevented the transport provider from
+accepting the function at this time.
+
+<dt>[TLOOK]<dd>An asynchronous event has occurred on this transport endpoint and requires
+immediate attention.
+
+<dt>[TNOTSUPPORT]<dd>This function is not supported by the underlying transport
+provider.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by 
+<I>fd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TPROTO]<dd>This error indicates that a communication problem has been detected between
+XTI and the transport provider for which there is no other suitable XTI
+error
+<I>(t_errno)</I>.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, a value of 0 is returned.  Otherwise,
+a value of -1 is returned and
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="tgeti50.htm">t_getinfo()</a></i>,
+<i><a href="topen55.htm">t_open()</a></i>,
+<i><a href="trcvr60.htm">t_rcvrel()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

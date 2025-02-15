@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>copywin</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_236">&nbsp;</a>NAME</h4><blockquote>
+copywin - copy a region of a window
+</blockquote><h4><a name = "tag_000_000_237">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int copywin(const WINDOW *<i>srcwin</i>, WINDOW *<i>dstwin</i>, int <i>sminrow</i>,
+            int <i>smincol</i>, int <i>dminrow</i>, int <i>dmincol</i>, int <i>dmaxrow</i>, 
+            int <i>dmaxcol</i>, int <i>overlay</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_238">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>copywin()</i>
+function provides a finer granularity of control over the
+<i><a href="overlay.htm">overlay()</a></i>
+and
+<i><a href="overw108.htm">overwrite()</a></i>
+functions.  As in the
+<i><a href="prefresh.htm">prefresh()</a></i>
+function, a rectangle is specified in the destination window, (<i>dminrow</i>,
+<i>dmincol</i>) and (<i>dmaxrow</i>, <i>dmaxcol</i>), and the upper-left-corner
+coordinates of the source window, (<i>sminrow</i>, <i>smincol</i>).
+If <i>overlay</i> is TRUE, then copying is non-destructive, as in
+<i><a href="overlay.htm">overlay()</a></i>.
+If <i>overlay</i> is FALSE, then copying is destructive, as in
+<i><a href="overw108.htm">overwrite()</a></i>.
+</blockquote><h4><a name = "tag_000_000_239">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>copywin()</i>
+returns OK.  Otherwise, it returns ERR.
+</blockquote><h4><a name = "tag_000_000_240">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_241">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="newpad.htm">newpad()</a></i>,
+<i><a href="overlay.htm">overlay()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

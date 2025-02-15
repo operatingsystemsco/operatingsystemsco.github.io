@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mail</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1327">&nbsp;</a>NAME</h4><blockquote>
+mail - send or read mail (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_1328">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+mail <b>[</b>-e<b>] [</b>-f <i>file</i><b>]</b>
+
+mail <b>[</b>-e| -p<b>][</b>-qr<b>][</b>-f <i>file</i><b>]</b>
+
+mail <b>[</b>-t<b>]</b><i> name</i> ...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1329">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mail</i>
+utility cannot guarantee support for all character encodings
+in all circumstances.
+For example,
+inter-system mail may be restricted to 7-bit data by the underlying
+network, 8-bit data need not be portable to non-internationalised
+systems, and so on.
+Under these circumstances, it is recommended that
+only characters defined in the
+ISO/IEC&nbsp;646:1991 standard International Reference Version
+(equivalent to ASCII) 7-bit range of
+characters be used.
+<h5><a name = "tag_001_014_1329_001">&nbsp;</a>Reading Mail</h5>
+The
+<i>mail</i>
+utility
+without arguments writes a user's mail to standard output,
+message-by-message.
+Mail is stored in the user's individual mailfile.
+For each message, the user is given a prompt
+and a line is read from the standard input
+to determine the disposition of the message;
+see the EXTENDED DESCRIPTION section.
+<h5><a name = "tag_001_014_1329_002">&nbsp;</a>Sending Mail</h5>
+When
+<i>name</i>s
+(user login names) are given,
+<i>mail</i>
+takes the standard input up to an end-of-file
+(or up to a line consisting of just a `.')
+and adds it to each user's mailfile.
+The message is preceded by the sender's name and a postmark.
+Lines in the message that begin with the sequence
+<b>From</b> are preceded with a
+"&gt;".
+<p>
+If a user being sent mail is not recognised, or if
+<i>mail</i>
+is interrupted during input, the message is saved in the file
+<b>dead.letter</b>
+to allow editing and resending.
+Note that this is regarded as a temporary file in that it is recreated every
+time it is needed, erasing the previous contents of
+<b>dead.letter</b>.
+The
+<i>mail</i>
+utility tries to create
+<b>dead.letter</b>
+in the current directory.
+If that fails, it tries to create
+in the directory specified by the
+<i>HOME</i>
+environment variable.
+<p>
+It may also be possible to send mail to remote systems
+using system-specific naming conventions.
+<p>
+There are implementation-dependent mechanisms that can be used to
+cause all mail sent to the user to be forwarded to one or more other
+destinations.
+<br>
+</blockquote><h4><a name = "tag_001_014_1330">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>mail</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+The following options are supported for reading mail:
+<dl compact>
+
+<dt><b>-e</b>
+<dd>Test for the presence of mail.
+Display nothing and exit with a successful return code if there is
+mail to read.
+
+<dt><b>-p</b>
+<dd>Write all mail to standard output without prompting for disposition.
+
+<dt><b>-q</b>
+<dd>Terminate after interrupts.
+By default, an interrupt
+terminates only the message being written.
+
+<dt><b>-r</b>
+<dd>Write messages in first-in, first-out order.
+
+<dt><b>-f&nbsp;</b><i>file</i>
+<dd>Use
+<i>file</i>
+(for example,
+<b>mbox</b>)
+instead of the default mailfile.
+
+</dl>
+<p>
+The following option is supported for sending mail:
+<dl compact>
+
+<dt><b>-t</b>
+<dd>Precede the message by a list of all users the
+<i>mail</i>
+is sent to.
+
+</dl>
+<br>
+</blockquote><h4><a name = "tag_001_014_1331">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported for sending mail:
+<dl compact>
+
+<dt><i>name</i><dd>A user login name.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1332">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is a text file of commands for writing
+mail or a text file to be added to the user's mailfile when
+sending mail.
+</blockquote><h4><a name = "tag_001_014_1333">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_1334">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variable affects the execution of
+<i>mail</i>:
+<dl compact>
+
+<dt><i>HOME</i><dd>Determine the pathname of the user's home directory.
+
+</dl>
+<p>
+The following environment variables may affect the execution of
+<i>mail</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error,
+and informative messages written to standard output.
+
+<dt><i>LC_TIME</i><dd>
+Determine the format and contents of date and
+time strings displayed by the
+<i>mail</i>
+utility.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TZ</i><dd>Determine the timezone used with date and time strings.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1335">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+When reading mail, signals are caught and the user
+is returned immediately to the next prompt;
+however, if the
+<b>-q</b>
+option is specified,
+<i>mail</i>
+terminates.
+When sending mail, signals are caught, interrupting
+the user's input.
+Any text already input is saved in the file
+<b>dead.letter</b>.
+</blockquote><h4><a name = "tag_001_014_1336">&nbsp;</a>STDOUT</h4><blockquote>
+When reading mail,
+the standard output is used for prompting and writing mail messages;
+the format of prompting and other informational messages
+is unspecified.
+When sending mail, the standard output is not used.
+</blockquote><h4><a name = "tag_001_014_1337">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+<br>
+</blockquote><h4><a name = "tag_001_014_1338">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+When reading mail,
+messages can be appended to files designated by the
+<b>s</b>
+or
+<b>w</b>
+commands or to a user's mailfile by using the
+<b>m</b>
+command.
+When sending mail, messages are written to mailfiles or to
+<b>dead.letter</b>.
+</blockquote><h4><a name = "tag_001_014_1339">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+When reading mail, the following commands read from the
+standard input determine the disposition of messages:
+<dl compact>
+
+<dt>newline<dd>
+Go on to next message.
+
+<dt><b>+</b><dd>Same as the newline character.
+
+<dt><b>d</b><dd>Delete message and go on to next message.
+
+<dt><b>p</b><dd>Display message again.
+
+<dt><b>-</b><dd>Go back to previous message.
+
+<dt><b>s[</b><i>file</i><b>]</b><dd>Save the message in the named
+<i>file</i>
+(<b>mbox</b>
+is default).
+
+<dt><b>w[</b><i>file</i><b>]</b><dd>Save the message (on some implementations, without its header) in
+the named
+<i>file</i>
+(<b>mbox</b>
+is default).
+
+<dt><b>m[</b><i>name&nbsp;...</i><b>]</b><dd>
+Mail the message to the named users;
+the default is the user who invoked
+<i>mail</i>.
+
+<dt><b>q</b><dd>Store undeleted mail and stop.
+
+<dt>&lt;EOF&gt;<dd>Same as
+<b>q</b>.
+
+<dt><b>x</b><dd>Put all mail back in the
+mailfile unchanged and stop.
+
+<dt><b>!</b><i>command</i><dd>
+Escape to the command interpreter to execute
+<i>command</i>.
+
+<dt><b>*</b><dd>Display a command summary.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1340">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion when the user had mail.
+
+<dt>1<dd>The user had no mail or an initialisation error occurred.
+
+<dt>&gt;1<dd>An error occurred after initialisation.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1341">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+When reading mail, the mailfile is unchanged.
+When sending mail, some of the named users need not have
+their mailfiles appended with the message.
+</blockquote><h4><a name = "tag_001_014_1342">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Delivery of messages to remote systems requires the
+existence of communication paths to such systems.
+These need not exist.
+<p>
+The location of stored mail on exiting from
+<i>mail</i>
+using the
+<b>q</b>
+command differs between implementations and may be either the user's
+mailfile or the user's
+<b>mbox</b>.
+<p>
+In the description of reading mail, the phrase &quot;go on to next
+message&quot; might or might not imply the displaying of the next message.
+<p>
+Input lines are limited to
+{LINE_MAX}
+bytes, but mailers between systems
+may impose more severe line-length restrictions.
+<p>
+Applications should migrate to the
+<i><a href="mailx.htm">mailx</a></i>
+utility.
+</blockquote><h4><a name = "tag_001_014_1343">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1344">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1345">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mailx.htm">mailx</a></i>,
+<i><a href="uuencode.htm">uuencode</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

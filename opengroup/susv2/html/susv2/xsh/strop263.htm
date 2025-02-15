@@ -1,0 +1,472 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;stropts.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_162">&nbsp;</a>NAME</h4><blockquote>
+stropts.h - STREAMS interface
+</blockquote><h4><a name = "tag_000_009_163">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;stropts.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_164">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>bandinfo</b>
+structure that includes at least the following members:
+<pre>
+<code>
+unsigned char bi_pri
+int           bi_flag
+</code>
+</pre>
+<p>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>strpeek</b>
+structure that includes at least the following members:
+<pre>
+<code>
+struct strbuf ctlbuf
+struct strbuf databuf
+t_uscalar_t   flags
+</code>
+</pre>
+<p>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>strbuf</b>
+structure that includes at least the following members:
+<pre>
+<code>
+int           maxlen     maximum buffer length
+int           len        length of data
+char         *buf        ptr to buffer
+</code>
+</pre>
+<p>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>strfdinsert</b>
+structure that includes at least the following members:
+<pre>
+<code>
+struct strbuf ctlbuf
+struct strbuf databuf
+t_uscalar_t   flags
+int           fildes
+int           offset
+</code>
+</pre>
+<p>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>strioctl</b>
+structure that includes at least the following members:
+<pre>
+<code>
+int           ic_cmd
+int           ic_timout
+int           ic_len
+char         *ic_dp
+</code>
+</pre>
+<p>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>strrecvfd</b>
+structure that includes at least the following members:
+<pre>
+<code>
+int           fd
+uid_t         uid
+gid_t         gid
+</code>
+</pre>
+<p>
+The 
+<b>uid_t</b>
+and
+<b>gid_t</b>
+types are defined through
+<b>typedef</b>
+as described in
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<p>
+The
+<b>t_uscalar_t</b>
+type is defined as described in
+<i><a href="../xns/xtih78.htm">&lt;xti.h&gt;</a></i>
+in the referenced <b>Networking Services, Issue 5</b> specification.
+<p>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>str_list</b>
+structure that includes at least the following members:
+<pre>
+<code>
+int               sl_nmods
+struct str_mlist *sl_modlist
+</code>
+</pre>
+<p>
+The
+<i>&lt;stropts.h&gt;</i>
+header defines the
+<b>str_mlist</b>
+structure that includes at least the following member:
+<pre>
+<code>
+char          l_name[FMNAMESZ+1]
+</code>
+</pre>
+<p>
+At least the following macros are defined for use as the <i>request</i>
+argument to
+<i><a href="ioctl.htm">ioctl()</a></i>:
+<dl compact>
+
+<dt>I_PUSH<dd>
+Push STREAMS module onto the top of the current STREAM, just below the STREAM
+head.
+
+<dt>I_POP<dd>
+Remove STREAMS module from just below the STREAM head.
+
+<dt>I_LOOK<dd>
+Retrieve the name of the module just below the STREAM head and place it in a
+character string.
+At least the following macros are defined for use as the
+<i>arg</i>
+argument:
+<dl compact>
+
+<dt>FMNAMESZ<dd>
+The minimum size in bytes of the buffer referred to by the <i>arg</i> argument.
+
+</dl>
+<p>
+<p>
+<dt>I_FLUSH<dd>
+This request flushes all input and/or output queues, depending on the value of
+the <i>arg</i> argument.
+At least the following macros are defined for use as the
+<i>arg</i>
+argument:
+<dl compact>
+
+<dt>FLUSHR<dd>
+Flush read queues.
+
+<dt>FLUSHW<dd>
+Flush write queues.
+
+<dt>FLUSHRW<dd>
+Flush read and write queues.
+
+</dl>
+<p>
+<p>
+<dt>I_FLUSHBAND<dd>
+Flush only band specified.
+<p>
+<dt>I_SETSIG<dd>
+Informs the STREAM head that the process wants the SIGPOLL signal issued (see
+<i><a href="signal.htm">signal()</a></i>
+and
+<i><a href="sigset.htm">sigset()</a></i>)
+when a particular event has occurred on the STREAM.
+<p>
+The header &lt;<b>stropts.h</b>&gt; defines these possible values for <i>arg</i> when
+I_SETSIG is specified:
+<dl compact>
+
+<dt>S_RDNORM<dd>
+A normal (priority band set to 0) message has arrived at the head
+of a STREAM head read queue.
+
+<dt>S_RDBAND<dd>
+A message with a non-zero priority band has arrived at the head of
+a STREAM head read queue.
+
+<dt>S_INPUT<dd>
+A message, other than a high-priority message,
+has arrived at the head of a STREAM head read queue.
+
+<dt>S_HIPRI<dd>
+A high-priority message is present on a STREAM head read queue.
+
+<dt>S_OUTPUT<dd>
+The write queue for normal data (priority band 0) just below the STREAM
+head is no longer full.  This notifies the process that there is room on the
+queue for sending (or writing) normal data downstream.
+
+<dt>S_WRNORM<dd>
+Same as S_OUTPUT.
+
+<dt>S_WRBAND<dd>
+The write queue for a non-zero priority band just below the STREAM head is no
+longer full.
+
+<dt>S_MSG<dd>
+A STREAMS signal message that contains the SIGPOLL signal reaches the front of
+the STREAM head read queue.
+
+<dt>S_ERROR<dd>
+Notification of an error condition reaches the STREAM head.
+
+<dt>S_HANGUP<dd>
+Notification of a hangup reaches the STREAM head.
+
+<dt>S_BANDURG<dd>
+When used in conjunction with S_RDBAND, SIGURG is generated instead of SIGPOLL
+when a priority message reaches the front of the STREAM head read queue.
+
+</dl>
+<p>
+<p>
+<dt>I_GETSIG<dd>
+Returns the events for which the calling process is
+currently registered to be sent a SIGPOLL signal.
+<p>
+<dt>I_FIND<dd>
+Compares the names of all modules currently present in
+the STREAM to the name pointed to by <i>arg</i>.
+<p>
+<dt>I_PEEK<dd>
+Allows a process to retrieve the information in the first message on the
+STREAM head read queue without taking the message off the queue.
+At least the following macros are defined for use as the
+<i>arg</i>
+argument:
+<dl compact>
+
+<dt>RS_HIPRI<dd>
+Only look for high-priority messages.
+
+</dl>
+<p>
+<dt>I_SRDOPT<dd>
+Sets the read mode.
+At least the following macros are defined for use as the
+<i>arg</i>
+argument:
+<dl compact>
+
+<dt>RNORM<dd>
+Byte-STREAM mode, the default.
+
+<dt>RMSGD<dd>
+Message-discard mode.
+
+<dt>RMSGN<dd>
+Message-nondiscard mode.
+
+<dt>RPROTNORM<dd>
+Fail
+<i><a href="read.htm">read()</a></i>
+with [EBADMSG] if a message containing a control part is at the front of the
+STREAM head read queue.
+
+<dt>RPROTDAT<dd>
+Deliver the control part of a message as data when a process issues a
+<i><a href="read.htm">read()</a></i>.
+
+<dt>RPROTDIS<dd>
+Discard the control part of a message, delivering any data part,
+when a process issues a
+<i><a href="read.htm">read()</a></i>.
+
+</dl>
+<p>
+<p>
+<dt>I_GRDOPT<dd>
+Returns the current read mode setting.
+<p>
+<dt>I_NREAD<dd>
+Counts the number of data bytes in data blocks in the first message on the
+STREAM head read queue.
+<p>
+<dt>I_FDINSERT<dd>
+Creates a message from the specified buffer(s), adds information about another
+STREAM, and sends the message downstream.
+<p>
+<dt>I_STR<dd>
+Constructs an internal STREAMS
+<i><a href="ioctl.htm">ioctl()</a></i>
+message and sends that message downstream.
+<p>
+<dt>I_SWROPT<dd>
+Sets the write mode.
+At least the following macros are defined for use as the
+<i>arg</i>
+argument:
+<dl compact>
+
+<dt>SNDZERO<dd>
+Send a zero-length message downstream when a
+<i><a href="write.htm">write()</a></i>
+of 0 bytes occurs.
+
+</dl>
+<p>
+<dt>I_GWROPT<dd>
+Returns the current write mode setting.
+<p>
+<dt>I_SENDFD<dd>
+Requests the STREAM associated with <i>fildes</i> to send a message,
+containing a file pointer, to the STREAM head at the other end of a
+STREAMS pipe.
+<p>
+<dt>I_RECVFD<dd>
+Retrieves the file descriptor associated with the message sent by an I_SENDFD
+<i><a href="ioctl.htm">ioctl()</a></i>
+over a STREAMS pipe.
+<p>
+<dt>I_LIST<dd>
+This request allows the process to list all the module names on the
+STREAM, up to and including the topmost driver name.
+<p>
+<dt>I_ATMARK<dd>
+This request allows the process to see if the current message on
+the STREAM head read queue is "marked" by some module downstream.
+At least the following macros are defined for use as the
+<i>arg</i>
+argument:
+<dl compact>
+
+<dt>ANYMARK<dd>
+Check if the message is marked.
+
+<dt>LASTMARK<dd>
+Check if the message is the last one marked on the queue.
+
+</dl>
+<p>
+<p>
+<dt>I_CKBAND<dd>
+Check if the message of a given priority band exists on the STREAM
+head read queue.
+<p>
+<dt>I_GETBAND<dd>
+Return the priority band of the first message on the STREAM head read queue.
+<p>
+<dt>I_CANPUT<dd>
+Check if a certain band is writable.
+<p>
+<dt>I_SETCLTIME<dd>
+Allows the process to set the time the STREAM head will delay
+when a STREAM is closing and there is data on the write queues.
+<p>
+<dt>I_GETCLTIME<dd>
+Returns the close time delay.
+<p>
+<dt>I_LINK<dd>
+Connects two STREAMs.
+<p>
+<dt>I_UNLINK<dd>
+Disconnects the two STREAMs.  The header defines at least the following value
+for <i>arg</i>:
+<dl compact>
+
+<dt>MUXID_ALL<dd>
+Unlink all STREAMs linked to the STREAM associated with <i>fildes</i>.
+
+</dl>
+<p>
+<p>
+<dt>I_PLINK<dd>
+Connects two STREAMs with a persistent link.
+<p>
+<dt>I_PUNLINK<dd>
+Disconnects the two STREAMs that were connected with a persistent link.
+<p>
+</dl>
+<p>
+The following macros are defined for
+<i><a href="getmsg.htm">getmsg()</a></i>,
+<i><a href="getpmsg.htm">getpmsg()</a></i>,
+<i><a href="putmsg.htm">putmsg()</a></i>
+and
+<i><a href="putpmsg.htm">putpmsg()</a></i>:
+<dl compact>
+
+<dt>MSG_ANY<dd>
+Receive any message.
+
+<dt>MSG_BAND<dd>
+Receive message from specified band.
+
+<dt>MSG_HIPRI<dd>
+Send/Receive high priority message.
+
+<dt>MORECTL<dd>
+More control information is left in message.
+
+<dt>MOREDATA<dd>
+More data is left in message.
+
+</dl>
+<p>
+The header &lt;<b>stropts.h</b>&gt; may make visible all of the
+symbols from &lt;<b>unistd.h</b>&gt;.
+<p>
+The following are declared as functions in the &lt;<b>stropts.h</b>&gt; header
+and may also be defined as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int    <a href="isast83.htm">isastream</a>(int);
+int    <a href="getmsg.htm">getmsg</a>(int, struct strbuf *, struct strbuf *, int *);
+int    <a href="getpmsg.htm">getpmsg</a>(int, struct strbuf *, struct strbuf *, int *, int *);
+int    <a href="ioctl.htm">ioctl</a>(int, int, ... );
+int    <a href="putmsg.htm">putmsg</a>(int, const struct strbuf *, const struct strbuf *, int);
+int    <a href="putpmsg.htm">putpmsg</a>(int, const struct strbuf *, const struct strbuf *, int,
+           int);
+int    <a href="fattach.htm">fattach</a>(int, const char *);
+int    <a href="fdetach.htm">fdetach</a>(const char *);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_165">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_166">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_167">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="close.htm">close()</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="getmsg.htm">getmsg()</a></i>,
+<i><a href="ioctl.htm">ioctl()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="pipe.htm">pipe()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="poll.htm">poll()</a></i>,
+<i><a href="putmsg.htm">putmsg()</a></i>,
+<i><a href="signal.htm">signal()</a></i>,
+<i><a href="sigset.htm">sigset()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="../xns/xtih78.htm">&lt;xti.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ctermid</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_002_056">&nbsp;</a>NAME</h4><blockquote>
+ctermid - generate a pathname for controlling terminal
+</blockquote><h4><a name = "tag_000_002_057">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+char *ctermid(char *<i>s</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_002_058">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ctermid()</i>
+function generates a string that, when used as a pathname, refers
+to the current controlling terminal for the current process.
+If
+<i>ctermid()</i>
+returns a pathname, access to the file is not
+guaranteed.
+<p>
+If the application uses any of the 
+_POSIX_THREAD_SAFE_FUNCTIONS or _POSIX_THREADS interfaces, the
+<i>ctermid()</i>
+function must be called with a non-NULL parameter.
+</blockquote><h4><a name = "tag_000_002_059">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If
+<i>s</i>
+is a null pointer, the string is generated in an area that may be
+static (and therefore may be overwritten by each call), the
+address of which is returned.
+Otherwise
+<i>s</i>
+is assumed to point to a character array
+of at least {L_ctermid}
+bytes; the string is placed in this array and the value of
+<i>s</i>
+is returned.
+The symbolic constant {L_ctermid}
+is defined in
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>,
+and will have a value greater than 0.
+<p>
+The
+<i>ctermid()</i>
+function will return an empty string if the pathname that would
+refer to the controlling terminal cannot be determined, or if the
+function is unsuccessful.
+</blockquote><h4><a name = "tag_000_002_060">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_002_061">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_062">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The difference between
+<i>ctermid()</i>
+and
+<i><a href="ttyname.htm">ttyname()</a></i>
+is that
+<i><a href="ttyname.htm">ttyname()</a></i>
+must be handed a file descriptor and returns a path of
+the terminal associated with that file descriptor, while
+<i>ctermid()</i>
+returns a string
+(such as
+<i>/dev/tty</i>)
+that will refer to the
+current controlling terminal if used as a pathname.
+</blockquote><h4><a name = "tag_000_002_063">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_064">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ttyname.htm">ttyname()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

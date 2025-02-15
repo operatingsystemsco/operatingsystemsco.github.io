@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_once</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1567">&nbsp;</a>NAME</h4><blockquote>
+pthread_once - dynamic package initialisation
+</blockquote><h4><a name = "tag_000_007_1568">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_once(pthread_once_t *<i>once_control</i>, 
+    void (*<i>init_routine</i>)(void));
+pthread_once_t <i>once_control</i> = PTHREAD_ONCE_INIT;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1569">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The first call to
+<i>pthread_once()</i>
+by any thread in a process, with a given
+<i>once_control</i>,
+will call the
+<i>init_routine()</i>
+with no arguments.
+Subsequent calls of
+<i>pthread_once()</i>
+with the same
+<i>once_control</i>
+will not call the
+<i>init_routine()</i>.
+On return from
+<i>pthread_once()</i>,
+it is guaranteed that
+<i>init_routine()</i>
+has completed.
+The
+<i>once_control</i>
+parameter is used to determine whether
+the associated initialisation routine has been called.
+<p>
+The function
+<i>pthread_once()</i>
+is not a cancellation point.
+However, if
+<i>init_routine()</i>
+is a cancellation point and is canceled,
+the effect on
+<i>once_control</i>
+is as if
+<i>pthread_once()</i>
+was never called.
+<p>
+The constant PTHREAD_ONCE_INIT
+is defined by the header
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+<p>
+The behaviour of
+<i>pthread_once()</i>
+is undefined if
+<i>once_control</i>
+has automatic storage duration or is not initialised by
+PTHREAD_ONCE_INIT.
+</blockquote><h4><a name = "tag_000_007_1570">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>pthread_once()</i>
+returns zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1571">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined. 
+<p>
+The
+<i>pthread_once()</i>
+function will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1572">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1573">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1574">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1575">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i>&lt;pthread,h&gt;</i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

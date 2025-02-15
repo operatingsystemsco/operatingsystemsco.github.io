@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_rcvdis</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_rcvdis - retrieve information from disconnection
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_rcvdis(
+    int fd,
+    struct t_discon *discon)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>discon-&gt
+<td align=center>udata.maxlen
+<td align=center>x
+<tr valign=top><td align=left>discon-&gt
+<td align=center>udata.len
+<td align=center>/
+<tr valign=top><td align=left>discon-&gt
+<td align=center>udata.buf
+<td align=center>?
+<tr valign=top><td align=left>discon-&gt
+<td align=center>reason
+<td align=center>/
+<tr valign=top><td align=left>discon-&gt
+<td align=center>sequence
+<td align=center>/
+</table>
+</pre>
+<p>
+This function is used to identify the cause of a disconnection and
+to retrieve any user data sent with the disconnection.
+The argument
+<I>fd</I>
+identifies the local transport endpoint where the connection existed,
+and
+<I>discon</I>
+points to a
+<B>t_discon</B>
+structure containing the following members:
+<pre>
+<code>
+struct netbuf udata;
+int reason;
+int sequence;
+</code>
+</pre>
+<p>
+The field
+<I>reason</I>
+specifies the reason for the disconnection
+through a protocol-dependent reason code,
+<I>udata</I>
+identifies any user data that was sent with the disconnection, and
+<I>sequence</I>
+may identify an outstanding connection indication with which the 
+disconnection is
+associated.
+The field
+<I>sequence</I>
+is only meaningful when
+<i>t_rcvdis()</i>
+is issued by a passive transport user who has executed one or more
+<i><a href="tlist53.htm">t_listen()</a></i>
+functions and is processing the resulting connection indications.
+If a disconnection indication occurs,
+<I>sequence</I>
+can be used to identify which of the outstanding connection indications is
+associated with the disconnection.
+<p>
+The 
+<I>maxlen</I>
+field of 
+<I>udata</I>
+may be set to zero, if the user does not care
+about incoming data. If, in addition, the user does not
+need to know the value of 
+<I>reason</I>
+or 
+<I>sequence</I>,
+<I>discon</I>
+may be set to NULL and any user data associated with the
+disconnection indication shall be discarded.
+However, if a user has retrieved
+more than one outstanding connection indication (via
+<i><a href="tlist53.htm">t_listen()</a></i>)
+and
+<I>discon</I>
+is a null pointer,
+the user will be unable to identify with which connection indication the
+disconnection is associated.
+</blockquote><h4>VALID STATES</h4><blockquote>
+T_DATAXFER,T_OUTCON,T_OUTREL,T_INREL,T_INCON(ocnt &gt; 0)
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure,
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TBADF]<dd>The specified file descriptor does not refer to a transport endpoint.
+
+<dt>[TBUFOVFLW]<dd>The number of bytes allocated for incoming data
+<I>(maxlen)</I>
+is greater than 0 but not
+sufficient to store the data.
+If
+<I>fd</I>
+is a passive endpoint with <I>ocnt</I> &gt; 1, it remains in
+state T_INCON;
+otherwise, the endpoint state is set to T_IDLE.
+
+<dt>[TNODIS]<dd>No disconnection indication currently exists on the specified
+transport endpoint.
+
+<dt>[TNOTSUPPORT]<dd>This function is not supported by the underlying transport
+provider.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by 
+<I>fd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TPROTO]<dd>This error indicates that a communication problem has been detected between
+XTI and the transport provider for which there is no other suitable XTI
+error
+<I>(t_errno)</I>.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, a value of 0 is returned.  Otherwise,
+a value of -1 is returned and
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="tallo43.htm">t_alloc()</a></i>,
+<i><a href="tconn46.htm">t_connect()</a></i>,
+<i><a href="tlist53.htm">t_listen()</a></i>,
+<i><a href="topen55.htm">t_open()</a></i>,
+<i><a href="tsndd67.htm">t_snddis()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

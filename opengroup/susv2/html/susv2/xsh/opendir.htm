@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>opendir</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_928">&nbsp;</a>NAME</h4><blockquote>
+opendir - open a directory
+</blockquote><h4><a name = "tag_000_007_929">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systy278.htm">sys/types.h</a>&gt;
+#include &lt;<a href="diren39.htm">dirent.h</a>&gt;
+
+DIR *opendir(const char *<i>dirname</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_930">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>opendir()</i>
+function opens a directory stream corresponding to the directory
+named by the
+<i>dirname</i>
+argument.
+The directory stream is positioned at the first entry.
+If the type
+<b>DIR</b>,
+is implemented using a file descriptor,
+applications will only be able to open up to a total of
+{OPEN_MAX}
+files and directories.
+A successful call to any of the
+<i>exec</i>
+functions will close any directory streams that are open in the
+calling process.
+</blockquote><h4><a name = "tag_000_007_931">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>opendir()</i>
+returns a pointer to an object of type
+<b>DIR</b>.
+Otherwise, a null pointer is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_932">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>opendir()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for the component of the path prefix of
+<i>dirname</i>
+or read permission is denied for
+<i>dirname.</i>
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>dirname</i>
+argument exceeds {PATH_MAX},
+or a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>dirname</i> does not name an existing directory
+or <i>dirname</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of
+<i>dirname</i>
+is not a directory.
+
+</dl>
+<p>
+The
+<i>opendir()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EMFILE]<dd>
+{OPEN_MAX} file descriptors are currently open in the calling process.
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[ENFILE]<dd>
+Too many files are currently open in the system.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_933">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_934">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>opendir()</i>
+function should be used in conjunction with
+<i><a href="readdir.htm">readdir()</a></i>,
+<i><a href="closedir.htm">closedir()</a></i>
+and
+<i><a href="rewin207.htm">rewinddir()</a></i>
+to examine the contents of the directory (see the EXAMPLES section in
+<i><a href="readdir.htm">readdir()</a></i>).
+This method is recommended for portability.
+</blockquote><h4><a name = "tag_000_007_935">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_936">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="closedir.htm">closedir()</a></i>,
+<i><a href="lstat.htm">lstat()</a></i>,
+<i><a href="readdir.htm">readdir()</a></i>,
+<i><a href="rewin207.htm">rewinddir()</a></i>,
+<i><a href="symlink.htm">symlink()</a></i>,
+<i><a href="diren39.htm">&lt;dirent.h&gt;</a></i>,
+<i><a href="limit88.htm">&lt;limits.h&gt;</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

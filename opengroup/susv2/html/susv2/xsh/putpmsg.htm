@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>putmsg</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1786">&nbsp;</a>NAME</h4><blockquote>
+putmsg, putpmsg - send a message on a STREAM
+</blockquote><h4><a name = "tag_000_007_1787">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="strop263.htm">stropts.h</a>&gt;
+
+int putmsg(int <i>fildes</i>, const struct strbuf *<i>ctlptr</i>,
+    const struct strbuf *<i>dataptr</i>, int <i>flags</i>);
+int putpmsg(int <i>fildes</i>, const struct strbuf *<i>ctlptr</i>,
+    const struct strbuf *<i>dataptr</i>, int <i>band</i>, int <i>flags</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1788">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>putmsg()</i>
+function creates a message from a process buffer(s) and sends the message to a
+STREAMS file.  The message may contain either a data part, a control part, or
+both.  The data and control parts are distinguished by placement in separate
+buffers, as described below.  The semantics of each part is defined by the
+STREAMS module that receives the message.
+<p>
+The
+<i>putpmsg()</i>
+function does the same thing as
+<i>putmsg()</i>,
+but the process can send messages in different priority bands.  Except where
+noted, all requirements on
+<i>putmsg()</i>
+also pertain to
+<i>putpmsg()</i>.
+<p>
+The <i>fildes</i> argument specifies a file descriptor referencing an
+open STREAM.
+The <i>ctlptr</i> and <i>dataptr</i> arguments each point to a <b>strbuf</b>
+structure.
+<p>
+The <i>ctlptr</i> argument points to the structure describing the control part,
+if any, to be included in the message.  The <i>buf</i> member in the
+<b>strbuf</b> structure points to the buffer where the control information
+resides, and the <i>len</i> member indicates the number of bytes to be sent.
+The <i>maxlen</i> member is not used by
+<i>putmsg()</i>.
+In a similar manner, the argument <i>dataptr</i> specifies the data, if any, to
+be included in the message.  The <i>flags</i> argument indicates what type of
+message should be sent and is described further below.
+<p>
+To send the data part of a message, <i>dataptr</i> must not be a null pointer
+and the <i>len</i> member of <i>dataptr</i> must be 0 or greater.
+To send the control part of a message, the corresponding values must be set
+for <i>ctlptr</i>.  No data (control) part will be sent if either <i>dataptr</i>
+(<i>ctlptr</i>) is a null pointer or the <i>len</i> member of <i>dataptr</i>
+(<i>ctlptr</i>) is set to -1.
+<p>
+For
+<i>putmsg()</i>,
+if a control part is specified and <i>flags</i> is set to RS_HIPRI, a high
+priority message is sent.  If no control part is specified, and <i>flags</i> is
+set to RS_HIPRI,
+<i>putmsg()</i>
+fails and sets <i>errno</i> to [EINVAL].  If <i>flags</i> is set to 0, a normal
+message (priority band equal to 0) is sent.  If a control part and data part
+are not specified and <i>flags</i> is set to 0, no message is sent and 0 is
+returned.
+<p>
+For
+<i>putpmsg()</i>,
+the flags are different.  The <i>flags</i> argument is a bitmask with the
+following mutually-exclusive flags defined:  MSG_HIPRI and MSG_BAND.  If
+<i>flags</i> is set to 0,
+<i>putpmsg()</i>
+fails and sets <i>errno</i> to [EINVAL].
+If a control part is specified and <i>flags</i> is set to MSG_HIPRI
+and <i>band</i> is set to 0, a high-priority message is sent.
+If <i>flags</i> is set to MSG_HIPRI and either no control part is
+specified or <i>band</i> is set to a non-zero value,
+<i>putpmsg()</i>
+fails and sets <i>errno</i> to [EINVAL].  If <i>flags</i> is set to MSG_BAND,
+then a message is sent in the priority band specified by <i>band</i>.  If a
+control part and data part are not specified and <i>flags</i> is set to
+MSG_BAND, no message is sent and 0 is returned.
+<p>
+The
+<i>putmsg()</i>
+function blocks if the STREAM write queue is full due to internal flow control
+conditions, with the following exceptions:
+<ul>
+<p>
+<li>
+For high-priority messages,
+<i>putmsg()</i>
+does not block on this condition and continues processing the message.
+<p>
+<li>
+For other messages,
+<i>putmsg()</i>
+does not block but fails when the write queue is full and O_NONBLOCK is set.
+<p>
+</ul>
+<p>
+The
+<i>putmsg()</i>
+function also blocks, unless prevented by lack of internal resources, while
+waiting for the availability of message blocks in the STREAM, regardless of
+priority or whether O_NONBLOCK has been specified.  No partial message is
+sent.
+</blockquote><h4><a name = "tag_000_007_1789">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>putmsg()</i>
+and
+<i>putpmsg()</i>
+return 0.  Otherwise, they return
+-1 and set <i>errno</i> to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1790">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>putmsg()</i>
+and
+<i>putpmsg()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[EAGAIN]<dd>
+A non-priority message was specified, the O_NONBLOCK flag is set, and the
+STREAM write queue is full due to internal flow control conditions; or
+buffers could not be allocated for the message that was to be created.
+
+<dt>[EBADF]<dd>
+<i>fildes</i> is not a valid file descriptor open for writing.
+
+<dt>[EINTR]<dd>
+A signal was caught during
+<i>putmsg()</i>.
+
+<dt>[EINVAL]<dd>
+An undefined value is specified in <i>flags</i>, or <i>flags</i>
+is set to RS_HIPRI or MSG_HIPRI and no control part is supplied,
+or the STREAM or multiplexer referenced by
+<i>fildes</i> is linked (directly or indirectly) downstream from a multiplexer,
+or <i>flags</i> is set to MSG_HIPRI and <i>band</i>
+is non-zero (for
+<i>putpmsg()</i>
+only).
+
+<dt>[ENOSR]<dd>
+Buffers could not be allocated for the message that was to be created due to
+insufficient STREAMS memory resources.
+
+<dt>[ENOSTR]<dd>
+A STREAM is not associated with <i>fildes</i>.
+
+<dt>[ENXIO]<dd>
+A hangup condition was generated downstream for the specified STREAM.
+
+<dt>[EPIPE] or [EIO]<dd>
+The <i>fildes</i> argument refers to a STREAMS-based pipe and the other end of
+the pipe is closed.  A SIGPIPE signal is generated for the calling thread.
+
+<dt>[ERANGE]<dd>
+The size of the data part of the message does not fall within the range
+specified by the maximum and minimum packet sizes of the topmost STREAM
+module.  This value is also returned if the control part of the message is
+larger than the maximum configured size of the control part of a message, or
+if the data part of a message is larger than the maximum configured size of
+the data part of a message.
+
+</dl>
+<p>
+In addition,
+<i>putmsg()</i>
+and
+<i>putpmsg()</i>
+will fail if the STREAM head had processed an asynchronous error before the
+call.  In this case, the value of
+<i>errno</i>
+does not reflect the result of
+<i>putmsg()</i>
+or
+<i>putpmsg()</i>
+but reflects the prior error.
+</blockquote><h4><a name = "tag_000_007_1791">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1792">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1793">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1794">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getmsg.htm">getmsg()</a></i>,
+<i><a href="poll.htm">poll()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="strop263.htm">&lt;stropts.h&gt;</a></i>,
+<a href="streams.htm">STREAMS overview</a>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

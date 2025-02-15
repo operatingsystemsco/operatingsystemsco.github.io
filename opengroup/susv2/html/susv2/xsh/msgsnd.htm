@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>msgsnd</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_826">&nbsp;</a>NAME</h4><blockquote>
+msgsnd - message send operation
+</blockquote><h4><a name = "tag_000_007_827">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysms269.htm">sys/msg.h</a>&gt;
+
+int msgsnd(int <i>msqid</i>, const void *<i>msgp</i>, size_t <i>msgsz</i>, int <i>msgflg</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_828">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>msgsnd()</i>
+function is used to send a message to the queue
+associated with the message queue identifier specified by
+<i>msqid</i>.
+<p>
+The argument
+<i>msgp</i>
+points to a user-defined buffer that must contain
+first a field of type
+<b>long int</b>
+that will specify the type of the message,
+and then a data portion that will hold the data bytes of the message.
+The structure below is an example of what
+this user-defined buffer might look like:
+<pre>
+<code>
+struct mymsg {
+    long int    mtype;       /* message type */
+    char        mtext[1];    /* message text */
+}
+</code>
+</pre>
+The structure member
+<b>mtype</b>
+is a non-zero positive type <b>long int</b> that can be used
+by the receiving process for message selection.
+<p>
+The structure member
+<b>mtext</b>
+is any text of length
+<i>msgsz</i>
+bytes.
+The argument
+<i>msgsz</i>
+can range from 0 to a system-imposed maximum.
+<p>
+The argument
+<i>msgflg</i>
+specifies the action to be taken if one or more of the following are true:
+<ul>
+<p>
+<li>
+The number of bytes already on the queue is equal to
+<b>msg_qbytes</b>,
+see
+<i><a href="sysms269.htm">&lt;sys/msg.h&gt;</a></i>.
+<p>
+<li>
+The total number of messages on all queues
+system-wide is equal to the system-imposed limit.
+<p>
+</ul>
+<p>
+These actions are as follows:
+<ul>
+<p>
+<li>
+If (<i>msgflg</i> &amp; IPC_NOWAIT)
+is non-zero, the message will not be
+sent and the calling thread will return immediately.
+<p>
+<li>
+If (<i>msgflg</i> &amp; IPC_NOWAIT)
+is 0, the calling thread will suspend execution until
+one of the following occurs:
+<ul>
+<p>
+<li>
+The condition responsible for the suspension no longer exists,
+in which case the message is sent.
+<p>
+<li>
+The message queue identifier
+<i>msqid</i>
+is removed from the system; when this occurs,
+<i>errno</i>
+is set equal to [EIDRM] and -1 is returned.
+<p>
+<li>
+The calling thread receives a signal that is to be caught;
+in this case the message is not sent
+and the calling thread resumes execution in the manner
+prescribed in
+<i><a href="sigac238.htm">sigaction()</a></i>.
+<p>
+</ul>
+<p>
+</ul>
+<p>
+Upon successful completion, the following actions are taken
+with respect to the data structure associated with
+<i>msqid</i>,
+see
+<i><a href="sysms269.htm">&lt;sys/msg.h&gt;</a></i>:
+<ul>
+<p>
+<li>
+<b>msg_qnum</b>
+is incremented by 1.
+<p>
+<li>
+<b>msg_lspid</b>
+is set equal to the process ID of the calling process.
+<p>
+<li>
+<b>msg_stime</b>
+is set equal to the current time.
+<p>
+</ul>
+<br>
+</blockquote><h4><a name = "tag_000_007_829">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>msgsnd()</i>
+returns 0.  Otherwise, no message will be sent,
+<i>msgsnd()</i>
+will return -1 and
+<i>errno</i>
+will be set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_830">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>msgsnd()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Operation permission is denied to the calling process.
+See
+<a href="ipc.htm">IPC</a>.
+
+<dt>[EAGAIN]<dd>
+The message cannot be sent for one of the reasons cited above and
+(<i>msgflg</i> &amp; IPC_NOWAIT) is non-zero.
+
+<dt>[EIDRM]<dd>
+The message queue identifier
+<i>msgid</i>
+is removed from the system.
+
+<dt>[EINTR]<dd>
+The
+<i>msgsnd()</i>
+function was interrupted by a signal.
+
+<dt>[EINVAL]<dd>
+The value of
+<i>msqid</i>
+is not a valid message queue identifier,
+or the value of
+<b>mtype</b>
+is less than 1; or the value of
+<i>msgsz</i>
+is less than 0 or greater than the system-imposed limit.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_831">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_832">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The POSIX Realtime Extension defines alternative interfaces for interprocess communication.
+Application developers who need to use IPC should design their
+applications so that modules using the IPC routines described in
+<a href="ipc.htm">IPC</a>
+can be easily modified to use the alternative interfaces.
+</blockquote><h4><a name = "tag_000_007_833">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_834">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mqclo98.htm">mq_close()</a></i>,
+<i><a href="mqget99.htm">mq_getattr()</a></i>,
+<i><a href="mqnot100.htm">mq_notify()</a></i>,
+<i><a href="mqope101.htm">mq_open()</a></i>,
+<i><a href="mqrec102.htm">mq_receive()</a></i>,
+<i><a href="mqsen103.htm">mq_send()</a></i>,
+<i><a href="mqset104.htm">mq_setattr()</a></i>,
+<i><a href="mqunl105.htm">mq_unlink()</a></i>,
+<i><a href="msgctl.htm">msgctl()</a></i>,
+<i><a href="msgget.htm">msgget()</a></i>,
+<i><a href="msgrcv.htm">msgrcv()</a></i>,
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sysms269.htm">&lt;sys/msg.h&gt;</a></i>,
+<a href="ipc.htm">IPC</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 2 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_rcvconnect</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_rcvconnect - receive the confirmation from a connection request
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_rcvconnect(
+    int fd,
+    struct t_call *call)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>call-&gt
+<td align=center>addr.maxlen
+<td align=center>x
+<tr valign=top><td align=left>call-&gt
+<td align=center>addr.len
+<td align=center>/
+<tr valign=top><td align=left>call-&gt
+<td align=center>addr.buf
+<td align=center>?
+<tr valign=top><td align=left>call-&gt
+<td align=center>opt.maxlen
+<td align=center>x
+<tr valign=top><td align=left>call-&gt
+<td align=center>opt.len
+<td align=center>/
+<tr valign=top><td align=left>call-&gt
+<td align=center>opt.buf
+<td align=center>?
+<tr valign=top><td align=left>call-&gt
+<td align=center>udata.maxlen
+<td align=center>x
+<tr valign=top><td align=left>call-&gt
+<td align=center>udata.len
+<td align=center>/
+<tr valign=top><td align=left>call-&gt
+<td align=center>udata.buf
+<td align=center>?
+<tr valign=top><td align=left>call-&gt
+<td align=center>sequence
+<td align=center>=
+</table>
+</pre>
+<p>
+This function enables a calling transport user to determine
+the status of a previously sent connection request
+and is used in conjunction with
+<i><a href="tconn46.htm">t_connect()</a></i>
+to establish a connection in asynchronous mode,
+and to complete a synchronous 
+<i><a href="tconn46.htm">t_connect()</a></i>
+call that was interrupted by a signal.
+The connection will be established on successful completion of
+this function.
+<p>
+The argument
+<I>fd</I>
+identifies the local transport endpoint where communication will be
+established,
+and
+<I>call</I>
+contains information associated with the newly established connection.
+The argument
+<I>call</I>
+points to a
+<B>t_call</B>
+structure which contains the following members:
+<pre>
+<code>
+struct netbuf addr;
+struct netbuf opt;
+struct netbuf udata;
+int sequence;
+</code>
+</pre>
+<p>
+In
+<I>call</I>,
+<I>addr</I>
+returns the protocol address associated with the responding
+transport endpoint,
+<I>opt</I>
+presents any options associated with the connection,
+<I>udata</I>
+points to optional user data that may be returned by
+the destination transport user during connection establishment,
+and
+<I>sequence</I>
+has no meaning for this function.
+<p>
+The
+<I>maxlen</I>
+field of each argument
+must be set before issuing this function to indicate the maximum
+size of the buffer for each.
+However, 
+<I>maxlen</I>
+can be set to zero, in which case no
+information to this specific argument is given to the user
+on the return from 
+<i>t_rcvconnect()</i>.
+If 
+<I>call</I>
+is set to NULL, no information at all is returned.
+By default,
+<i>t_rcvconnect()</i>
+executes in synchronous mode and
+waits for the connection to be established before returning.
+On return, the
+<I>addr</I>,
+<I>opt</I>
+and
+<I>udata</I>
+fields reflect values associated with the connection.
+<p>
+If O_NONBLOCK
+is set (via
+<i><a href="topen55.htm">t_open()</a></i>
+or
+<i><a href="fcntl.htm">fcntl()</a></i>),
+<i>t_rcvconnect()</i>
+executes in asynchronous mode, and
+reduces to a poll for existing connection confirmations.
+If none are available,
+<i>t_rcvconnect()</i>
+fails and returns immediately
+without waiting for the connection to be established.
+(See [TNODATA] below.)
+In this case,
+<i>t_rcvconnect()</i>
+must be called again to complete the connection establishment phase and
+retrieve the information returned in
+<I>call</I>.
+</blockquote><h4>VALID STATES</h4><blockquote>
+T_OUTCON
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure,
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TBADF]<dd>The specified file descriptor does not refer to a transport endpoint.
+
+<dt>[TBUFOVFLW]<dd>The number of bytes allocated for an incoming argument
+<I>(maxlen)</I>
+is greater than 0 but not
+sufficient to store the value of that argument,
+and the connection information to be returned in
+<I>call</I>
+will be discarded.
+The provider's state, as seen by the user, will be changed
+to T_DATAXFER.
+
+<dt>[TLOOK]<dd>An asynchronous event has occurred on this transport connection and requires
+immediate attention.
+
+<dt>[TNODATA]<dd>O_NONBLOCK
+was set, but a connection confirmation has not yet arrived.
+
+<dt>[TNOTSUPPORT]<dd>This function is not supported by the underlying transport
+provider.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by 
+<I>fd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TPROTO]<dd>This error indicates that a communication problem has been detected between
+XTI and the transport provider for which there is no other suitable XTI
+error
+<I>(t_errno)</I>.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, a value of 0 is returned.  Otherwise,
+a value of -1 is returned and
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="tacce42.htm">t_accept()</a></i>,
+<i><a href="tallo43.htm">t_alloc()</a></i>,
+<i><a href="tbind44.htm">t_bind()</a></i>,
+<i><a href="tconn46.htm">t_connect()</a></i>,
+<i><a href="tlist53.htm">t_listen()</a></i>,
+<i><a href="topen55.htm">t_open()</a></i>,
+<i><a href="toptm56.htm">t_optmgmt()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

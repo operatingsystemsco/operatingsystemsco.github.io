@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getpgid</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_644">&nbsp;</a>NAME</h4><blockquote>
+getpgid - get the process group ID for a process
+</blockquote><h4><a name = "tag_000_005_645">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+pid_t getpgid(pid_t <i>pid</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_646">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getpgid()</i>
+function returns the process group ID of the process whose process ID is equal
+to <i>pid</i>.  If <i>pid</i> is equal to 0,
+<i>getpgid()</i>
+returns the process group ID of the calling process.
+</blockquote><h4><a name = "tag_000_005_647">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>getpgid()</i>
+returns a process group ID.  Otherwise, it returns
+(<b>pid_t</b>)-1 and sets <i>errno</i> to indicate the error.
+</blockquote><h4><a name = "tag_000_005_648">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>getpgid()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EPERM]<dd>
+The process whose process ID is equal to <i>pid</i> is not in the same session
+as the calling process, and the implementation does not allow access to the
+process group ID of that process from the calling process.
+
+<dt>[ESRCH]<dd>
+There is no process with a process ID equal to <i>pid</i>.
+
+</dl>
+<p>
+The
+<i>getpgid()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of the <i>pid</i> argument is invalid.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_649">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_650">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_651">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_652">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="getpgrp.htm">getpgrp()</a></i>,
+<i><a href="getpid.htm">getpid()</a></i>,
+<i><a href="getsid.htm">getsid()</a></i>,
+<i><a href="setpgid.htm">setpgid()</a></i>,
+<i><a href="setsid.htm">setsid()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

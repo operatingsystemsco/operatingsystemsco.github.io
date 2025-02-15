@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>derwin</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_312">&nbsp;</a>NAME</h4><blockquote>
+derwin, newwin, subwin - window creation functions
+</blockquote><h4><a name = "tag_000_000_313">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+WINDOW *derwin(WINDOW *<i>orig</i>, int <i>nlines</i>, int <i>ncols</i>, int <i>begin_y</i>,
+               int <i>begin_x</i>);
+
+WINDOW *newwin(int <i>nlines</i>, int <i>ncols</i>, int <i>begin_y</i>, int <i>begin_x</i>);
+
+WINDOW *subwin(WINDOW *<i>orig</i>, int <i>nlines</i>, int <i>ncols</i>, int <i>begin_y</i>,
+               int <i>begin_x</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_314">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>derwin()</i>
+function is the same as
+<i><a href="subwin.htm">subwin()</a></i>,
+except that <i>begin_y</i> and <i>begin_x</i> are relative to the origin of the
+window <i>orig</i> rather than absolute screen positions.
+<p>
+The
+<i><a href="newwin.htm">newwin()</a></i>
+function creates a new window with <i>nlines</i> lines and <i>ncols</i> columns,
+positioned so that the origin is (<i>begin_y</i>, <i>begin_x</i>).  If
+<i>nlines</i> is zero, it defaults to
+<b>LINES</b>
+- <i>begin_y</i>; if <i>ncols</i> is zero, it defaults to
+<b>COLS</b>
+- <i>begin_x</i>.
+<p>
+The
+<i><a href="subwin.htm">subwin()</a></i>
+function creates a new window with <i>nlines</i> lines and <i>ncols</i> columns,
+positioned so that the origin is at (<i>begin_y</i>, <i>begin_x</i>).  (This
+position is an absolute screen position, not a position relative to the window
+<i>orig</i>.)  If any part of the new window is outside <i>orig</i>,
+the function fails and the window is not created.
+</blockquote><h4><a name = "tag_000_000_315">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions
+return a pointer to the new window.  Otherwise, they return a null pointer.
+</blockquote><h4><a name = "tag_000_000_316">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_317">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Before performing the first refresh of a subwindow, portable applications
+should call
+<i><a href="touchwin.htm">touchwin()</a></i>
+or
+<i><a href="touch147.htm">touchline()</a></i>
+on the parent window.
+<p>
+Each window maintains internal descriptions of the screen image and status.
+The screen image is shared among all windows in the window hierarchy.  Refresh
+operations rely on information on what has changed within a window, which is
+private to each window.  Refreshing a window, when updates were made to a
+different window, may fail to perform needed updates because the windows do
+not share this information.
+<p>
+A new full-screen window is created by calling:
+<pre>
+<code>
+newwin(0, 0, 0, 0);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_318">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="delwin.htm">delwin()</a></i>,
+<i><a href="islin48.htm">is_linetouched()</a></i>,
+<i><a href="doupdate.htm">doupdate()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getsubopt</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_749">&nbsp;</a>NAME</h4><blockquote>
+getsubopt - parse suboption arguments from a string
+</blockquote><h4><a name = "tag_000_005_750">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+int getsubopt(char **<i>optionp</i>, char * const *<i>tokens</i>, char **<i>valuep</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_751">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getsubopt()</i>
+function parses suboption arguments in a flag argument that was initially
+parsed by
+<i><a href="getopt.htm">getopt()</a></i>.
+These suboption arguments must be separated by commas and may consist of
+either a single token, or a token-value pair separated by an equal sign.
+Because commas delimit suboption arguments in the option string, they are not
+allowed to be part of the suboption arguments or the value of a suboption
+argument.  Similarly, because the equal sign separates a token from its value,
+a token must not contain an equal sign.
+<p>
+The
+<i>getsubopt()</i>
+function takes the address of a pointer to the option argument string, a
+vector of possible tokens, and the address of a value string pointer.  If the
+option argument string at *<i>optionp</i> contains only one suboption argument,
+<i>getsubopt()</i>
+updates *<i>optionp</i> to point to the null at the end of the string.
+Otherwise, it isolates the suboption argument by replacing the comma separator
+with a null, and updates *<i>optionp</i> to point to the start of the next
+suboption argument.  If the suboption argument has an associated value,
+<i>getsubopt()</i>
+updates *<i>valuep</i> to point to the value's first character.  Otherwise it
+sets *<i>valuep</i> to a null pointer.
+<p>
+The token vector is organised as a series of pointers to
+strings. The end of the token vector is identified by a null pointer.
+<p>
+When
+<i>getsubopt()</i>
+returns, if *<i>valuep</i> is not a null pointer then the suboption argument
+processed included a value.  The calling program may use this information to
+determine if the presence or lack of a value for this suboption is an error.
+<p>
+Additionally, when
+<i>getsubopt()</i>
+fails to match the suboption argument with the tokens in the
+<i>tokens</i>
+array, the calling program should decide if this is an error, or if the
+unrecognised option should be passed on to another program.
+</blockquote><h4><a name = "tag_000_005_752">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>getsubopt()</i>
+function returns the index of the matched token string, or -1 if no token
+strings were matched.
+</blockquote><h4><a name = "tag_000_005_753">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_005_754">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_755">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_756">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_757">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getopt.htm">getopt()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

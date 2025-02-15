@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>flockfile</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_101">&nbsp;</a>NAME</h4><blockquote>
+flockfile, ftrylockfile, funlockfile - stdio locking functions
+</blockquote><h4><a name = "tag_000_005_102">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+void flockfile(FILE *<i>file</i>);
+int ftrylockfile(FILE *<i>file</i>);
+void funlockfile(FILE *<i>file</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_103">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>flockfile()</i>,
+<i><a href="ftryl51.htm">ftrylockfile()</a></i>
+and
+<i><a href="funlo53.htm">funlockfile()</a></i>
+functions provide for explicit
+application-level locking of stdio (<b> FILE *</b>)
+objects.
+These functions can be used by a thread
+to delineate a sequence of I/O statements that are to be executed as a unit.
+<p>
+The
+<i>flockfile()</i>
+function is used by a thread to acquire ownership of a (<b> FILE *</b>)
+object.
+<p>
+The
+<i><a href="ftryl51.htm">ftrylockfile()</a></i>
+function is used by a thread to acquire ownership of a (<b> FILE *</b>)
+object if the object is available;
+<i><a href="ftryl51.htm">ftrylockfile()</a></i>
+is a non-blocking version of
+<i>flockfile()</i>.
+<p>
+The
+<i><a href="funlo53.htm">funlockfile()</a></i>
+function is used to relinquish the ownership granted to the thread.
+The behaviour is undefined if a thread other than the current owner calls the
+<i><a href="funlo53.htm">funlockfile()</a></i>
+function.
+<p>
+Logically, there is a lock count associated with each (<b> FILE *</b>)
+object.
+This count is implicitly initialised to zero when the (<b> FILE *</b>)
+object is created.
+The (<b> FILE *</b>)
+object is unlocked when the count is zero.
+When the count is positive,
+a single thread owns the (<b> FILE *</b>)
+object.
+When the
+<i>flockfile()</i>
+function is called, if the count is zero or
+if the count is positive and the caller owns the (<b> FILE *</b>)
+object, the count is incremented.
+Otherwise, the calling thread is suspended,
+waiting for the count to return to zero.
+Each call to
+<i><a href="funlo53.htm">funlockfile()</a></i>
+decrements the count.
+This allows matching calls to
+<i>flockfile()</i>
+(or successful calls to
+<i><a href="ftryl51.htm">ftrylockfile()</a></i>)
+and
+<i><a href="funlo53.htm">funlockfile()</a></i>
+to be nested.
+<p>
+All functions that reference (<b> FILE *</b>)
+objects behave as if they use
+<i>flockfile()</i>
+and
+<i><a href="funlo53.htm">funlockfile()</a></i>
+internally to obtain ownership of these (<b> FILE *</b>)
+objects.
+</blockquote><h4><a name = "tag_000_005_104">&nbsp;</a>RETURN VALUE</h4><blockquote>
+None for
+<i>flockfile()</i>
+and
+<i><a href="funlo53.htm">funlockfile()</a></i>.
+The function
+<i><a href="ftryl51.htm">ftrylockfile()</a></i>
+returns zero for success and non-zero to indicate
+that the lock cannot be acquired.
+</blockquote><h4><a name = "tag_000_005_105">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined. 
+</blockquote><h4><a name = "tag_000_005_106">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_107">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Realtime applications may encounter priority inversion when using FILE
+locks.
+The problem occurs when a high priority thread &quot;locks&quot; a FILE that
+is about to be &quot;unlocked&quot; by a low priority
+thread, but the low priority thread is preempted by a medium priority
+thread.
+This scenario leads to priority inversion; a high priority thread is
+blocked by lower priority threads for an unlimited period of time.
+During system design, realtime programmers must take into account the
+possibility of this kind of priority inversion.
+They can deal with it in a number of ways, such as by having critical
+sections that are guarded by FILE locks execute at a high priority, so
+that a thread cannot be preempted while executing in its critical
+section.
+</blockquote><h4><a name = "tag_000_005_108">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_109">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getcu54.htm">getc_unlocked()</a></i>,
+<i><a href="getch55.htm">getchar_unlocked()</a></i>,
+<i><a href="putcu195.htm">putc_unlocked()</a></i>,
+<i><a href="putch196.htm">putchar_unlocked()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

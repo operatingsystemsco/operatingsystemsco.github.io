@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getpwuid</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_704">&nbsp;</a>NAME</h4><blockquote>
+getpwuid, getpwuid_r - search user database for a user ID
+</blockquote><h4><a name = "tag_000_005_705">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systy278.htm">sys/types.h</a>&gt;
+#include &lt;<a href="pwdh198.htm">pwd.h</a>&gt;
+
+struct passwd *getpwuid(uid_t <i>uid</i>);
+int getpwuid_r(uid_t <i>uid</i>, struct passwd *<i>pwd</i>, char *<i>buffer</i>,
+    size_t <i>bufsize</i>, struct passwd **<i>result</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_706">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getpwuid()</i>
+function searches the user database for an entry with a matching
+<i>uid</i>.
+<p>
+The
+<i>getpwuid()</i>
+interface need not be reentrant.
+<p>
+The
+<i>getpwuid_r()</i>
+function updates the
+<b>passwd</b>
+structure pointed to by
+<i>pwd</i>
+and stores a pointer to that structure
+at the location pointed to by
+<i>result.</i>
+The structure will contain an entry
+from the user database with a matching
+<i>uid</i>.
+Storage referenced by the structure is allocated
+from the memory provided with the
+<i>buffer</i>
+parameter, which is
+<i>bufsize</i>
+characters in size.
+The maximum size needed for this buffer can be determined with the
+{_SC_GETPW_R_SIZE_MAX}
+<i><a href="sysconf.htm">sysconf()</a></i>
+parameter.
+A NULL pointer is returned at the location pointed to by
+<i>result</i>
+on error or if the requested entry is not found.
+<p>
+Applications wishing to check for error situations should set
+<i>errno</i>
+to 0 before calling
+<i>getpwuid()</i>.
+If
+<i>getpwuid()</i>
+returns a null pointer and
+<i>errno</i>
+is set to non-zero, an error occurred.
+</blockquote><h4><a name = "tag_000_005_707">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>getpwuid()</i>
+function returns a pointer to a
+<b>struct passwd</b>
+with the structure as defined in
+<i><a href="pwdh198.htm">&lt;pwd.h&gt;</a></i>
+with a matching entry if found.
+A null pointer is returned if the requested entry
+is not found, or an error occurs.
+On error,
+<i>errno</i>
+is set to indicate the error.
+<p>
+The return value may point to a static area which is overwritten
+by a subsequent call to
+<i><a href="getpwent.htm">getpwent()</a></i>,
+<i><a href="getpwnam.htm">getpwnam()</a></i>
+or
+<i>getpwuid()</i>.
+<p>
+If successful, the
+<i>getpwuid_r()</i>
+function returns zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_005_708">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>getpwuid()</i>
+function may fail if:
+<br>
+<dl compact>
+
+<dt>[EIO]<dd>
+An I/O error has occurred.
+
+<dt>[EINTR]<dd>
+A signal was caught during
+<i>getpwuid()</i>.
+
+<dt>[EMFILE]<dd>
+{OPEN_MAX} file descriptors are currently open in the calling process.
+
+<dt>[ENFILE]<dd>
+The maximum allowable number of files is currently open in the system.
+
+</dl>
+<p>
+The 
+<i>getpwuid_r()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ERANGE]<dd>
+Insufficient storage was supplied via
+<i>buffer</i>
+and
+<i>bufsize</i>
+to contain the data to be referenced by the resulting
+<b>passwd</b>
+structure.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_709">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_710">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Three names associated with the current process can be determined:
+<i>getpwuid</i>(<i>geteuid</i>())
+returns the name associated with the effective user ID of the process;
+<i><a href="getlogin.htm">getlogin()</a></i>
+returns the name associated with the current login activity; and
+<i>getpwuid</i>(<i>getuid</i>())
+returns the name associated with the real user ID of the process.
+</blockquote><h4><a name = "tag_000_005_711">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_712">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getpwnam.htm">getpwnam()</a></i>,
+<i><a href="geteuid.htm">geteuid()</a></i>,
+<i><a href="getuid.htm">getuid()</a></i>,
+<i><a href="getlogin.htm">getlogin()</a></i>,
+<i><a href="limit88.htm">&lt;limits.h&gt;</a></i>,
+<i><a href="pwdh198.htm">&lt;pwd.h&gt;</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+<i>getpwuid()</i> derived from System V Release 2.0.
+<P>
+<i>getpwuid_r()</i> derived from the POSIX Threads Extension (1003.1c-1995).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

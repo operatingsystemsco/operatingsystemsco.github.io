@@ -1,0 +1,530 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1745">&nbsp;</a>NAME</h4><blockquote>
+pr - print files
+</blockquote><h4><a name = "tag_001_014_1746">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+pr <b>[</b>+<i>page</i><b>][</b>-<i>column</i><b>][</b>-adFmrt<b>][</b>-e<b>[</b><i>char</i><b>][</b><i>gap</i><b>]][</b>-h <i>header</i><b>][</b>-i<b>[</b><i>char</i><b>][</b><i>gap</i><b>]]
+[</b>-l <i>lines</i><b>][</b>-n<b>[</b><i>char</i><b>][</b><i>width</i><b>]][</b>-o <i>offset</i><b>][</b>-s<b>[</b><i>char</i><b>]][</b>-w <i>width</i><b>][</b>-fp<b>]
+[</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1747">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pr</i>
+utility
+is a printing and pagination filter.
+If multiple input files are specified, each is read, formatted,
+and written to standard output.
+By default, the input is separated into
+66-line pages, each with:
+<ul>
+<p>
+<li>
+a 5-line header that includes the page number, date, time and
+the pathname of the file
+<p>
+<li>
+a 5-line trailer consisting of blank lines.
+<p>
+</ul>
+<p>
+If standard output is associated with a terminal,
+diagnostic messages will be deferred until the
+<i>pr</i>
+utility has completed processing.
+<p>
+When options specifying multi-column output are specified,
+output text columns will be of equal width;
+input lines that do not fit into a text column will be truncated.
+By default, text columns are separated with at least one
+blank character.
+</blockquote><h4><a name = "tag_001_014_1748">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>pr</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that:
+the
+<i>page</i>
+option has a
+"+"
+delimiter;
+<i>page</i>
+and
+<i>column</i>
+can be multi-digit numbers; some of the option-arguments
+are optional; and some of the option-arguments cannot be specified
+as separate arguments from the preceding option letter.
+In particular, the
+<b>-s</b>
+option does not allow the option
+letter to be separated from its argument, and the options
+<b>-e</b>,
+<b>-i</b>
+and
+<b>-n</b>
+require that both arguments, if present, not be
+separated from the option letter.
+<p>
+The following options are supported.
+In the following option descriptions,
+<i>column</i>,
+<i>lines</i>,
+<i>offset</i>,
+<i>page</i>
+and
+<i>width</i>
+are positive decimal integers;
+<i>gap</i>
+is a non-negative decimal integer.
+<dl compact>
+
+<dt>+<i>page</i><dd>Begin output at page number
+<i>page</i>
+of the formatted input.
+
+<dt><b>-</b><i>column</i>
+<dd>Produce multi-column output that is arranged in
+<i>column</i>
+columns (default is 1) and is
+written down each column in the
+order in which the text is received from the input file.
+This option should not be used with
+<b>-m</b>.
+The options
+<b>-e</b>
+and
+<b>-i</b>
+will be assumed for multiple text-column output.
+Whether or not text columns are
+produced with identical vertical lengths is unspecified,
+but a text column
+will never exceed the length of the page (see the
+<b>-l</b>
+option).
+When used with
+<b>-t</b>,
+use the minimum number of lines to write the output.
+
+<dt><b>-a</b>
+<dd>Modify the effect of the
+<i>-column</i>
+option so that the columns are filled
+across the page in a round-robin order
+(for example, when
+<i>column</i>
+is 2, the first input line heads column 1,
+the second heads column 2, the third is the second line in column 1,
+and so on).
+
+<dt><b>-d</b>
+<dd>Produce output that is double-spaced;
+append an extra
+newline character
+following every
+newline character
+found in the input.
+
+<dt><b>-e[</b><i>char</i><b>][</b><i>gap</i><b>]</b><dd>
+Expand each input
+tab character
+to the next greater column position specified by the formula
+<i>n*gap</i>+1
+where
+<i>n</i>
+is an integer &gt; 0.
+If
+<i>gap</i>
+is zero or is omitted,
+it defaults to 8.
+All
+tab
+characters in the input will be expanded into the appropriate number of
+space characters.
+If any non-digit character,
+<i>char</i>,
+is specified, it will be used as the input tab character.
+
+<dt><b>-f</b>
+<dd>Use a
+form-feed
+character for new pages, instead of the default behaviour
+that uses a sequence of
+newline
+characters.
+Pause before beginning the first page if
+the standard output is associated with a terminal.
+
+<dt><b>-F</b>
+<dd>Use a
+form-feed
+character for new pages, instead of the default behaviour
+that uses a sequence of
+newline
+characters.
+
+<dt><b>-h&nbsp;</b><i>header</i>
+<dd>
+Use the string
+<i>header</i>
+to replace the contents of the
+<i>file</i>
+operand in the page header.
+
+<dt><b>-i[</b><i>char</i><b>][</b><i>gap</i><b>]</b><dd>
+In output, replace multiple
+space characters
+with
+tab characters
+wherever two or more adjacent
+space characters
+reach column positions
+<i>gap</i>+1,
+2*<i>gap</i>+1,
+3*<i>gap</i>+1,
+and so on.
+If
+<i>gap</i>
+is zero or is omitted, default
+tab
+settings at every eighth column position are assumed.
+If any non-digit character,
+<i>char</i>,
+is specified, it will be used as the output
+tab
+character.
+
+<dt><b>-l&nbsp;</b><i>lines</i>
+<dd>Override the 66-line default and reset the page length to
+<i>lines</i>.
+If
+<i>lines</i>
+is not greater than
+the sum of both the header and trailer depths
+(in lines), the
+<i>pr</i>
+utility will suppress both the header and trailer, as if the
+<b>-t</b>
+option were in effect.
+
+<dt><b>-m</b>
+<dd>Merge files.
+Standard output will be formatted so the
+<i>pr</i>
+utility writes one line from each file specified by a
+<i>file</i>
+operand, side by side into text columns of equal
+fixed widths, in terms of the number of column positions.
+Implementations support merging of at least nine
+<i>file</i>
+operands.
+
+<dt><b>-n[</b><i>char</i><b>][</b><i>width</i><b>]</b><dd>
+Provide
+<i>width</i>-digit
+line numbering (default for
+<i>width</i>
+is 5).
+The number will occupy the first
+<i>width</i>
+column positions of each text column
+of default output or each line of
+<b>-m</b>
+output.
+If
+<i>char</i>
+(any non-digit character) is given, it will be appended to the line number
+to separate it from whatever follows (default for
+<i>char</i>
+is a
+tab character).
+
+<dt><b>-o&nbsp;</b><i>offset</i>
+<dd>
+Each line of output will be preceded by offset &lt;space&gt;s.
+If the
+<b>-o</b>
+option is not specified, the default offset is zero.
+The space taken will be in addition to the output line width (see
+<b>-w</b>
+option below).
+
+<dt><b>-p</b>
+<dd>Pause before beginning each page if the
+standard output is directed to a terminal
+(<i>pr</i>
+will write an alert character to standard error and wait for a
+carriage-return character to be read on
+<b>/dev/tty</b>).
+
+<dt><b>-r</b>
+<dd>Write no diagnostic reports on failure to open files.
+
+<dt><b>-s[</b><i>char</i><b>]</b><dd>
+Separate text columns by the single character
+<i>char</i>
+instead of by the appropriate number of
+space characters
+(default for
+<i>char</i>
+is the
+tab
+character).
+
+<dt><b>-t</b>
+<dd>Write neither the five-line identifying header nor the five-line
+trailer usually supplied for each page.
+Quit writing after the last
+line of each file without spacing to the end of the page.
+
+<dt><b>-w&nbsp;</b><i>width</i>
+<dd>
+Set the width of the line to
+<i>width</i>
+column positions for multiple text-column output only.
+If the
+<b>-w</b>
+option is not specified and the
+<b>-s</b>
+option is
+not specified, the default width is 72.
+If the
+<b>-w</b>
+option is not specified and the
+<b>-s</b>
+option is specified, the default width is 512.
+
+For single column output, input lines will not be truncated.
+
+</dl>
+<br>
+</blockquote><h4><a name = "tag_001_014_1749">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to be written.
+If no
+<i>file</i>
+operands are specified,
+or if a
+<i>file</i>
+operand is "-", the standard input will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1750">&nbsp;</a>STDIN</h4><blockquote>
+The standard input will be used only if no
+<i>file</i>
+operands are specified,
+or if a
+<i>file</i>
+operand is "-".
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_1751">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files must be text files.
+<p>
+The file
+<b>/dev/tty</b>
+is used to read responses required by the
+<b>-p</b>
+option.
+</blockquote><h4><a name = "tag_001_014_1752">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>pr</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single-
+versus multi-byte characters in arguments and input files)
+and which characters are defined as
+printable (character class
+<b>print</b>).
+Non-printable characters still will be written to standard output,
+but are not counted for the purpose for column-width
+and line-length calculations.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LC_TIME</i><dd>
+Determine the
+format of the date and time for use in writing header lines.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TZ</i><dd>Determine the
+timezone for use in writing header lines.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1753">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+If
+<i>pr</i>
+receives an interrupt while writing to a terminal,
+it will flush all accumulated error messages to the screen before terminating.
+</blockquote><h4><a name = "tag_001_014_1754">&nbsp;</a>STDOUT</h4><blockquote>
+The
+<i>pr</i>
+utility output will be a paginated version of the original file (or files).
+This pagination will be accomplished using either
+form-feed characters
+or a sequence of
+newline characters,
+as controlled by the
+<b>-F</b>
+or
+<b>-f</b>
+option.
+Page headers will be generated unless the
+<b>-t</b>
+option is specified.
+The page headers will be of the form:
+<p><code>
+<pre>
+<tt>"\n\n%s %s Page %d\n\n\n"</tt>, &lt;<i>output of </i>date&gt;,
+&lt;<i>file</i>&gt;,
+&lt;<i>page number</i>&gt;
+</pre>
+</code>
+<p>
+In the POSIX locale, the
+&lt;<i>output&nbsp;of&nbsp;date</i>&gt;
+field, representing the date and time
+of last modification of the input file (or the current date and time if
+the input file is standard input),
+is equivalent to the output of the
+following command as it would appear if executed at the given time:
+<pre>
+<code>
+date "+%b %e %H:%M %Y"
+</code>
+</pre>
+without the trailing newline character,
+if the page being written is from standard input.
+If the page being written is not
+from standard input, in the POSIX locale, the
+same format will be used, but the time used will be the modification
+time of the file corresponding to
+<i>file</i>
+instead of the current time.
+When the LC_TIME locale category is not set to the POSIX locale,
+a different format and order of presentation of this
+field may be used.
+<p>
+If the standard input is used instead of a
+<i>file</i>
+operand,
+the
+&lt;<i>file</i>&gt;
+field will be replaced by a null string.
+<p>
+If the
+<b>-h</b>
+option is specified, the
+&lt;<i>file</i>&gt;
+field will be replaced by the
+<i>header</i>
+argument.
+</blockquote><h4><a name = "tag_001_014_1755">&nbsp;</a>STDERR</h4><blockquote>
+Used for diagnostic messages
+and for alerting the terminal when
+<b>-p</b>
+is specified.
+</blockquote><h4><a name = "tag_001_014_1756">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1757">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1758">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>All files were written successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1759">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1760">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1761">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+Print a numbered list of all files in the current directory:
+<pre>
+<code>
+ls -a | pr -n -h "Files in $(pwd)."
+</code>
+</pre>
+<p>
+<li>
+Print
+<b>file1</b>
+and
+<b>file2</b>
+as a double-spaced, three-column listing
+headed by &quot;file list&quot;:
+<pre>
+<code>
+pr -3d -h "file list" file1 file2
+</code>
+</pre>
+<p>
+<li>
+Write
+<b>file1</b>
+on
+<b>file2</b> ,
+expanding tabs to columns 10, 19, 28, ... :
+<pre>
+<code>
+pr -e9 -t &lt;file1 &gt;file2
+</code>
+</pre>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_1762">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+It is possible that a new interface that conforms to the
+Utility Syntax Guidelines will be introduced.
+</blockquote><h4><a name = "tag_001_014_1763">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="expand.htm">expand</a></i>,
+<i><a href="lp.htm">lp</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

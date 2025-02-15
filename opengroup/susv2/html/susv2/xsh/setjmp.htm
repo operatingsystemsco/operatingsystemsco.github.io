@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>setjmp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_417">&nbsp;</a>NAME</h4><blockquote>
+setjmp - set jump point for a non-local goto
+</blockquote><h4><a name = "tag_000_008_418">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="setjm230.htm">setjmp.h</a>&gt;
+
+int setjmp(jmp_buf <i>env</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_419">&nbsp;</a>DESCRIPTION</h4><blockquote>
+A call to
+<i>setjmp()</i>,
+saves the calling environment in its
+<i>env</i>
+argument for later use by
+<i><a href="longjmp.htm">longjmp()</a></i>.
+<p>
+It is unspecified whether
+<i>setjmp()</i>
+is a macro or a function.
+If a macro definition is suppressed in order to access an actual
+function, or a program defines an external identifier with the name
+<i>setjmp</i>
+the behaviour is undefined.
+<p>
+All accessible objects have values as of the time
+<i><a href="longjmp.htm">longjmp()</a></i>
+was called, except that the values of objects of automatic
+storage duration which are local to the function containing the
+invocation of the corresponding
+<i>setjmp()</i>
+which do not have volatile-qualified type and which are
+changed between the
+<i>setjmp()</i>
+invocation and
+<i><a href="longjmp.htm">longjmp()</a></i>
+call are indeterminate.
+<p>
+An invocation of
+<i>setjmp()</i>
+must appear in one of the following contexts only:
+<ul>
+<p>
+<li>
+the entire controlling expression of a selection or iteration
+statement
+<p>
+<li>
+one operand of a relational or equality operator with the other
+operand an integral constant expression, with the resulting
+expression being the entire controlling expression of a selection
+or iteration statement
+<p>
+<li>
+the operand of a unary "!"
+operator with the resulting expression
+being the entire controlling expression of a selection or
+iteration
+<p>
+<li>
+the entire expression of an expression statement (possibly cast
+to
+<b>void</b>).
+<p>
+</ul>
+</blockquote><h4><a name = "tag_000_008_420">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the return is from a direct invocation,
+<i>setjmp()</i>
+returns 0.  If the return is from a call to
+<i><a href="longjmp.htm">longjmp()</a></i>,
+<i>setjmp()</i>
+returns a non-zero value.
+</blockquote><h4><a name = "tag_000_008_421">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_008_422">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_423">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+In general,
+<i><a href="sigse251.htm">sigsetjmp()</a></i>
+is more useful in dealing with errors and interrupts
+encountered in a low-level subroutine of a program.
+</blockquote><h4><a name = "tag_000_008_424">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_425">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="longjmp.htm">longjmp()</a></i>,
+<i><a href="sigse251.htm">sigsetjmp()</a></i>,
+<i><a href="setjm230.htm">&lt;setjmp.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

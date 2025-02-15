@@ -1,0 +1,3049 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ex</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_586">&nbsp;</a>NAME</h4><blockquote>
+ex - text editor
+</blockquote><h4><a name = "tag_001_014_587">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+ex <b>[</b>-rR<b>]</b>[-l<b>][</b>-s | -v <b>][</b>-c <i>command</i><b>]</b>-t <i>tagstring</i><b>][</b>-w <i>size</i><b>][</b><i>file</i>...<b>]</b>
+
+ex <b>[</b>-rR<b>][</b>-l<b>][</b>- | -v <b>][</b>+<i>command</i><b>][</b>-t <i>tagstring</i><b>][</b>-w <i>size</i><b>][</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_588">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ex</i>
+utility is a line-oriented text editor that
+supports both line and full-screen editing (see
+<i><a href="vi.htm">vi</a></i>).
+<p>
+Certain block-mode terminals do not have all the capabilities
+necessary to support the complete
+<i>ex</i>
+definition, such as the
+full-screen editing commands
+(<i>visual</i>
+mode) or
+<i>open mode .</i>
+When these commands cannot be supported on such terminals, this
+condition will not produce an error message such as &quot;not an editor
+command&quot; nor report a syntax error.
+The implementation may either accept the
+commands and produce
+results on the
+screen that are the result of an unsuccessful attempt to meet the
+requirements of this specification or
+report an error
+describing the terminal-related deficiency.
+The affected commands are
+noted as they occur later in this section.
+</blockquote><h4><a name = "tag_001_014_589">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>ex</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-c </b><i>command</i><dd>
+<dt>+<i>command</i><dd>
+Begin editing by executing the specified
+<i>ex</i>
+command-mode commands.
+As with normal editing command-line entries, the
+<i>command</i>
+option-argument can consist of multiple
+<i>ex</i>
+commands separated
+by vertical-line characters
+(|).
+The use of commands that enter input or
+visual modes in this manner produces undefined results.
+
+<dt><b>-l</b><dd>(The letter ell.)
+Set lisp mode; indents appropriately for Lisp code; the
+<b>()</b>,
+<b>{}</b>,
+<b>[[</b>
+and
+<b>]]</b>
+commands in visual mode are modified to have meaning for Lisp.
+
+<dt><b>-r</b>
+<dd>Recover the named files after an editor or system crash, after
+the editor has been terminated by a signal, or after the use of a
+<b>preserve</b>
+editor command.
+A
+<i>crash</i>
+in this context is an
+unexpected failure of the system or utility that requires
+restarting the failed system or utility.
+A system crash implies
+that any utilities running at the time also crash.
+In the case of an editor or system crash,
+the degree of recovery (the number of changes
+to the buffer since the most recent
+<b>preserve</b>
+command) available is unspecified.
+
+If no
+<i>file</i>
+operands are given,
+all other options, the
+<i>EXINIT</i>
+variable and any
+<b>.exrc</b>
+files will be ignored;
+a list of all recoverable files
+available to the invoking user will be written;
+and
+<i>ex</i>
+will exit without reading files or processing user commands.
+
+<dt><b>-R</b>
+<dd>Set read-only mode, preventing accidental overwriting of the files.
+Any command that would write to a file will require the
+"!"
+suffix (see, for example, the
+<b>write</b>
+command)
+to be effective in this mode.
+
+<dt><b>-s</b><dd>
+<dt><b>-</b><dd>Prepare
+<i>ex</i>
+for batch use by taking the following actions:
+<ul>
+
+<li>
+Suppress writing prompts and informational
+(but not diagnostic) messages.
+
+
+<li>
+Ignore the value of
+<i>TERM</i>
+and any implementation default terminal type and
+assume the terminal is a type incapable of supporting
+visual mode; see the
+<b>visual</b>
+command
+and the description of
+<i><a href="vi.htm">vi</a></i>.
+
+<li>
+Suppress the use of the
+<i>EXINIT</i>
+environment variable
+and the reading of any
+<b>.exrc</b>
+file (see the EXTENDED DESCRIPTION section).
+
+</ul>
+
+<dt><b>-t&nbsp;</b><i>tagstring</i>
+<dd>
+Edit the file containing the specified
+<i>tagstring</i>
+and proceed as if the first command were
+<b>:tag</b>
+<i>tagstring</i>.
+(See
+<i><a href="ctags.htm">ctags</a></i>.)
+The tags feature represented by
+<b>-t</b>&nbsp;<i>tagstring</i>
+and the
+<b>ta</b>
+command are optional.
+It is provided on any system that
+also provides a conforming implementation of
+<i><a href="ctags.htm">ctags</a></i>;
+otherwise, the use of
+<b>-t</b>
+produces undefined results.
+
+<dt><b>-v</b>
+<dd>Invoke
+<i><a href="vi.htm">vi</a></i>.
+
+<dt><b>-w&nbsp;</b><i>size</i>
+<dd>
+Set the value of the
+<i>window</i>
+editor option to
+<i>size</i>.
+
+</dl>
+<p>
+If both the
+<b>-t</b>&nbsp;<i>tagstring</i>
+and
+<b>-c</b>&nbsp;<i>command</i>
+(or the obsolescent
+<i>+command</i>)
+options are given, the
+<b>-t</b>&nbsp;<i>tagstring</i>
+will be processed first; that is,
+the file containing the tag is selected by
+<b>-t</b>
+and then the command is executed.
+</blockquote><h4><a name = "tag_001_014_590">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to be edited.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_591">&nbsp;</a>STDIN</h4><blockquote>
+The standard input must be a text file consisting of commands,
+as described in the EXTENDED DESCRIPTION section.
+</blockquote><h4><a name = "tag_001_014_592">&nbsp;</a>INPUT FILES</h4><blockquote>
+Input files must be text files or files that would be text files
+except for an incomplete last line that is not longer than
+{LINE_MAX}-1
+bytes in length and contains no NUL characters.
+The editing of other forms of files may optionally be allowed by
+<i>ex</i>
+implementations.
+<p>
+The
+<b>.exrc</b>
+files (see the EXTENDED DESCRIPTION section)
+must be text files consisting of commands.
+<p>
+By default,
+<i>ex</i>
+reads lines from the files to be edited without
+interpreting any of those lines as any form of editor command.
+</blockquote><h4><a name = "tag_001_014_593">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>ex</i>:
+<dl compact>
+
+<dt><i>COLUMNS</i><dd>
+Override the system-selected horizontal screen size.
+See
+the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> 
+for valid values and results when it is unset or null.
+
+<dt><i>EXINIT</i><dd>Determine a list of
+<i>ex</i>
+commands that are executed on editor start-up,
+before reading the first file.
+The list can contain multiple commands by separating
+them using a vertical-line
+(|)
+character.
+See the EXTENDED DESCRIPTION section
+for more details of the initialisation phase.
+
+<dt><i>HOME</i><dd>Determine
+a pathname of a directory that will be searched for an editor
+start-up file named
+<b>.exrc</b>;
+see the EXTENDED DESCRIPTION section for details.
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+within regular expressions.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files),
+the behaviour of character classes within regular expressions,
+the classification of characters as upper- or lower-case letters,
+the case conversion of letters,
+and the detection of word boundaries.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LINES</i><dd>Override the system-selected vertical screen size,
+used as the number of lines in a screenful and the vertical
+screen size in visual mode.
+See
+the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> 
+for valid values and results when it is unset or null.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>PATH</i><dd>Determine the search path
+for the shell command specified in the editor commands
+<b>shell</b>,
+<b>read</b>
+and
+<b>write</b>;
+see
+the description of command search and execution in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>.
+
+<dt><i>SHELL</i><dd>Determine the preferred command-line interpreter for use in
+"!",
+<b>shell</b>,
+<b>read</b>
+and other commands with an operand of the form
+!<i>string</i>
+For the
+<b>shell</b>
+command, the program will be invoked with the single argument
+<b>-i</b>,
+for all others it will be invoked with the two arguments
+<b>-c</b>
+and
+<i>string</i>.
+If no
+<i>SHELL</i>
+environment variable is set,
+or it is set to a null string, the
+<i><a href="sh.htm">sh</a></i>
+utility will be used.
+
+<dt><i>TERM</i><dd>Determine the name of the terminal type.
+If this variable is
+unset or null, an unspecified default terminal type will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_594">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+The following actions will be taken upon receipt of signals:
+<dl compact>
+
+<dt>SIGINT<dd>When an interrupt occurs,
+<i>ex</i>
+will alert the terminal and write a message.
+The current editor command will be aborted and
+<i>ex</i>
+will return to the command level and
+prompt for another command.
+If the standard input is not a terminal device,
+<i>ex</i>
+will exit at the interrupt and return a non-zero exit status.
+(The alerting action
+can be modified by the use of the
+<b>errorbells</b>
+editor option; see
+<xref href=exedops><a href="#tag_001_014_598_052">
+Edit Options in ex
+</a></xref>.)
+
+<dt>SIGCONT<dd>
+The screen will be refreshed (if in visual mode).
+
+<dt>SIGHUP<dd>
+If the current buffer has changed since the last
+<b>e</b>
+or
+<b>w</b>
+command,
+<i>ex</i>
+will attempt to save the current file in a state such
+that it can be recovered later by an
+<i>ex</i>
+<b>-r</b>
+command.
+
+</dl>
+<p>
+The action taken for all other signals is unspecified.
+<br>
+</blockquote><h4><a name = "tag_001_014_595">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output is used only for writing prompts to the user,
+for informational messages and for writing lines from the file.
+</blockquote><h4><a name = "tag_001_014_596">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_597">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output from
+<i>ex</i>
+must be text files that are identical to
+the input files if no changes have been made to the files
+by commands,
+with the exception that in all cases
+where a forced session termination (the
+<i>ex</i>
+command
+q!)
+has not been issued prior to any file write,
+a trailing
+newline character
+will be added to the last line of the file if one was not
+present in the input.
+</blockquote><h4><a name = "tag_001_014_598">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The pathname of the file being edited by
+<i>ex</i>
+is referred to as the
+<i>current</i>
+file.
+The text of the file is read into a
+working version of the file (called
+<i>buffer</i>
+in this section;
+intermediate versions of the buffer may be kept
+in a file that is created in the directory
+indicated by the
+<b>directory</b>
+editor option)
+and all editing changes are performed on that version;
+the changes have no effect on the original file until an
+<i>ex</i>
+command causes the file to be written out.
+Lines in the buffer may each be limited to
+{LINE_MAX}
+bytes and an error message may be written if the limit is exceeded
+during editing.
+<p>
+The
+<i>alternative</i>
+pathname is the name of the last file mentioned in an
+editor command, or the previous current pathname if the last file
+mentioned became the current file.
+When the character
+"%"
+appears in a pathname entered as part of a command argument,
+it is replaced by the current pathname;
+the character
+"#"
+is replaced by the alternative pathname.
+Any character, including
+"%"
+and
+"#",
+retains its literal value (is escaped)
+when preceded by a backslash.
+<p>
+When an error occurs,
+<i>ex</i>
+will alert the terminal and write a message.
+(The alerting action
+can be modified by the use of the
+<b>errorbells</b>
+editor option.)
+<p>
+If the system crashes,
+<i>ex</i>
+will attempt to preserve the buffer if any unwritten changes were made.
+The command-line option
+<b>-r</b>
+can be used to retrieve the saved changes.
+<p>
+During initialisation, before the
+first file is read or any user commands from the terminal are processed,
+if the environment variable
+<i>EXINIT</i>
+is set, the editor will execute the
+<i>ex</i>
+commands contained in that variable.
+If the variable is not set,
+<i>ex</i>
+will attempt to read
+commands from the file
+<b>$HOME/.exrc</b>
+(the file
+<b>.exrc</b>
+in the directory referred to by the
+<i>HOME</i>
+environment variable).
+If and only if
+<i>EXINIT</i>
+or
+<b>$HOME/.exrc</b>
+sets the editor option
+<b>exrc</b>,
+<i>ex</i>
+finally will attempt to read
+commands from a file
+<b>.exrc</b>
+in the current directory.
+In the event that
+<i>EXINIT</i>
+is not set and the current directory is the
+user's home directory, any
+<b>.exrc</b>
+file will only be processed once.
+No
+<b>.exrc</b>
+file will be read unless it is owned by the
+same user ID as the effective user ID of the process.
+After any
+<b>.exrc</b>
+files are processed, any commands specified by the
+<b>-c</b>
+option will be processed.
+<p>
+By default,
+<i>ex</i>
+starts in the command mode, which is indicated by the <b>:</b> prompt.
+The input mode can be entered by
+<b>append</b>,
+<b>insert</b>
+or
+<b>change</b>
+commands;
+it can be exited (and command mode reentered) by typing a period
+(.)
+alone at the beginning of a line.
+There is one other mode, visual mode, in which
+full-screen editing is available.
+This is described more fully under the
+<b>visual</b>
+command and in the
+<i><a href="vi.htm">vi</a></i>
+utility description.
+The command line can consist of multiple
+<i>ex</i>
+commands separated
+by vertical-line characters
+(|).
+The use of commands that enter input or
+visual modes in this manner, unless they are the final command
+on the line, produces undefined results.
+<p>
+Command lines beginning with the double-quote character
+( )
+are ignored.
+This can be used for comments in an editor script.
+<h5><a name = "tag_001_014_598_001">&nbsp;</a>Addressing in ex</h5>
+<xref type="5" name="exaddr"></xref>
+Addressing in
+<i>ex</i>
+relates to the
+<i>current line</i>.
+In general, the current line is
+the last line affected by a command;
+the exact effect on the current line
+is discussed under the description of
+each command.
+When the buffer contains no lines, the current line is set to zero.
+<p>
+Addresses are constructed by one of the following methods:
+<ol>
+<p>
+<li>
+The address
+.
+(period)
+refers to the current line.
+<p>
+<li>
+The address "$" refers to the last line of the buffer.
+<p>
+<li>
+The address
+<i>n</i>,
+where
+<i>n</i>
+is a decimal number, refers to the
+<i>n</i>th
+line of the buffer.
+<p>
+<li>
+The address
+<i>'x</i> refers to the line marked with the
+mark-name character
+<i>x</i>,
+which must be a lower-case letter of the POSIX locale.
+Lines can be marked with the
+<b>ma</b>
+or
+k
+commands described below.
+<p>
+<li>
+A regular expression
+(RE)
+enclosed by slashes
+(/)
+is an address,
+and refers to the first line found by searching
+forward from the line following the current line
+toward the end of the
+buffer and stopping at the first line containing a
+string matching the RE.
+The second slash can be omitted at the end of a command line.
+If the
+<b>wrapscan</b>
+option is set, the search will wrap
+around to the beginning of the buffer
+and continue up to and including the current line, so that the entire
+buffer is searched.
+<p>
+<li>
+An RE enclosed in question marks
+(?)
+addresses
+the first line found by searching
+backward
+from the line
+preceding
+the current line
+toward the beginning of
+the buffer and stopping at the first line containing
+a string matching the RE.
+The second question mark can be omitted at the end of a command line.
+If the
+<b>wrapscan</b>
+option is set, the search will wrap around
+from the beginning of the buffer to the
+end of the buffer and continue up to and including the
+current line, so that the entire buffer is searched.
+<p>
+<li>
+An address followed by a plus sign
+(+)
+or a minus sign
+(-)
+followed by a
+decimal number
+is an offset address, and refers to the first address plus
+(respectively minus) the indicated number of lines.
+If the address is omitted, the addition or subtraction
+is taken with respect to the current line.
+<p>
+<li>
+An address of "+" or "-" followed by a number
+is taken with respect to the current line number; for example,
+-5
+is understood to mean
+.-5.
+<p>
+<li>
+An address ending with "+" or "-" has 1 added to or subtracted
+from the address, respectively.
+As a consequence of this rule and of rule 8 above, the address "-"
+refers to the line preceding the current line.
+Moreover, trailing "+" and "-" characters have a cumulative effect;
+for example,
+--
+refers to the current line less 2.
+<p>
+<li>
+A percent sign
+(%)
+stands for the
+address pair
+1,$.
+<p>
+</ol>
+<p>
+Commands require zero, one or two addresses.
+See the descriptions of
+<i>line</i>
+and
+<i>range</i>
+in
+<xref href=excmd><a href="#tag_001_014_598_002">
+Command Descriptions in ex
+</a></xref>.
+Commands that require zero addresses regard the presence
+of an address as an error.
+<p>
+Adjacent addresses in a
+<i>range</i>
+must be separated from each other by a comma
+(,)
+or a semicolon
+(;).
+In the latter case, the current line
+(.)
+is set to
+the first address,
+and only then is the second address calculated.
+This feature can be used to determine the starting
+line for forward and backward searches (see rules 5 and 6 above).
+The second address of any two-address sequence
+corresponds to a line that follows,
+in the buffer, the line corresponding to the first address.
+The first address must be less than or equal to the second address.
+The first address must be greater than or equal to the first line
+of the editing buffer and the last address must be less than or equal
+to the last line of the editing buffer.
+Any other case is an error.
+<p>
+All of the following examples are valid
+<i>addresses</i>:
+<dl compact>
+
+<dt>+++<dd>three lines after the current line
+
+<dt>/<i>re</i>/-<dd>one line before the next occurrence of
+<i>re</i>
+
+<dt>-2<dd>two lines before the current line.
+
+</dl>
+<h5><a name = "tag_001_014_598_002">&nbsp;</a>Command Descriptions in ex</h5>
+<xref type="5" name="excmd"></xref>
+The following symbols are used in this section to represent
+optional modifiers.
+Any or all can be omitted; the defaults are shown.
+<dl compact>
+
+<dt><i>line</i><dd>A single line address, given in any of the
+forms described in
+<xref href=exaddr><a href="#tag_001_014_598_001">
+Addressing in ex
+</a></xref>;
+the default for
+<i>line</i>
+is the current line.
+
+<dt><i>range</i><dd>A
+<i>line</i>,
+or a pair of line addresses, separated by a comma or semicolon
+(see
+<xref href=exaddr><a href="#tag_001_014_598_001">
+Addressing in ex
+</a></xref>
+for the difference between the two);
+the default for
+<i>range</i>
+is the current line only
+(.,.).
+A percent sign
+(%)
+stands for the range
+(1,$).
+If the range specified is such that the starting address exceeds
+the ending address, the range is invalid and the command will
+not be performed.
+If more than the expected number of addresses are given in a range,
+the greatest valid number of the last ones given will be used.
+For example,
+1,3,5p
+prints lines 3 to 5, inclusive (because two is the
+greatest valid number in the range accepted by
+<b>print</b>).
+
+<dt><i>count</i><dd>A positive integer, specifying the number of lines to be
+affected by the command;
+the default for
+<i>count</i>
+is 1.
+
+<dt><i>flags</i><dd>One of the characters
+"#",
+p
+or
+l
+(ell),
+or both
+"#"
+and
+l
+to add numbers to list-format output.
+When a command with such a flag
+completes, the
+addressed lines
+will be written out as if by the corresponding
+<b>#</b>,
+<b>p</b>
+or
+<b>l</b>
+command.
+The use of
+<i>flags</i>
+applies to all lines written by the
+<b>list</b>,
+<b>number</b>,
+<b>open</b>,
+<b>print</b>,
+<b>substitute</b>,
+<b>visual</b>,
+<b>&amp;</b>
+and
+z
+commands; for other commands, it applies to the
+current line at the completion of the command.
+In addition, any number of "+" or "-" characters can also be
+given after the flags,
+in which case the line written is not the one affected by the
+command, but rather the line addressed by the offset
+address as described above.
+The default for
+<i>flags</i>
+is null.
+
+<dt><i>buffer</i><dd>One of a number of named areas for saving text.
+The named buffers
+are specified by the lower-case letters of the POSIX locale.
+Specifying
+<i>buffer</i>
+causes the area of text affected by
+the command to be stored into the buffer as it was before
+the command took effect.
+This argument is also used on the
+<b>put</b>
+command and the visual mode put commands
+(<b>p</b>
+and
+<b>P</b>)
+to specify the buffer that will provide the text to insert.
+
+If the buffer name is specified in upper-case,
+and the buffer is to be modified (as with a
+deletion or yanking command),
+the buffer will be appended to
+rather than being overwritten.
+If the buffer is not to be modified (as in a visual mode
+<b>put</b>
+command) the buffer name can be specified in lower-case or
+upper-case with the same results.
+There is also one unnamed buffer, which is the repository
+for all text deleted (with the
+<b>delete</b>
+or visual mode
+<b>d</b>
+command) or yanked (with the
+<b>yank</b>
+or visual mode
+<b>y</b>
+command) when no buffer is specified.
+
+There are also
+numbered buffers, 1 to 9, inclusive, which are accessible only from
+visual mode.
+These buffers are special in that,
+in visual mode, when deleted text is placed in the unnamed buffer,
+it also is placed in buffer 1, the previous contents of
+buffer 1 are placed in buffer 2, and so on.
+Any text in buffer 9 will be lost.
+Text that is yanked (or otherwise copied) into the unnamed
+buffer does not modify the numbered buffers.
+Text cannot be placed directly into the numbered
+buffers although it can be retrieved from them by using a
+visual mode
+<b>put</b>
+command with the buffer name given as a number.
+When the
+<i>buffer</i>
+modifier is not used in the commands below, the unnamed buffer
+is the default.
+
+<dt><i>file</i><dd>A pattern used to derive a pathname; the default is the
+current file, as defined above.
+If no current file has yet been established, a warning will be written
+and the command will be aborted, except where specifically noted
+in the individual command descriptions that follow.
+The pattern will be subjected to the process of shell
+word expansions (see
+<xref href=wordexp><a href="chap2.htm#tag_001_006">
+Word Expansions
+</a></xref>);
+if more than a single pathname results
+and the command is expecting one file, the effects are unspecified.
+
+<dt><i>word</i><dd>In the POSIX locale, a
+<i>word</i>
+consists of a maximal sequence of letters, digits and underscores,
+delimited at both ends by characters other than
+letters, digits or underscores, or by the beginning or end of
+a line or the file.
+
+<dt><b>!</b><dd>A character that can be
+appended to the command to modify its operation, as detailed
+in the individual command descriptions.
+
+</dl>
+<p>
+If both a
+<i>count</i>
+and a
+<i>range</i>
+are specified for a
+command that uses them, the number of lines affected will be
+taken from the
+<i>count</i>
+value rather than the
+<i>range</i>.
+The starting line for the command is taken to be the
+first line addressed by the
+<i>range</i>.
+<p>
+When only a
+<i>line</i>
+or
+<i>range</i>
+is specified with no
+command, the implied command is either a
+<b>print</b>,
+<b>list</b>
+or
+<b>number</b>
+(<b>p</b>,
+<b>l</b>
+or
+<b>#</b>).
+The command selected will be the last
+of these three commands to be used, including use as a
+<i>flag</i>.
+When no range or count is specified and the command line
+is a blank line, the current line will be
+written, and the current line will be set to
+.+1.
+<p>
+Zero or more blank characters can precede or follow the addresses,
+<i>count</i>,
+<i>flags</i>
+or command name.
+Any object following a command name
+(such as
+<i>buffer</i>,
+<i>file</i>
+and so on)
+that begins with an alphabetic character
+will be separated from the command name
+with at least one
+blank character.
+<p>
+For each of the
+commands listed below, the command can be entered as the
+abbreviation (those characters in the Synopsis command word preceding the
+<b>[),</b>
+the full command (all characters shown for the command word, omitting the
+<b>[</b>
+and
+<b>]),</b>
+or any subset of the characters of the full command down to the abbreviation.
+For example, the
+<b>args</b>
+command (shown as
+<b>ar[gs]</b>
+in the Synopsis)
+can be entered as
+<b>ar</b>,
+<b>arg</b>
+or
+<b>args</b>.
+<h5><a name = "tag_001_014_598_003">&nbsp;</a>Abbreviate</h5>
+<i>Synopsis</i>:   
+ab<b>[</b>brev<b>]</b><i> word rhs</i>
+<p>
+Add the named abbreviation to the current abbreviation list.
+In visual mode, if
+<i>word</i>
+is typed so that it is preceded
+and followed by characters that cannot be part of a
+<i>word</i>
+(as defined previously),
+it will be replaced by the string
+<i>rhs</i>.
+<h5><a name = "tag_001_014_598_004">&nbsp;</a>Append</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>a<b>[</b>ppend<b>][</b>!<b>]</b>
+<p>
+Enter input mode; the input text will be placed after the specified line.
+If line 0 is specified, the text will be placed at the beginning of the
+buffer.
+The current line indicator will be set
+to the last input line; if no lines are input, it will be set to the
+target line, or to the first line of the file if a target of 0 was
+specified.
+Following the command name with
+<b>!</b>
+causes the
+<b>autoindent</b>
+editor option setting to be toggled
+for the duration of this command only.
+<h5><a name = "tag_001_014_598_005">&nbsp;</a>Arguments</h5>
+<i>Synopsis</i>:   
+ar<b>[</b>gs<b>]</b>
+<p>
+Write the argument list with the current argument inside "[" and "]".
+The argument list is the list
+of operands on start-up, which can subsequently be replaced by
+the operands of the
+<b>next</b>
+command.
+<h5><a name = "tag_001_014_598_006">&nbsp;</a>Change</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>]</b> c<b>[</b>hange<b>][</b>!<b>] [</b><i>count</i><b>]</b>
+<p>
+Enter input mode; the input text will replace the specified lines
+(<i>range</i>).
+The current line indicator will be set
+to the last line input; if no lines were input, it will be set to the
+line before the target line, or to the first line of the file if there
+are no lines preceding the target.
+Following the command name with
+"!"
+causes the
+<b>autoindent</b>
+editor option setting to be toggled for
+the duration of this command only.
+<h5><a name = "tag_001_014_598_007">&nbsp;</a>Change Directory</h5>
+<i>Synopsis</i>:   
+chd<b>[</b>ir<b>][</b>!<b>] [</b><i>directory</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+cd<b>[</b>!<b>] [</b><i>directory</i><b>]</b>
+<p>
+Change the current working directory to
+<i>directory</i>.
+The argument will be subjected to the process of shell word expansions (see
+<xref href=wordexp><a href="chap2.htm#tag_001_006">
+Word Expansions
+</a></xref>).
+When invoked with no
+<i>directory</i>
+argument, and the
+<i>HOME</i>
+environment variable is set to a non-empty value, the directory name in the
+<i>HOME</i>
+environment variable will become the new working directory.
+If
+<i>HOME</i>
+is empty or undefined, the default behaviour is implementation-dependent.
+If the current buffer has been modified since the last write, a
+warning will be written and the command will fail.
+This warning can be overridden by appending
+"!"
+to the command name,
+which will allow the command to complete.
+<h5><a name = "tag_001_014_598_008">&nbsp;</a>Copy</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>co<b>[</b>py<b>] </b><i>line </i><b>[</b><i>flags</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>t <i>line </i><b>[</b><i>flags</i><b>]</b>
+<p>
+Place a copy of the specified lines
+(<i>range</i>)
+after the specified destination
+<i>line</i>;
+line 0 specifies that the lines will be placed at the beginning of the
+buffer.
+<h5><a name = "tag_001_014_598_009">&nbsp;</a>Delete</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>d<b>[</b>elete<b>] [</b><i>buffer</i><b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Delete the specified lines from the buffer.
+If a named
+<i>buffer</i>
+is specified, the deleted text will be saved in it;
+otherwise, the deleted text will be saved in the unnamed buffer.
+If the
+command name is followed by a letter that could be
+interpreted as either a buffer name or a
+<i>flag</i>
+value (because neither a
+<i>count</i>
+nor an additional
+<i>flags</i>
+value was given),
+<i>ex</i>
+will consider the letter to be a
+<i>flags</i>
+value if the letter directly follows the command name,
+without any
+blank character
+separation; if the letter is preceded by
+one of more blank characters,
+it is considered a buffer name.
+<p>
+For example:
+<dl compact>
+
+<dt><b>1dp&nbsp;</b>or<b>&nbsp;1deletep</b><dd>Deletes the first line and prints the
+line that was second.
+
+<dt><b>1d&nbsp;p</b><dd>Deletes the first line, saving it in buffer
+p.
+
+<dt><b>1d&nbsp;p1l</b><dd>(Pee-one-ell.)
+Deletes the first line, saving it in buffer
+p,
+and listing the line that was second.
+
+</dl>
+<p>
+The current line indicator will be set to the line following
+the deleted lines,
+or to the last line if the deleted lines were at the end.
+<h5><a name = "tag_001_014_598_010">&nbsp;</a>Edit</h5>
+<i>Synopsis</i>:   
+e<b>[</b>dit<b>][</b>!<b>] [</b>+<i>line</i><b>] [</b><i>file</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+ex<b>[</b>!<b>] [</b>+<i>line</i><b>] [</b><i>file</i><b>]</b>
+<p>
+Begin editing
+<i>file</i>.
+If the current buffer has been modified since the last write,
+a warning will be written and the command will be aborted.
+This action can be overridden by appending the character
+"!"
+to the
+command name
+(e!
+<i>file</i>).
+The current line indicator will be affected as follows:
+<ul>
+<p>
+<li>
+If
+<i>file</i>
+is omitted or results in the current file, the current line indicator
+will not be changed.
+<p>
+<li>
+Otherwise, the current line indicator will be the last line of the buffer;
+however, if this command is executed from within visual mode, the current
+line indicator will be the first line of the buffer.
+<p>
+</ul>
+<p>
+If the
++<i>line</i>
+option is specified, the current line indicator will be set to the
+specified position, where
+<i>line</i>
+can be a number (or "$")
+or specified as &quot;<b>/</b><i>pattern</i>&quot; or &quot;<b>?</b><i>pattern</i>&quot;.
+Preceding the pattern with a "/" will start a search from the
+beginning of the file.
+Preceding the pattern with a
+"?"
+will start a search from the end of the file.
+This command is affected by the editor options
+<b>autowrite</b>
+and
+<b>writeany</b>.
+<h5><a name = "tag_001_014_598_011">&nbsp;</a>File</h5>
+<i>Synopsis</i>:   
+f<b>[</b>ile<b>] [</b><i>file</i><b>]</b>
+<p>
+Write the current pathname, the number
+of lines, and the current position when no
+<i>file</i>
+argument has been specified;
+<i>ex</i>
+may write other unspecified information.
+If no current file has yet been established,
+an unspecified message
+will be written
+to indicate that no file is being edited.
+With
+<i>file</i>,
+<i>ex</i>
+will change the current filename to
+<i>file</i>
+without changing the contents of the buffer or the previous
+current file.
+<h5><a name = "tag_001_014_598_012">&nbsp;</a>Global</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>g<b>[</b>lobal<b>] </b>/<i>pattern</i>/ <b>[</b><i>commands</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>v /<i>pattern</i>/ <b>[</b><i>commands</i><b>]</b>
+<p>
+Mark the lines within the given range that match
+(g)
+or do not match
+(v)
+the given pattern.
+Then execute the
+<i>ex</i>
+commands given by
+<i>commands</i>
+with the current line
+(.)
+set to each marked line.
+The
+<i>range</i>
+defaults to the entire file.
+<p>
+Multiple
+<i>commands</i>
+can be specified, one per line, by escaping each
+newline character
+with a backslash.
+If
+<i>commands</i>
+are omitted, each line will be written.
+For the
+<b>append</b>,
+<b>change</b>
+and
+<b>insert</b>
+commands, the
+input text will be included as part of the
+<b>global</b>
+command line;
+in this case the terminating period can be omitted if it ends
+<i>commands</i>.
+The
+<b>visual</b>
+command can be specified as one of the
+<i>commands</i>.
+In this mode, input will be taken from the terminal.
+Entering a
+Q
+from visual mode causes the next line matching the pattern
+to be selected and visual mode to be reentered, until the list
+is exhausted.
+<p>
+The
+<b>global</b>
+command itself and the
+<b>undo</b>
+command cannot be used in
+<i>commands</i>.
+The editor options
+<b>autoprint</b>,
+<b>autoindent</b>
+and
+<b>report</b>
+will be inhibited
+for the duration of the
+<b>g</b>
+or
+<b>v</b>
+command.
+<h5><a name = "tag_001_014_598_013">&nbsp;</a>Insert</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>i<b>[</b>nsert<b>][</b>!<b>]</b>
+<p>
+Enter input mode;
+the input text will be placed before the specified line.
+The current line indicator will be set
+to the last line input; if no lines were input, it will be set to the
+line before the target line, or to the first line of the file if there
+are no lines preceding the target.
+Following the command name with the character
+"!"
+causes the
+<b>autoindent</b>
+editor option setting to be toggled for
+the duration of this command only.
+<h5><a name = "tag_001_014_598_014">&nbsp;</a>Join</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>j<b>[</b>oin<b>][</b>!<b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Join the text from the specified lines together into one line.
+In the POSIX locale, when the last character on the first line of a pair
+of lines to be joined is a period, two
+space characters
+will be added following
+the period; when
+the last character of the first line is a
+blank character
+or when the first
+character on the second line of the pair is a
+")",
+no
+space characters
+will be added; otherwise, one
+space character
+will be added following the last character of the first line.
+Extra
+blank characters
+at the start of a line will be discarded.
+<p>
+Appending a character
+"!"
+to the
+<b>join</b>
+command name causes a simpler join with no white-space
+processing, independent of the current locale.
+<h5><a name = "tag_001_014_598_015">&nbsp;</a>List</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>l<b>[</b>ist<b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Write the addressed lines in a way that should be unambiguous:
+non-printable characters
+will be written as implementation-dependent multi-character sequences;
+the end of the line will be marked with a "$".
+<p>
+Long lines will be folded;
+the length at which folding occurs is unspecified,
+but should be appropriate for the output device.
+The only useful flag is
+"#",
+for line numbers.
+The current line indicator will be set to the last line written.
+<h5><a name = "tag_001_014_598_016">&nbsp;</a>Map</h5>
+<i>Synopsis</i>:   
+map<b>[</b>!<b>] [</b><i>x rhs</i><b>]</b>
+<p>
+Define macros for use in visual mode.
+The first argument must be a single character
+or the sequence
+#<i>digit</i>
+(the latter meaning one of the terminal's numbered
+function keys).
+When this character or function key
+is typed in visual mode,
+the action will be as if the corresponding
+<i>rhs</i>
+had been typed.
+If the character
+"!"
+is appended to the command name
+<b>map</b>,
+the mapping is effective
+during input mode rather than command mode.
+This allows
+<i>x</i>
+to have two different macro definitions at the same time:
+one for command mode and one for input mode.
+Non-printable characters,
+except for a
+tab character,
+require escaping with a
+&lt;control&gt;-V
+(or
+&lt;control&gt;-Q)
+to be entered in the arguments.
+On certain block-mode terminals, the mapping need not occur immediately
+(for example, it may occur after the terminal transmits a group
+of characters to the system),
+but it will achieve the same results of modifying the file
+as if it occurred immediately.
+Implementations may restrict the set of commands accepted within
+<i>rhs</i>;
+the list of restrictions is implementation-dependent.
+<p>
+The
+<b>map</b>
+command with no arguments will write all
+of the macros currently defined.
+If
+"!"
+is appended to the command, only the macros effective during input mode
+will be written; otherwise, only the macros effective during
+command mode will be written.
+<h5><a name = "tag_001_014_598_017">&nbsp;</a>Mark</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>ma<b>[</b>rk<b>] </b><i>x</i>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>k <i>x</i>
+<p>
+Give the specified line the specified mark
+<i>x</i>,
+which must be a
+single lower-case letter of the POSIX locale.
+The current line position will not be affected.
+The expression
+'<i>x</i>
+can then be used as an address in any command requiring one.
+For example
+&quot;<b>.,'</b><i>x</i><b>d</b>&quot;
+deletes all the lines from the current one to the marked line.
+Also see the
+<i><a href="vi.htm">vi</a></i>
+``
+and
+''
+commands
+for uses of the mark in visual mode.
+If the
+'<i>x</i>
+command is used in
+non-visual mode, the character
+marked will be the first
+non-blank
+character of the current line.
+Otherwise, the character marked will be the
+character at the current column of the current line.
+<h5><a name = "tag_001_014_598_018">&nbsp;</a>Move</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>m<b>[</b>ove<b>] </b><i>line</i>
+<p>
+Move the specified lines
+(<i>range</i>)
+to be after the target line
+(<i>line</i>).
+The current line indicator will be set to the first of the moved lines.
+<h5><a name = "tag_001_014_598_019">&nbsp;</a>Next</h5>
+<i>Synopsis</i>:   
+n<b>[</b>ext<b>][</b>!<b>] [</b><i>file ...</i><b>]</b>
+<p>
+Edit the next file from the argument list.
+If the current buffer has been modified since the
+last write, a warning will be written and the command will be aborted.
+This action can be overridden by appending the character
+"!"
+to the command name
+(n!).
+The argument list can
+be replaced by specifying a new one as operands to this command.
+Editing then starts with the first file on this new list.
+The current line indicator will be reset as described for the
+<b>edit</b>
+command.
+This command is affected by the editor options
+<b>autowrite</b>
+and
+<b>writeany</b>;
+see
+<xref href=exedops><a href="#tag_001_014_598_052">
+Edit Options in ex
+</a></xref>
+for details.
+<h5><a name = "tag_001_014_598_020">&nbsp;</a>Number</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>nu<b>[</b>mber<b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b># <b>[</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Write the selected lines, each preceded with its line number in decimal.
+Non-printable characters,
+except for a
+tab character,
+will be expanded as specified by the
+<b>print</b>
+command.
+The format is as follows:
+<p><code>
+<tt>"%+6d\t%s"</tt>, &lt;<i>line number</i>&gt;,
+&lt;<i>line text</i>&gt;
+</code>
+<p>
+The only meaningful flag is
+l,
+which causes the additional
+expanded writing of
+tab characters
+and end-of-lines done by the
+<b>list</b>
+command to be performed.
+The current line indicator will be set to the last line written.
+<h5><a name = "tag_001_014_598_021">&nbsp;</a>Open</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>o<b>[</b>pen<b>]</b> /<i>pattern</i>/ <b>[</b><i>flags</i><b>]</b>
+<p>
+Enter open mode, which is equivalent
+to visual mode with a one-line window.
+All the visual mode commands are available.
+If a match is found for the optional regular expression in
+<i>line</i>,
+the cursor will be placed at the start of the matching pattern.
+The visual mode command
+<b>Q</b>
+(see
+<i><a href="vi.htm">vi</a></i>)
+will exit open mode.
+This command need not be supported on block-mode terminals.
+<h5><a name = "tag_001_014_598_022">&nbsp;</a>Preserve</h5>
+<i>Synopsis</i>:   
+pre<b>[</b>serve<b>]</b>
+<p>
+Save the current buffer in a form that can
+later be recovered by using
+<i>ex</i>
+<b>-r</b>
+or by using the
+<b>recover</b>
+command.
+After the file has been preserved,
+a mail message will be sent to the user.
+This message can be read by invoking the
+<i><a href="mailx.htm">mailx</a></i>
+utility.
+The message will contain the name of the file,
+the time of preservation, and an
+<i>ex</i>
+command that could be used to recover the file.
+Additional information may be included in
+the mail message.
+<h5><a name = "tag_001_014_598_023">&nbsp;</a>Print</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>p<b>[</b>rint<b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Write the addressed lines.
+Non-printable characters,
+except for the
+tab character,
+will be written as implementation-dependent multi-character sequences.
+<p>
+Long lines will be folded;
+the length at which folding occurs is unspecified,
+but should be appropriate for the output device.
+The only meaningful
+<i>flags</i>
+are
+"#"
+and
+l.
+The current line indicator will be set to the last line written.
+<h5><a name = "tag_001_014_598_024">&nbsp;</a>Put</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>pu<b>[</b>t<b>] [</b><i>buffer</i><b>]</b>
+<p>
+Put back deleted or yanked lines after line
+<i>line</i>.
+A buffer can be specified;
+otherwise, the text in the unnamed buffer
+(where deleted or yanked text is placed by default) will be restored.
+The current line indicator will be set to the first line put back.
+<h5><a name = "tag_001_014_598_025">&nbsp;</a>Quit</h5>
+<i>Synopsis</i>:   
+q<b>[</b>uit<b>][</b>!<b>]</b>
+<p>
+Terminate the editing session.
+If the current buffer has been modified since
+the last write, a warning will be written
+and the command will fail.
+This warning can be overridden
+and an exit forced, discarding changes,
+by appending the character
+"!"
+to the command name.
+<h5><a name = "tag_001_014_598_026">&nbsp;</a>Read</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>r<b>[</b>ead<b>][</b>!<b>] [</b><i>file</i><b>]</b>
+<p>
+Place a copy of the specified file in the
+current buffer after the target line
+(which can be line 0 to place text at the beginning).
+If no
+<i>file</i>
+is named, the current file is the default.
+If there is no current file, then
+<i>file</i>
+will become the current file.
+If there is no current file nor
+<i>file</i>
+operand, the command will fail.
+<p>
+The current line indicator will be set to the last line read.
+In visual mode, the current line indicator will be set to the first line read.
+If
+<i>file</i>
+is preceded by
+"!",
+<i>file</i>
+is taken to
+be an operating system command and passed to the program named in the
+<i>SHELL</i>
+environment variable;
+the resultant output will be read in to the buffer.
+The special meaning of
+"!"
+can be overridden by escaping it with a backslash character.
+<h5><a name = "tag_001_014_598_027">&nbsp;</a>Recover</h5>
+<i>Synopsis</i>:   
+rec<b>[</b>over<b>]</b><i> file</i>
+<p>
+Attempt to recover
+<i>file</i>
+if it was saved as the
+result of a
+<b>preserve</b>
+command, the receipt of a signal (see the ASYNCHRONOUS EVENTS
+section), or a system or editor crash.
+The current line indicator will be reset as described for the
+<b>read</b>
+editor command.
+<h5><a name = "tag_001_014_598_028">&nbsp;</a>Rewind</h5>
+<i>Synopsis</i>:   
+rew<b>[</b>ind<b>][</b>!<b>]</b>
+<p>
+Rewind the argument list; that is, the
+current file will be set to the first file in the argument list.
+This is equivalent to a
+<b>next</b>
+command with the current
+argument list as its operands.
+If the current buffer has been
+modified since the last write, a warning will be written and
+the command will be aborted.
+The action can be overridden by
+appending the character
+"!"
+to the command name
+(rew!).
+The current line indicator will be reset as described for the
+<b>read</b>
+editor command.
+This command is affected by the editor options
+<b>autowrite</b>
+and
+<b>writeany</b>;
+see
+<xref href=exedops><a href="#tag_001_014_598_052">
+Edit Options in ex
+</a></xref>
+for details.
+<h5><a name = "tag_001_014_598_029">&nbsp;</a>Set</h5>
+<i>Synopsis</i>:   
+se<b>[</b>t<b>] [</b><i>option</i><b>[</b>=<b>[</b><i>value</i><b>]] </b>...<b>] [</b>no<i>option</i> ...<b>] [</b><i>option</i>? ...<b>] [</b>all<b>]</b>
+<p>
+When no arguments are specified,
+write those options whose values have
+been changed from the default settings;
+when the argument
+<b>all</b>
+is specified, write all of the option values.
+<p>
+Giving an option name followed by the character
+"?"
+causes the current value of that
+option to be written.
+The
+"?"
+can be separated from the
+option name by zero or more
+blank characters.
+The
+"?"
+is necessary only for Boolean valued options.
+Boolean options can be given values by the form
+<b>se</b>
+<i>option</i>
+to turn
+them on or
+se no<i>option</i>
+to turn them off;
+string and numeric options can be assigned by the form
+se<i>option</i>
+Blank characters
+in strings can
+be included as is
+by preceding each such character with a backslash.
+More than one option can be set or listed by a single
+<b>set</b>
+command by specifying multiple arguments,
+each separated from the next by one or more blank characters.
+<p>
+See
+<xref href=exedops><a href="#tag_001_014_598_052">
+Edit Options in ex
+</a></xref>
+for further details about options.
+<h5><a name = "tag_001_014_598_030">&nbsp;</a>Shell</h5>
+<i>Synopsis</i>:   
+sh<b>[</b>ell<b>]</b>
+<p>
+Invoke the program named in the
+<i>SHELL</i>
+environment variable with the argument
+<b>-i</b>
+(interactive mode).
+Editing will be resumed when the program exits.
+<h5><a name = "tag_001_014_598_031">&nbsp;</a>Source</h5>
+<i>Synopsis</i>:   
+so<b>[</b>urce<b>] </b><i>file</i>
+<p>
+Read and execute commands from the file specified
+by the mandatory argument
+<i>file</i>.
+Such
+<b>so</b>
+commands can be nested.
+The maximum supported nesting depth is implementation-dependent,
+but will be at least one.
+<h5><a name = "tag_001_014_598_032">&nbsp;</a>Substitute</h5>
+<i>Synopsis</i>:   <b>[</b><i>range</i><b>] </b>s<b>[</b>ubstitute<b>] [</b>/<i>pattern</i>/<i>repl</i>/<b>[</b><i>options</i><b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]]</b>
+<p>
+Replace the first instance of the pattern
+<i>pattern</i>
+by the string
+<i>repl</i>
+on each specified line.
+(See
+<xref href=exre><a href="#tag_001_014_598_050">
+Regular Expressions in ex
+</a></xref>
+and
+<xref href=exrep><a href="#tag_001_014_598_051">
+Replacement Strings in ex
+</a></xref>.)
+If the
+<b>/</b><i>pattern</i><b>/</b><i>repl</i><b>/</b>
+argument is not present, the
+<b>/</b><i>pattern</i><b>/</b><i>repl</i><b>/</b>
+from the previous
+<b>substitute</b>
+command will be used.
+If
+<i>options</i>
+includes the letter
+<b>g</b>
+(global), all non-overlapping instances
+of the pattern in the line will be substituted.
+If the option letter
+<b>c</b>
+(confirm) is included, then before each substitution
+the line will be written with
+^
+characters written on the following line,
+adjacent to and identifying the pattern to be replaced;
+an affirmative response
+causes the substitution to be done, while any other
+input aborts it.
+An affirmative response consists of a line with the
+affirmative response (as defined by the current locale) at the
+beginning of the line.
+Such a line will be subject to editing in the same
+way as the command line (the "/" or ":"
+line at the bottom of the screen).
+The current line indicator will be set to the last line substituted.
+When the
+<b>c</b>
+option is used, typing the interrupt character or receiving
+the SIGINT signal will stop the substitute operation and
+<i>ex</i>
+will return to command mode.
+All substitutions completed before the
+interrupt occurred will be retained, and none will be made after
+that point.
+The current line indicator will be set to the last line substituted.
+This command is affected by the
+<i>LC_MESSAGES</i>
+environment variable and the
+<b>wrapscan</b>
+option.
+<h5><a name = "tag_001_014_598_033">&nbsp;</a>Suspend</h5>
+<i>Synopsis</i>:   
+su<b>[</b>spend<b>][</b>!<b>]</b>
+<br>
+<i>Synopsis</i>:   
+st<b>[</b>op<b>][</b>!<b>]</b>
+<p>
+Allow control to return to the invoking process;
+<i>ex</i>
+will suspend itself as if it had received the SIGTSTP signal.
+The suspension will occur only if
+ job control
+is enabled in the invoking shell (see the description of
+<i>set</i>
+<b>-m</b>).
+<p>
+Following either
+<b>suspend</b>
+or
+<b>stop</b>
+with the character
+"!"
+will affect the operation of the
+<b>autowrite</b>
+editor option for this command only.
+<p>
+The current
+<b>susp</b>
+character (see
+<i><a href="stty.htm">stty</a></i>)
+will also cause the suspension.
+<h5><a name = "tag_001_014_598_034">&nbsp;</a>Tag</h5>
+<i>Synopsis</i>:   
+ta<b>[</b>g<b>][</b>!<b>] </b><i>tagstring</i>
+<p>
+Search for the
+<i>tagstring</i>,
+which can be in a
+different file.
+If the tag is in a different file, then
+the new file will be opened for editing.
+If the current buffer has been modified since the last write,
+a warning will be written and the command will be aborted.
+The action can be overridden by appending the character
+"!"
+to the command name.
+The current line indicator will be reset to the line indicated by the tag.
+This command is affected by the editor options
+<b>autowrite</b>
+and
+<b>writeany</b>;
+see
+<xref href=exedops><a href="#tag_001_014_598_052">
+Edit Options in ex
+</a></xref>
+and
+<i><a href="ctags.htm">ctags</a></i>
+for details.
+This command is affected by the
+<b>tags</b>
+editor option.
+<p>
+The
+<b>tag</b>
+command will search for
+<i>tagstring</i>
+in the tag file referred to by the
+<b>tags</b>
+editor option until a reference to
+<i>tagstring</i>
+is found.
+The file pointed to by this reference will be loaded
+into the buffer, and the current line will be set to
+the first occurrence of the
+pattern specified in the tag file associated with the supplied
+<i>tagstring</i>;
+if the tag file contained a line-number reference,
+the current line will be set to that line.
+If the pattern or line number
+is not found, an error message will be written.
+If a file referred to by the
+<b>tags</b>
+editor option does not exist or is not readable,
+an error message will be written.
+The results are unspecified if the format of a tags file
+is not as specified by the
+<i><a href="ctags.htm">ctags</a></i>
+utility description.
+<h5><a name = "tag_001_014_598_035">&nbsp;</a>Unabbreviate</h5>
+<i>Synopsis</i>:   
+una<b>[</b>bbrev<b>] </b><i>word</i>
+<p>
+Delete
+<i>word</i>
+from the list of abbreviations,
+as described by the
+<b>abbrev</b>
+editor command.
+<h5><a name = "tag_001_014_598_036">&nbsp;</a>Undo</h5>
+<i>Synopsis</i>:   
+u<b>[</b>ndo<b>]</b>
+<p>
+Reverse the changes made by the previous editing command
+(one that changes the contents of the buffer).
+For this purpose,
+<b>global</b>
+and
+<b>visual</b>
+are considered
+single commands.
+An
+<b>undo</b>
+can itself be reversed.
+Commands that affect the external environment, such as
+<b>write</b>,
+<b>edit</b>
+and
+<b>next,</b>
+cannot be undone.
+<h5><a name = "tag_001_014_598_037">&nbsp;</a>Unmap</h5>
+<i>Synopsis</i>:   
+unm<b>[</b>ap<b>][</b>!<b>] </b><i>x</i>
+<p>
+If no
+"!"
+is specified, remove the command-mode macro definition for
+<i>x</i>;
+otherwise,
+remove the input-mode macro definition for
+<i>x</i>.
+See the
+<b>map</b>
+command.
+<h5><a name = "tag_001_014_598_038">&nbsp;</a>Visual</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>vi<b>[</b>sual<b>] [</b><i>type</i><b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Enter visual mode with the current line indicator set to
+<i>line</i>.
+The
+<i>type</i>
+is optional, and can be "-", ".", "+" or "^", as in the
+<b>z</b>
+command, to specify the position of the specified line on the
+screen window.
+(The default is to place the line at the top of the screen window.)
+A
+<i>count</i>
+specifies the number of lines that
+will initially be written;
+the default is the value of the editor option
+<b>window</b>.
+The command
+<b>Q</b>
+will exit visual mode.
+(For more information, see
+<i><a href="vi.htm">vi</a></i>.)
+This command need not be supported on block-mode terminals.
+<h5><a name = "tag_001_014_598_039">&nbsp;</a>Write</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>w<b>[</b>rite<b>][</b>!<b>] [</b>&gt;&gt;<b>] [</b><i>file</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>w<b>[</b>rite<b>] [</b>!<b>] [</b><i>file</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>wq<b>[</b>!<b>] [</b>&gt;&gt;<b>] [</b><i>file</i><b>]</b>
+<p>
+Write the specified lines (the whole buffer, if no
+<i>range</i>
+is given) out to
+the file represented by the pathname
+<i>file</i>,
+writing to standard output the number of lines and bytes written.
+<p>
+If
+<i>file</i>
+is specified and is not the current file, and
+the file named by
+<i>file</i>
+exists,
+then the write will fail.
+If the current file has been changed by the
+<b>file</b>
+command and that file exists, the write will fail.
+In either case, the write can be forced by appending the character
+"!"
+to the command name.
+An existing file can be appended to by appending
+&gt;&gt;
+to the command name.
+If the file does not exist, the result is
+implementation-dependent.
+<p>
+If the
+<i>file</i>
+is preceded by
+"!",
+the program named in the
+<i>SHELL</i>
+environment variable will be
+invoked with
+<i>file</i>
+as its second argument, and the specified
+lines will be passed as standard input to the command.
+The
+<b>!</b>
+in this usage must be separated from the
+<b>w</b>
+command by at least one
+blank
+character.
+The special meaning of the
+<b>!</b>
+can be
+overridden by escaping it with a backslash character.
+This command is affected by the editor options
+<b>writeany</b>
+and
+<b>readonly</b>.
+<p>
+The command
+<b>wq</b>
+is equivalent to a
+<b>w</b>
+followed
+by a
+<b>q</b>;
+<b>wq!</b>
+is equivalent to
+<b>w!</b>
+followed by
+<b>q</b>.
+If the current buffer has no pathname associated with it, the
+<b>write</b>
+command will fail.
+<h5><a name = "tag_001_014_598_040">&nbsp;</a>Write and Exit</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>x<b>[</b>it<b>][</b>!<b>] [</b><i>file</i><b>]</b>
+<p>
+Perform a
+<b>write</b>
+command
+if any changes have been made to the current buffer
+since the last write to any file.
+The
+<i>range</i>
+defaults to the entire file.
+<p>
+Unless the command fails because an attempt to
+write lines to a file did not succeed, the
+<i>ex</i>
+utility will exit after an
+<b>x</b>
+command.
+This command is affected by the editor options
+<b>writeany</b>
+and
+<b>readonly</b>.
+<h5><a name = "tag_001_014_598_041">&nbsp;</a>Yank</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>ya<b>[</b>nk<b>] [</b><i>buffer</i><b>] [</b><i>count</i><b>]</b>
+<p>
+Place the specified lines in the named buffer.
+If no buffer is specified, the unnamed buffer will be used
+(where the most recently deleted or yanked text is placed by default).
+<h5><a name = "tag_001_014_598_042">&nbsp;</a>Adjust Window</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>z <b>[</b><i>type</i><b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+If
+<i>type</i>
+is omitted, then
+<i>count</i>
+lines following the specified line
+(<i>line</i>)
+will be written.
+The default for
+<i>count</i>
+is the value of the editor option
+<b>window</b>.
+The
+<i>type</i>
+argument will change the position at which
+<i>line</i>
+will be written on the screen by affecting the number of
+lines written before and after
+<i>line</i>.
+<p>
+If
+<i>type</i>
+is specified, it will be one of the following:
+<dl compact>
+
+<dt><b>-</b><dd>Place
+<i>line</i>
+at the bottom of the screen.
+
+<dt><b>+</b><dd>Place
+<i>line</i>
+at the top of the screen.
+
+<dt><b>.</b><dd>Place
+<i>line</i>
+in the middle.
+
+<dt><b>^</b><dd>Write out
+<i>count</i>
+lines starting
+<i>count</i>*2
+lines before the addressed line; the net effect of this will be that a
+<b>z^</b>
+command following another
+<b>z</b>
+command writes the previous page.
+
+<dt><b>=</b><dd>Centre the addressed line
+on the screen with a line of hyphens written
+immediately before and after it.
+The number of preceding and
+following lines of text written will be reduced to account for
+these lines of hyphens.
+
+</dl>
+<p>
+In all cases the
+current line indicator will be set to
+the last line written, with the exception of the
+"="
+type, which causes the current line indicator to be set to
+that addressed in the command.
+<h5><a name = "tag_001_014_598_043">&nbsp;</a>Escape</h5>
+<i>Synopsis</i>:   
+! <i>command</i>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>]</b>! <i>command</i>
+<p>
+Pass the remainder of the line after the
+<b>!</b>
+character to the program named in the
+<i>SHELL</i>
+environment variable for execution.
+A warning will be issued if the buffer has been changed since the last write.
+A single
+<b>!</b>
+character will be written when the command completes.
+The current line position will not be affected.
+<p>
+Within the text of
+<i>command</i>,
+<b>%</b>
+and
+<b>#</b>
+will be expanded as pathnames (the current and alternative pathnames,
+respectively),
+and
+<b>!</b>
+will be replaced with the text of the previous
+<b>!</b>
+command.
+(Thus,
+<b>!!</b>
+will repeat the previous
+<b>!</b>
+command.)
+If any such expansion is done, the expanded line will be echoed.
+<p>
+The special meanings of
+<b>%</b>,
+<b>#</b>
+and
+<b>!</b>
+can be overridden by
+escaping them with a backslash character.
+This command is affected by the editor options
+<b>autowrite</b>
+and
+<b>writeany</b>;
+see
+<xref href=exedops><a href="#tag_001_014_598_052">
+Edit Options in ex
+</a></xref>
+for details.
+<p>
+In the second form of the
+<b>!</b>
+command, the remainder of the line after the
+<b>!</b>
+will be passed to the
+program named in the
+<i>SHELL</i>
+environment variable, as described above.
+The specified lines
+will be provided to the program
+as standard input;
+the resulting output will replace the specified lines.
+<h5><a name = "tag_001_014_598_044">&nbsp;</a>Shift Left</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>]</b> &lt; <b>[</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Shift the specified lines to the left;
+the number of character positions
+to be shifted will be determined by the editor option
+<b>shiftwidth</b>.
+Only leading
+blank characters
+will be lost in shifting; other characters
+will not be affected.
+The current line indicator will be set to the last line changed.
+<h5><a name = "tag_001_014_598_045">&nbsp;</a>Shift Right</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>]</b> &gt; <b>[</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Shift the specified lines to the right, by inserting
+blank characters,
+using
+tab characters
+where possible, as determined by the editor option
+<b>shiftwidth</b>.
+Empty lines will not be changed.
+The current line indicator will be set to the last line changed.
+<h5><a name = "tag_001_014_598_046">&nbsp;</a>Resubstitute</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>&amp; <b>[</b><i>options</i><b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] </b>s<b>[</b>ubstitute<b>] [</b><i>options</i><b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+<b>[</b><i>range</i><b>] ~ </b> <b>[</b><i>options</i><b>] [</b><i>count</i><b>] [</b><i>flags</i><b>]</b>
+<p>
+Repeat the previous substitute command, as if &amp; were replaced by the
+previous:
+<pre>
+<code>
+s/<i>pattern</i>/<i>repl</i>/
+</code>
+</pre>
+command.
+The same effect can obtained by omitting the:
+<pre>
+<code>
+/<i>pattern</i>/<i>repl</i>/
+</code>
+</pre>
+string in the
+<b>substitute</b>
+command.
+The version of the command using tilde will be the same as &amp; and
+<b>s</b>,
+but the
+<i>pattern</i>
+used will be the last regular expression used in any command,
+not necessarily the one used in the last substitute command.
+For example, in the sequence:
+<pre>
+<code>
+s/red/blue/
+/green
+~
+</code>
+</pre>
+the "~" is equivalent to:
+<pre>
+<code>
+s/green/blue/
+</code>
+</pre>
+<h5><a name = "tag_001_014_598_047">&nbsp;</a>Scroll</h5>
+<xref type="5" name="scroll"></xref>
+<i>Synopsis</i>:   
+<i>eof</i>
+<p>
+Write the next
+<i>n</i>
+lines, where
+<i>n</i>
+is the value of the editor option
+<b>scroll</b>.
+The command is invoked with the
+<b>eof</b>
+character (see the description of the
+<i><a href="stty.htm">stty</a></i>
+<b>eof</b>
+character).
+The current line indicator will be set to the last line written.
+This command need not be supported on block-mode terminals.
+<h5><a name = "tag_001_014_598_048">&nbsp;</a>Write Line Number</h5>
+<i>Synopsis</i>:   
+<b>[</b><i>line</i><b>] </b>= <b>[</b><i>flags</i><b>]</b>
+<p>
+Write the line number of the specified line (default last line).
+The current line position will not be affected.
+<h5><a name = "tag_001_014_598_049">&nbsp;</a>Execute</h5>
+<i>Synopsis</i>:   
+ @ <i>buffer</i>
+<br>
+<i>Synopsis</i>:   
+* <i>buffer</i>
+<p>
+Execute each line of the named buffer as an
+<i>ex</i>
+command.
+If no buffer is specified or is specified as "@" or "*",
+the last buffer executed will be used.
+If there is no last buffer,
+an error occurs.
+<h5><a name = "tag_001_014_598_050">&nbsp;</a>Regular Expressions in ex</h5>
+<xref type="5" name="exre"></xref>
+The
+<i>ex</i>
+utility supports the basic regular expressions described in
+the <b>XBD</b> specification, <a href="../xbd/re.htm#tag_007_003"><b>Basic Regular Expressions</b>&nbsp;</a> .
+A null RE
+(//)
+is equivalent to the last RE encountered.
+<p>
+Regular expressions can be used in addresses to specify lines and, in some
+commands (for example, the
+<b>substitute</b>
+command), to specify portions of a line to be substituted.
+<p>
+The following constructs can be used to enhance the
+basic regular expressions:
+<dl compact>
+
+<dt>\&lt;<dd>Match the beginning of a
+<i>word</i>.
+(See the definition of
+<i>word</i>
+at the beginning of
+<xref href=excmd><a href="#tag_001_014_598_002">
+Command Descriptions in ex
+</a></xref>.)
+
+<dt>\&gt;<dd>Match the end of a
+<i>word</i>.
+
+<dt>~<dd>Match the replacement part of the last
+<b>substitute</b>
+command.
+The tilde
+(~)
+character can be escaped in a regular expression to become
+a normal character with no special meaning.
+
+</dl>
+<p>
+When
+the editor option
+<b>nomagic</b>
+is set, the only characters with special meanings are "^"
+at the beginning of a pattern, "$" at the end of a pattern, and "\".
+The characters ".", "*", "[" and "~" are treated as ordinary characters
+unless preceded by a "\";
+when preceded by a "\" they regain their special meaning.
+<h5><a name = "tag_001_014_598_051">&nbsp;</a>Replacement Strings in ex</h5>
+<xref type="5" name="exrep"></xref>
+The character &amp;
+(\&amp; if the editor option
+<b>nomagic</b>
+is set)
+in the replacement string will stand for the
+text matched by the pattern to be replaced.
+The character
+~ (\~
+if
+<b>nomagic</b>
+is set)
+will be replaced by the replacement part of the
+previous substitute command.
+The sequence
+\<i>n</i>
+where
+<i>n</i>
+is an integer, will be replaced by
+the text matched by the pattern enclosed in the
+<i>n</i>th
+set of parentheses
+\(
+and
+\).
+<p>
+The strings
+\l,
+\u,
+\L
+and
+\U
+can be used to modify the case of elements in
+the replacement string (using the
+\&amp;
+or
+\&lt;digit&gt;
+notation.
+The string
+\l
+(\u)
+causes the first character (actually inserted by the
+substitution) that follows the
+\l
+(\u)
+to be converted to lower-case (upper-case).
+The strings
+\L
+(\U)
+causes all characters subsequent
+to them to be converted to lower-case (upper-case) as they are inserted
+by the substitution until the string
+\e
+or
+\E,
+or the end of the
+replacement string, is encountered.
+<p>
+An example of case conversion with the
+<b>s</b>
+command is as follows:
+<pre>
+<code>
+<b>:</b>p
+<b>The cat sat on the mat.</b>
+<b>:</b>s/\&lt;.at\&gt;/\u&amp;/gp
+<b>The Cat Sat on the Mat.</b>
+<b>:</b>s/S\(.*\)M/S\U\1\eM/p
+<b>The Cat SAT ON THE Mat.</b>
+</code>
+</pre>
+<p>
+In visual mode, a &lt;control&gt;-V &lt;control&gt;-M (or &lt;control&gt;-Q &lt;control&gt;-M)
+sequence in the replacement string will be mapped to a
+newline character, and so can be used to split lines.
+A literal &lt;control&gt;-M requires escaping by preceding it with a backslash
+(\^V^M
+or
+\^Q^M).
+<h5><a name = "tag_001_014_598_052">&nbsp;</a>Edit Options in ex</h5>
+<xref type="5" name="exedops"></xref>
+The
+<i>ex</i>
+utility has a number of options that modify its behaviour.
+These options have default settings, which can be changed using the
+<b>set</b>
+command.
+<p>
+Options are Boolean unless otherwise specified.
+<h5><a name = "tag_001_014_598_053">&nbsp;</a>autoindent, ai</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>autoindent</b>
+is set, each line in input mode will be indented
+(using first as many tab characters as possible,
+as determined by the editor option
+<b>tabstop</b>,
+and then using space characters) to align with the previous line.
+(Starting indentation will be determined by the line appended after, or the
+line inserted before or the first line changed, with an
+<b>a</b>,
+<b>i</b>
+or
+<b>c</b>
+command, respectively.)
+When a newline character is inserted in the middle of a line,
+and when
+<b>autoindent</b>
+is on, the first non-blank character to
+the right of the cursor will be aligned to the current margin
+on a new line immediately following the current line.
+Any blank characters
+to the left of the cursor position at which the
+newline character
+was entered will be retained.
+When
+<b>autoindent</b>
+is off, a new line will be created, but no
+blank characters
+will be discarded.
+Additional indentation can be provided as usual;
+succeeding lines will automatically be indented to the new alignment.
+A line entered during input mode with
+<b>autoindent</b>
+that contains no user-entered characters will be empty,
+despite the appearance of indentation during entry.
+<p>
+Reducing the indent can be achieved
+when the cursor is at the current left margin by typing
+&lt;control&gt;-D
+one or more times;
+the cursor will be moved back to the previous integral number of
+<b>shiftwidth</b>
+spaces for each
+&lt;control&gt;-D.
+A ^
+followed by a
+&lt;control&gt;-D
+will remove all indentation temporarily (for the
+current line);
+a
+0
+followed by a
+&lt;control&gt;-D
+will remove all indentation
+permanently (for the current line and subsequent lines
+until input mode is reentered
+or until the indentation is
+specifically set to some other value).
+Changing the indent with
+&lt;control&gt;-D
+need not be supported on
+block-mode terminals.
+<h5><a name = "tag_001_014_598_054">&nbsp;</a>autoprint, ap</h5>
+[Default <i>on</i>]
+<p>
+If
+<b>autoprint</b>
+is set,
+the current line will be written after each command that changes buffer text.
+(Autoprint will be suppressed in the
+<b>global</b>
+[g
+and
+v]
+commands and for any command on which print operands
+[<i>flags</i>]
+are used to write explicitly the current line.)
+<h5><a name = "tag_001_014_598_055">&nbsp;</a>autowrite, aw</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>autowrite</b>
+is set,
+when a
+<b>next</b>,
+<b>rewind</b>,
+<b>tag</b>,
+<b>edit</b>,
+<b>suspend</b>,
+<b>stop</b>
+or
+"!"
+command is given,
+the buffer will be written (to the current file) if
+it has been modified.
+Appending the character
+"!"
+to the command name for
+any of these commands except
+"!"
+causes the write not to occur.
+If the write fails, the command will be aborted and an error message
+will be written.
+<h5><a name = "tag_001_014_598_056">&nbsp;</a>beautify, bf</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>beautify</b>
+is set,
+all non-printable characters,
+other than
+tab,
+newline
+and
+form-feed characters,
+will be discarded from text read in from files.
+<h5><a name = "tag_001_014_598_057">&nbsp;</a>directory, dir</h5>
+[Default <i>implementation-dependent</i>]
+<p>
+The value of this option specifies the directory in which the editor
+buffer is to be placed.
+If this directory is not writable by the user, the editor quits.
+<h5><a name = "tag_001_014_598_058">&nbsp;</a>edcompatible, ed</h5>
+[Default <i>off</i>]
+<p>
+Causes the presence of
+<b>g</b>
+and
+<b>c</b>
+suffixes on substitute commands
+to be remembered, and toggled by repeating the suffixes.
+<h5><a name = "tag_001_014_598_059">&nbsp;</a>errorbells, eb</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>errorbells</b>
+is set, error messages will be preceded by an alert action.
+Setting this option off causes the user to be informed of an error
+even when in visual mode, but rather than using the
+alert
+character, an
+error message will be written, using a standout mode of the terminal
+(such as inverse video) instead of the normal effect of the
+alert character, when the effect of the alert
+character is to cause the terminal to ring a bell or make other sounds.
+The editor should place the error message in a standout mode of the
+terminal, such as inverse video instead of ringing the bell,
+when the terminal capabilities allow this.
+<h5><a name = "tag_001_014_598_060">&nbsp;</a>exrc</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>exrc</b>
+is set,
+<i>ex</i>
+will access any
+<b>.exrc</b>
+file in the current directory, as described previously.
+If
+<b>exrc</b>
+is not set,
+<i>ex</i>
+will ignore any
+<b>.exrc</b>
+file in the current directory
+during initialisation,
+unless the current directory is that named by the
+<i>HOME</i>
+variable.
+<h5><a name = "tag_001_014_598_061">&nbsp;</a>ignorecase, ic</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>ignorecase</b>
+is set,
+characters that have upper-case and lower-case representations will
+have those representations considered as equivalent for purposes
+of regular expression comparison.
+<h5><a name = "tag_001_014_598_062">&nbsp;</a>lisp</h5>
+[Default <i>off</i>]
+<p>
+Autoindent mode and the
+<b>(</b>,
+<b>)</b>,
+<b>{</b>,
+<b>}</b>,
+<b>[[</b>
+and
+<b>]]</b>
+commands in visual mode are suitably modified for
+<b>lisp</b>
+code.
+<h5><a name = "tag_001_014_598_063">&nbsp;</a>list</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>list</b>
+is set,
+write the addressed lines in a way that should be unambiguous:
+non-printable characters
+will be written as implementation-dependent multi-character sequences;
+the end of the line will be marked with a "$".
+<h5><a name = "tag_001_014_598_064">&nbsp;</a>magic</h5>
+[Default <i>on</i>]
+<p>
+If
+<b>magic</b>
+is set,
+change the interpretation of characters in regular expressions and
+substitution replacement strings (see
+<xref href=exre><a href="#tag_001_014_598_050">
+Regular Expressions in ex
+</a></xref>
+and
+<xref href=exrep><a href="#tag_001_014_598_051">
+Replacement Strings in ex
+</a></xref>).
+<h5><a name = "tag_001_014_598_065">&nbsp;</a>mesg</h5>
+[Default <i>on</i>]
+<p>
+If
+<b>mesg</b>
+is set, the permission for others to use the
+<b>write</b>
+or
+<b>talk</b>
+commands to write to the terminal will be
+turned on while in visual mode.
+The shell-level command
+<i><a href="mesg.htm">mesg</a></i>
+<b>n</b>
+takes precedence over any setting of the
+<i>ex</i>
+<b>mesg</b>
+option; that is,
+if
+<b>mesg&nbsp;y</b>
+was issued before
+<i>ex</i>
+started (or in a shell escape), such as:
+<pre>
+<code>
+:!mesg&nbsp;y
+</code>
+</pre>
+the
+<b>mesg</b>
+option in
+<i>ex</i>
+can suppress incoming messages, but the
+<b>mesg</b>
+option cannot enable incoming messages if
+<b>mesg&nbsp;n</b>
+was issued.
+<h5><a name = "tag_001_014_598_066">&nbsp;</a>number, nu</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>number</b>
+is set,
+lines will be written with line numbers,
+as with the
+<b>number</b>
+command.
+<h5><a name = "tag_001_014_598_067">&nbsp;</a>paragraphs, para</h5>
+[Default <i>implementation-dependent</i>]
+<p>
+The
+<b>paragraph</b>
+option defines additional paragraph boundaries for the
+<b>{</b>
+and
+<b>}</b>
+commands in visual mode.
+The
+<b>paragraph</b>
+option can be set to a character string
+consisting of zero or more character pairs.
+The default value is implementation-dependent.
+<p>
+In the text to be edited, the character string
+&lt;newline&gt;. char-pair ,
+where
+&lt;<i>char-pair</i>&gt;
+is one of the character pairs found in
+<b>paragraph</b>,
+defines a paragraph boundary.
+For example, if:
+<pre>
+<code>
+paragraph=LaA ##
+</code>
+</pre>
+then all of the following additional paragraph
+boundaries would be recognised:
+<pre>
+<code>
+&lt;newline&gt;.La
+&lt;newline&gt;.A&lt;space&gt;
+&lt;newline&gt;.##
+</code>
+</pre>
+<h5><a name = "tag_001_014_598_068">&nbsp;</a>prompt</h5>
+[Default <i>on</i>]
+<p>
+If
+<b>prompt</b>
+is set,
+command mode input will be prompted for with a colon
+(:);
+when unset, no prompt will be written.
+<h5><a name = "tag_001_014_598_069">&nbsp;</a>readonly</h5>
+[Default <i>see text</i>]
+<p>
+If
+<b>readonly</b>
+is set,
+read-only mode will be enabled.
+Writing to a different file will be allowed in read-only mode;
+in addition, the write can be forced by using the character
+"!"
+(see the editor command
+<b>write</b>).
+The default setting will be
+<i>off</i>
+unless the file lacks write permission
+or the command-line option
+<b>-R</b>
+is used.
+<h5><a name = "tag_001_014_598_070">&nbsp;</a>redraw</h5>
+[Default <i>off</i>]
+<p>
+The editor simulates an intelligent terminal on a dumb terminal.
+(Since this is likely to require a large amount of output to the terminal,
+it is useful only at high transmission speeds.)
+<h5><a name = "tag_001_014_598_071">&nbsp;</a>remap</h5>
+[Default <i>on</i>]
+<p>
+If
+<b>remap</b>
+is set,
+macro translation will allow for macros defined in terms of
+other macros;
+translation will continue until the final product is obtained.
+If unset, only a one-step translation will be done.
+<h5><a name = "tag_001_014_598_072">&nbsp;</a>report</h5>
+[Default 5]
+<p>
+The value of this option will give the number of lines that can be changed
+by an editor command before a report is generated on the number of lines
+affected.
+<h5><a name = "tag_001_014_598_073">&nbsp;</a>scroll</h5>
+[Default
+window/2]
+<p>
+The value of this option will determine the number of lines scrolled on a
+<b>eof</b>
+command
+(see
+<xref href=scroll><a href="#tag_001_014_598_047">
+Scroll
+</a></xref>
+and the description of the
+<i><a href="stty.htm">stty</a></i>
+<b>eof</b>
+character).
+Changing the value of
+<b>window</b>
+in
+<i>EXINIT ,
+</i>one of the
+<b>.exrc</b>
+files, or with a
+<i>set</i>
+command
+will not affect the value of
+scroll.
+This editor option need not be supported on block-mode terminals.
+<h5><a name = "tag_001_014_598_074">&nbsp;</a>sections</h5>
+[Default <i>implementation-dependent</i>]
+<p>
+The
+<b>sections</b>
+option defines additional section
+boundaries for the
+[[
+and
+]]
+commands in visual mode.
+The
+<b>sections</b>
+option can be set to a character string
+consisting of zero or more character pairs.
+The default value is implementation-dependent.
+<p>
+In the text to be edited, the character string
+&lt;newline&gt;. char-pair ,
+where
+&lt;<i>char-pair</i>&gt;
+is one of the character pairs found in
+<b>sections</b>,
+defines a section boundary in the same manner
+that paragraph boundaries are defined.
+(See the
+<b>paragraphs</b>
+command.)
+<h5><a name = "tag_001_014_598_075">&nbsp;</a>shell, sh</h5>
+[Default from the environment
+<i>SHELL ]
+</i><p>
+The value of this option can be a string representing
+the pathname of the shell to be invoked for the
+"!"
+shell escape command, and by the
+<b>shell</b>
+command.
+The default is taken from the
+<i>SHELL</i>
+variable in the environment; see the ENVIRONMENT VARIABLES section
+for default values for
+<i>SHELL .
+</i><h5><a name = "tag_001_014_598_076">&nbsp;</a>shiftwidth, sw</h5>
+[Default 8]
+<p>
+The value of this option gives the width of an indentation level
+used during
+<b>autoindent</b>
+and by the shift commands.
+<h5><a name = "tag_001_014_598_077">&nbsp;</a>showmatch, sm</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>showmatch</b>
+is set,
+in visual mode, when a
+")"
+or
+"}"
+is typed, the matching
+"("
+or
+"{"
+will be shown
+if it is still on the screen.
+This editor option need not be supported on block-mode terminals.
+<h5><a name = "tag_001_014_598_078">&nbsp;</a>showmode</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>showmode</b>
+is set, in visual mode, the current mode that the
+editor is in will be written on the last line of the screen.
+Modes that will be reported are command mode and input mode;
+other unspecified modes may be written.
+<h5><a name = "tag_001_014_598_079">&nbsp;</a>slowopen</h5>
+[Default <i>off</i>]
+<p>
+In visual mode, this option prevents screen updates during input to improve
+throughput on unintelligent terminals.
+<h5><a name = "tag_001_014_598_080">&nbsp;</a>tabstop, ts</h5>
+[Default 8]
+<p>
+The value of this option specifies the software tab stops to be used by
+the editor to expand tabs in the input.
+<h5><a name = "tag_001_014_598_081">&nbsp;</a>tags</h5>
+[Default <i>see text</i>]
+<p>
+The value of this option can be a string representing
+space-character-separated
+pathnames that will be used as tag files for the
+<b>tag</b>
+command.
+A requested tag will be searched for sequentially in the specified files.
+By default, filenames of
+<b>tags</b>
+will be searched for in the current directory and in
+other implementation-dependent directories.
+<h5><a name = "tag_001_014_598_082">&nbsp;</a>term</h5>
+[Default from the environment
+<i>TERM ]
+</i><p>
+The value of this option can be a string representing
+the terminal type of the output device.
+The default is taken from the
+<i>TERM</i>
+variable in the environment; see the ENVIRONMENT VARIABLES section
+for default values for
+<i>TERM .
+</i><h5><a name = "tag_001_014_598_083">&nbsp;</a>terse</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>terse</b>
+is set,
+error messages may be less verbose.
+However, except for this caveat, error messages are unspecified.
+Furthermore, not all error
+messages need change for different settings of this option.
+<h5><a name = "tag_001_014_598_084">&nbsp;</a>warn</h5>
+[Default <i>on</i>]
+<p>
+If
+<b>warn</b>
+is set,
+<i>ex</i>
+will write a warning message to standard error
+if the contents of the buffer have not been saved
+before a
+"!"
+command escape.
+<h5><a name = "tag_001_014_598_085">&nbsp;</a>window</h5>
+[Default <i>see text</i>]
+<p>
+The value of this option determines
+the default number of lines in a screenful,
+as written by the
+<b>z</b>
+command.
+When in visual mode, the number
+of lines output when moving up or down the file by a
+<i>screenful</i>.
+The value of
+<b>window</b>
+can be unrelated to the real screen size, except that it will be set on
+entry to be the current number of screen lines.
+(The current number of screen lines will be determined by the
+system or overridden by the user, as described for
+<i>LINES</i>
+in the ENVIRONMENT VARIABLES section and the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> .)
+The baud rate of the terminal
+line may reduce the default in an implementation-dependent manner.
+The default value of
+<b>windows</b>
+also can be overridden by specifying a window size using the
+<b>-w</b>
+command-line option.
+<h5><a name = "tag_001_014_598_086">&nbsp;</a>wrapscan, ws</h5>
+[Default <i>on</i>]
+<p>
+If
+<b>wrapscan</b>
+is set,
+searches (using
+//
+or
+??)
+will wrap around the end of the
+editing buffer;
+when unset, searches will stop at the beginning of the editing buffer for
+??,
+or at the end of the editing buffer for
+//.
+<h5><a name = "tag_001_014_598_087">&nbsp;</a>wrapmargin, wm</h5>
+[Default 0]
+<p>
+If the value of this option is greater than zero (say
+<i>n</i>)
+in visual mode during text entry,
+then, in the POSIX locale, a
+newline character
+will replace all consecutive
+blank characters,
+at the boundary between a
+blank character
+and a non-blank character,
+so that lines will end at least
+<i>n</i>
+spaces from the ending margin of the terminal screen.
+(The ending margin will be determined by the
+system or overridden by the user, as described for
+<i>COLUMNS</i>
+in the ENVIRONMENT VARIABLES section and the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> .)
+If a line consists of a sequence of
+non-blank
+characters long enough such that it extends continuously from
+the beginning margin to beyond the ending margin, that sequence
+will not be broken by the action of this option.
+If the value is zero, no wrapping will be performed.
+<h5><a name = "tag_001_014_598_088">&nbsp;</a>writeany, wa</h5>
+[Default <i>off</i>]
+<p>
+If
+<b>writeany</b>
+is set,
+file-overwriting
+checks will be inhibited that would otherwise be made before
+<b>write</b>
+and
+<b>xit</b>
+commands, or before an automatic write
+(see editor option
+<b>autowrite</b>),
+allowing a write
+to any file (provided permissions allow it).
+</blockquote><h4><a name = "tag_001_014_599">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_600">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+When an error in the input script is encountered, or when
+an error is detected that is a consequence of the data
+(not) present in the file or due to an external condition
+such as a read or write error:
+<ul>
+<p>
+<li>
+If the standard input is a terminal device file,
+all input will be flushed, and a new command read.
+<p>
+<li>
+If the standard input is a regular file,
+<i>ex</i>
+will terminate with a non-zero exit status.
+<p>
+<li>
+If the command in error was one of those specified with the command-line
+<b>-c</b>
+option (or the obsolescent
+"+"
+option), all of the remaining
+<b>-c</b>
+commands will be flushed, and a new command read from standard input.
+<p>
+</ul>
+</blockquote><h4><a name = "tag_001_014_601">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+If a SIGSEGV signal is received while
+<i>ex</i>
+is saving a file, the file might not be successfully saved.
+<p>
+The
+<b>next</b>
+command can accept more than one file, so usage such as:
+<pre>
+<code>
+next `ls [abc]*`
+</code>
+</pre>
+is valid; it would not be valid for the
+<b>edit</b>
+or
+<b>read</b>
+commands, for example, because they expect only one file
+and unspecified results occur.
+</blockquote><h4><a name = "tag_001_014_602">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_603">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about 
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_604">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ed.htm">ed</a></i>,
+<i><a href="sed.htm">sed</a></i>,
+<i><a href="vi.htm">vi</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

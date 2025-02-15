@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>bg</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_172">&nbsp;</a>NAME</h4><blockquote>
+bg - run jobs in the background
+</blockquote><h4><a name = "tag_000_000_173">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+bg <b>[</b><i>job_id</i> ...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_174">&nbsp;</a>DESCRIPTION</h4><blockquote>
+If job control is enabled (see the description of
+<i>set</i>
+<b>-m</b>),
+the
+<i>bg</i>
+utility resumes suspended jobs from the current environment (see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>)
+by running them as background jobs.
+If the job specified by
+<i>job_id</i>
+is already a running background job, the
+<i>bg</i>
+utility has no effect
+and will exit successfully.
+<p>
+Using
+<i>bg</i>
+to place a job into the background causes its process ID
+to become &quot;known in the current shell execution environment&quot;,
+as if it had been started as an asynchronous list; see
+<xref href=asyncl><a href="chap2.htm#tag_001_009_003">
+Lists
+</a></xref>.
+</blockquote><h4><a name = "tag_000_000_175">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_176">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>job_id</i><dd>Specify the job to be resumed as a background job.
+If no
+<i>job_id</i>
+operand is given, the most recently suspended job is used.
+The format of
+<i>job_id</i>
+is described in the entry for
+<b>job control job ID</b>
+in 
+the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a> .
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_177">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_000_000_178">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_179">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>bg</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_000_000_180">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+<br>
+</blockquote><h4><a name = "tag_000_000_181">&nbsp;</a>STDOUT</h4><blockquote>
+The output of
+<i>bg</i>
+consists of a line in the format:
+<p><code>
+<tt>"[%d] %s\n"</tt>, &lt;<i>job-number</i>&gt;,
+&lt;<i>command</i>&gt;
+</code>
+where the fields are as follows:
+<dl compact>
+
+<dt><b>&lt;</b><i>job-number</i><b>&gt;</b><dd>
+A number that can be used to identify the job to the
+<i><a href="wait.htm">wait</a></i>,
+<i><a href="fg.htm">fg</a></i>
+and
+<i><a href="kill.htm">kill</a></i>
+utilities.
+Using these utilities, the job can be identified
+by prefixing the job number with
+"%".
+
+<dt><b>&lt;</b><i>command</i><b>&gt;</b><dd>
+The associated command that was given to the shell.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_182">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_000_000_183">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_184">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_185">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_186">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+If job control is disabled, the
+<i>bg</i>
+utility will exit with an error
+and no job will be placed in the background.
+</blockquote><h4><a name = "tag_000_000_187">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+A job is generally suspended by typing the SUSP character
+(&lt;control&gt;-Z
+on most systems); see
+the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a> .
+At that point,
+<i>bg</i>
+can put the job into the background.
+This is most effective when the job
+is expecting no terminal input and its
+output has been redirected to non-terminal files.
+A background job can be forced to stop
+when it has terminal output by issuing the command:
+<pre>
+<code>
+stty tostop
+</code>
+</pre>
+<p>
+A background job can be stopped with the command:
+<pre>
+<code>
+kill -s stop <i>job ID</i>
+</code>
+</pre>
+<p>
+The
+<i>bg</i>
+utility will not work as expected when it
+is operating in its own utility execution environment
+because that environment will have no suspended jobs.
+In the following examples:
+<pre>
+<code>
+... | xargs bg
+(bg)
+</code>
+</pre>
+each
+<i>bg</i>
+operates in a different environment and will not share
+its parent shell's understanding of jobs.
+For this reason,
+<i>bg</i>
+is generally implemented as a shell regular built-in.
+</blockquote><h4><a name = "tag_000_000_188">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_189">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_190">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fg.htm">fg</a></i>,
+<i><a href="kill.htm">kill</a></i>,
+<i><a href="jobs.htm">jobs</a></i>,
+<i><a href="wait.htm">wait</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>col</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_111">&nbsp;</a>NAME</h4><blockquote>
+col - filter reverse line-feeds (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_112">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+col <b>[</b>-bfpx<b>]</b> 
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_113">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>col</i>
+utility
+reads from the standard input and writes to the standard output.
+It performs the line overlays implied by reverse line-feeds,
+and by forward and reverse half-line-feeds.
+Unless
+<b>-x</b>
+is used, all
+blank characters
+in the input will be converted to
+tab characters
+wherever possible.
+<p>
+The
+ASCII
+control characters
+SO
+and
+SI
+are assumed by
+<i>col</i>
+to start and end text in an alternative character set.
+The character set to which each input character belongs is remembered,
+and on output
+SI
+and
+SO
+characters are generated as appropriate to ensure
+that each character is written in the correct character set.
+<p>
+On input, the only control characters accepted are
+space,
+backspace,
+tab,
+carriage-return
+and
+newline characters,
+SI,
+SO,
+VT,
+reverse line-feed, forward half-line-feed and
+reverse half-line-feed.
+The
+VT
+character is an alternative form of full reverse line-feed,
+included for
+compatibility with some earlier programs of this type.
+The only other characters to be copied to the output are
+those that are printable.
+<p>
+The ASCII codes for the control functions and line-motion
+sequences mentioned above are as given in the table below.
+ESC stands for the ASCII escape character, with the octal code 033;
+ESC<b>-x</b> means a sequence of two characters,
+ESC followed by the character
+<b>x</b>.
+<pre>
+<dl compact><dt> <dd>
+<table <tr valign=top><td align=left>reverse line-feed
+<td align=left><small>ESC</small>-7
+<tr valign=top><td align=left>reverse half-line-feed
+<td align=left><small>ESC</small>-8
+<tr valign=top><td align=left>forward half-line-feed
+<td align=left><small>ESC</small>-9
+<tr valign=top><td align=left>vertical-tab (<small>VT</small>)
+<td align=left>013
+<tr valign=top><td align=left>start-of-text (<small>SO</small>)
+<td align=left>016
+<tr valign=top><td align=left>end-of-text (<small>SI</small>)
+<td align=left>017
+</table>
+</dl>
+</pre>
+</blockquote><h4><a name = "tag_001_014_114">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>col</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+The following options are supported:
+<dl compact>
+
+<dt><b>-b</b>
+<dd>Assume that the output device in use is not capable of backspacing.
+In this case, if two or more characters are to appear in the same place,
+only the last one read will be output.
+
+<dt><b>-f</b>
+<dd>Suppress the normal treatment of half-line motions.
+Although
+<i>col</i>
+accepts half-line motions in its input, it normally does not
+emit them on output.
+Instead, text that would appear between lines is moved to the next lower
+full-line boundary.
+By suppressing this treatment, the output from
+<i>col</i>
+may contain forward half-line-feeds,
+but will still never contain either kind of reverse-line motion.
+
+<dt><b>-p</b>
+<dd>Force escape sequences to be passed through unchanged.
+Normally,
+<i>col</i>
+will remove any escape sequences found in its input that are
+not specified above.
+
+<dt><b>-x</b>
+<dd>Prevent
+<i>col</i>
+from converting
+blank characters
+to
+tab characters
+on output wherever possible.
+Tab stops are considered to be at each column position
+<i>n</i>
+such that
+<i>n</i>
+modulo 8 equals 1.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_115">&nbsp;</a>OPERANDS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_116">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is a text file to be translated.
+</blockquote><h4><a name = "tag_001_014_117">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_118">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables may affect the execution of
+<i>col</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_119">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_120">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output is a text file, translated from the
+standard input.
+</blockquote><h4><a name = "tag_001_014_121">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_122">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_123">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_124">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_125">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_126">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The use of the
+<b>-x</b>
+option may increase or decrease printing time,
+depending on the printer type.
+<p>
+Local vertical motions that would result in backing up over the first
+line of the document are ignored.
+As a result, the first line must not have any superscripts.
+<p>
+The use of the
+<b>-f</b>
+or
+<b>-p</b>
+options is discouraged unless the user
+is aware of the consequences of passing unusual escape sequences
+to the terminal.
+</blockquote><h4><a name = "tag_001_014_127">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_128">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_129">&nbsp;</a>SEE ALSO</h4><blockquote>
+None.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

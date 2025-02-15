@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;ucontext.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_217">&nbsp;</a>NAME</h4><blockquote>
+ucontext - user context
+</blockquote><h4><a name = "tag_000_010_218">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;ucontext.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_219">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;ucontext.h&gt;</i>
+header defines the
+<b>mcontext_t</b>
+type through
+<b>typedef</b>.
+<p>
+The
+<i>&lt;ucontext.h&gt;</i>
+header defines the
+<b>ucontext_t</b>
+type as a structure that includes at least the following members:
+<pre>
+<code>
+ucontext_t *uc_link     pointer to the context that will be resumed
+                        when this context returns
+sigset_t    uc_sigmask  the set of signals that are blocked when this
+                        context is active
+stack_t     uc_stack    the stack used by this context
+mcontext_t  uc_mcontext a machine-specific representation of the saved
+                        context
+</code>
+</pre>
+<p>
+The types
+<b>sigset_t</b>
+and
+<b>stack_t</b>
+are defined as in
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+<p>
+The following are declared as functions and may also be defined as macros,
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int  <a href="getco56.htm">getcontext</a>(ucontext_t *);
+int  <a href="setco228.htm">setcontext</a>(const ucontext_t *);
+void <a href="makec94.htm">makecontext</a>(ucontext_t *, (void *)(), int, ...);
+int  <a href="swapc265.htm">swapcontext</a>(ucontext_t *, const ucontext_t *);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_220">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_221">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_222">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getco56.htm">getcontext()</a></i>,
+<i><a href="makec94.htm">makecontext()</a></i>,
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sigpr250.htm">sigprocmask()</a></i>,
+<i><a href="sigal240.htm">sigaltstack()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>cosh</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_002_023">&nbsp;</a>NAME</h4><blockquote>
+cosh - hyperbolic cosine function
+</blockquote><h4><a name = "tag_000_002_024">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+double cosh(double <i>x</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_002_025">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>cosh()</i>
+function computes the hyperbolic cosine of
+<i>x</i>.
+<p>
+An application wishing to check for error situations should set
+<i>errno</i>
+to 0 before calling
+<i>cosh()</i>.
+If
+<i>errno</i>
+is non-zero on return,
+or the returned value is NaN,
+an error has occurred.
+</blockquote><h4><a name = "tag_000_002_026">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>cosh()</i>
+returns the hyperbolic cosine of
+<i>x</i>.
+<p>
+If the result would cause an overflow, HUGE_VAL is
+returned
+and
+<i>errno</i>
+is set to [ERANGE].
+<p>
+If
+<i>x</i>
+is NaN, NaN is returned and
+<i>errno</i>
+may be set to [EDOM].
+</blockquote><h4><a name = "tag_000_002_027">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>cosh()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ERANGE]<dd>
+The result would cause an overflow.
+
+</dl>
+<p>
+The
+<i>cosh()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>The value of
+<i>x</i>
+is NaN.
+
+</dl>
+<p>
+No other errors will occur.
+</blockquote><h4><a name = "tag_000_002_028">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_029">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_030">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_031">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="acosh.htm">acosh()</a></i>,
+<i><a href="isnan.htm">isnan()</a></i>,
+<i><a href="sinh.htm">sinh()</a></i>,
+<i><a href="tanh.htm">tanh()</a></i>,
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

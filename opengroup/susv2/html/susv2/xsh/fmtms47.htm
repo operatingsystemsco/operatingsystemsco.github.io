@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;fmtmsg.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_128">&nbsp;</a>NAME</h4><blockquote>
+fmtmsg.h - message display structures
+</blockquote><h4><a name = "tag_000_005_129">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;fmtmsg.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_130">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;fmtmsg.h&gt;</i>
+header defines the following macros, which expand to constant integral
+expressions:
+<dl compact>
+
+<dt>MM_HARD<dd>
+Source of the condition is hardware.
+
+<dt>MM_SOFT<dd>
+Source of the condition is software.
+
+<dt>MM_FIRM<dd>
+Source of the condition is firmware.
+
+<dt>MM_APPL<dd>
+Condition detected by application.
+
+<dt>MM_UTIL<dd>
+Condition detected by utility.
+
+<dt>MM_OPSYS<dd>
+Condition detected by operating system.
+
+<dt>MM_RECOVER<dd>
+Recoverable error.
+
+<dt>MM_NRECOV<dd>
+Non-recoverable error.
+
+<dt>MM_HALT<dd>
+Error causing application to halt.
+
+<dt>MM_ERROR<dd>
+Application has encountered a non-fatal fault.
+
+<dt>MM_WARNING<dd>
+Application has detected unusual non-error condition.
+
+<dt>MM_INFO<dd>
+Informative message.
+
+<dt>MM_NOSEV<dd>
+No severity level provided for the message.
+
+<dt>MM_PRINT<dd>
+Display message on standard error.
+
+<dt>MM_CONSOLE<dd>
+Display message on system console.
+
+</dl>
+<p>
+The table below indicates the null values and identifiers for
+<i><a href="fmtmsg.htm">fmtmsg()</a></i>
+arguments.  The
+<i>&lt;fmtmsg.h&gt;</i>
+header defines the macros in the
+<b>Identifier</b>
+column, which expand to constant
+expressions that expand to expressions of the type indicated in the
+<b>Type</b>
+column:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Argument</b>
+<th align=center><b>Type</b>
+<th align=center><b>Null-Value</b>
+<th align=center><b>Identifier</b>
+<tr valign=top><td align=left><i>label</i>
+<td align=left><b>char*</b>
+<td align=left>(<b>char</b>*)0
+<td align=left>MM_NULLLBL
+<tr valign=top><td align=left><i>severity</i>
+<td align=left><b>int</b>
+<td align=left>0
+<td align=left>MM_NULLSEV
+<tr valign=top><td align=left><i>class</i>
+<td align=left><b>long int</b>
+<td align=left><b>0L</b>
+<td align=left>MM_NULLMC
+<tr valign=top><td align=left><i>text</i>
+<td align=left><b>char*</b>
+<td align=left>(<b>char*</b>)0
+<td align=left>MM_NULLTXT
+<tr valign=top><td align=left><i>action</i>
+<td align=left><b>char*</b>
+<td align=left>(<b>char*</b>)0
+<td align=left>MM_NULLACT
+<tr valign=top><td align=left><i>tag</i>
+<td align=left><b>char*</b>
+<td align=left>(<b>char*</b>)0
+<td align=left>MM_NULLTAG
+</table>
+<p>
+The
+<i>&lt;fmtmsg.h&gt;</i>
+header also defines the following macros for use as return values for
+<i><a href="fmtmsg.htm">fmtmsg()</a></i>:
+<dl compact>
+
+<dt>MM_OK<dd>
+The function succeeded.
+
+<dt>MM_NOTOK<dd>
+The function failed completely.
+
+<dt>MM_NOMSG<dd>
+The function was unable to generate a message on standard error,
+but otherwise succeeded.
+
+<dt>MM_NOCON<dd>
+The function was unable to generate a console message,
+but otherwise succeeded.
+
+</dl>
+<p>
+The following is declared as a function and may also be defined as a macro.
+A function prototype must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int <a href="fmtmsg.htm">fmtmsg</a>(long, const char*, int,
+    const char*, const char*, const char*);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_131">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_132">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_133">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fmtmsg.htm">fmtmsg()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

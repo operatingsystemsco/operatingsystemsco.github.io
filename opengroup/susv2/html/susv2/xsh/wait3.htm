@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>wait3</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_437">&nbsp;</a>NAME</h4><blockquote>
+wait3 - wait for a child process to change state
+(<b>LEGACY</b>)
+</blockquote><h4><a name = "tag_000_010_438">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="syswa281.htm">sys/wait.h</a>&gt;
+
+pid_t wait3 (int *<i>stat_loc</i>, int <i>options</i>, struct rusage *<i>resource_usage</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_439">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>wait3()</i>
+function allows the calling thread to obtain status information for specified
+child processes.
+<p>
+The following call:
+<pre>
+<code>
+wait3(stat_loc, options, resource_usage);
+</code>
+</pre>
+is equivalent to the call:
+<pre>
+<code>
+waitpid((pid_t)-1, stat_loc, options);
+</code>
+</pre>
+except that on successful completion, if the <i>resource_usage</i> argument to
+<i>wait3()</i>
+is not a null pointer, the rusage structure that the third argument points to
+is filled in for the child process identified by the return value.
+<p>
+This interface need not be reentrant.
+</blockquote><h4><a name = "tag_000_010_440">&nbsp;</a>RETURN VALUE</h4><blockquote>
+See
+<i><a href="waitpid.htm">waitpid()</a></i>.
+</blockquote><h4><a name = "tag_000_010_441">&nbsp;</a>ERRORS</h4><blockquote>
+In addition to the error conditions specified on
+<i><a href="waitpid.htm">waitpid()</a></i>,
+under the following conditions,
+<i>wait3()</i>
+may fail and set <i>errno</i> to:
+<dl compact>
+
+<dt>[ECHILD]<dd>
+The calling process has no existing unwaited-for child processes, or if the
+set of processes specified by the argument <i>pid</i> can never be in the
+states specified by the argument <i>options</i>.
+
+<dt>[ENOSYS]<dd>
+The
+<i>wait3()</i>
+function is not supported on this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_442">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_443">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+New applications should use
+<i><a href="waitpid.htm">waitpid()</a></i>.
+</blockquote><h4><a name = "tag_000_010_444">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_445">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="exit.htm">exit()</a></i>,
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="pause.htm">pause()</a></i>,
+<i><a href="waitpid.htm">waitpid()</a></i>,
+<i><a href="syswa281.htm">&lt;sys/wait.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

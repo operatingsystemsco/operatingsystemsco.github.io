@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>endutxent</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_788">&nbsp;</a>NAME</h4><blockquote>
+endutxent, getutxent, getutxid, getutxline, pututxline, setutxent
+- user accounting database functions
+</blockquote><h4><a name = "tag_000_005_789">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="utmpx301.htm">utmpx.h</a>&gt;
+
+void endutxent(void);
+struct utmpx *getutxent(void);
+struct utmpx *getutxid(const struct utmpx *<i>id</i>);
+struct utmpx *getutxline(const struct utmpx *<i>line</i>);
+struct utmpx *pututxline(const struct utmpx *<i>utmpx</i>);
+void setutxent(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_790">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions provide access to the user accounting database.
+<p>
+The
+<i><a href="getut72.htm">getutxent()</a></i>
+function reads in the next entry from the user accounting
+database.  If the database is not already open, it opens it.  If it reaches
+the end of the database, it fails.
+<p>
+The
+<i>getutxid()</i>
+function searches forward from the current point in the database.  If the
+<b>ut_type</b> value of the <b>utmpx</b> structure pointed to by <i>id</i> is
+BOOT_TIME, OLD_TIME or NEW_TIME, then it stops when it finds an
+entry with a matching <b>ut_type</b> value.
+If the <b>ut_type</b> value is INIT_PROCESS, LOGIN_PROCESS, USER_PROCESS,
+or DEAD_PROCESS, then it stops when it finds an entry whose type is one of
+these four and whose <b>ut_id</b> member matches the <b>ut_id</b> member of
+the <b>utmpx</b> structure pointed to by <i>id</i>.  If the end of the database
+is reached without a match,
+<i>getutxid()</i>
+fails.
+<p>
+The
+<i>getutxid()</i>
+or
+<i>getutxline()</i>
+may cache data.
+For this reason, to use
+<i>getutxline()</i>
+to search for multiple occurrences, it is necessary to zero out the static
+data after each success, or
+<i>getutxline()</i>
+could just return a pointer to the same <b>utmpx</b> structure over and over
+again.
+<p>
+There is one exception to the rule about removing the structure before further
+reads are done.  The implicit read done by
+<i><a href="putut197.htm">pututxline()</a></i>
+(if it finds that it is not already at the correct place in the user
+accounting database) will not modify the static structure returned by
+<i><a href="getut72.htm">getutxent()</a></i>,
+<i>getutxid()</i>
+or
+<i>getutxline()</i>,
+if the application has just modified this structure and passed the pointer
+back to
+<i><a href="putut197.htm">pututxline()</a></i>.
+<p>
+For all entries that match a request, the
+<b>ut_type</b>
+member indicates the type of the entry.  Other members of the entry will
+contain meaningful data based on the value of the
+<b>ut_type</b>
+member as follows:
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>ut_type Member</b>
+<th align=center><b>Other Members with Meaningful Data</b>
+<tr valign=top><td align=left>EMPTY
+<td align=left>No others
+<tr valign=top><td align=left>BOOT_TIME
+<td align=left><b>ut_tv</b>
+<tr valign=top><td align=left>OLD_TIME
+<td align=left><b>ut_tv</b>
+<tr valign=top><td align=left>NEW_TIME
+<td align=left><b>ut_tv</b>
+<tr valign=top><td align=left>USER_PROCESS
+<td align=left><b>ut_id</b>, <b>ut_user</b> (login name of the user), <b>ut_line</b>, <b>ut_pid</b>, <b>ut_tv</b>
+<tr valign=top><td align=left>INIT_PROCESS
+<td align=left><b>ut_id</b>, <b>ut_pid</b>, <b>ut_tv</b>
+<tr valign=top><td align=left>LOGIN_PROCESS
+<td align=left><b>ut_id</b>, <b>ut_user</b> (implementation-dependent name of the login process), <b>ut_pid</b>, <b>ut_tv</b>
+<tr valign=top><td align=left>DEAD_PROCESS
+<td align=left><b>ut_id</b>, <b>ut_pid</b>, <b>ut_tv</b>
+</table>
+</pre>
+<p>
+The
+<i>getutxline()</i>
+function searches forward from the current point in the database until it
+finds an entry of the type LOGIN_PROCESS or USER_PROCESS which also has a
+<b>ut_line</b> value matching that in the <b>utmpx</b> structure pointed to by
+<i>line</i>.  If the end of the database is reached without a match,
+<i>getutxline()</i>
+fails.
+<p>
+If the process has appropriate privileges, the
+<i><a href="putut197.htm">pututxline()</a></i>
+function writes out the structure into the user accounting database.
+It uses
+<i>getutxid()</i>
+to search for a record that satisfies the request.  If this search succeeds,
+then the entry is replaced.  Otherwise, a new entry is made at the end of the
+user accounting database.
+<p>
+The
+<i><a href="setut235.htm">setutxent()</a></i>
+function resets the input to the beginning of the database.  This should be
+done before each search for a new entry if it is desired that the entire
+database be examined.
+<p>
+The
+<i>endutxent()</i>
+function closes the user accounting database.
+<p>
+These interfaces need not be reentrant.
+</blockquote><h4><a name = "tag_000_005_791">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i><a href="getut72.htm">getutxent()</a></i>,
+<i>getutxid()</i>
+and
+<i>getutxline()</i>
+return a pointer to a <b>utmpx</b> structure containing a copy of the requested
+entry in the user accounting database.  Otherwise a null pointer is returned.
+<p>
+The return value may point to a static area which is overwritten by a
+subsequent call to
+<i>getutxid()</i>
+or
+<i>getutxline()</i>.
+<p>
+Upon successful completion,
+<i><a href="putut197.htm">pututxline()</a></i>
+returns a pointer to a <b>utmpx</b> structure containing a copy of the entry
+added to the user accounting database.  Otherwise a null pointer is returned.
+<p>
+The
+<i>endutxent()</i>
+and
+<i><a href="setut235.htm">setutxent()</a></i>
+functions return no value.
+</blockquote><h4><a name = "tag_000_005_792">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined for the
+<i>endutxent()</i>,
+<i><a href="getut72.htm">getutxent()</a></i>,
+<i>getutxid()</i>,
+<i>getutxline()</i>
+and
+<i><a href="setut235.htm">setutxent()</a></i>
+functions.
+<p>
+The
+<i><a href="putut197.htm">pututxline()</a></i>
+function may fail if:
+<dl compact>
+
+<dt>[EPERM]<dd>
+The process does not have appropriate privileges.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_793">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_794">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The sizes of the arrays in the
+structure can be found using the <b>sizeof</b> operator.
+</blockquote><h4><a name = "tag_000_005_795">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_796">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="utmpx301.htm">&lt;utmpx.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

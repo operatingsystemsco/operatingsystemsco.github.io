@@ -1,0 +1,475 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>command</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_149">&nbsp;</a>NAME</h4><blockquote>
+command - execute a simple command
+</blockquote><h4><a name = "tag_001_014_150">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+command <b>[</b>-p<b>] </b><i>command_name </i><b>[</b><i>argument</i> ...<b>]</b>
+
+command <b>[</b> -v | -V <b>] </b><i>command_name</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_151">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>command</i>
+utility causes the shell to treat the
+arguments as a simple command, suppressing the
+shell function lookup that is
+described in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>
+item 1b.
+<p>
+If the
+<i>command_name</i>
+is the same as the name of one of the special built-in utilities,
+the special properties in the enumerated list at the beginning of
+<xref href=sbi><a href="chap2.htm#tag_001_014">
+Special Built-in Utilities
+</a></xref>
+will not occur.
+In every other respect, if
+<i>command_name</i>
+is not the name of a function, the effect of
+<i>command</i>
+will be the same as omitting
+<i>command</i>.
+<p>
+The
+<i>command</i>
+utility also provides information concerning
+how a command name will be interpreted by the shell;
+see
+<b>-v</b>
+and
+<b>-V</b>.
+</blockquote><h4><a name = "tag_001_014_152">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>command</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-p</b>
+<dd>Perform the command search using a default value for
+<i>PATH</i>
+that is guaranteed to find all of the standard utilities.
+
+<dt><b>-v</b>
+<dd>Write a string to standard output that indicates
+the pathname or command that will be used by the
+shell, in the current shell execution environment (see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>),
+to invoke
+<i>command_name</i>.
+<ul>
+
+<li>
+Utilities, regular built-in utilities,
+<i>command_names</i>
+including a slash character,
+and any implementation-dependent functions that are found using the
+<i>PATH</i>
+variable (as described in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>),
+will be written as absolute pathnames.
+
+<li>
+Shell functions, special built-in utilities,
+regular built-in utilities not associated with a
+<i>PATH</i>
+search,
+and shell reserved words
+will be written as just their names.
+
+<li>
+An alias will be written as a command line
+that represents its alias definition.
+
+<li>
+Otherwise, no output will be written
+and the exit status will reflect
+that the name was not found.
+
+</ul>
+
+<dt><b>-V</b>
+<dd>Write a string to standard output
+that indicates how the name given in the
+<i>command_name</i>
+operand will be interpreted by the
+shell, in the current shell execution environment (see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>).
+Although the format of this string is unspecified,
+it will indicate in which
+of the following categories
+<i>command_name</i>
+falls and include the information stated:
+<ul>
+
+<li>
+Utilities, regular built-in utilities,
+and any implementation-dependent functions
+that are found using the
+<i>PATH</i>
+variable (as described in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>),
+will be identified as such and
+include the absolute pathname in the string.
+
+<li>
+Other shell functions will be identified as functions.
+
+<li>
+Aliases will be identified as aliases and
+their definitions will be included in the string.
+
+<li>
+Special built-in utilities will be identified as special built-in utilities.
+
+<li>
+Regular built-in utilities not associated with a
+<i>PATH</i>
+search will be identified as regular built-in utilities.
+(The term &quot;regular&quot; need not be used.)
+
+<li>
+Shell reserved words will be identified as reserved words.
+
+</ul>
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_153">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>argument</i><dd>
+One of the strings treated as an argument to
+<i>command_name</i>.
+
+<dt><i>command_name</i><dd>
+The name of a utility or a special built-in utility.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_154">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_155">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_156">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>command</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>PATH</i><dd>Determine the search path
+used during the command search described in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>,
+except as described under the
+<b>-p</b>
+option.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_157">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_158">&nbsp;</a>STDOUT</h4><blockquote>
+When the
+<b>-v</b>
+option is specified,
+standard output is formatted as:
+<p><code>
+<tt>"%s\n"</tt>, &lt;<i>pathname or command</i>&gt;
+</code>
+<p>
+When the
+<b>-V</b>
+option is specified,
+standard output is formatted as:
+<p><code>
+<tt>"%s\n"</tt>, &lt;<i>unspecified</i>&gt;
+</code>
+</blockquote><h4><a name = "tag_001_014_159">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_160">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_161">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_162">&nbsp;</a>EXIT STATUS</h4><blockquote>
+When the
+<b>-v</b>
+or
+<b>-V</b>
+options are specified, the following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>The
+<i>command_name</i>
+could not be found or an error occurred.
+
+</dl>
+<p>
+Otherwise, the following exit values are returned:
+<dl compact>
+
+<dt>126<dd>The utility specified by
+<i>command_name</i>
+was found but could not be invoked.
+
+<dt>127<dd>An error occurred in the
+<i>command</i>
+utility or the utility specified by
+<i>command_name</i>
+could not be found.
+
+</dl>
+<p>
+Otherwise, the exit status of
+<i>command</i>
+will be that of the simple command specified by the arguments to
+<i>command</i>.
+</blockquote><h4><a name = "tag_001_014_163">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_164">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The order for command search
+allows functions to override regular built-ins and path searches.
+This utility is necessary to allow functions that have the same name as
+a utility to call the utility (instead of a recursive call to the function).
+<p>
+The system default path is available using
+<i><a href="getconf.htm">getconf</a></i>;
+however, since
+<i><a href="getconf.htm">getconf</a></i>
+may need to have the
+<i>PATH</i>
+set up before it can be called itself, the following can be used:
+<pre>
+<code>
+command -p getconf _CS_PATH
+</code>
+</pre>
+<p>
+There are some advantages to suppressing the
+special characteristics of special built-ins on occasion.
+For example:
+<pre>
+<code>
+command exec &gt; <i>unwritable-file</i>
+</code>
+</pre>
+will not cause a non-interactive script to abort, so that the
+output status can be checked by the script.
+<p>
+The
+<i>command</i>,
+<i><a href="env.htm">env</a></i>,
+<i><a href="nohup.htm">nohup</a></i>,
+<i><a href="time.htm">time</a></i>
+and
+<i><a href="xargs.htm">xargs</a></i>
+utilities have been specified to use
+exit code 127 if an error occurs so that
+applications can distinguish
+&quot;failure to find a utility&quot; from &quot;invoked utility exited
+with an error indication&quot;.
+The value 127 was chosen because it is not commonly used for other meanings;
+most utilities use small values for &quot;normal error conditions&quot; and
+the values above 128 can be confused with termination due to receipt of a
+signal.
+The value 126
+was chosen in a similar manner to indicate that the utility
+could be found, but not invoked.
+Some scripts produce meaningful error messages
+differentiating the 126 and 127 cases.
+The distinction between exit codes 126 and 127 is based
+on KornShell practice that uses 127 when all attempts to
+<i>exec</i>
+the utility fail with
+[ENOENT],
+and uses 126 when any attempt to
+<i>exec</i>
+the utility fails for any other reason.
+<p>
+Since the
+<b>-v</b>
+and
+<b>-V</b>
+options of
+<i>command</i>
+produce output in relation to the
+current shell execution environment,
+<i>command</i>
+is generally provided as a shell regular built-in.
+If it is called in a subshell or separate utility execution environment,
+such as one of the following:
+<pre>
+<code>
+(PATH=foo command -v)
+ nohup command -v
+</code>
+</pre>
+it will not necessarily produce correct results.
+For example, when called with
+<i><a href="nohup.htm">nohup</a></i>
+or an
+<i>exec</i>
+function, in a separate utility execution environment,
+most implementations will not be able to identify
+aliases, functions or special built-ins.
+<p>
+Two types of regular built-ins could be encountered
+on a system and these are described separately by
+<i>command</i>.
+The description of command search in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>
+allows for a standard utility to be implemented
+as a regular built-in as long as it is found
+in the appropriate place in a
+<i>PATH</i>
+search.
+So, for example,
+<i>command</i>
+<b>-v</b>
+true
+might yield
+<b>/bin/true</b>
+or some similar pathname.
+Other implementation-dependent utilities
+that are not defined by this specification
+might exist only as built-ins and have no
+pathname associated with them.
+These will produce output identified as (regular) built-ins.
+Applications encountering these will not be able
+to count on
+<i>exec</i>ing
+them, using them with
+<i><a href="nohup.htm">nohup</a></i>,
+overriding them with a different
+<i>PATH ,
+</i>and so on.
+<br>
+</blockquote><h4><a name = "tag_001_014_165">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+Make a version of
+<i><a href="cd.htm">cd</a></i>
+that always prints out the new working directory exactly once:
+<pre>
+<code>
+cd() {
+    command cd "$@" &gt;/dev/null
+    pwd
+}
+</code>
+</pre>
+<p>
+<li>
+Start off a &quot;secure shell script&quot; in which the script avoids
+being spoofed by its parent:
+<pre>
+<code>
+IFS='
+'
+#    The preceding value should be &lt;space&gt;&lt;tab&gt;&lt;newline&gt;.
+#    Set IFS to its default value.
+
+\unalias -a
+#    Unset all possible aliases.
+#    Note that unalias is escaped to prevent an alias
+#    being used for unalias.
+
+unset -f command
+#    Ensure command is not a user function.
+
+PATH="$(command -p getconf _CS_PATH):$PATH"
+#    Put on a reliable PATH prefix.
+
+#    ...
+</code>
+</pre>
+<p>
+At this point, given correct permissions on the directories called by
+<i>PATH ,
+</i>the script has the ability to ensure that any utility it
+calls is the intended one.
+It is being very cautious because it assumes that
+implementation extensions may be present that would
+allow user functions to exist when
+it is invoked; this capability is not specified by this specification,
+but it is not prohibited as an extension.
+For example, the
+<i>ENV</i>
+variable precedes the invocation of the script
+with a user startup script.
+Such a script could define functions
+to spoof the application.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_166">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_167">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sh.htm">sh</a></i>,
+<i><a href="type.htm">type</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

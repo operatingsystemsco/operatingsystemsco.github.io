@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>getwin</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_454">&nbsp;</a>NAME</h4><blockquote>
+getwin, putwin - dump window to, and reload window from, a file
+</blockquote><h4><a name = "tag_000_000_455">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+WINDOW *getwin(FILE *<i>filep</i>);
+
+int putwin(WINDOW *<i>win</i>, FILE *<i>filep</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_456">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getwin()</i>
+function reads window-related data stored in the file by
+<i><a href="putwin.htm">putwin()</a></i>.
+The function then creates and initialises a new window using that data.
+<p>
+The
+<i><a href="putwin.htm">putwin()</a></i>
+function writes all data associated with <i>win</i> into the
+<i>stdio</i>
+stream to which
+<i>filep</i> points, using an unspecified format.  This information can be
+retrieved later using
+<i>getwin()</i>.
+</blockquote><h4><a name = "tag_000_000_457">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>getwin()</i>
+returns a pointer to the window it created.  Otherwise, it returns a null
+pointer.
+<p>
+Upon successful completion,
+<i><a href="putwin.htm">putwin()</a></i>
+returns OK.  Otherwise, it returns ERR.
+</blockquote><h4><a name = "tag_000_000_458">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_459">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="scrdu118.htm">scr_dump()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

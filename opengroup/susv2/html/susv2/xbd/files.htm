@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>Directory Structure and Devices</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade><blockquote>
+<center>
+<h2><a name = "tag_003">&nbsp;</a>Directory Structure and Devices</h2>
+</center>
+<xref type="1" name="files"></xref>
+<h3><a name = "tag_003_001">&nbsp;</a>Directory Structure and Files</h3>
+The following directories exist on conforming systems and
+must be used as described.
+Portable applications cannot
+assume the ability to create files in any of these directories.
+<dl compact>
+
+<dt><b>/</b><dd>The root directory.
+
+<dt><b>/dev</b><dd>Contains
+<b>/dev/console</b>,
+<b>/dev/null</b>
+and
+<b>/dev/tty</b>,
+described below.
+
+</dl>
+<p>
+The following directory exists on conforming systems
+and is used as described.
+<dl compact>
+
+<dt><b>/tmp</b><dd><index term="/tmp, "></index>
+A directory made available for programs that need a place
+to create temporary files.
+Applications are allowed
+to create files in this directory, but
+cannot assume that such files
+are preserved between invocations of the application.
+
+The
+<b>/tmp</b>
+directory is defined to accommodate historical
+applications that assume its availability.
+Applications are encouraged to use the contents of
+<i>TMPDIR</i>
+for creating temporary files rather than
+the specific name
+<b>/tmp</b>.
+See
+<i><a href="../xsh/tempnam.htm">tempnam()</a></i>
+in the <b>XSH</b> specification.
+
+</dl>
+<p>
+The following files exist on conforming systems and are
+both readable and writable.
+<dl compact>
+
+<dt><b>/dev/null</b><dd><index term="/dev/null, "></index>
+An infinite data source and data sink.
+Data written to
+<b>/dev/null</b>
+is discarded.
+Reads from
+<b>/dev/null</b>
+always return end-of-file (EOF).
+
+<dt><b>/dev/tty</b><dd><index term="/dev/tty, "></index>
+In each process, a synonym
+for the controlling terminal associated with
+the process group of that process, if any.
+It is useful for programs or shell procedures that wish to
+be sure of writing messages to or reading data from the terminal
+no matter how output has been redirected.
+It can also be used for programs that demand the name of a file
+for output, when typed output is desired
+and it is tiresome to find out what terminal
+is currently in use.
+
+</dl>
+<p>
+The following file exists on conforming systems and need not be readable or
+writable:
+<dl compact>
+
+<dt><b>/dev/console</b><dd><index term="/dev/console, "></index>
+The
+<b>/dev/console</b>
+file is a generic name given to the system console.  It is usually linked to
+a particular machine-dependent special file.  It provides a basic I/O
+interface to the system console.
+
+</dl>
+<h3><a name = "tag_003_002">&nbsp;</a>Output Devices and Terminal Types</h3>
+<xref type="2" name="termchar"></xref>
+The utilities in the <b>XCU</b> specification historically have been implemented
+on a wide range of terminal types, but a
+conforming implementation need not support all features of all
+utilities on every conceivable terminal.
+This specification set states which features are optional for certain
+classes of terminals in the individual utility description sections.
+The implementation will document which terminal types
+it supports and which of these features and
+utilities are not supported by each terminal.
+<p>
+When a feature or utility is not supported on a specific
+terminal type, as allowed by this specification set, and the
+implementation considers such a condition to be an error
+preventing use of the feature or utility, the implementation
+will indicate such conditions through diagnostic messages or
+exit status values or both (as appropriate to the specific
+utility description) that inform the user that the terminal
+type lacks the appropriate capability.
+<p>
+This specification set uses a notational convention based on
+historical practice
+that identifies some of the control characters defined in
+<xref href=charset><a href="charset.htm#tag_001_001">
+Portable Character Set
+</a></xref>
+in a manner easily remembered by users on many terminals.
+The correspondence between this
+&quot;control-<i>char</i> &quot;
+notation and the actual control characters is shown in
+the following table.
+When this specification set refers to a character by its
+control-
+name, it is referring to the actual control character shown
+in the Value column of the table,
+which is not necessarily the exact control key sequence on all terminals.
+Some terminals have keyboards that do not allow the direct transmission
+of all the non-alphanumeric characters shown.
+In such cases, the system documentation will describe
+which data sequences transmitted by the terminal are interpreted by
+the system as representing the special characters.
+<pre>
+<center>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Name</b>
+<th align=center><b>Value</b>
+<th align=center><b>Name</b>
+<th align=center><b>Value</b>
+<th align=center><b>Name</b>
+<th align=center><b>Value</b>
+<tr valign=top><td align=left><i>control-A</i>
+<td align=center>&lt;SOH&gt;
+<td align=left>control-L
+<td align=center>&lt;FF&gt;
+<td align=left>control-W
+<td align=center>&lt;ETB&gt;
+<tr valign=top><td align=left><i>control-B</i>
+<td align=center>&lt;STX&gt;
+<td align=left>control-M
+<td align=center>&lt;CR&gt;
+<td align=left>control-X
+<td align=center>&lt;CAN&gt;
+<tr valign=top><td align=left><i>control-C</i>
+<td align=center>&lt;ETX&gt;
+<td align=left>control-N
+<td align=center>&lt;SO&gt;
+<td align=left>control-Y
+<td align=center>&lt;EM&gt;
+<tr valign=top><td align=left><i>control-D</i>
+<td align=center>&lt;EOT&gt;
+<td align=left>control-O
+<td align=center>&lt;SI&gt;
+<td align=left>control-Z
+<td align=center>&lt;SUB&gt;
+<tr valign=top><td align=left><i>control-E</i>
+<td align=center>&lt;ENQ&gt;
+<td align=left>control-P
+<td align=center>&lt;DLE&gt;
+<td align=left>control-[
+<td align=center>&lt;ESC&gt;
+<tr valign=top><td align=left><i>control-F</i>
+<td align=center>&lt;ACK&gt;
+<td align=left>control-Q
+<td align=center>&lt;DC1&gt;
+<td align=left>control-\
+<td align=center>&lt;FS&gt;
+<tr valign=top><td align=left><i>control-G</i>
+<td align=center>&lt;BEL&gt;
+<td align=left>control-R
+<td align=center>&lt;DC2&gt;
+<td align=left>control-]
+<td align=center>&lt;GS&gt;
+<tr valign=top><td align=left><i>control-H</i>
+<td align=center>&lt;BS&gt;
+<td align=left>control-S
+<td align=center>&lt;DC3&gt;
+<td align=left>control-^
+<td align=center>&lt;RS&gt;
+<tr valign=top><td align=left><i>control-I</i>
+<td align=center>&lt;HT&gt;
+<td align=left>control-T
+<td align=center>&lt;DC4&gt;
+<td align=left>control-_
+<td align=center>&lt;US&gt;
+<tr valign=top><td align=left><i>control-J</i>
+<td align=center>&lt;LF&gt;
+<td align=left>control-U
+<td align=center>&lt;NAK&gt;
+<td align=left>control-?
+<td align=center>&lt;DEL&gt;
+<tr valign=top><td align=left><i>control-K</i>
+<td align=center>&lt;VT&gt;
+<td align=left>control-V
+<td align=center>&lt;SYN&gt;
+</table>
+</center>
+</pre>
+<h6 align=center><xref table="Control Character Names"><a name="tagt_3">&nbsp;</a></xref>Table: Control Character Names</h6>
+<xref type="7" name="cntlcharnames"></xref>
+<dl><dt><b>Note:</b>
+<dd>The notation uses upper-case letters for arbitrary editorial reasons.
+There is no implication that the keystrokes represent control-shift-letter
+sequences.
+</dl>
+
+
+</blockquote>
+<hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

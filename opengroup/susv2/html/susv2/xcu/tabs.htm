@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>tabs</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2163">&nbsp;</a>NAME</h4><blockquote>
+tabs - set terminal tabs
+</blockquote><h4><a name = "tag_001_014_2164">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+tabs <b>[</b> -<i>n</i>| -a| -a2| -c| -c2| -c3| -f| -p| -s| -u<b>][</b>+m<b>[</b><i>n</i><b>]]</b>
+<b>[</b>-T <i>type</i><b>]</b>
+
+tabs <b>[</b>-T <i>type</i><b>][</b> +<b>[</b><i>n</i><b>]]</b><i> n1</i><b>[</b>,<i>n2</i>,...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2165">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>tabs</i>
+utility displays a series of characters
+that first clears the hardware terminal tab settings and
+then initialises the tab stops at the specified positions
+and optionally adjusts the margin.
+<p>
+The phrase &quot;tab-stop position
+<i>N</i>&quot;
+is taken to mean that, from the start of a line of
+output, tabbing to position
+<i>N</i>
+will cause the next character output to
+be in the
+(<i>N</i>+1)th
+column position on that line.
+The maximum number of tab stops allowed is terminal-dependent.
+<p>
+It need not be possible to implement
+<i>tabs</i>
+on certain terminals.
+If the terminal type obtained from the
+<i>TERM</i>
+environment variable or
+<b>-T</b>
+option represents such a terminal,
+an appropriate
+diagnostic message will be written to standard error and
+<i>tabs</i>
+will exit with a status greater than zero.
+</blockquote><h4><a name = "tag_001_014_2166">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>tabs</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except for various extensions:
+the options
+<b>-a2</b>,
+<b>-c2</b>
+and
+<b>-c3</b>
+are multi-character and
++m<i>n</i>
+uses a leading plus sign and an optional option-argument.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-</b><i>n</i>
+<dd>Specify repetitive tab stops separated
+by a uniform number of column positions,
+<i>n</i>,
+where
+<i>n</i>
+is a single-digit decimal number.
+The default usage of
+<i>tabs</i>
+with no arguments is equivalent to
+tabs -8.
+When
+<b>-0</b>
+is used, the tab stops are cleared and no new ones set.
+
+<dt><b>-a</b>
+<dd>1,10,16,36,72
+
+Assembler, applicable to some mainframes.
+
+<dt><b>-a2</b>
+<dd>1,10,16,40,72
+
+Assembler, applicable to some mainframes.
+
+<dt><b>-c</b>
+<dd>1,8,12,16,20,55
+
+COBOL, normal format.
+
+<dt><b>-c2</b>
+<dd>1,6,10,14,49
+
+COBOL,
+compact format (columns 1-6 omitted).
+
+<dt><b>-c3</b>
+<dd>1,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,67
+
+COBOL
+compact format (columns 1-6 omitted), with more tabs than
+<b>-c2</b>.
+
+<dt><b>-f</b>
+<dd>1,7,11,15,19,23
+
+FORTRAN
+
+<dt><b>-p</b>
+<dd>1,5,9,13,17,21,25,29,33,37,41,45,49,53,57,61
+
+PL/1
+
+<dt><b>-s</b>
+<dd>1,10,55
+
+SNOBOL
+
+<dt><b>-u</b>
+<dd>1,12,20,44
+
+Assembler, applicable to some mainframes.
+
+<dt><b>-T&nbsp;</b><i>type</i>
+<dd>
+Indicate the type of terminal.
+If this option is not
+supplied and the
+<i>TERM</i>
+variable is unset or null,
+an unspecified default terminal type will be used.
+The setting of
+<i>type</i>
+will take precedence over the value in
+<i>TERM .
+</i>
+<dt><b>+m[</b><i>n</i><b>]</b><dd>
+Reset the margin.
+The margin argument can be used for some terminals.
+It causes all tabs to be moved over
+<i>n</i>
+columns by making column
+<i>n</i>+1
+the left margin.
+If
+<i>n</i>
+is omitted, the default is 10.
+The normal (leftmost) margin on most terminals is
+obtained by
++m0.
+The margin for most terminals is reset only when the
++m
+flag is given explicitly.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2167">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>n1</i><b>[,</b><i>n2</i><b>,</b>...<b>]</b><dd>
+A single command-line argument that consists of tab-stop values
+separated
+using either commas or
+blank characters.
+The tab-stop values will be positive decimal integers
+in strictly ascending order.
+If any number (except the first one) is preceded by a plus sign, it is taken
+as an increment to be added to the previous value.
+For example, the tab lists
+1,10,20,30
+and
+1,10,+10,+10
+are considered to be identical.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2168">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2169">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2170">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>tabs</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TERM</i><dd>Determine the terminal type.
+If this variable is
+unset or null,
+and if the
+<b>-T</b>
+option is not specified, an unspecified default
+terminal type will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2171">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2172">&nbsp;</a>STDOUT</h4><blockquote>
+If standard output is a terminal,
+the appropriate sequence to clear and set the tab stops
+may be written to standard output
+in an unspecified format.
+If standard output is not a terminal,
+undefined results occur.
+</blockquote><h4><a name = "tag_001_014_2173">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2174">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2175">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2176">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2177">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2178">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+This utility makes use of the terminal's hardware tabs and the
+<i><a href="stty.htm">stty</a></i>
+<i>tabs</i>
+option.
+<p>
+This utility is not recommended for application use.
+<p>
+Some integrated display units might not have
+escape sequences to set tab stops, but may be set by
+internal system calls.
+On these terminals,
+<i>tabs</i>
+will work if standard output is directed to the terminal;
+if output is directed to another file, however,
+<i>tabs</i>
+will fail.
+</blockquote><h4><a name = "tag_001_014_2179">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2180">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2181">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="expand.htm">expand</a></i>,
+<i><a href="stty.htm">stty</a></i>,
+<i><a href="unexpand.htm">unexpand</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

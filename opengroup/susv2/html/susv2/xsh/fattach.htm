@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fattach</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_004_101">&nbsp;</a>NAME</h4><blockquote>
+fattach - attach a STREAMS-based file descriptor to a file
+in the file system name space
+</blockquote><h4><a name = "tag_000_004_102">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="strop263.htm">stropts.h</a>&gt;
+
+int fattach(int <i>fildes</i>, const char *<i>path</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_004_103">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fattach()</i>
+function attaches a STREAMS-based file descriptor to a file, effectively
+associating a pathname with <i>fildes</i>.  The <i>fildes</i> argument must be a
+valid open file descriptor associated with a STREAMS file.  The <i>path</i>
+argument points to a pathname of an existing file.  The process must have
+appropriate privileges, or must be the owner of the file named by <i>path</i>
+and have write permission.  A successful call to
+<i>fattach()</i>
+causes all pathnames that name the file named by
+<i>path</i>
+to name the STREAMS file associated with
+<i>fildes</i>,
+until the STREAMS file is detached from the file.  A STREAMS file can be
+attached to more than one file and can have several pathnames associated with
+it.
+<p>
+The attributes of the named STREAMS file are initialised as follows: the
+permissions, user ID, group ID, and times are set to those of the file named
+by <i>path</i>, the number of links is set to 1, and the size and device
+identifier are set to those of the STREAMS file associated with <i>fildes</i>.
+If any attributes of the named STREAMS file are subsequently changed (for
+example, by
+<i><a href="chmod.htm">chmod()</a></i>),
+neither the attributes of the underlying file nor the attributes of the
+STREAMS file to which
+<i>fildes</i>
+refers are affected.
+<p>
+File descriptors referring to the underlying file, opened prior to an
+<i>fattach()</i>
+call, continue to refer to the underlying file.
+</blockquote><h4><a name = "tag_000_004_104">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>fattach()</i>
+returns 0.  Otherwise, -1 is returned and
+<i>errno</i> is set to indicate the error.
+</blockquote><h4><a name = "tag_000_004_105">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>fattach()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for a component of the path prefix, or
+the process is the owner of <i>path</i> but does not have write
+permissions on the file named by <i>path</i>.
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not a valid open file descriptor.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file
+or <i>path</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+<dt>[EPERM]<dd>
+The effective user ID of the process is not the owner of the file named by
+<i>path</i> and the process does not have appropriate privilege.
+
+<dt>[EBUSY]<dd>
+The file named by <i>path</i> is currently a mount point or has a STREAMS file
+attached to it.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The size of <i>path</i> exceeds {PATH_MAX}, or
+a component of <i>path</i> is longer than {NAME_MAX}.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+</dl>
+<br>
+<p>
+The
+<i>fattach()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The <i>fildes</i> argument does not refer to a STREAMS file.
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[EXDEV]<dd>
+A link to a file on another file system was attempted.
+
+</dl>
+</blockquote><h4><a name = "tag_000_004_106">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_107">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>fattach()</i>
+function behaves similarly to the traditional
+<i>mount()</i>
+function in the way a file is temporarily replaced by the root
+directory of the mounted file system.  In the case of
+<i>fattach()</i>,
+the replaced file need not be a directory and the replacing file is a STREAMS
+file.
+</blockquote><h4><a name = "tag_000_004_108">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_109">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fdetach.htm">fdetach()</a></i>,
+<i><a href="isast83.htm">isastream()</a></i>,
+<i><a href="strop263.htm">&lt;stropts.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

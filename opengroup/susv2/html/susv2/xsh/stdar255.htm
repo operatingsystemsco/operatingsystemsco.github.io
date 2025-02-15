@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;stdarg.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_849">&nbsp;</a>NAME</h4><blockquote>
+stdarg.h - handle variable argument list
+</blockquote><h4><a name = "tag_000_008_850">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;stdarg.h&gt;
+
+void va_start(va_list <i>ap</i>, <i>argN</i>);
+<i>type</i> va_arg(va_list <i>ap</i>, <i>type</i>);
+void va_end(va_list <i>ap</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_851">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;stdarg.h&gt;</i>
+header contains a set of macros which allows portable functions that accept
+variable argument lists to be written.
+Functions that have variable argument lists (such
+as <i>printf</i>()) but do not use these macros are
+inherently non-portable, as different systems use different
+argument-passing conventions.
+<p>
+The type <b>va_list</b> is defined for variables used to traverse
+the list.
+<p>
+The <i>va_start</i>() macro is invoked to initialise <i>ap</i>
+to the beginning of the list before any calls to
+<i><a href="vaarg302.htm">va_arg()</a></i>.
+<p>
+The object
+<i>ap</i>
+may be passed as an argument to another function; if that function
+invokes the
+<i>va_arg</i>()
+macro with parameter
+<i>ap</i>,
+the value of
+<i>ap</i>
+in the calling function is indeterminate and must be passed to
+the
+<i>va_end</i>()
+macro prior to any further reference to
+<i>ap</i>.
+The parameter
+<i>argN</i>
+is the identifier of the rightmost parameter in the variable
+parameter list in the function definition (the one just before
+the , ...).
+If the parameter
+<i>argN</i>
+is declared with the
+<b>register</b>
+storage class, with a function type or array type, or with a type
+that is not compatible with the type that results after
+application of the default argument promotions, the behaviour is
+undefined.
+<p>
+The
+<i><a href="vaarg302.htm">va_arg()</a></i>
+macro will return the next argument in the list
+pointed to by <i>ap</i>. Each invocation of
+<i><a href="vaarg302.htm">va_arg()</a></i>
+modifies <i>ap</i> so that the values of successive arguments are
+returned in turn.
+The <i>type</i> parameter is the type the argument is expected to be.
+This is the type name specified such that the type of a pointer to an object
+that has the specified type can be obtained simply by suffixing a * to
+type.
+Different types can be mixed, but it is up to the routine to know
+what type of argument is expected.
+<p>
+The
+<i><a href="vaend303.htm">va_end()</a></i>
+macro is used to clean up; it invalidates <i>ap</i> for use
+(unless
+<i><a href="vasta304.htm">va_start()</a></i>
+is invoked again).
+<p>
+Multiple traversals, each bracketed by
+<i><a href="vasta304.htm">va_start()</a></i>
+<i><a href="vaend303.htm">va_end()</a></i>,
+are possible.
+</blockquote><h4><a name = "tag_000_008_852">&nbsp;</a>EXAMPLES</h4><blockquote>
+This example is a possible implementation of
+<i><a href="exec.htm">execl()</a></i>.
+<pre>
+<code>
+#include &lt;stdarg.h&gt;
+
+#define  MAXARGS     31
+
+/*
+ * execl is called by
+ * execl(file, arg1, arg2, ..., (char *)(0));
+ */
+int execl (const char *file, const char *args, ...)
+{
+    va_list ap;
+    char *array[MAXARGS];
+    int argno = 0;
+        va_start(ap, args);
+    while (args != 0) {
+        array[argno++] = args;
+        args = va_arg(ap, const char&nbsp;*);
+}
+va_end(ap);
+return execv(file, array);
+}
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_853">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+It is up to the calling routine to communicate to the called
+routine how many arguments
+there are, since it is not always possible for the called routine
+to determine this in any other way.
+For example,
+<i><a href="exec.htm">execl()</a></i>
+is passed a null pointer to signal the end of the list.
+The
+<i><a href="printf.htm">printf()</a></i>
+function can tell how many arguments are there by the
+<i>format</i>
+argument.
+</blockquote><h4><a name = "tag_000_008_854">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_855">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="printf.htm">printf</i>()</a>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

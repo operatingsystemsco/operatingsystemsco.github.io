@@ -1,0 +1,431 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>touch</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2296">&nbsp;</a>NAME</h4><blockquote>
+touch - change file access and modification times
+</blockquote><h4><a name = "tag_001_014_2297">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+touch <b>[</b>-acm<b>][</b> -r <i>ref_file</i>| -t <i>time</i><b>]</b><i> file</i>...
+
+touch <b>[</b>-acm<b>][</b><i>date_time</i><b>]</b><i> file</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2298">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>touch</i>
+utility will change the modification times, access times
+or both of files.
+The modification time is equivalent to the value of the
+<i>st_mtime</i>
+member of the
+<i>stat</i>
+structure for a file, as described in the <b>XSH</b> specification;
+the access time is equivalent to the value of
+<i>st_atime</i>.
+<p>
+The time used can be specified by the
+<b>-t</b>&nbsp;<i>time</i>
+option-argument, the
+corresponding time fields of the file referenced by the
+<b>-r</b>&nbsp;<i>ref_file</i>
+option-argument, or the
+<i>date_time</i>
+operand, as specified in
+the following sections.
+If none of these are specified,
+<i>touch</i>
+will use
+the current time (the value returned by the equivalent of the <b>XSH</b> specification
+<i><a href="../xsh/time.htm">time()</a></i>
+function).
+<p>
+For each
+<i>file</i>
+operand,
+<i>touch</i>
+will perform actions equivalent to the following functions defined in the <b>XSH</b> specification:
+<ol>
+<p>
+<li>
+If
+<i>file</i>
+does not exist, a
+<i><a href="../xsh/creat.htm">creat()</a></i>
+function call is made with the
+<i>file</i>
+operand used as the
+<i>path</i>
+argument and the value of the bitwise inclusive
+OR of S_IRUSR, S_IWUSR, S_IRGRP, S_IWGRP, S_IROTH and
+S_IWOTH used as the
+<i>mode</i>
+argument.
+<p>
+<li>
+The
+<i><a href="../xsh/utime.htm">utime()</a></i>
+function is called with the following arguments:
+<ol type = a>
+<p>
+<li>
+The
+<i>file</i>
+operand is used as the
+<i>path</i>
+argument.
+<p>
+<li>
+The
+<i>utimbuf</i>
+structure members
+<i>actime</i>
+and
+<i>modtime</i>
+are determined as described in the OPTIONS section.
+<p>
+</ol>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_2299">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>touch</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-a</b>
+<dd>Change the access time of
+<i>file</i>.
+Do not change the modification time unless
+<b>-m</b>
+is also specified.
+
+<dt><b>-c</b>
+<dd>Do not create a specified
+<i>file</i>
+if it does not exist.
+Do not write any diagnostic messages
+concerning this condition.
+
+<dt><b>-m</b>
+<dd>Change the modification time of
+<i>file</i>.
+Do not change the access time unless
+<b>-a</b>
+is also specified.
+
+<dt><b>-r&nbsp;</b><i>ref_file</i>
+<dd>
+Use the corresponding time of
+the file named by the pathname
+<i>ref_file</i>
+instead of the current time.
+
+<dt><b>-t&nbsp;</b><i>time</i>
+<dd>
+Use the specified
+<i>time</i>
+instead of the current time.
+The option-argument will be a decimal number of the form:
+<pre>
+<code>
+<b>[[</b><i>CC</i><b>]</b><i>YY</i><b>]</b><i>MMDDhhmm</i><b>[</b>.<i>SS</i><b>]</b>
+</code>
+</pre>
+where each two digits represents the following:
+<dl compact>
+
+<dt><i>MM</i><dd>The month of the year
+[01-12].
+
+<dt><i>DD</i><dd>The day of the month
+[01-31].
+
+<dt><i>hh</i><dd>The hour of the day
+[00-23].
+
+<dt><i>mm</i><dd>The minute of the hour
+[00-59].
+
+<dt><i>CC</i><dd>The first two digits of the year (the century).
+
+<dt><i>YY</i><dd>The second two digits of the year.
+
+<dt><i>SS</i><dd>The second of the minute [00-61].
+
+</dl>
+<p>
+Both
+<i>CC</i>
+and
+<i>YY</i>
+are optional.
+If neither is given, the current year will be assumed.
+If
+<i>YY</i>
+is specified, but
+<i>CC</i>
+is not,
+<i>CC</i>
+will be derived as follows:
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>If YY is:</b>
+<th align=center><b>CC becomes:</b>
+<tr valign=top><td align=center>69-99
+<td align=center>19
+<tr valign=top><td align=center>00-68
+<td align=center>20
+</table>
+</pre>
+<p>
+The resulting time will be affected by the value of the
+<i>TZ</i>
+environment variable.
+If the resulting time value precedes the Epoch,
+<i>touch</i>
+will exit immediately with an error status.
+The range of valid times past the Epoch is implementation-dependent,
+but will extend to at least
+the time 0 hours, 0 minutes, 0 seconds, January 1, 2038,
+Coordinated Universal Time.
+Some systems will not be able to represent dates beyond the
+January 18, 2038,
+because they use
+<b>signed int</b>
+as a time holder.
+<p>
+The range for
+<i>SS</i>
+is (00-61) rather than (00-59) because of leap seconds.
+If
+<i>SS</i>
+is 60 or 61, and the resulting time, as affected by the
+<i>TZ</i>
+environment variable, does not refer to a leap second,
+the resulting time will be
+one or two seconds after a time where
+<i>SS</i>
+is 59.
+If
+<i>SS</i>
+is not given a value, it is assumed to be zero.
+<p>
+</dl>
+<p>
+If neither the
+<b>-a</b>
+nor
+<b>-m</b>
+options were specified,
+<i>touch</i>
+will behave as if both the
+<b>-a</b>
+and
+<b>-m</b>
+options were specified.
+</blockquote><h4><a name = "tag_001_014_2300">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file whose times are to be modified.
+
+<dt><i>date_time</i><dd>
+Use the specified
+<i>date_time</i>
+instead of the current time.
+The operand is a decimal number of the form:
+<pre>
+<code>
+<i>MMDDhhmm</i><b>[</b><i>yy</i><b>]
+</b></code>
+</pre>
+where
+<i>MM</i>,
+<i>DD</i>,
+<i>hh</i>,
+and
+<i>mm</i>
+are as described for the
+<i>time</i>
+option-argument to the
+<b>-t</b>
+option and the optional
+<i>yy</i>
+is interpreted as follows:
+
+<dl compact><dt> <dd>
+If not specified, the current year will be used.
+If
+<i>yy</i>
+is in the range 69-99, the year 1969-1999,
+respectively, will be used.
+Otherwise, the results are unspecified.
+</dl>
+<p>
+If no
+<b>-r</b>
+option is specified, no
+<b>-t</b>
+option is specified, at least two operands
+are specified, and the first operand is an eight- or ten-digit decimal
+integer, the first operand will be assumed to be a
+<i>date_time</i>
+operand.
+Otherwise, the first operand will be assumed to be a
+<i>file</i>
+operand.
+<p>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2301">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2302">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2303">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>touch</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TZ</i><dd>Determine the timezone to be used for interpreting the
+<i>time</i>
+option-argument
+(or
+<i>date_time</i>
+operand; see above).
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2304">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2305">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2306">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2307">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2308">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2309">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The utility executed successfully and all requested changes were made.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2310">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2311">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The interpretation of time is taken to be
+<b>seconds since the Epoch</b>
+(see
+the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a> ).
+It should be noted that implementations conforming to the <b>XSH</b> specification
+do not take leap seconds into account when computing
+seconds since the Epoch.
+When
+<i>SS</i><b>=</b>60
+is used, the resulting
+time always refers to 1 plus &quot;seconds since the Epoch&quot;
+for a time when
+<i>SS</i><b>=</b>59.
+<p>
+Although the
+<b>-t</b>&nbsp;<i>time</i>
+option-argument and the
+obsolescent
+<i>date_time</i>
+operand specify values in 1969, the access
+time and modification time fields are defined in terms of
+seconds since the Epoch (midnight on 1 January 1970
+UTC).
+Therefore, depending on the value of
+<i>TZ</i>
+when
+<i>touch</i>
+is run, there will never be more than a few valid hours in 1969 and there
+need not be any valid times in 1969.
+<p>
+One ambiguous situation occurs if
+<b>-t</b>&nbsp;<i>time</i>
+is not specified,
+<b>-r</b>&nbsp;<i>ref_file</i>
+is not specified, and the first operand is an
+eight- or ten-digit decimal number.
+A portable script can avoid this problem by using:
+<pre>
+<code>
+touch -- file
+</code>
+</pre>
+or:
+<pre>
+<code>
+touch ./file
+</code>
+</pre>
+in this case.
+</blockquote><h4><a name = "tag_001_014_2312">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2313">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The obsolescent
+<i>date_time</i>
+operand may be withdrawn in a future issue.
+Applications should use the
+<b>-r</b>
+or
+<b>-t</b>
+options.
+</blockquote><h4><a name = "tag_001_014_2314">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="date.htm">date</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/creat.htm">creat()</a></i>,
+<i><a href="../xsh/time.htm">time()</a></i>,
+<i><a href="../xsh/sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

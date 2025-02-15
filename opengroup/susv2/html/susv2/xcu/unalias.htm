@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>unalias</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2467">&nbsp;</a>NAME</h4><blockquote>
+unalias - remove alias definitions
+</blockquote><h4><a name = "tag_001_014_2468">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+unalias <i>alias-name</i>...
+
+unalias -a
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2469">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>unalias</i>
+utility removes the definition for each alias name specified.
+See
+<xref href=alsub><a href="chap2.htm#tag_001_003_001">
+Alias Substitution
+</a></xref>.
+The aliases are removed
+from the current shell execution environment;
+see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>.
+</blockquote><h4><a name = "tag_001_014_2470">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>unalias</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following option is supported:
+<dl compact>
+
+<dt><b>-a</b>
+<dd>Remove all alias definitions from the current shell execution environment.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2471">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>alias-name</i><dd>
+The name of an alias to be removed.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2472">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2473">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2474">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>unalias</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2475">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2476">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2477">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2478">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2479">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2480">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>One of the
+<i>alias-name</i>
+operands specified did not represent a valid alias definition, or
+an error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2481">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2482">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Since
+<i>unalias</i>
+affects the current shell execution environment,
+it is generally provided as a shell regular built-in.
+</blockquote><h4><a name = "tag_001_014_2483">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2484">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2485">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="alias.htm">alias</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

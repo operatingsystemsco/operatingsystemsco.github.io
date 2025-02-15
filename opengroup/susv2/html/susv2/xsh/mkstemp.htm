@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mkstemp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_651">&nbsp;</a>NAME</h4><blockquote>
+mkstemp - make a unique file name
+</blockquote><h4><a name = "tag_000_007_652">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+int mkstemp(char *<i>template</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_653">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mkstemp()</i>
+function replaces the contents of the string pointed to by
+<i>template</i>
+by a unique file name, and returns a file descriptor for the file open for
+reading and writing.  The function thus prevents any possible race condition
+between testing whether the file exists and opening it for use.  The string in
+<i>template</i>
+should look like a file name with six trailing 'X's;
+<i>mkstemp()</i>
+replaces each 'X' with a character from the portable file name character set.
+The characters are chosen such that the resulting name does not duplicate the
+name of an existing file.
+</blockquote><h4><a name = "tag_000_007_654">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>mkstemp()</i>
+returns an open file descriptor.  Otherwise -1 is returned if no suitable
+file could be created.
+</blockquote><h4><a name = "tag_000_007_655">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_007_656">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_657">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+It is possible to run out of letters.
+<p>
+The
+<i>mkstemp()</i>
+function need not check to determine whether the file name part of
+<i>template</i>
+exceeds the maximum allowable file name length.
+<p>
+For portability with previous versions of this document,
+<i><a href="tmpfile.htm">tmpfile()</a></i>
+is preferred over this function.
+</blockquote><h4><a name = "tag_000_007_658">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_659">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getpid.htm">getpid()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="tmpfile.htm">tmpfile()</a></i>,
+<i><a href="tmpnam.htm">tmpnam()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

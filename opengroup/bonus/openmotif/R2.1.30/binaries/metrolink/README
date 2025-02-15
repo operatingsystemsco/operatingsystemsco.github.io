@@ -1,0 +1,131 @@
+                         Open Motif 2.1.30
+               Metro Link Incorporated Binary Packages
+                      Release 4 (July 5, 2000)
+                      
+                   Installation and Release Notes
+
+
+=== Changes Since Previous Releases ===
+
+Metro Link Open Motif release 4 includes official Open Motif patches
+#1 and #2.  It also includes approximately 30 significant bug fixes
+and enhancements to the Motif libraries and window manager, plus many
+minor source changes and over 100 fixes to the Motif demo source
+code.  These changes were developed for Metro Link's commercial Motif
+products, and are now being contributed back to Open Motif.
+
+The Linux binaries are now built with multi-byte language support
+enabled.  Some multi-byte testing has been done, but if you encounter
+any problems with multi-byte support, please report them so that we
+can work on fixing them.
+
+The development packages now install updated versions of the imake
+configuration files Motif.rules and Motif.tmpl into
+/usr/X11R6/lib/X11/config/.  Some versions of Linux and FreeBSD are
+missing these files, or have outdated versions.
+
+
+=== System Requirements ===
+
+Linux packages are provided for x86, Alpha, and PowerPC architectures.
+The packages should work on any Linux distribution with at least Linux
+kernel 2.2, glibc 2.1.1, XFree86 3.3.3, and the rpm package installer.
+This includes the following x86 distributions:
+
+    o Red Hat Linux 6.0 or later
+    o Mandrake Linux 6.0 or later
+    o S.u.S.E. Linux 6.2 or later
+    o Caldera OpenLinux 2.4 or later
+    o TurboLinux 6.0 or later
+
+The following Alpha Linux distributions meet the requirements:
+
+    o Red Hat Linux 6.0 or later
+    o S.u.S.E. Linux 6.1 or later
+
+The following PowerPC Linux distributions meet the requirements:
+
+    o Yellow Dog Linux Champion Server 1.2 or later
+    o Linux/PPC 1999 or later
+
+FreeBSD packages require FreeBSD 3.0 or later.
+
+
+=== Installation Instructions ===
+
+There are two packages for each platform: runtime and development.
+The runtime package contains the Motif shared libraries, Motif window
+manager (mwm), and Motif support files.  The development package
+includes the header files and static libraries needed to compile
+Motif programs from source code.
+
+To install the packages, use the following commands:
+
+    Linux:   rpm -ivh openmotif-2.1.30-4_MLI.i386.rpm
+             rpm -ivh openmotif-devel-2.1.30-4_MLI.i386.rpm
+    (for Alpha and PowerPC, the file names are slightly different)
+
+    FreeBSD: pkg_add openmotif-2.1.30-4_MLI.tgz
+             pkg_add openmotif-devel-2.1.30-4_MLI.tgz
+
+    
+=== Compiling Motif Programs that Use Imake ===
+
+Many X Window System programs use the imake(1) facility to generate
+Makefiles.  This facility, usually accessed through the xmkmf(1)
+command, allows for greater software portability by using platform-
+independent Imakefiles from which regular Makefiles are generated at
+build time.  When you install the Motif development package, the
+system imake configuration files located in /usr/X11R6/lib/X11/config
+are modified so that the imake environment knows that Motif has been
+installed on the system.  Motif programs that use Imakefiles can then
+be built in the same way as any other X programs that use imake,
+which is usually as simple as typing:
+
+	xmkmf -a
+	make
+
+Some Imakefiles are not written to properly take advantage of the
+Motif information in the imake configuration files.  If your program
+compiles but fails to link, this is most likely the case.  If this
+happens, examine the command line used in the link step and compare
+the libraries used to the library lists in the next section.  In
+particular, -lXp may be missing, as it is a new requirement as of
+Motif 2.1.  Try adding the missing library to the Imakefile or
+Makefile and rebuild.
+
+
+=== Compiling Motif Programs Without Using Imake ===
+
+If the program you are building does not use Imakefiles, or if you do
+not wish to use this facility, you must set up compiling and linking
+commands manually.  For compilation, the option -I/usr/X11R6/include
+is necessary for the compiler to find the header files.
+
+The link step needs the option -L/usr/X11R6/lib so that the X and
+Motif libraries can be found.  The list of libraries and the order in
+which they appear on the command line is also important.  The
+following example illustrates linking a simple program with the Motif
+library and all of the libraries it depends on.
+
+	gcc -o foo foo.o -L/usr/X11R6/lib -lXm -lXp -lXt -lSM -lICE \
+	     -lXext -lX11
+
+If your Motif program also uses the Motif Resource Manager (MRM)
+library, then -lMrm should be inserted into the command line before
+-lXm.
+
+
+=== Problems/Comments? ===
+
+Metro Link does not provide technical support for the Open Motif
+binary packages.  However, we are interested in hearing your
+feedback.  Comments, suggestions, and problem reports may be
+e-mailed to <openmotif@metrolink.com>.  In particular, if you would
+like to see additional operating systems, architectures, or package
+formats supported, drop us a line; our choices for future releases
+will be based on demand.
+
+Metro Link does provide fully supported commercial versions of Motif
+for a variety of platforms.  See our web site at www.metrolink.com
+for details.

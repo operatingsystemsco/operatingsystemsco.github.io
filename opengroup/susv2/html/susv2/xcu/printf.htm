@@ -1,0 +1,528 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>printf</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1764">&nbsp;</a>NAME</h4><blockquote>
+printf - write formatted output
+</blockquote><h4><a name = "tag_001_014_1765">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+printf <i>format</i><b>[</b><i>argument</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1766">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>printf</i>
+utility will write formatted operands to the standard output.
+The
+<i>argument</i>
+operands will be formatted under control of the
+<i>format</i>
+operand.
+</blockquote><h4><a name = "tag_001_014_1767">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1768">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>format</i><dd>A string describing the format to use to write the remaining operands;
+see the EXTENDED DESCRIPTION section.
+
+<dt><i>argument</i><dd>
+The strings to be written to standard output, under the control of
+<i>format</i>;
+see the EXTENDED DESCRIPTION section.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1769">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1770">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1771">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>printf</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LC_NUMERIC</i><dd>
+Determine the
+locale for numeric formatting.
+It will affect the format of numbers written using the
+e,
+E,
+f,
+g
+and
+G
+conversion characters (if supported).
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1772">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1773">&nbsp;</a>STDOUT</h4><blockquote>
+See the EXTENDED DESCRIPTION section.
+</blockquote><h4><a name = "tag_001_014_1774">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1775">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1776">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The
+<i>format</i>
+operand will be used as the
+<i>format</i>
+string described in
+the <b>XBD</b> specification, <a href="../xbd/notation.htm"><b>File Format Notation</b>&nbsp;</a> 
+with the following exceptions:
+<ul>
+<p>
+<li>
+A <img src="../images/delta.gif" border=0> character in the format string, in any context other
+than a flag of a conversion specification, will be treated as
+an ordinary character that is copied to the output.
+<p>
+<li>
+In addition to the escape sequences shown in
+the <b>XBD</b> specification, <a href="../xbd/notation.htm"><b>File Format Notation</b>&nbsp;</a> 
+(\\,
+\a,
+\b,
+\f,
+\n,
+\r,
+\t,
+\v),
+<b>\</b><i>ddd</i>,
+where
+<i>ddd</i>
+is a one-, two- or three-digit octal number,
+will be written as a byte with the numeric value specified by
+the octal number.
+<p>
+<li>
+The implementation will not precede or follow output from the
+d
+or
+u
+conversion specifications with
+blank characters
+not specified by the
+<i>format</i>
+operand.
+<p>
+<li>
+The implementation will not precede output from the
+o
+conversion specification with zeros not specified by the
+<i>format</i>
+operand.
+<p>
+<li>
+The
+e,
+E,
+f,
+g
+and
+G
+conversion specifications need not be supported.
+<p>
+<li>
+An additional conversion character,
+b,
+will be supported as follows.
+The argument will be taken to be a string that may
+contain backslash-escape sequences.
+The following backslash-escape sequences will be supported:
+<ul>
+<p>
+<li>
+the escape sequences listed in
+the <b>XBD</b> specification, <a href="../xbd/notation.htm"><b>File Format Notation</b>&nbsp;</a> 
+(\\,
+\a,
+\b,
+\f,
+\n,
+\r,
+\t,
+\v),
+which will be converted to the characters they represent
+<p>
+<li>
+<b>\0</b><i>ddd</i>,
+where
+<i>ddd</i>
+is a zero-, one-, two- or three-digit octal number
+that will be converted to a byte with the numeric value specified
+by the octal number
+<p>
+<li>
+\c,
+which will not be written and will cause
+<i>printf</i>
+to ignore any remaining characters in the
+string operand containing it, any remaining
+string operands and any additional characters in the
+<i>format</i>
+operand.
+<p>
+</ul>
+<p>
+The interpretation of a backslash followed by any other sequence
+of characters is unspecified.
+<p>
+Bytes from the converted string will be written until the end
+of the string or the number of bytes indicated by the precision
+specification is reached.
+If the precision is omitted, it
+will be taken to be infinite, so all bytes up to the end of the converted
+string will be written.
+<p>
+<li>
+For each specification that consumes an argument, the next argument
+operand will be evaluated and converted to the appropriate
+type for the conversion as specified below.
+<p>
+<li>
+The
+<i>format</i>
+operand will be reused as often as necessary to
+satisfy the argument operands.
+Any extra
+c
+or
+s
+conversion specifications will be evaluated as if a null string argument
+were supplied; other extra conversion specifications will be
+evaluated as if a zero argument were supplied.
+If the
+<i>format</i>
+operand contains no conversion specifications and
+<i>argument</i>
+operands are present, the results are unspecified.
+<p>
+<li>
+If a character sequence in the
+<i>format</i>
+operand begins with a
+"%"
+character, but does not form a valid conversion specification,
+the behaviour is unspecified.
+<p>
+</ul>
+<p>
+The
+<i>argument</i>
+operands will be treated as strings if the corresponding
+conversion character is
+b,
+c
+or
+s;
+otherwise, it will be evaluated as a
+C constant, as described by the ISO&nbsp;C standard, with the following extensions:
+<ul>
+<p>
+<li>
+A leading plus or minus sign will be allowed.
+<p>
+<p>
+<li>
+If the leading character is a single- or double-quote, the value
+will be the numeric
+value in the underlying codeset of the character following the single- or
+double-quote.
+<p>
+</ul>
+<p>
+If an argument operand cannot be completely converted into an internal
+value appropriate to the corresponding conversion specification, a diagnostic
+message will be written to standard error and the utility
+will not exit with a zero exit status,
+but will continue processing any remaining operands and
+will write the value accumulated at the time the error was
+detected to standard output.
+</blockquote><h4><a name = "tag_001_014_1777">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1778">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1779">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The floating-point formatting conversion specifications of
+<i><a href="../xsh/printf.htm">printf()</a></i>
+are not required
+because all arithmetic in the shell is integer arithmetic.
+The
+<i><a href="awk.htm">awk</a></i>
+utility performs floating-point calculations and provides its own
+<b>printf</b>
+function.
+The
+<i><a href="bc.htm">bc</a></i>
+utility can perform arbitrary-precision floating-point
+arithmetic, but does not provide extensive formatting capabilities.
+(This
+<i>printf</i>
+utility cannot really be used to format
+<i><a href="bc.htm">bc</a></i>
+output; it does not support arbitrary precision.)
+Implementations are encouraged to support
+the floating-point conversions as an extension.
+<p>
+Note that this
+<i>printf</i>
+utility, like the <b>XSH</b> specification
+<i><a href="../xsh/printf.htm">printf()</a></i>
+function
+on which it is based, makes no special provision for dealing with multi-byte
+characters when using the
+<b>%c</b>
+conversion specification or when a precision
+is specified in a
+<b>%b</b>
+or
+<b>%s</b>
+conversion specification.
+Applications
+should be extremely cautious using either of these features when there
+are multi-byte characters in the character set.
+<p>
+Field widths and precisions cannot be specified as "*" since the "*"
+can be replaced directly in the
+<i>format</i>
+operand using shell variable substitution.
+Implementations can also provide this feature as an extension if
+they so choose.
+<p>
+Hexadecimal character constants as defined in the ISO&nbsp;C standard are not
+recognised in the
+<i>format</i>
+operand because there is no consistent way to
+detect the end of the constant.
+Octal character constants are limited
+to, at most, three octal digits, but hexadecimal character constants are only
+terminated by a non-hex-digit character.
+In the ISO&nbsp;C standard, the
+##
+concatenation operator can be used to terminate a constant and follow it
+with a hexadecimal character to be written.
+In the shell, concatenation occurs
+before the
+<i>printf</i>
+utility has a chance to parse the end of the hexadecimal constant.
+<p>
+The
+<b>%b</b>
+conversion specification is not part of the ISO&nbsp;C standard; it has
+been added here as a portable way to process backslash escapes expanded
+in string operands as provided by the
+<i><a href="echo.htm">echo</a></i>
+utility.
+See also the APPLICATION USAGE section of
+<i><a href="echo.htm">echo</a></i>
+for ways to use
+<i>printf</i>
+as a replacement for all of the traditional versions of the
+<i><a href="echo.htm">echo</a></i>
+utility.
+<p>
+If an argument cannot be parsed correctly for the corresponding conversion
+specification, the
+<i>printf</i>
+utility is required to report an error.
+Thus, overflow and extraneous characters at the end of an argument being
+used for a numeric conversion are to be reported as errors.
+<p>
+It is not considered an error if an argument
+operand is not completely used for a
+c
+or
+s
+conversion or if a string
+operand's first or second character is used to get the numeric value of a
+character.
+</blockquote><h4><a name = "tag_001_014_1780">&nbsp;</a>EXAMPLES</h4><blockquote>
+To alert the user and then print and read a series of prompts:
+<pre>
+<code>
+printf "\aPlease fill in the following: \nName: "
+read name
+printf "Phone number: "
+read phone
+</code>
+</pre>
+<p>
+To read out a list of right and wrong answers from a file, calculate
+the percentage correctly, and print them out.
+The numbers are right-justified and separated by a single
+tab character.
+The percentage is written to one decimal place of accuracy:
+<pre>
+<code>
+while read right wrong ; do
+   percent=$(echo "scale=1;($right*100)/($right+$wrong)" | bc)
+   printf "%2d right\t%2d wrong\t(%s%%)\n" \
+       $right $wrong $percent
+done &lt; database_file
+</code>
+</pre>
+The command:
+<pre>
+<code>
+printf "%5d%4d\n" 1 21 321 4321 54321
+</code>
+</pre>
+produces:
+<pre>
+<code>
+    1  21
+  3214321
+54321   0
+</code>
+</pre>
+<p>
+Note that the
+<i>format</i>
+operand is used three times to print all of the
+given strings and that a
+0
+was supplied by
+<i>printf</i>
+to satisfy the last
+<b>%4d</b>
+conversion specification.
+<p>
+The
+<i>printf</i>
+utility is required to notify the user when conversion
+errors are detected while producing numeric output; thus, the
+following results would be expected on an implementation with
+32-bit twos-complement integers when
+<b>%d</b>
+is specified as the
+<i>format</i>
+operand:
+<pre>
+<table  bordercolor=#000000 border=1 align=center>
+<tr valign=top><th align=center><b>Argument</b>
+<th align=center><b>Standard<br>Output</b>
+<th align=center><b>Diagnostic Output</b>
+<tr valign=top><td align=left>5a
+<td align=left>5
+<td align=left>printf: "5a" not completely converted
+<tr valign=top><td align=left>9999999999
+<td align=left>2147483647
+<td align=left>printf: "9999999999" arithmetic overflow
+<tr valign=top><td align=left>-9999999999
+<td align=left>-2147483648
+<td align=left>printf: "-9999999999" arithmetic overflow
+<tr valign=top><td align=left>ABC
+<td align=left>0
+<td align=left>printf: "ABC" expected numeric value
+</table>
+</pre>
+<p>
+The diagnostic message format is not specified, but these
+examples convey the type of information that should be reported.
+Note that the value shown on standard output is what would be
+expected as the return value from the <b>XSH</b> specification
+function
+<i><a href="../xsh/strtol.htm">strtol()</a></i>.
+A similar correspondence exists between
+<b>%u</b>
+and
+<i><a href="../xsh/strtoul.htm">strtoul()</a></i>
+and
+<b>%e</b>,
+<b>%f</b>
+and
+<b>%g</b>
+(if the implementation supports floating-point conversions) and
+<i><a href="../xsh/strtod.htm">strtod()</a></i>.
+<p>
+In a locale using the ISO/IEC&nbsp;646:1991 standard
+as the underlying codeset, the command:
+<pre>
+<code>
+printf "%d\n" 3 +3 -3 \'3 \"+3 "'-3"
+</code>
+</pre>
+produces:
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><td align=left>3
+<td align=left>Numeric value of constant 3
+<tr valign=top><td align=left>3
+<td align=left>Numeric value of constant 3
+<tr valign=top><td align=left>-3
+<td align=left>Numeric value of constant -3
+<tr valign=top><td align=left>51
+<td align=left>Numeric value of the character `3' in the ISO/IEC&nbsp;646:1991 standard codeset
+<tr valign=top><td align=left>43
+<td align=left>Numeric value of the character `+' in the ISO/IEC&nbsp;646:1991 standard codeset
+<tr valign=top><td align=left>45
+<td align=left>Numeric value of the character `-' in the ISO/IEC&nbsp;646:1991 standard codeset
+</table>
+</pre>
+<p>
+Note that in a locale with multi-byte characters, the value of a
+character is intended to be the value of the equivalent of the
+<b>wchar_t</b>
+representation of the character as described in the <b>XSH</b> specification.
+</blockquote><h4><a name = "tag_001_014_1781">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1782">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="awk.htm">awk</a></i>,
+<i><a href="bc.htm">bc</a></i>,
+<i><a href="echo.htm">echo</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/printf.htm">printf()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

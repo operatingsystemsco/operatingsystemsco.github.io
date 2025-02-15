@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>getbegyx</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_404">&nbsp;</a>NAME</h4><blockquote>
+getbegyx, getmaxyx, getparyx, getyx - get cursor and window coordinates
+</blockquote><h4><a name = "tag_000_000_405">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+void getbegyx(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>);
+
+void getmaxyx(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>);
+
+void getparyx(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>);
+
+void getyx(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_406">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i><a href="getyx.htm">getyx()</a></i>
+macro stores the cursor position of the specified window in <i>y</i> and
+<i>x</i>.
+<p>
+The
+<i><a href="getparyx.htm">getparyx()</a></i>
+macro, if the specified window is a subwindow, stores in <i>y</i>
+and <i>x</i> the coordinates of the window's origin relative to its parent
+window.  Otherwise, -1 is stored in <i>y</i> and <i>x</i>.
+<p>
+The
+<i>getbegyx()</i>
+macro stores the absolute screen coordinates of the specified window's origin
+in <i>y</i> and <i>x</i>.
+<p>
+The
+<i><a href="getmaxyx.htm">getmaxyx()</a></i>
+macro stores the number of rows of the specified window in <i>y</i>
+and stores the window's number of columns in <i>x</i>.
+</blockquote><h4><a name = "tag_000_000_407">&nbsp;</a>RETURN VALUE</h4><blockquote>
+No return values are defined.
+</blockquote><h4><a name = "tag_000_000_408">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_409">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+These interfaces are macros and `&amp;' cannot be used before the
+<i>y</i> and <i>x</i> arguments.
+<br>
+Traditional implementations have often defined the following macros:
+<p>
+<pre>
+<code>
+void getbegx(WINDOW *<i>win</i>, int <i>x</i>);
+<br>
+void getbegy(WINDOW *<i>win</i>, int <i>y</i>);
+<br>
+void getmaxx(WINDOW *<i>win</i>, int <i>x</i>);
+<br>
+void getmaxy(WINDOW *<i>win</i>, int <i>y</i>);
+<br>
+void getparx(WINDOW *<i>win</i>, int <i>x</i>);
+<br>
+void getpary(WINDOW *<i>win</i>, int <i>y</i>);
+</code>
+</pre>
+<p>
+Although
+<i>getbegyx()</i>,
+<i><a href="getmaxyx.htm">getmaxyx()</a></i>
+and
+<i><a href="getparyx.htm">getparyx()</a></i>
+provide the required functionality, this does not preclude applications
+from defining these macros for their own use. For example, to
+implement
+<br>
+<pre>
+<code>
+void getbegx(WINDOW *<i>win</i>, int <i>x</i>);
+</code>
+</pre>
+the macro would be
+<p>
+<pre>
+    #define getbegx(_win,_x)     \
+    {                            \
+        int _y;                  \
+                                 \
+        getbegyx(_win,_y,_x);    \
+    }
+</pre>
+</blockquote><h4><a name = "tag_000_000_410">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

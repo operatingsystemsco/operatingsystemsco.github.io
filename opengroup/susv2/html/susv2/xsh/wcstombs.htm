@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>wcstombs</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_644">&nbsp;</a>NAME</h4><blockquote>
+wcstombs - convert a wide-character string to a character string
+</blockquote><h4><a name = "tag_000_010_645">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+size_t wcstombs(char *<i>s</i>, const wchar_t *<i>pwcs</i>, size_t <i>n</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_646">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>wcstombs()</i>
+function converts the sequence of wide-character codes that
+are in the array pointed to by
+<i>pwcs</i>
+into a sequence of characters that begins in the initial
+shift state and stores these characters
+into the array pointed to by
+<i>s</i>,
+stopping if a character would exceed the limit of
+<i>n</i>
+total bytes or if a null byte is stored.
+Each wide-character code is converted as if by a call to
+<i><a href="wctomb.htm">wctomb()</a></i>,
+except that the shift state of
+<i><a href="wctomb.htm">wctomb()</a></i>
+is not affected.
+<p>
+The behaviour of this function is affected by the LC_CTYPE
+category of the current locale.
+<p>
+No more than
+<i>n</i>
+bytes will be modified in the array pointed to by
+<i>s</i>.
+If copying takes place between objects that overlap, the
+behaviour is undefined.
+If
+<i>s</i>
+is a null pointer,
+<i>wcstombs()</i>
+returns the length required to convert the entire array regardless of the
+value of
+<i>n</i>,
+but no values are stored.
+function returns the number of bytes required for the character array.
+</blockquote><h4><a name = "tag_000_010_647">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If a wide-character code is encountered that does not
+correspond to a valid character (of one or more bytes each),
+<i>wcstombs()</i>
+returns (<b>size_t</b>)-1.
+Otherwise,
+<i>wcstombs()</i>
+returns the number of bytes stored in the character array,
+not including any terminating null byte.
+The array will not be null-terminated if the value
+returned is
+<i>n</i>.
+</blockquote><h4><a name = "tag_000_010_648">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>wcstombs()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EILSEQ]<dd>
+A wide-character code does not correspond to a valid character.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_649">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_650">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_651">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_652">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mblen.htm">mblen()</a></i>,
+<i><a href="mbtowc.htm">mbtowc()</a></i>,
+<i><a href="mbstowcs.htm">mbstowcs()</a></i>,
+<i><a href="wctomb.htm">wctomb()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the ISO C standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

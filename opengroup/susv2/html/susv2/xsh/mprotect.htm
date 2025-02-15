@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mprotect</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_717">&nbsp;</a>NAME</h4><blockquote>
+mprotect - set protection of memory mapping
+</blockquote><h4><a name = "tag_000_007_718">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysmm268.htm">sys/mman.h</a>&gt;
+
+int mprotect(void *<i>addr</i>, size_t <i>len</i>, int <i>prot</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_719">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The function
+<i>mprotect()</i>
+changes the access protections
+to be that specified by
+<i>prot</i>
+for those whole pages containing any part of the
+address space of the process starting at address
+<i>addr</i>
+and continuing for
+<i>len</i>
+bytes.
+The parameter
+<i>prot</i>
+determines whether read, write, execute, or some combination of
+accesses are permitted to the data being mapped.
+The
+<i>prot</i>
+argument should be either PROT_NONE
+or the bitwise inclusive OR of one or more of PROT_READ, PROT_WRITE and
+PROT_EXEC.
+<p>
+If an implementation cannot support the combination of access types
+specified by
+<i>prot</i>,
+the call to
+<i>mprotect()</i>
+fails.
+<p>
+An implementation may permit accesses other than those specified by
+<i>prot</i>;
+however, no implementation permits a write to succeed where
+PROT_WRITE has not been set or permits any access where
+PROT_NONE alone has been set.
+Implementations will support at least the following values of
+<i>prot</i>:
+PROT_NONE,
+PROT_READ,
+PROT_WRITE,
+and the inclusive OR of
+PROT_READ
+and
+PROT_WRITE.
+If PROT_WRITE
+is specified, the application must have opened the mapped objects
+in the specified address range with write permission, unless
+MAP_PRIVATE
+was specified in the original mapping, regardless of whether
+the file descriptors used to map the objects have since been closed.
+<p>
+The implementation
+&nbsp;will
+require that
+<i>addr</i>
+be a multiple of the page size as returned by
+<i><a href="sysconf.htm">sysconf()</a></i>.
+<p>
+The behaviour of this function is unspecified
+if the mapping was not established by a call to
+<i><a href="mmap.htm">mmap()</a></i>.
+<p>
+When
+<i>mprotect()</i>
+fails for reasons other than [EINVAL], the protections on some of the pages in
+the range [<i>addr, addr + len</i>) may have been changed.
+</blockquote><h4><a name = "tag_000_007_720">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>mprotect()</i>
+returns 0.  Otherwise, it returns -1 and sets <i>errno</i> to indicate the
+error.
+</blockquote><h4><a name = "tag_000_007_721">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>mprotect()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+The <i>prot</i> argument specifies a protection that violates the access
+permission the process has to the underlying memory object.
+
+<dt>[EAGAIN]<dd>
+The <i>prot</i> argument specifies PROT_WRITE over a MAP_PRIVATE mapping and
+there are insufficient memory resources to reserve for locking the private
+page.
+
+<dt>[EINVAL]<dd>
+The <i>addr</i> argument is not a multiple of the page size as returned by
+<i><a href="sysconf.htm">sysconf()</a></i>.
+
+<dt>[ENOMEM]<dd>
+Addresses in the range [<i>addr, addr + len</i>) are invalid for the address
+space of a process, or specify one or more pages which are not mapped.
+
+<dt>[ENOMEM]<dd>The
+<i>prot</i>
+argument specifies PROT_WRITE on a MAP_PRIVATE mapping,
+and it would require more space than the system is able
+to supply for locking the private pages, if required.
+
+<dt>[ENOTSUP]<dd>
+The implementation does not support the combination of accesses
+requested in the
+<i>prot</i>
+argument.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_722">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_723">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The EINVAL error above is marked EX because it is defined as an
+optional error in the POSIX Realtime Extension.
+</blockquote><h4><a name = "tag_000_007_724">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_725">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mmap.htm">mmap()</a></i>,
+<i><a href="sysconf.htm">sysconf()</a></i>,
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

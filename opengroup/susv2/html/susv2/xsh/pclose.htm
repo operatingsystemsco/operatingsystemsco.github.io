@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pclose</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_955">&nbsp;</a>NAME</h4><blockquote>
+pclose - close a pipe stream to or from a process
+</blockquote><h4><a name = "tag_000_007_956">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+int pclose(FILE *<i>stream</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_957">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pclose()</i>
+function closes a stream that was opened by
+<i><a href="popen.htm">popen()</a></i>,
+waits for the command to terminate, and returns the termination status
+of the process that was running the command language interpreter.
+However, if a call caused the termination status to be unavailable to
+<i>pclose()</i>,
+then
+<i>pclose()</i>
+returns -1 with
+<i>errno</i>
+set to
+[ECHILD]
+to report this situation; this can happen if the application calls one of the
+following functions:
+<ul>
+<p>
+<li>
+<i><a href="wait.htm">wait()</a></i>
+<p>
+<li>
+<i><a href="waitpid.htm">waitpid()</a></i>
+with a
+<i>pid</i>
+argument less than or equal to 0 or equal to the process ID of the command
+line interpreter
+<p>
+<li>
+any other function not defined in this specification that could do one of the
+above.
+<p>
+</ul>
+<p>
+In any case,
+<i>pclose()</i>
+will not return before the child process created by
+<i><a href="popen.htm">popen()</a></i>
+has terminated.
+<p>
+If the command language interpreter cannot be executed, the
+child termination status returned by
+<i>pclose()</i>
+will be as if the command language interpreter terminated using
+<i>exit</i>(127)
+or
+<i>_exit</i>(127).
+<p>
+The
+<i>pclose()</i>
+function will not affect the termination status of any child of the
+calling process other than the one created by
+<i><a href="popen.htm">popen()</a></i>
+for the associated stream.
+<p>
+If the argument
+<i>stream</i>
+to
+<i>pclose()</i>
+is not a pointer to a stream created by
+<i><a href="popen.htm">popen()</a></i>,
+the result of
+<i>pclose()</i>
+is undefined.
+</blockquote><h4><a name = "tag_000_007_958">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful return,
+<i>pclose()</i>
+returns the termination status of the command language interpreter.
+Otherwise,
+<i>pclose()</i>
+returns -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_007_959">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>pclose()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ECHILD]<dd>
+The status of the child process could not be obtained,
+as described above.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_960">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_961">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_962">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_963">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="popen.htm">popen()</a></i>,
+<i><a href="waitpid.htm">waitpid()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>.
+<br>
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

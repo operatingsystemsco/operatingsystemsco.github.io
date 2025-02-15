@@ -1,0 +1,711 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ls</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1289">&nbsp;</a>NAME</h4><blockquote>
+ls - list directory contents
+</blockquote><h4><a name = "tag_001_014_1290">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+ls <b>[</b>-CFRacdilqrtu1<b>][</b>-fgmnopsx<b>][</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1291">&nbsp;</a>DESCRIPTION</h4><blockquote>
+For each operand that names a file of a type other than directory,
+<i>ls</i>
+writes the name of the file
+as well as any requested, associated information.
+For each operand that names a file of type directory,
+<i>ls</i>
+writes the
+names of files contained within that directory, as well as any requested,
+associated information.
+<p>
+If no operands are specified,
+the contents of the current directory are written.
+If more than one operand is specified, non-directory operands
+are written first; directory and non-directory operands are sorted
+separately according to the collating sequence in the current locale.
+</blockquote><h4><a name = "tag_001_014_1292">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>ls</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+<dt><b>-C</b>
+<dd>Write multi-text-column output with entries sorted down the columns,
+according to the collating sequence.
+The number of text columns and
+the column separator characters are unspecified, but should be
+adapted to the nature of the output device.
+<dt><b>-F</b>
+<dd>Write a slash
+(/)
+immediately after each pathname that is a directory,
+an asterisk
+(*)
+after each that is executable,
+and a vertical bar
+(|)
+after each that is a FIFO.
+For other file types, other symbols may be written.
+
+<dt><b>-R</b>
+<dd>Recursively list subdirectories encountered.
+<dt><b>-a</b>
+<dd>Write out all directory entries,
+including those whose names begin with a period
+(.).
+Entries beginning with a period
+will not be written out unless
+explicitly referenced, the
+<b>-a</b>
+option is supplied, or an
+implementation-dependent condition causes them to be written.
+<dt><b>-c</b>
+<dd>Use time of last modification of the file status information
+(see
+<i><a href="../xsh/sysst273.htm">&lt;sys/stat.h&gt;</a></i>
+in the <b>XSH</b> specification)
+instead of last modification of the file itself for sorting
+(<b>-t</b>)
+or writing
+(<b>-l</b>).
+<dt><b>-d</b>
+<dd>Do not treat directories differently from
+other types of files.
+The use of
+<b>-d</b>
+with
+<b>-R</b>
+produces unspecified results.
+<dt><b>-f</b>
+<dd>Force each argument to be interpreted as a directory
+and list the name found in each slot.
+This option turns off
+<b>-l</b>,
+<b>-t</b>,
+<b>-s</b>
+and
+<b>-r</b>,
+and turns on
+<b>-a</b>;
+the order is the order in which entries appear in the directory.
+
+<dt><b>-g</b>
+<dd>The same as
+<b>-l</b>,
+except that the owner is not written.
+
+<dt><b>-i</b>
+<dd>For each file, write the file's file serial number (see
+<i><a href="../xsh/stat.htm">stat()</a></i>
+in the <b>XSH</b> specification).
+
+<dt><b>-l</b>
+<dd>(The letter ell.)
+Write out in long format (see the STDOUT section).
+When
+<b>-l</b>
+(ell) is specified,
+<b>-1</b>
+(one) is assumed.
+
+<dt><b>-m</b>
+<dd>Stream output format;
+list files across the page, separated by commas.
+
+<dt><b>-n</b>
+<dd>The same as
+<b>-l</b>,
+except that the owner's UID and GID
+numbers are written, rather than the associated character strings.
+
+<dt><b>-o</b>
+<dd>The same as
+<b>-l</b>,
+except that the group is not written.
+
+<dt><b>-p</b>
+<dd>Write a slash
+(/)
+after each filename if that file is a directory.
+
+<dt><b>-q</b>
+<dd>Force each instance of non-printable filename characters and
+tab characters
+to be written as the question-mark
+(?)
+character.
+Implementations may provide this option by default if the output
+is to a terminal device.
+
+<dt><b>-r</b>
+<dd>Reverse the order of the sort to get reverse collating sequence
+or oldest first.
+
+<dt><b>-s</b>
+<dd>Indicate the total number of file system blocks consumed
+by each file displayed.
+The block size is implementation-dependent.
+
+<dt><b>-t</b>
+<dd>Sort by time modified (most recently modified first) before
+sorting the operands by the collating sequence.
+
+<dt><b>-u</b>
+<dd>Use time of last access (see
+<i><a href="../xsh/sysst273.htm">&lt;sys/stat.h&gt;</a></i>
+in the <b>XSH</b> specification)
+instead of last modification of the file for sorting
+(<b>-t</b>)
+or writing
+(<b>-l</b>).
+
+<dt><b>-x</b>
+<dd>The same as
+<b>-C</b>,
+except that the
+multi-text-column output is produced with
+entries sorted across, rather than down, the columns.
+
+<dt><b>-1</b>
+<dd>(The numeric digit one.)
+Force output to be one entry per line.
+
+</dl>
+<p>
+Specifying more than one of the options in the following
+mutually exclusive pairs is not considered an error:
+<b>-C</b>
+and
+<b>-l</b>
+(ell),
+<b>-m</b>
+and
+<b>-l</b>
+(ell),
+<b>-x</b>
+and
+<b>-l</b>
+(ell),
+<b>-C</b>
+and
+<b>-1</b>
+(one),
+<b>-c</b>
+and
+<b>-u</b>.
+The last option specified in each pair determines the output format.
+</blockquote><h4><a name = "tag_001_014_1293">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to be written.
+If the file specified is not found,
+a diagnostic message will be output on standard error.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1294">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1295">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1296">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>ls</i>:
+<dl compact>
+
+<dt><i>COLUMNS</i><dd>
+Determine the user's preferred column position width
+for writing multiple text-column output.
+If this variable contains a string representing a decimal integer,
+the
+<i>ls</i>
+utility calculates how many pathname text columns to write (see
+<b>-C</b>)
+based on the width provided.
+If
+<i>COLUMNS</i>
+is not set or invalid, an implementation-dependent
+number of column positions
+is assumed, based on the implementation's knowledge of the
+output device.
+The column width chosen to write the names of files in any given
+directory will be constant.
+Filenames will not be truncated
+to fit into the multiple text-column output.
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the
+locale for character collation information in
+determining the pathname collation sequence.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single-
+versus multi-byte characters in arguments)
+and which characters are defined as
+printable (character class
+<b>print</b>).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LC_TIME</i><dd>
+Determine the format and contents for date and time strings written by
+<i>ls</i>.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TZ</i><dd>Determine the timezone for date and time strings written by
+<i>ls</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1297">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1298">&nbsp;</a>STDOUT</h4><blockquote>
+The default format is to list one entry per line to standard
+output; the exceptions are to terminals or when one of the
+<b>-C</b>,
+<b>-m</b>
+or
+<b>-x</b>
+options is specified.
+If the output is to a terminal, the format is implementation-dependent.
+<p>
+When
+<b>-m</b>
+is specified, the format used is:
+<p><code>
+'-1n'
+<tt>"%s, %s, ...\n"</tt>, &lt;<i>filename1</i>&gt;,
+&lt;<i>filename2</i>&gt;
+</code>
+where the largest number of filenames is written without
+exceeding the length of the line.
+<p>
+If the
+<b>-i</b>
+option is specified, the file's file serial number (see
+<i><a href="../xsh/sysst273.htm">&lt;sys/stat.h&gt;</a></i>
+in the <b>XSH</b> specification)
+is written in the following format
+before any other output for the corresponding entry:
+<p><code>
+<tt>"%u "</tt>, &lt;<i>file serial number</i>&gt;
+</code>
+<p>
+If the
+<b>-l</b>
+option is specified, the following information
+will be written:
+<p><code>
+<tt>"%s %u %s %s %u %s %s\n"</tt>, &lt;<i>file&nbsp;mode</i>&gt;,
+&lt;<i>number&nbsp;of&nbsp;links</i>&gt;,
+&lt;<i>owner&nbsp;name</i>&gt;,
+&lt;<i>group&nbsp;name</i>&gt;,
+&lt;<i>number&nbsp;of&nbsp;bytes&nbsp;in&nbsp;the&nbsp;file</i>&gt;,
+&lt;<i>date&nbsp;and&nbsp;time</i>&gt;,
+&lt;<i>pathname</i>&gt;
+<br>
+</code>
+<p>
+The
+<b>-g</b>,
+<b>-n</b>
+and
+<b>-o</b>
+options use the same format as
+<b>-l</b>,
+but with omitted items and their associated
+blank characters;
+see the OPTIONS section.
+<p>
+If
+&lt;<i>owner name</i>&gt;
+or
+&lt;<i>group name</i>&gt;
+cannot be determined,
+or if
+<b>-n</b>
+is given,
+they are replaced
+with their associated numeric values using the format
+%u.
+<p>
+The
+&lt;<i>date and time</i>&gt;,
+field will contain the appropriate
+date and timestamp of when the file was last modified.
+In the POSIX locale, the field is the equivalent
+of the output of the following
+<i><a href="date.htm">date</a></i>
+command:
+<pre>
+<code>
+date "+%b %e %H:%M"
+</code>
+</pre>
+if the file has been modified in the last six months, or:
+<pre>
+<code>
+date "+%b %e  %Y"
+</code>
+</pre>
+(where two
+space
+characters are used between
+<b>%e</b>
+and
+<b>%Y)</b>
+if the file has not been modified in the last six months or if the
+modification date is in the future, except that, in both cases,
+the final
+newline character
+produced by
+<i><a href="date.htm">date</a></i>
+is not included and
+the output is as if the
+<i><a href="date.htm">date</a></i>
+command were executed at the
+time of the last modification date of the file rather than the
+current time.
+When the LC_TIME locale category is not set to
+the POSIX locale, a different format and order of presentation
+of this field may be used.
+<p>
+If the file is a character special or block special file, the size of the
+file may be replaced with implementation-dependent information associated
+with the device in question.
+<p>
+If the pathname was specified as a
+<i>file</i>
+operand, it will be written
+as specified.
+<p>
+The file mode written under the
+<b>-l</b>,
+<b>-g</b>,
+<b>-n</b>
+and
+<b>-o</b>
+options consists of the following format:
+<p><code>
+<tt>"%c%s%s%s%c"</tt>, &lt;<i>entry&nbsp;type</i>&gt;,
+&lt;<i>owner&nbsp;permissions</i>&gt;,
+&lt;<i>group&nbsp;permissions</i>&gt;,
+&lt;<i>other&nbsp;permissions</i>&gt;,
+&lt;<i>optional&nbsp;alternate&nbsp;access&nbsp;method&nbsp;flag</i>&gt;
+</code>
+<p>
+The
+&lt;<i>optional alternate access method flag</i>&gt;
+is a single
+space character
+if there is no alternate or additional
+access control method associated with the file;
+otherwise, a printable character is used.
+<p>
+The
+&lt;<i>entry type</i>&gt;
+character describes the type of file, as follows:
+<dl compact>
+
+<dt>d<dd>Directory.
+
+<dt>b<dd>Block special file.
+
+<dt>c<dd>Character special file.
+
+<dt>p<dd>FIFO.
+
+<dt>-<dd>Regular file.
+
+</dl>
+<p>
+Implementations may add other characters to this list to represent
+other, implementation-dependent, file types.
+<p>
+The next three fields are three characters each:
+<dl compact>
+
+<dt>&lt;<i>owner permissions</i>&gt;<dd>
+Permissions for the file owner class (see
+<b>file access permissions</b>
+in
+the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a> ).
+
+<dt>&lt;<i>group permissions</i>&gt;<dd>
+Permissions for the file group class.
+
+<dt>&lt;<i>other permissions</i>&gt;<dd>
+Permissions for the file other class.
+
+</dl>
+<p>
+Each field has three character positions:
+<p>
+<ol>
+<li>
+If
+r,
+the file is readable; if "-", it is not readable.
+<p>
+<li>
+If
+w,
+the file is writable; if "-", it is not writable.
+<p>
+<li>
+The first of the following that applies:
+<dl compact>
+
+<dt><b>S</b><dd>If in
+&lt;<i>owner permissions</i>&gt;,
+the file is not executable and
+set-user-ID mode is set.
+If in
+&lt;<i>group permissions</i>&gt;,
+the file is not executable and set-group-ID mode is set.
+
+<dt><b>s</b><dd>If in
+&lt;<i>owner permissions</i>&gt;,
+the file is executable and
+set-user-ID mode is set.
+If in
+&lt;<i>group permissions</i>&gt;,
+the file is executable and set-group-ID mode is set.
+
+<dt><b>x</b><dd>The file is executable or the directory is searchable.
+
+<dt><b>-</b><dd>None of the attributes of
+S,
+s
+or
+x
+applies.
+
+</dl>
+<p>
+Implementations may add other characters to this list for the third
+character position.
+Such additions will, however, be written in
+lower-case if the file is executable or searchable, and in upper-case
+if it is not.
+<p>
+</ol>
+<p>
+If any of the
+<b>-l</b>,
+<b>-g</b>,
+<b>-n</b>,
+<b>-o</b>
+or
+<b>-s</b>
+options is specified,
+each list of files within the directory will be
+preceded by a status line indicating the number of file system
+blocks occupied by files in the directory in
+512-byte units, rounded up to the next integral
+number of units, if necessary.
+In the POSIX locale, the format is:
+<p><code>
+<tt>"total %u\n"</tt>, &lt;<i>number of units in the directory</i>&gt;
+</code>
+<p>
+If more than one directory, or a combination of non-directory files and
+directories are written, either as a result of specifying multiple
+operands, or the
+<b>-R</b>
+option, each list of files within a directory will be preceded by:
+<p><code>
+<tt>"\n%s:\n"</tt>, &lt;<i>directory name</i>&gt;
+</code>
+<p>
+If this string is the first thing to be written, the first
+newline
+character is not written.
+This output precedes the number of units in the directory.
+<p>
+If the
+<b>-s</b>
+option is given, each file shall be written
+with the number of blocks used by the file.
+Along with
+<b>-C</b>,
+<b>-1</b>,
+<b>-m</b>
+or
+<b>-x</b>,
+the number and a
+space character
+precede the filename; with
+<b>-g</b>,
+<b>-l</b>,
+<b>-n</b>
+or
+<b>-o</b>,
+they precede each line describing a file.
+</blockquote><h4><a name = "tag_001_014_1299">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1300">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1301">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1302">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>All files were written successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1303">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1304">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Many implementations use the equal sign
+(=)
+and the at sign
+(@)
+to denote
+sockets bound to the file system and symbolic links, respectively, for the
+<b>-F</b>
+option.
+Similarly, many historical implementations use the
+s
+character and the
+l
+character to denote sockets and symbolic links,
+respectively, as the entry type characters for the
+<b>-l</b>
+option.
+<p>
+It is difficult for an application to use every part of the file modes
+field of
+<i>ls</i>
+<b>-l</b>
+in a portable manner.
+Certain file types and executable
+bits are not guaranteed to be exactly as shown, as implementations may
+have extensions.
+Applications can use this field to pass directly to
+a user printout or prompt, but actions based on its contents should
+generally be deferred, instead, to the
+<i><a href="test.htm">test</a></i>
+utility.
+<p>
+The output of
+<i>ls</i>
+(with the
+<b>-l</b>
+and related options) contains information that
+logically could be used by utilities such as
+<i><a href="chmod.htm">chmod</a></i>
+and
+<i><a href="touch.htm">touch</a></i>
+to restore files to a known state.
+However, this information is presented in a format
+that cannot be used directly by those utilities or be easily
+translated into a format that can be used.
+A character has been added to the end of the permissions
+string so that applications will at least have an indication
+that they may be working in an area they do not understand
+instead of assuming that they can translate the permissions
+string into something that can be used.
+Future issues or related documents may define one
+or more specific characters to be used based on different
+standard additional or alternative access control mechanisms.
+<p>
+As with many of the utilities that deal with filenames,
+the output of
+<i>ls</i>
+for multiple files or in one of the long listing formats
+must be used carefully on systems where filenames can
+contain embedded white space.
+Systems and system administrators
+should institute policies and user training to limit the
+use of such filenames.
+<p>
+The number of disk blocks occupied
+by the file that it reports varies depending on underlying file
+system type, block size units reported and the method of
+calculating the number of blocks.
+On some file system types,
+the number is the actual number of blocks occupied by the file
+(counting indirect blocks and ignoring holes in the file); on
+others it is calculated based on the file size (usually making
+an allowance for indirect blocks, but ignoring holes).
+</blockquote><h4><a name = "tag_001_014_1305">&nbsp;</a>EXAMPLES</h4><blockquote>
+An example of a small directory tree being fully listed with
+<i>ls</i>
+<b>-laRF</b>
+<b>a</b>
+in the POSIX locale:
+<pre>
+<code>
+total 11
+drwxr-xr-x   3 hlj      prog          64 Jul  4 12:07 ./
+drwxrwxrwx   4 hlj      prog        3264 Jul  4 12:09 ../
+drwxr-xr-x   2 hlj      prog          48 Jul  4 12:07 b/
+-rwxr--r--   1 hlj      prog         572 Jul  4 12:07 foo*
+
+a/b:
+total 4
+drwxr-xr-x   2 hlj      prog          48 Jul  4 12:07 ./
+drwxr-xr-x   3 hlj      prog          64 Jul  4 12:07 ../
+-rw-r--r--   1 hlj      prog         700 Jul  4 12:07 bar
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1306">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The
+<b>-s</b>
+uses implementation-dependent units and cannot be used portably;
+it may be withdrawn in a future issue.
+<p>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_1307">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="chmod.htm">chmod</a></i>,
+<i><a href="find.htm">find</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

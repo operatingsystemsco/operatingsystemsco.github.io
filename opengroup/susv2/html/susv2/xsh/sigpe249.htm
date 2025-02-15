@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sigpending</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_684">&nbsp;</a>NAME</h4><blockquote>
+sigpending - examine pending signals
+</blockquote><h4><a name = "tag_000_008_685">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="signa248.htm">signal.h</a>&gt;
+
+int sigpending(sigset_t *<i>set</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_686">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sigpending()</i>
+function stores, in the location referenced by the
+<i>set</i>
+argument, the set of signals that are blocked from
+delivery to the calling thread and that are pending on the process or
+the calling thread.
+</blockquote><h4><a name = "tag_000_008_687">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>sigpending()</i>
+returns 0.  Otherwise -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_008_688">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_008_689">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_690">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_691">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_692">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sigad239.htm">sigaddset()</a></i>,
+<i><a href="sigde241.htm">sigdelset()</a></i>,
+<i><a href="sigem242.htm">sigemptyset()</a></i>,
+<i><a href="sigfi243.htm">sigfillset()</a></i>,
+<i><a href="sigis246.htm">sigismember()</a></i>,
+<i><a href="sigpr250.htm">sigprocmask()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

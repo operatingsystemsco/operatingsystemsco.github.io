@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>msync</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_835">&nbsp;</a>NAME</h4><blockquote>
+msync - synchronise memory with physical storage
+</blockquote><h4><a name = "tag_000_007_836">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysmm268.htm">sys/mman.h</a>&gt;
+
+int msync(void *<i>addr</i>, size_t <i>len</i>, int <i>flags</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_837">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>msync()</i>
+function writes all modified data to permanent storage locations, if any,
+in those whole pages containing any part of the
+address space of the process starting at address
+<i>addr</i>
+and continuing for
+<i>len</i>
+bytes.
+If no such storage exists,
+<i>msync()</i>
+need not have any effect.
+If requested, the
+<i>msync()</i>
+function then invalidates cached copies of data.
+<p>
+The implementation
+&nbsp;will
+require that
+<i>addr</i>
+be a multiple of the page size as returned by
+<i><a href="sysconf.htm">sysconf()</a></i>.
+<p>
+For mappings to files, the
+<i>msync()</i>
+function ensures that all write operations are completed
+as defined for
+synchronised I/O data integrity completion.
+It is unspecified whether the implementation also writes out
+other file attributes.
+When the
+<i>msync()</i>
+function is called on MAP_PRIVATE mappings, any modified data will
+not be written to the underlying object
+and will not cause such data to be made visible to other processes.
+It is unspecified whether data in MAP_PRIVATE
+mappings has any permanent storage locations.
+The effect of
+<i>msync()</i>
+on shared memory objects is unspecified.
+<p>
+The
+<i>flags</i>
+argument is constructed from the bitwise inclusive OR of one or more
+of the following flags defined in the header
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Symbolic Constant</b>
+<th align=center><b>Description</b>
+<tr valign=top><td align=left>MS_ASYNC
+<td align=left>Perform asynchronous writes.
+<tr valign=top><td align=left>MS_SYNC
+<td align=left>Perform synchronous writes.
+<tr valign=top><td align=left>MS_INVALIDATE
+<td align=left>Invalidate cached data.
+</table>
+<p>
+When MS_ASYNC is specified,
+<i>msync()</i>
+returns immediately once all the write operations are
+initiated or queued for servicing; when MS_SYNC is specified,
+<i>msync()</i>
+will not return until all write operations are completed
+as defined for synchronised I/O data integrity completion.
+Either MS_ASYNC or MS_SYNC is specified, but not both.
+<p>
+When MS_INVALIDATE is specified,
+<i>msync()</i>
+invalidates all cached copies of mapped data
+that are inconsistent with the permanent storage locations
+such that subsequent references obtain data
+that was consistent with the permanent storage locations
+sometime between the call to
+<i>msync()</i>
+and the first subsequent memory reference to the data.
+<p>
+The behaviour of this function is unspecified
+if the mapping was not established by a call to
+<i><a href="mmap.htm">mmap()</a></i>.
+<p>
+If
+<i>msync()</i>
+causes any write to a file, the file's
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields are marked for update.
+</blockquote><h4><a name = "tag_000_007_838">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>msync()</i>
+returns 0.  Otherwise, it returns -1 and sets
+<i>errno</i> to indicate the error.
+</blockquote><h4><a name = "tag_000_007_839">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>msync()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+Some or all of the addresses in the range starting at
+<i>addr</i>
+and continuing for
+<i>len</i>
+bytes are locked, and MS_INVALIDATE is specified.
+
+<dt>[EINVAL]<dd>
+The value in
+<i>flags</i>
+is invalid.
+
+<dt>[EINVAL]<dd>The value of
+<i>addr</i>
+is not a multiple of the page size, {PAGESIZE}.
+
+<dt>[ENOMEM]<dd>
+The addresses in the range starting at
+<i>addr</i>
+and continuing for
+<i>len</i>
+bytes are outside the range allowed for the address space of a process
+or specify one or more pages that are not mapped.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_840">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_841">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>msync()</i>
+function should be used by programs that require a memory object to be in a
+known state, for example in building transaction facilities.
+<p>
+Normal system activity can cause pages to be written to disk.  Therefore,
+there are no guarantees that
+<i>msync()</i>
+is the only control over when pages are or are not written to disk.
+<p>
+The second form of [EINVAL] above is marked EX because it is defined as an
+optional error in the POSIX Realtime Extension.
+</blockquote><h4><a name = "tag_000_007_842">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_843">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mmap.htm">mmap()</a></i>,
+<i><a href="sysconf.htm">sysconf()</a></i>,
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,72 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Corrigendum</title>
+</head>
+
+<body>
+
+<font face="Arial" size="5"><b>Corrigendum: U039 </b></font>
+<p><font face="Arial" size="3"><b>Date: 17 August 1999 </b></font></p>
+<p><font face="Arial" size="3"><b>Document: P702, X/Open Single Sign-On Service
+(XSSO) </b></font></p>
+<p><font face="Arial" size="3"><b>Code: 2426 08/99 P702/U039 </b></font></p>
+<p><font face="Arial" size="3"><b>Contents: This corrigendum comprises one item:
+U039/XSSO-001 </b></font></p>
+<hr size="1">
+<pre>
+Change Number: U039/XSSO-001
+
+Title: Allow Module Pathname definition for PAM modules using ISA
+
+Qualifier: Minor technical
+
+Rationale: The existing definition of the Module Path field does not
+allow for systems that support multiple concurrent 
+instruction set architectures (ISA) to place PAM modules 
+in directories relative to the ISA. This change is designed 
+to permit such implementations.
+
+The problem is solved if the pathname contains the $ISA 
+token. That token is then replaced by an implementation
+defined directory name which defines the path relative 
+to the calling program's instruction set architecture.
+
+Existing Module Path fields are unaffected. This change 
+permits applications with different instruction set 
+architectures (ISA) to be able to find modules with a 
+corresponding ISA. It is possible to use relative Module 
+Path fields for those modules contained in the 
+implementation-defined base directory; however this
+solution would not allow modules supplied by add-on 
+packages to be named with absolute path names to where 
+the add-on packages are naturally stored, but must be 
+relocated under implementation-defined base directory. 
+
+Change: On page 30, section 5.6.4:
+
+change
+
+/usr/lib/security/pam_<service_name>_<module_name>.<extension>
+
+to
+
+/usr/lib/security/$ISA/pam_<service_name>_<module_name>.<extension>
+
+and add immediately below it the following explanation:
+
+     If the pathname contains the $ISA token, that token 
+     is replaced by an implementation-defined directory 
+     name which defines the path relative to the calling 
+     program's instruction set architecture.
+
+----------------------------------------------------------------------------
+
+</pre>
+
+</body>
+
+</html>

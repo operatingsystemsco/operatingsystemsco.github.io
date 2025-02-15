@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>bcmp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_278">&nbsp;</a>NAME</h4><blockquote>
+bcmp - memory operations
+</blockquote><h4><a name = "tag_000_001_279">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="strin261.htm">strings.h</a>&gt;
+
+int bcmp(const void *<i>s1</i>, const void *<i>s2</i>, size_t <i>n</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_280">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>bcmp()</i>
+function compares the first
+<i>n</i>
+bytes of the area pointed to by
+<i>s1</i>
+with the area pointed to by
+<i>s2</i>.
+</blockquote><h4><a name = "tag_000_001_281">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>bcmp()</i>
+function returns 0 if
+<i>s1</i>
+and
+<i>s2</i>
+are identical, non-zero otherwise.  Both areas are assumed to be
+<i>n</i>
+bytes long.  If the value of <i>n</i> is 0,
+<i>bcmp()</i>
+returns 0.
+</blockquote><h4><a name = "tag_000_001_282">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_001_283">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_284">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+For portability to implementations conforming to earlier versions of this
+specification,
+<i><a href="memcmp.htm">memcmp()</a></i>
+is preferred over this function.
+</blockquote><h4><a name = "tag_000_001_285">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_286">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="memcmp.htm">memcmp()</a></i>,
+<i><a href="strin261.htm">&lt;strings.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

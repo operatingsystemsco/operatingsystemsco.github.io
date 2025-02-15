@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>rmdir</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_141">&nbsp;</a>NAME</h4><blockquote>
+rmdir - remove a directory
+</blockquote><h4><a name = "tag_000_008_142">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int rmdir(const char *<i>path</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_143">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>rmdir()</i>
+function removes a directory whose name is given by
+<i>path</i>.
+The directory is removed only if it is an empty directory.
+<p>
+If the directory is the root directory or the current working
+directory of any process,
+it is unspecified whether the function succeeds,
+or whether it fails and sets
+<i>errno</i>
+to [EBUSY].
+<p>
+If <i>path</i> names a symbolic link, then
+<i>rmdir()</i>
+fails and sets <i>errno</i> to [ENOTDIR].
+<p>
+If the directory's link count becomes 0 and no process has the directory open,
+the space occupied by the directory will be freed and the directory will no
+longer be accessible.  If one or more processes have the directory open when
+the last link is removed, the dot and dot-dot entries, if present, are removed
+before
+<i>rmdir()</i>
+returns and no new entries may be created in the directory, but the directory
+is not removed until all references to the directory are closed.
+<p>
+Upon successful completion, the
+<i>rmdir()</i>
+function marks for update the
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the parent directory.
+</blockquote><h4><a name = "tag_000_008_144">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the function
+<i>rmdir()</i>
+returns 0.  Otherwise, -1 is returned, and
+<i>errno</i>
+is set to indicate the error.
+If -1 is returned, the named directory is not changed.
+</blockquote><h4><a name = "tag_000_008_145">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>rmdir()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied on a component of the path prefix,
+or write permission is denied on the parent directory of the
+directory to be removed.
+
+<dt>[EBUSY]<dd>
+The directory to be removed is currently in use by the system
+or another process and the implementation considers this to be an error.
+
+<dt>[EEXIST]&nbsp;or&nbsp;[ENOTEMPTY]<dd>
+
+The
+<i>path</i>
+argument names a directory that is not an empty directory.
+
+<dt>[EIO]<dd>
+A physical I/O error has occurred.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>path</i>
+argument exceeds {PATH_MAX}
+or a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file, or the
+<i>path</i>
+argument names a non-existent directory or points to an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the path is not a directory.
+
+<dt>[EPERM] or [EACCES]<dd>
+
+The S_ISVTX flag is set on the parent directory of the directory to be removed
+and the caller is not the owner of the directory to be removed, nor is the
+caller the owner of the parent directory, nor does the caller have the
+appropriate privileges.
+
+<dt>[EROFS]<dd>
+The directory entry to be removed resides on a read-only file system.
+
+</dl>
+<p>
+The
+<i>rmdir()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_146">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_147">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_148">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_149">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mkdir.htm">mkdir()</a></i>,
+<i><a href="remove.htm">remove()</a></i>,
+<i><a href="unlink.htm">unlink()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

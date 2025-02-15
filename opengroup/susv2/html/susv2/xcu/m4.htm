@@ -1,0 +1,606 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>m4</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1308">&nbsp;</a>NAME</h4><blockquote>
+m4 - macro processor (<b>DEVELOPMENT</b>)
+</blockquote><h4><a name = "tag_001_014_1309">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+m4 <b>[</b>-s<b>][</b> -D <i>name</i><b>[</b>=<i>val</i><b>]]</b>...<b>[</b>-U <i>name</i><b>]</b>... <i>file</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1310">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>m4</i>
+utility is a macro processor
+that reads one or more text files,
+processes them according to their included macro statements,
+and writes the results to standard output.
+</blockquote><h4><a name = "tag_001_014_1311">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>m4</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that the order of the
+<b>-D</b>
+and
+<b>-U</b>
+options is significant.
+The following options are supported:
+<dl compact>
+
+<dt><b>-s</b>
+<dd>Enable line synchronisation output for the
+<i><a href="c89.htm">c89</a></i>
+preprocessor phase
+(that is,
+<b>#line</b>
+directives).
+
+<dt><b>-D</b> <i>name</i><b>[</b>=<i>val</i><b>]</b>
+<dd>
+Define
+<i>name</i>
+to
+<i>val</i>
+or to null if
+<i>=val</i>
+is omitted.
+
+<dt><b>-U&nbsp;</b><i>name</i>
+<dd>
+Undefine
+<i>name</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1312">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a text file to be processed.
+If no
+<i>file</i>
+is given, or if it is "-", the standard input is read.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1313">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is a text file that is used if no
+<i>file</i>
+operand is given, or if it is "-".
+</blockquote><h4><a name = "tag_001_014_1314">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file named by the
+<i>file</i>
+operand is a text file.
+</blockquote><h4><a name = "tag_001_014_1315">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>m4</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1316">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1317">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output is the same as the input files,
+after being processed for macro expansion.
+</blockquote><h4><a name = "tag_001_014_1318">&nbsp;</a>STDERR</h4><blockquote>
+Used to display strings with the
+<b>errprint</b>
+macro, macro tracing enabled by the
+<b>traceon</b>
+macro, 
+the defined text for macros written by the dumpdef macro,
+or for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1319">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1320">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The
+<i>m4</i>
+utility compares each token from the input against the set of
+built-in and user-defined macros.
+If the token matches the name
+of a macro, then the token is replaced by the macros defining
+text, if any, and rescanned for matching macro names.
+Once no portion of the token matches the name of a macro, it is written
+to standard output.
+Macros may have arguments, in which case
+the arguments will be substituted into the defining text before
+it is rescanned.
+<p>
+Macro calls have the form:
+<pre>
+<code>
+<i>name</i>(<i>arg1</i>, <i>arg2</i>, ..., <i>argn</i>)
+</code>
+</pre>
+<p>
+Macro names consist of letters, digits and underscores, where
+the first character is not a digit.
+Tokens not of this form
+are not treated as macro names.
+<p>
+The left parenthesis must immediately follow the name of the macro.
+If a token matching the name of a macro is not followed by a left
+parenthesis, it will be handled as a use of that macro without arguments.
+<p>
+If a macro name is followed by a left parenthesis, its arguments
+are the comma-separated tokens between the left parenthesis
+and the matching right parenthesis.
+Unquoted blank and newline characters preceding each argument are ignored.
+All other characters, including trailing
+blank and newline characters, are retained.
+Commas enclosed between left and right parenthesis
+characters do not delimit arguments.
+<p>
+Arguments are positionally defined and referenced.
+The string
+$1
+in the defining text will be replaced by the first argument.
+Systems support at least nine arguments;
+only the first nine
+can be referenced, using the strings
+$1
+to
+$9,
+inclusive.
+The string
+$0
+will be replaced with the name of the macro.
+The string
+$#
+will be replaced by the number of
+arguments as a string.
+The string
+$*
+will be replaced by a
+list of all of the arguments, separated by commas.
+The string
+$@
+will be replaced by a list of all of the arguments
+separated by commas, and each argument will be quoted using the
+current left and right quoting strings.
+<p>
+If fewer arguments are supplied than are in the macro definition,
+the omitted arguments are taken to be null.
+It is not an
+error if more arguments are supplied than are in the macro
+definition.
+<p>
+No special meaning is given to any characters enclosed between
+matching left and right quoting strings, but the quoting strings
+are themselves discarded.
+By default, the left quoting string
+consists of a grave accent (`)
+and the right quoting string consists of an acute accent (')
+see also the
+<b>changequote</b>
+macro.
+<p>
+Comments are written but not scanned for matching macro names;
+by default, the begin-comment string consists of the number sign
+character and the end-comment string consists of a newline character.
+See also the
+<b>changecom</b>
+and
+<b>dnl</b>
+macros.
+<p>
+The
+<i>m4</i>
+utility
+makes available the following built-in macros.
+They can be redefined, but once this is done the original meaning is lost.
+Their values are null unless otherwise stated.
+<dl compact>
+
+<dt><b>changecom</b><dd>
+The
+<b>changecom</b>
+macro sets the begin- and end-comment strings.
+With no arguments, the comment mechanism is disabled.
+With a single argument, that argument
+becomes the begin-comment string and the
+newline character
+becomes the end-comment string.
+With two arguments, the first argument
+becomes the begin-comment string and the second argument
+becomes the end-comment string.
+Systems support comment strings of at least five characters.
+
+<dt><b>changequote</b><dd>
+The
+<b>changequote</b>
+macro sets the begin- and end-quote strings.
+With no arguments, the quote strings are set
+to the default values
+(that is,&nbsp;).
+With a single argument, that argument
+becomes the begin-quote string and the
+newline character
+becomes the end-quote string.
+With two arguments, the first argument
+becomes the begin-quote string and the second argument
+becomes the end-quote string.
+Systems support quote strings of at least five characters.
+
+<dt><b>decr</b><dd>The defining text of the
+<b>decr</b>
+macro is its first
+argument decremented by 1.
+It is an error to specify
+an argument containing any non-numeric characters.
+
+<dt><b>define</b><dd>The second argument is specified as the defining text of the
+macro whose name is the first argument.
+
+<dt><b>defn</b><dd>The defining text of the
+<b>defn</b>
+macro is the quoted
+definition (using the current quoting strings) of its arguments.
+
+<dt><b>divert</b><dd>The
+<i>m4</i>
+utility maintains ten temporary buffers, numbered 0 to 9, inclusive.
+When the last of the input has been processed,
+any output that has been placed in these buffers will
+be written to standard output in buffer-numerical order.
+The
+<b>divert</b>
+macro diverts future output to the buffer specified
+by its argument.
+Specifying no argument or an argument of
+0 resumes the normal output process.
+Output diverted to a
+stream other than 0 to 9 is discarded.
+It is an
+error to specify an argument containing any non-numeric
+characters.
+
+<dt><b>divnum</b><dd>The defining text of the
+<b>divnum</b>
+macro is the number
+of the current output stream as a string.
+
+<dt><b>dnl</b><dd>The
+<b>dnl</b>
+macro causes
+<i>m4</i>
+to discard all input characters up
+to and including the next
+newline
+character.
+
+<dt><b>dumpdef</b><dd>
+The
+<b>dumpdef</b>
+macro writes the defined text to standard error for each of the macros
+specified as arguments, or, if no arguments are specified, for all
+macros.
+
+<dt><b>errprint</b><dd>The
+<b>errprint</b>
+macro writes its arguments to standard error.
+
+<dt><b>eval</b><dd>The
+<b>eval</b>
+macro evaluates its first argument as an
+arithmetic expression, using 32-bit signed integer
+arithmetic.
+All of the C-language operators are supported, except for
+[],
+-&gt;,
+++,
+--,
+(type)
+unary *,
+<b>sizeof</b>,
+",", ".", "?:" and all assignment operators.
+It is an error to specify any of these operators.
+Precedence and associativity are as in C.
+Systems support octal and
+hexadecimal numbers as in C.
+The second argument, if specified, sets the radix for the result;
+the default is 10.
+The third argument, if
+specified, sets the minimum number of digits in the result.
+It is an error to specify an argument
+containing any non-numeric characters.
+
+
+<dt><b>ifdef</b><dd>If the first argument to the
+<b>ifdef</b>
+macro is defined,
+the defining text is the second argument.
+Otherwise, the defining text is the third argument,
+if specified, or the null string, if not.
+
+<dt><b>ifelse</b><dd>If the first argument (or the defining text of the first
+argument if it is a macro name) to the
+<b>ifelse</b>
+macro is the
+same as the second argument (or the defining text of the
+second argument if it is a macro name), then the defining
+text is the third argument.
+If there are more than four
+arguments, the initial comparison of the first and second
+arguments are repeated for each group of three arguments.
+If no match is found, the defining text will be the argument
+following the last set of three compared, otherwise it will be null.
+
+<dt><b>include</b><dd>The defining text for the
+<b>include</b>
+macro is the contents
+of the file named by the first argument.
+It is an error if the file cannot be read.
+
+<dt><b>incr</b><dd>The defining text of the
+<b>incr</b>
+macro is its first
+argument incremented by 1.
+It is an error to specify
+an argument containing any non-numeric characters.
+
+<dt><b>index</b><dd>The defining text of the
+<b>index</b>
+macro is the first character
+position (as a string) in the first argument where a string
+matching the second argument begins (zero origin), or -1 if
+the second argument does not occur.
+
+<dt><b>len</b><dd>The defining text of the
+<b>len</b>
+macro is the length (as a string)
+of the first argument.
+
+<dt><b>m4exit</b><dd>Exit from the
+<i>m4</i>
+utility.
+If the first argument is
+specified, it will be the exit code.
+The default is zero.
+It is an error to specify an argument
+containing any non-numeric characters.
+
+<dt><b>m4wrap</b><dd>The first argument will be processed when EOF is reached.
+If the
+<b>m4wrap</b>
+macro is used multiple times, the arguments
+specified will be processed in the order in which the
+<b>m4wrap</b>
+macros were processed.
+
+<dt><b>maketemp</b><dd>
+The defining text is the first argument, with any trailing
+capital X characters replaced with the current process ID as a string.
+
+<dt><b>popdef</b><dd>The
+<b>popdef</b>
+macro deletes the current definition of its
+arguments, replacing it with the previous one.
+If there is no previous definition, the macro is undefined.
+
+<dt><b>pushdef</b><dd>
+The
+<b>pushdef</b>
+macro is identical to the
+<b>define</b>
+macro with
+the exception that it preserves any current definition
+for future retrieval using the
+<b>popdef</b>
+macro.
+
+<dt><b>shift</b><dd>The defining text for the
+<b>shift</b>
+macro is all of its arguments
+except for the first one.
+
+<dt><b>sinclude</b><dd>
+The
+<b>sinclude</b>
+macro is identical to the
+<b>include</b>
+macro, except
+that it is not an error if the file is inaccessible.
+
+<dt><b>substr</b><dd>The defining text for the
+<b>substr</b>
+macro is the substring
+of the first argument beginning at the zero-offset
+character position specified by the second argument.
+The third argument, if specified, is the number of characters
+to select;
+if not specified, the characters from the
+starting point to the end of the first argument become
+the defining text.
+It is not an error to specify
+a starting point beyond the end of the first argument and
+the defining text will be null.
+It is an error to
+specify an argument containing any non-numeric characters.
+
+<dt><b>syscmd</b><dd>The
+<b>syscmd</b>
+macro interprets its first argument as a shell command line.
+The defining text is the string result of that command.
+No output redirection is performed by the
+<i>m4</i>
+utility.
+The exit status value from the command
+can be retrieved using the
+<b>sysval</b>
+macro.
+
+
+<dt><b>sysval</b><dd>The defining text of the
+<b>sysval</b>
+macro is the exit value
+of the utility last invoked by the
+<b>syscmd</b>
+macro (as a string).
+
+<dt><b>traceon</b><dd>The
+<b>traceon</b>
+macro enables tracing for the macros specified as
+arguments, or, if no arguments are specified, for all macros.
+The trace output is written to standard error
+in an unspecified format.
+
+<dt><b>traceoff</b><dd>The
+<b>traceoff</b>
+macro disables tracing for the macros specified as
+arguments, or, if no arguments are specified, for all macros.
+
+<dt><b>translit</b><dd>The defining text of the
+<b>translit</b>
+macro is the first
+argument with every character that occurs in the second
+argument replaced with the corresponding character from
+the third argument.
+
+<dt><b>undefine</b><dd>
+The
+<b>undefine</b>
+macro deletes all definitions (including those
+preserved using the
+<b>pushdef</b>
+macro) of the macros named
+by its arguments.
+
+<dt><b>undivert</b><dd>
+The
+<b>undivert</b>
+macro causes immediate output of any text
+in temporary buffers named as arguments, or all temporary
+buffers if no arguments are specified.
+Buffers can be
+undiverted into other temporary buffers.
+Undiverting
+discards the contents of the temporary buffer.
+It is an error to specify an argument containing any non-numeric characters.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1321">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred
+
+</dl>
+<p>
+If the
+m4exit
+macro is used, the exit value can be specified by the
+input file.
+</blockquote><h4><a name = "tag_001_014_1322">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1323">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<b>defn</b>
+macro is useful for renaming macros, especially built-ins.
+</blockquote><h4><a name = "tag_001_014_1324">&nbsp;</a>EXAMPLES</h4><blockquote>
+An example of a single
+<i>m4</i>
+input file capable of generating two output files follows.
+The file
+<b>file1.m4</b>
+could contain lines such as:
+<pre>
+<code>
+if(VER, 1, <i>do_something</i>)
+if(VER, 2, <i>do_something</i>)
+</code>
+</pre>
+<p>
+The makefile for the program might include:
+<pre>
+<code>
+file1.1.c : file1.m4
+            m4 -D VER=1 file1.m4 &gt; file1.1.c
+            ...
+file1.2.c : file1.m4
+            m4 -D VER=2 file1.m4 &gt; file1.2.c
+            ...
+</code>
+</pre>
+<br>
+<p>
+The
+<b>-U</b>
+option can be used to undefine
+<b>VER</b>.
+If
+<b>file1.m4</b>
+contains:
+<pre>
+<code>
+if(VER, 1, <i>do_something</i>)
+if(VER, 2, <i>do_something</i>)
+ifndef(VER, <i>do_something</i>)
+</code>
+</pre>
+<br>
+then the makefile would contain:
+<pre>
+<code>
+file1.0.c : file1.m4
+            m4 -U VER file1.m4 &gt; file1.0.c
+            ...
+file1.1.c : file1.m4
+            m4 -D VER=1 file1.m4 &gt; file1.1.c
+            ...
+file1.2.c : file1.m4
+            m4 -D VER=2 file1.m4 &gt; file1.2.c
+            ...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1325">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1326">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="c89.htm">c89</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

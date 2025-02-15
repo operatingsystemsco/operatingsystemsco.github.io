@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>localeconv</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_381">&nbsp;</a>NAME</h4><blockquote>
+localeconv - determine the program locale
+</blockquote><h4><a name = "tag_000_007_382">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="local90.htm">locale.h</a>&gt;
+
+struct lconv *localeconv(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_383">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>localeconv()</i>
+function sets the components of an object with the type
+<b>struct lconv</b>
+with the values appropriate for the formatting of numeric
+quantities (monetary and otherwise) according to the rules of the
+current locale.
+<p>
+The members of the structure with type
+<b>char *</b>
+are pointers to strings, any of which (except <b>decimal_point</b>)
+can point to "", to indicate that the value is not available in
+the current locale or is of zero length.
+The members with type <b>char</b> are non-negative numbers, any of
+which can be {CHAR_MAX} to indicate that the value is not available
+in the current locale.
+<p>
+The members include the following:
+<dl compact>
+
+<dt><b>char&nbsp;*decimal_point</b><dd><br>
+The radix character used to format non-monetary
+quantities.
+
+<dt><b>char&nbsp;*thousands_sep</b><dd><br>
+The character used to separate groups of digits before the
+decimal-point character in formatted non-monetary quantities.
+
+<dt><b>char&nbsp;*grouping</b><dd><br>
+A string whose elements taken as one-byte integer values
+indicate the size of each group of digits
+in formatted non-monetary quantities.
+
+<dt><b>char&nbsp;*int_curr_symbol</b><dd><br>
+The international currency symbol applicable to the current
+locale.
+The first three characters contain the alphabetic international
+currency symbol in accordance with those specified in
+the .
+The fourth character (immediately preceding the null byte)
+is the character used to separate the international currency
+symbol from the monetary quantity.
+
+<dt><b>char&nbsp;*currency_symbol</b><dd><br>
+The local currency symbol applicable to the current locale.
+
+<dt><b>char&nbsp;*mon_decimal_point</b><dd><br>
+The radix character used to format monetary quantities.
+
+<dt><b>char&nbsp;*mon_thousands_sep</b><dd><br>
+The separator for groups of digits before the decimal-point in
+formatted monetary quantities.
+
+<dt><b>char&nbsp;*mon_grouping</b><dd><br>
+A string whose elements taken as one-byte integer values
+indicate the size of each group of digits
+in formatted monetary quantities.
+
+<dt><b>char&nbsp;*positive_sign</b><dd><br>
+The string used to indicate a non-negative valued formatted
+monetary quantity.
+
+<dt><b>char&nbsp;*negative_sign</b><dd><br>
+The string used to indicate a negative valued formatted monetary
+quantity.
+
+<dt><b>char&nbsp;int_frac_digits</b><dd>
+The number of fractional digits (those after the decimal-point)
+to be displayed in an internationally formatted monetary
+quantity.
+
+<dt><b>char&nbsp;frac_digits</b><dd>
+The number of fractional digits (those after the decimal-point)
+to be displayed in a formatted monetary quantity.
+
+<dt><b>char&nbsp;p_cs_precedes</b><dd>
+Set to 1 if the <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>
+&nbsp;precedes the value for a non-negative formatted monetary
+quantity.  Set to 0 if the symbol succeeds the value.
+
+<dt><b>char&nbsp;p_sep_by_space</b><dd>
+Set to 0 if no space separates the <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>
+from the value for a non-negative formatted monetary quantity.
+Set to 1 if a space separates the symbol from the value;
+&nbsp;and set to 2 if a space separates the symbol and the sign string, if
+adjacent.
+
+<dt><b>char&nbsp;n_cs_precedes</b><dd>
+Set to 1 if the <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>
+&nbsp;precedes the value for a negative formatted monetary
+quantity.  Set to 0 if the symbol succeeds the value.
+
+<dt><b>char&nbsp;n_sep_by_space</b><dd>
+Set to 0 if no space separates the <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>
+from the value for a negative formatted monetary quantity.
+Set to 1 if a space separates the symbol from the value;
+&nbsp;and set to 2 if a space separates the symbol and the sign string, if
+adjacent.
+
+<dt><b>char&nbsp;p_sign_posn</b><dd>
+Set to a value indicating the positioning of the
+<b>positive_sign</b> for a non-negative formatted monetary
+quantity.
+
+<dt><b>char&nbsp;n_sign_posn</b><dd>
+Set to a value indicating the positioning of the
+<b>negative_sign</b> for a negative formatted monetary
+quantity.
+
+</dl>
+<p>
+The elements of <b>grouping</b> and <b>mon_grouping</b> are
+interpreted according to the following:
+<dl compact>
+
+<dt>{CHAR_MAX}<dd>
+No further grouping is to be performed.
+
+<dt>0<dd>The previous element is to be repeatedly used for the remainder
+of the digits.
+
+<dt><i>other</i><dd>The integer value is the number of digits that comprise the
+current group.
+The next element is examined to determine the size of the next
+group of digits before the current group.
+
+</dl>
+<p>
+The values of <b>p_sign_posn</b> and <b>n_sign_posn</b> are
+interpreted according to the following:
+<dl compact>
+
+<dt>0<dd>Parentheses surround the quantity and <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>.
+
+<dt>1<dd>The sign string precedes the quantity and <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>.
+
+<dt>2<dd>The sign string succeeds the quantity and <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>.
+
+<dt>3<dd>The sign string immediately precedes the <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>.
+
+<dt>4<dd>The sign string immediately succeeds the <b>currency_symbol</b>
+&nbsp;or <b>int_curr_symbol</b>.
+
+</dl>
+<p>
+The implementation will behave as if no function in this specification
+calls
+<i>localeconv()</i>.
+</blockquote><h4><a name = "tag_000_007_384">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>localeconv()</i>
+function returns a pointer to the filled-in object.
+The structure pointed to by the return value must not be
+modified by the program, but may be overwritten by a subsequent
+call to
+<i>localeconv()</i>.
+In addition, calls to
+<i><a href="setlo231.htm">setlocale()</a></i>
+with the categories LC_ALL, LC_MONETARY, or LC_NUMERIC
+may overwrite the contents of the structure.
+<br>
+</blockquote><h4><a name = "tag_000_007_385">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_007_386">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_387">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The following table illustrates the rules which may be used by
+four countries to format monetary quantities.
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Country</b>
+<th align=center><b>Positive Format</b>
+<th align=center><b>Negative Format</b>
+<th align=center><b>International Format</b>
+<tr valign=top><td align=left>Italy
+<td align=left>L.1.230
+<td align=left>-L.1.230
+<td align=left>ITL.1.230
+<tr valign=top><td align=left>Netherlands
+<td align=left>F 1.234,56
+<td align=left>F -1.234,56
+<td align=left>NLG 1.234,56
+<tr valign=top><td align=left>Norway
+<td align=left>kr1.234,56
+<td align=left>kr1.234,56-
+<td align=left>NOK 1.234,56
+<tr valign=top><td align=left>Switzerland
+<td align=left>SFrs.1,234.56
+<td align=left>SFrs.1,234.56C
+<td align=left>CHF 1,234.56
+</table>
+<p>
+For these four countries, the respective values for the monetary
+members of the structure returned by
+<i>localeconv()</i>
+are:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>&nbsp;</b>
+<th align=center><b>Italy</b>
+<th align=center><b>Netherlands</b>
+<th align=center><b>Norway</b>
+<th align=center><b>Switzerland</b>
+<tr valign=top><td align=left><b>int_curr_symbol</b>
+<td align=left>"ITL."
+<td align=left>"NLG "
+<td align=left>"NOK "
+<td align=left>"CHF "
+<tr valign=top><td align=left><b>currency_symbol</b>
+<td align=left>"L."
+<td align=left>"F"
+<td align=left>"kr"
+<td align=left>"SFrs."
+<tr valign=top><td align=left><b>mon_decimal_point</b>
+<td align=left>""
+<td align=left>","
+<td align=left>","
+<td align=left>"."
+<tr valign=top><td align=left><b>mon_thousands_sep</b>
+<td align=left>"."
+<td align=left>"."
+<td align=left>"."
+<td align=left>","
+<tr valign=top><td align=left><b>mon_grouping</b>
+<td align=left>"\3"
+<td align=left>"\3"
+<td align=left>"\3"
+<td align=left>"\3"
+<tr valign=top><td align=left><b>positive_sign</b>
+<td align=left>""
+<td align=left>""
+<td align=left>""
+<td align=left>""
+<tr valign=top><td align=left><b>negative_sign</b>
+<td align=left>"-"
+<td align=left>"-"
+<td align=left>"-"
+<td align=left>"C"
+<tr valign=top><td align=left><b>int_frac_digits</b>
+<td align=left>0
+<td align=left>2
+<td align=left>2
+<td align=left>2
+<tr valign=top><td align=left><b>frac_digits</b>
+<td align=left>0
+<td align=left>2
+<td align=left>2
+<td align=left>2
+<tr valign=top><td align=left><b>p_cs_precedes</b>
+<td align=left>1
+<td align=left>1
+<td align=left>1
+<td align=left>1
+<tr valign=top><td align=left><b>p_sep_by_space</b>
+<td align=left>0
+<td align=left>1
+<td align=left>0
+<td align=left>0
+<tr valign=top><td align=left><b>n_cs_precedes</b>
+<td align=left>1
+<td align=left>1
+<td align=left>1
+<td align=left>1
+<tr valign=top><td align=left><b>n_sep_by_space</b>
+<td align=left>0
+<td align=left>1
+<td align=left>0
+<td align=left>0
+<tr valign=top><td align=left><b>p_sign_posn</b>
+<td align=left>1
+<td align=left>1
+<td align=left>1
+<td align=left>1
+<tr valign=top><td align=left><b>n_sign_posn</b>
+<td align=left>1
+<td align=left>4
+<td align=left>2
+<td align=left>2
+</table>
+</blockquote><h4><a name = "tag_000_007_388">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_389">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="isalpha.htm">isalpha()</a></i>,
+<i><a href="isascii.htm">isascii()</a></i>,
+<i><a href="nllan111.htm">nl_langinfo()</a></i>,
+<i><a href="printf.htm">printf()</a></i>,
+<i><a href="scanf.htm">scanf()</a></i>,
+<i><a href="setlo231.htm">setlocale()</a></i>,
+<i><a href="strcat.htm">strcat()</a></i>,
+<i><a href="strchr.htm">strchr()</a></i>,
+<i><a href="strcmp.htm">strcmp()</a></i>,
+<i><a href="strcoll.htm">strcoll()</a></i>,
+<i><a href="strcpy.htm">strcpy()</a></i>,
+<i><a href="strftime.htm">strftime()</a></i>,
+<i><a href="strlen.htm">strlen()</a></i>,
+<i><a href="strpbrk.htm">strpbrk()</a></i>,
+<i><a href="strspn.htm">strspn()</a></i>,
+<i><a href="strtok.htm">strtok()</a></i>,
+<i><a href="strxfrm.htm">strxfrm()</a></i>,
+<i><a href="strtod.htm">strtod()</a></i>,
+<i><a href="langi86.htm">&lt;langinfo.h&gt;</a></i>,
+<i><a href="local90.htm">&lt;locale.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the ANSI C standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

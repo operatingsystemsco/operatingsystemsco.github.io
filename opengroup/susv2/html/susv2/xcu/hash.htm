@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>hash</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_909">&nbsp;</a>NAME</h4><blockquote>
+hash - remember or report utility locations
+</blockquote><h4><a name = "tag_001_014_910">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+hash <b>[</b><i>utility</i>...<b>]</b>
+
+hash -r 
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_911">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>hash</i>
+utility affects the way the current shell environment
+remembers the locations of utilities found as described in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>.
+Depending on the arguments specified, it adds utility
+locations to its list of remembered locations
+or it purges the contents of the list.
+When no arguments are specified,
+it reports on the contents of the list.
+<p>
+Utilities provided as built-ins to the shell
+are not reported by
+<i>hash</i>.
+</blockquote><h4><a name = "tag_001_014_912">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>hash</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following option is supported:
+<dl compact>
+
+<dt><b>-r</b>
+<dd>Forget all previously remembered utility locations.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_913">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>utility</i><dd>The name of a utility to be searched for and added
+to the list of remembered locations.
+If
+<i>utility</i>
+contains one or more slashes, the results are unspecified.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_914">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_915">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_916">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>hash</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>PATH</i><dd>Determine the location of
+<i>utility</i>,
+as described in
+the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> .
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_917">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_918">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output of
+<i>hash</i>
+is used when no arguments are specified.
+Its format is unspecified, but includes
+the pathname of each utility in the list of remembered locations
+for the current shell environment.
+This list consists of those utilities named in previous
+<i>hash</i>
+invocations that have been invoked,
+and may contain those invoked and found through the
+normal command search process.
+</blockquote><h4><a name = "tag_001_014_919">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_920">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_921">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_922">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_923">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_924">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Since
+<i>hash</i>
+affects the current shell execution environment,
+it is always provided as a shell regular built-in.
+If it is called in a separate utility execution environment,
+such as one of the following:
+<pre>
+<code>
+nohup hash -r
+find . -type f | xargs hash
+</code>
+</pre>
+it will not affect the command search process of the caller's environment.
+<p>
+The
+<i>hash</i>
+utility may be implemented as an alias, for example,
+<i><a href="alias.htm">alias</a></i>
+<b>-t -</b>,
+in which case utilities found through normal command search
+will not be listed by the
+<i>hash</i>
+command.
+<p>
+The effects of
+<i>hash</i>
+<b>-r</b>
+can also be achieved portably by resetting the value of
+<i>PATH ;
+</i>in the simplest form, this can be:
+<pre>
+<code>
+PATH="$PATH"
+</code>
+</pre>
+<p>
+The use of
+<i>hash</i>
+with
+<i>utility</i>
+names is unnecessary for most applications,
+but may provide a performance improvement
+on a few implementations; normally, the hashing
+process is included by default.
+</blockquote><h4><a name = "tag_001_014_925">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_926">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_927">&nbsp;</a>SEE ALSO</h4><blockquote>
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

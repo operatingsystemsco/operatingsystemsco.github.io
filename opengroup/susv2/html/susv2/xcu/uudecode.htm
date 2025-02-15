@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>uudecode</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2638">&nbsp;</a>NAME</h4><blockquote>
+uudecode - decode a binary file
+</blockquote><h4><a name = "tag_001_014_2639">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+uudecode <b>[</b><i>file</i><b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2640">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>uudecode</i>
+utility reads a file or standard input if no file is specified,
+that includes data created by the
+<i><a href="uuencode.htm">uuencode</a></i>
+utility.
+The
+<i>uudecode</i>
+utility scans the input file, searching for
+data compatible with the format specified in
+<i><a href="uuencode.htm">uuencode</a></i>
+and attempts to create or overwrite the
+file described by the data.
+The pathname, file access permission bits
+and contents for the file to be produced
+are all contained in that data.
+The mode bits of the created file will be set from the file access
+permission bits contained in the data; that is,
+other attributes of the mode,
+including the file mode creation mask (see
+<i><a href="umask.htm">umask</a></i>),
+will not affect the file being produced.
+<p>
+If the pathname of the file to be produced exists, and the user
+does not have write permission on that file,
+<i>uudecode</i>
+will terminate with an error.
+If the pathname of the file to be produced exists,
+and the user has write permission on that file, the existing file
+will be overwritten.
+<p>
+If the input data was produced by
+<i><a href="uuencode.htm">uuencode</a></i>
+on a system with a different number of bits per byte
+than on the target system, the results of
+<i>uudecode</i>
+are unspecified.
+</blockquote><h4><a name = "tag_001_014_2641">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2642">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>The pathname of a file containing the output of
+<i><a href="uuencode.htm">uuencode</a></i>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2643">&nbsp;</a>STDIN</h4><blockquote>
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_2644">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files must be files containing the output of
+<i><a href="uuencode.htm">uuencode</a></i>.
+</blockquote><h4><a name = "tag_001_014_2645">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>uudecode</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2646">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2647">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2648">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2649">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output file will be in the same format as the file originally encoded by
+<i><a href="uuencode.htm">uuencode</a></i>.
+</blockquote><h4><a name = "tag_001_014_2650">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2651">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2652">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2653">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The user who is invoking
+<i>uudecode</i>
+must have write permission on any file being created.
+<p>
+The output of
+<i><a href="uuencode.htm">uuencode</a></i>
+is essentially an encoded bit stream
+that is not cognizant of byte boundaries.
+It is possible that a 9-bit byte target
+machine can process input from an 8-bit
+source, if it is aware of the requirement,
+but the reverse is unlikely to be satisfying.
+Of course, the only data that is meaningful
+for such a transfer between architectures is generally
+character data.
+</blockquote><h4><a name = "tag_001_014_2654">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2655">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2656">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="uuencode.htm">uuencode</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

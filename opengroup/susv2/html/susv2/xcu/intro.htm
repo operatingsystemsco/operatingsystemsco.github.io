@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ls</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font>
+</center>
+<hr size=2 noshade><blockquote>
+<center>
+<h2><a name = "tag_001">&nbsp;</a>Introduction</h2>
+</center>
+<xref type="1" name="intro"></xref>
+<h3><a name = "tag_001_001">&nbsp;</a>Overview</h3>
+The XCU specification defines the shell command language
+and the utilities provided by the X/Open System Interface (XSI).
+The utilities are accessed using commands
+given to command interpreters supporting
+the shell command language.
+The system interfaces and headers (described in CAE Specification, <b>System Interfaces and Headers</b>, <b>Issue 5</b>) and the utilities
+are jointly known as services to application programs.
+No particular restrictions are imposed on the way in
+which the services are implemented.
+<p>
+The utilities are defined in terms of their interface as seen
+from the
+<i>sh</i>
+command interpreter.
+Alternative interfaces are available to application programs through
+one of the
+functions, and the
+<i><a href="../xsh/popen.htm">popen()</a></i>
+and
+<i><a href="../xsh/system.htm">system()</a></i>
+interfaces, all of which are described in CAE Specification, <b>System Interfaces and Headers</b>, <b>Issue 5</b>.
+<h3><a name = "tag_001_002">&nbsp;</a>Conformance</h3>
+<xref type="2" name="conformance"></xref>
+An implementation conforming to this specification shall
+meet the following criteria:
+<ul>
+<p>
+<li>
+The system shall provide all the utilities described in this specification
+with all the functionality defined, subject to the following:
+<ul>
+<p>
+<li>
+Development utilities listed in
+<xref href=dev><a href="#tag_001_003_001">
+Development
+</a></xref>
+need not be provided.
+<p>
+<li>
+FORTRAN utilities listed in
+<xref href=fortran><a href="#tag_001_003_002">
+FORTRAN
+</a></xref>
+need not be provided.
+<p>
+<li>
+Legacy utilities listed in
+<xref href=legacy><a href="#tag_001_003_003">
+LEGACY
+</a></xref>
+need not be provided.
+<p>
+<li>
+Within the utilities that are provided, functionality marked by the codes
+<small>OF</small>, <small>OP</small>, <small>PI</small>, or <small>UN</small>
+need not be provided.
+<p>
+</ul>
+<p>
+<li>
+The system may provide one or more of the following:
+<ul>
+<p>
+<li>
+development utilities (as a group) listed in
+<xref href=dev><a href="#tag_001_003_001">
+Development
+</a></xref>
+<p>
+<li>
+the FORTRAN77 compiler listed in
+<xref href=fortran><a href="#tag_001_003_002">
+FORTRAN
+</a></xref>.
+<p>
+</ul>
+<p>
+When an implementation claims that an optional or possibly unsupportable
+facility is provided, all of its constituent parts shall be provided
+and shall comply with the specification.
+<p>
+When an implementation claims that a development system is provided,
+all of the utilities marked <b>DEVELOPMENT</b> and listed in
+<xref href=dev><a href="#tag_001_003_001">
+Development
+</a></xref>,
+except
+<i><a href="dis.htm">dis</a></i>,
+shall be provided and shall comply with the specification.
+<p>
+When an implementation claims that a FORTRAN system is provided,
+the utility marked <b>FORTRAN</b> and listed in
+<xref href=fortran><a href="#tag_001_003_002">
+FORTRAN
+</a></xref>
+shall be provided and shall comply with the specification.
+<dl><dt><b>Note:</b>
+<dd>To determine whether an implementation supports development, FORTRAN
+or possibly unsupportable utilities, refer to the implementation's
+Conformance Statement.
+</dl>
+<p>
+<li>
+The system may provide additional or enhanced utilities and facilities
+not required by this specification, provided that such additions or
+enhancements do not affect the behaviour of an application
+that requires only the facilities described in this specification.
+<p>
+</ul>
+<p>
+An implementation conforming to this specification depends on the environment
+provided by the system interfaces and headers specified in the referenced
+<b>XSH</b> specification.  For further information, refer to the <b>XSH</b> specification, <b>Section 1.2</b>,
+<b>Conformance</b>, the referenced <b>XPG4, Version 2</b> document and
+the implementation's Conformance Statement.
+<h4><a name = "tag_001_002_001">&nbsp;</a>Symbolic Links</h4>
+The definition of symbolic links in the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a>  was new in
+Issue 4, Version 2.
+An implementation need not support symbolic links to be conformant with this
+document.  (See the <b>XSH</b> specification, <b>Section 1.2, Conformance</b> for the implications
+on conformance with the <b>XSH</b> specification.)
+<p>
+The definition of pathname resolution in the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a>  indicates the effects of
+symbolic links.  However, many utilities that manipulate files may manipulate
+symbolic links.  Use of these utilities in this context (that is, when the
+last component of the pathname is a symbolic link) produces unspecified
+effects.  In addition, if any utility encounters a symbolic link after
+pathname resolution has been completed, the effects are unspecified.
+<p>
+<h4><a name = "tag_001_002_002">&nbsp;</a>Considerations for Utilities in Support of Files of Arbitrary Size</h4>
+The following utilities will support files of any size up to the
+maximum that can be created by the implementation.  This support
+includes correct writing of file size-related values (such as file
+sizes and offsets, line numbers, and block counts) and correct
+interpretation of command line arguments that contain such values. 
+<dl compact>
+
+<dt><i>basename</i><dd>Return non-directory portion of pathname.
+
+<dt><i>cat</i><dd>Concatenate and print files.
+
+<dt><i>cd</i><dd>Change working directory.
+
+<dt><i>chgrp</i><dd>Change file group ownership.
+
+<dt><i>chmod</i><dd>Change file modes.
+
+<dt><i>chown</i><dd>Change file ownership.
+
+<dt><i>cksum</i><dd>Write file checksums and sizes.
+
+<dt><i>cmp</i><dd>Compare two files.
+
+<dt><i>cp</i><dd>Copy files.
+
+<dt><i>dd</i><dd>Convert and copy a file.
+
+<dt><i>df</i><dd>Report free disk space.
+
+<dt><i>dirname</i><dd>Return directory portion of pathname.
+
+<dt><i>du</i><dd>Estimate file space usage.
+
+<dt><i>find</i><dd>Find files.
+
+<dt><i>ln</i><dd>Link files.
+
+<dt><i>ls</i><dd>List directory contents.
+
+<dt><i>mkdir</i><dd>Make directories.
+
+<dt><i>mv</i><dd>Move files.
+
+<dt><i>pathchk</i><dd>Check pathnames.
+
+<dt><i>pwd</i><dd>Return working directory name.
+
+<dt><i>rm</i><dd>Remove directory entries.
+
+<dt><i>rmdir</i><dd>Remove directories.
+
+<dt><i>sh</i><dd>Shell, the standard command language interpreter.
+
+<dt><i>sum</i><dd>Print checksum and block or byte count of a file.
+
+<dt><i>test</i><dd>Evaluate expression.
+
+<dt><i>touch</i><dd>Change file access and modification times.
+
+<dt><i>ulimit</i><dd>Set or report file size limit.
+
+</dl>
+<p>
+Exceptions to the requirement that utilities support files of any size
+up to the maximum are: 
+<ol>
+<p>
+<li>
+Utilities such as 
+<i><a href="tar.htm">tar</a></i>
+and 
+<i><a href="cpio.htm">cpio</a></i>
+cannot support arbitrary file sizes
+due to limitations imposed by fixed file formats. 
+<p>
+<li>
+Uses of files as
+command scripts, or for configuration or control, are exempt. For
+example, it is not required that 
+<i><a href="sh.htm">sh</a></i>
+be able to read an arbitrarily large &quot;.profile&quot;. 
+<p>
+<li>
+Shell input and output redirection are exempt. For
+example, it is not required that the redirections
+<i>sum &lt; file</i>
+or
+<i>echo foo &gt; file</i>
+succeed for an arbitrarily large existing file. 
+<p>
+</ol>
+<h3><a name = "tag_001_003">&nbsp;</a>Options</h3>
+<p>
+Utilities marked <b>DEVELOPMENT</b>, <b>FORTRAN</b> or <b>LEGACY</b> are optional.
+See
+<xref href=conformance><a href="#tag_001_002">
+Conformance
+</a></xref>
+for conformance requirements.
+<h4><a name = "tag_001_003_001">&nbsp;</a>Development</h4>
+<xref type="3" name="dev"></xref>
+Utilities marked <b>DEVELOPMENT</b> in this specification are:
+<pre>
+<center>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th colspan=4 align=center><b>Development Utilities</b>
+<tr valign=top><td align=left>admin
+<td align=left>get
+<td align=left>nm
+<td align=left>strip
+<tr valign=top><td align=left>cflow
+<td align=left>lex
+<td align=left>prs
+<td align=left>unget
+<tr valign=top><td align=left>ctags
+<td align=left>lint
+<td align=left>rmdel
+<td align=left>val
+<tr valign=top><td align=left>cxref
+<td align=left>m4
+<td align=left>sact
+<td align=left>what
+<tr valign=top><td align=left>delta
+<td align=left>make
+<td align=left>sccs
+<td align=left>yacc
+<tr valign=top><td align=left>dis
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+</table>
+</center>
+</pre>
+Even if the DEVELOPMENT option is supported, or the LEGACY option is
+supported, the
+<i>dis</i>
+utility need not be supported.
+<h4><a name = "tag_001_003_002">&nbsp;</a>FORTRAN</h4>
+<xref type="3" name="fortran"></xref>
+The
+<i><a href="fort77.htm">fort77</a></i>
+FORTRAN compiler is the only utility marked <b>FORTRAN</b> in this
+specification.
+<h4><a name = "tag_001_003_003">&nbsp;</a>LEGACY</h4>
+<xref type="3" name="legacy"></xref>
+The utilities in the table below are marked <b>LEGACY</b>.
+Various factors may have contributed to the decision to class a
+utility <b>LEGACY</b>.
+Application writers should not use functionality marked <b>LEGACY</b>.
+<p>
+If a migration path exists, advice is given to application developers
+regarding alternative means of obtaining similar functionality.
+This information may be found in the APPLICATION USAGE
+sections on the relevant pages.
+<p>
+No requirement beyond that which was in effect at the time
+that these utilities were marked <b>LEGACY</b> shall be applied to
+these utilities.
+<pre>
+<center>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th colspan=4 align=center><b>Legacy Utilities</b>
+<tr valign=top><td align=left> <a href="calendar.htm">calendar</a> <a href="cancel.htm">cancel</a> <a href="cc.htm">cc</a> <a href="col.htm">col</a> <a href="cpio.htm">cpio</a> <a href="cu.htm">cu</a> <a href="dircmp.htm">dircmp</a> 
+<td align=left> <a href="dis.htm">dis</a> <a href="egrep.htm">egrep</a> <a href="fgrep.htm">fgrep</a> <a href="line.htm">line</a> <a href="lint.htm">lint</a> <a href="lpstat.htm">lpstat</a> 
+<td align=left> <a href="mail.htm">mail</a> <a href="pack.htm">pack</a> <a href="pcat.htm">pcat</a> <a href="pg.htm">pg</a> <a href="spell.htm">spell</a> <a href="sum.htm">sum</a> <a href="tar.htm">tar</a> 
+<td align=left> <a href="unpack.htm">unpack</a> <a href="uulog.htm">uulog</a> <a href="uuname.htm">uuname</a> <a href="uupick.htm">uupick</a> <a href="uuto.htm">uuto</a> 
+</table>
+</center>
+</pre>
+
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

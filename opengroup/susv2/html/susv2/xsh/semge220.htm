@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sem_getvalue</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_288">&nbsp;</a>NAME</h4><blockquote>
+sem_getvalue - get the value of a semaphore
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_008_289">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="semap227.htm">semaphore.h</a>&gt;
+
+int sem_getvalue(sem_t *<i>sem</i>, int *<i>sval</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_290">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sem_getvalue()</i>
+function updates the location referenced by the
+<i>sval</i>
+argument to have the value of the semaphore referenced by
+<i>sem</i>
+without affecting the state of the semaphore.
+The updated value represents an actual semaphore value
+that occurred at some unspecified time during the call,
+but it need not be the actual value of the semaphore
+when it is returned to the calling process.
+<p>
+If
+<i>sem</i>
+is locked, then the value returned by
+<i>sem_getvalue()</i>
+is either zero or a negative number
+whose absolute value represents the number of processes waiting
+for the semaphore at some unspecified time during the call.
+</blockquote><h4><a name = "tag_000_008_291">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the function returns a value of zero.
+Otherwise, the function returns a value of -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_008_292">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>sem_getvalue()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>sem</i>
+argument does not refer to a valid semaphore.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>sem_getvalue()</i>
+is not supported by this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_293">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_294">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_295">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_296">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="semctl.htm">semctl()</a></i>,
+<i><a href="semget.htm">semget()</a></i>,
+<i><a href="semop.htm">semop()</a></i>,
+<i><a href="sempo223.htm">sem_post()</a></i>,
+<i><a href="semtr224.htm">sem_trywait()</a></i>,
+<i><a href="semwa226.htm">sem_wait()</a></i>,
+<i><a href="semap227.htm">&lt;semaphore.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

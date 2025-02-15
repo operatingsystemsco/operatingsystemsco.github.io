@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>setlocale</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_435">&nbsp;</a>NAME</h4><blockquote>
+setlocale - set program locale
+</blockquote><h4><a name = "tag_000_008_436">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="local90.htm">locale.h</a>&gt;
+
+char *setlocale(int <i>category</i>, const char *<i>locale</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_437">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>setlocale()</i>
+function selects the appropriate piece of the program's locale, as specified
+by the
+<i>category</i>
+and
+<i>locale</i>
+arguments, and may be used to change or query the program's
+entire locale or portions thereof.
+The value LC_ALL
+for
+<i>category</i>
+names the
+program's entire locale; other values for
+<i>category</i>
+name only a part of the program's locale:
+<dl compact>
+
+<dt>LC_COLLATE<dd>
+Affects the behaviour of regular expressions and the collation functions.
+
+<dt>LC_CTYPE<dd>
+Affects the behaviour of regular expressions, character classification,
+character conversion functions and wide-character functions.
+
+<dt>LC_MESSAGES<dd>
+Affects what strings are expected by commands and utilities
+as affirmative or negative responses,
+what strings are given by commands and utilities
+as affirmative or negative responses,
+and the content of messages.
+
+<dt>LC_MONETARY<dd>
+Affects the behaviour of functions that handle monetary values.
+
+<dt>LC_NUMERIC<dd>
+Affects the radix character for the formatted
+input/output functions and the string conversion functions.
+
+<dt>LC_TIME<dd>
+Affects the behaviour of the time conversion functions.
+
+</dl>
+<p>
+The
+<i>locale</i>
+argument is a pointer to a character string
+containing the required setting of
+<i>category.</i>
+The contents of this string are implementation-dependent.
+In addition, the following preset values of
+<i>locale</i>
+are defined for all settings
+of
+<i>category:</i>
+<dl compact>
+
+<dt>"POSIX"<dd>Specifies the minimal environment for C-language translation called POSIX
+locale.
+If
+<i>setlocale()</i>
+is not invoked, the POSIX locale is the default.
+
+<dt>"C"<dd>Same as POSIX.
+
+<dt>""<dd>Specifies an implementation-dependent native environment.
+For XSI-conformant systems, this corresponds to the value of the associated
+environment variables, <i>LC_*</i> and <i>LANG</i>; see the <b>XBD</b> specification, <a href="../xbd/locale.htm"><b>Locale</b>&nbsp;</a> and the
+<b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a>.
+
+<dt>A null pointer<dd>
+Used to direct
+<i>setlocale()</i>
+to query the current internationalised
+environment and return the name of the
+<i><a href="../xcu/locale.htm">locale()</a></i>.
+
+</dl>
+<p>
+The locale state is common to all threads within a process.
+</blockquote><h4><a name = "tag_000_008_438">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>setlocale()</i>
+returns the string associated with the specified category for the new locale.
+Otherwise,
+<i>setlocale()</i>
+returns a null pointer and the program's locale is not changed.
+<p>
+A null pointer for
+<i>locale</i>
+causes
+<i>setlocale()</i>
+to return a pointer to the string associated with the
+<i>category</i>
+for the program's current locale.  The program's locale is not changed.
+<p>
+The string returned by
+<i>setlocale()</i>
+is such that a
+subsequent call with that string and its associated
+<i>category</i>
+will restore that part of the program's
+locale.
+The string returned must not be modified by the program, but may be
+overwritten by a subsequent call to
+<i>setlocale()</i>.
+</blockquote><h4><a name = "tag_000_008_439">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_008_440">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_441">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The following code illustrates how a program can initialise
+the international environment for one language, while
+selectively modifying the program's locale such that regular
+expressions and string operations can be applied to text
+recorded in a different language:
+<pre>
+<code>
+setlocale(LC_ALL, "De");
+setlocale(LC_COLLATE, "Fr@dict");
+</code>
+</pre>
+<p>
+Internationalised programs must call
+<i>setlocale()</i>
+to initiate a specific language operation.
+This can be done by calling
+<i>setlocale()</i>
+as follows:
+<pre>
+<code>
+setlocale(LC_ALL, "");
+</code>
+</pre>
+Changing the setting of LC_MESSAGES has no effect on catalogues
+that have already been opened by calls to
+<i><a href="catopen.htm">catopen()</a></i>.
+</blockquote><h4><a name = "tag_000_008_442">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_443">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="isalnum.htm">isalnum()</a></i>,
+<i><a href="isalpha.htm">isalpha()</a></i>,
+<i><a href="iscntrl.htm">iscntrl()</a></i>,
+<i><a href="isgraph.htm">isgraph()</a></i>,
+<i><a href="islower.htm">islower()</a></i>,
+<i><a href="isprint.htm">isprint()</a></i>,
+<i><a href="ispunct.htm">ispunct()</a></i>,
+<i><a href="isspace.htm">isspace()</a></i>,
+<i><a href="isupper.htm">isupper()</a></i>,
+<i><a href="iswalnum.htm">iswalnum()</a></i>,
+<i><a href="iswalpha.htm">iswalpha()</a></i>,
+<i><a href="iswcntrl.htm">iswcntrl()</a></i>,
+<i><a href="iswgraph.htm">iswgraph()</a></i>,
+<i><a href="iswlower.htm">iswlower()</a></i>,
+<i><a href="iswprint.htm">iswprint()</a></i>,
+<i><a href="iswpunct.htm">iswpunct()</a></i>,
+<i><a href="iswspace.htm">iswspace()</a></i>,
+<i><a href="iswupper.htm">iswupper()</a></i>,
+<i><a href="local91.htm">localeconv()</a></i>,
+<i><a href="mblen.htm">mblen()</a></i>,
+<i><a href="mbstowcs.htm">mbstowcs()</a></i>,
+<i><a href="mbtowc.htm">mbtowc()</a></i>,
+<i><a href="nllan111.htm">nl_langinfo()</a></i>,
+<i><a href="printf.htm">printf()</a></i>,
+<i><a href="scanf.htm">scanf()</a></i>,
+<i>setlocale()</i>,
+<i><a href="strcoll.htm">strcoll()</a></i>,
+<i><a href="strerror.htm">strerror()</a></i>,
+<i><a href="strfmon.htm">strfmon()</a></i>,
+<i><a href="strtod.htm">strtod()</a></i>,
+<i><a href="strxfrm.htm">strxfrm()</a></i>,
+<i><a href="tolower.htm">tolower()</a></i>,
+<i><a href="toupper.htm">toupper()</a></i>,
+<i><a href="towlower.htm">towlower()</a></i>,
+<i><a href="towupper.htm">towupper()</a></i>,
+<i><a href="wcscoll.htm">wcscoll()</a></i>,
+<i><a href="wcstod.htm">wcstod()</a></i>,
+<i><a href="wcstombs.htm">wcstombs()</a></i>,
+<i><a href="wcsxfrm.htm">wcsxfrm()</a></i>,
+<i><a href="wctomb.htm">wctomb()</a></i>,
+<i><a href="langi86.htm">&lt;langinfo.h&gt;</a></i>,
+<i><a href="local90.htm">&lt;locale.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ftw</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_383">&nbsp;</a>NAME</h4><blockquote>
+ftw - traverse (walk) a file tree
+</blockquote><h4><a name = "tag_000_005_384">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="ftwh52.htm">ftw.h</a>&gt;
+
+int ftw(const char *<i>path</i>, int (*<i>fn</i>)(const char *,
+    const struct stat *<i>ptr</i>, int <i>flag</i>), int <i>ndirs</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_385">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ftw()</i>
+function recursively descends the directory hierarchy rooted in
+<i>path</i>.
+For each object in the hierarchy,
+<i>ftw()</i>
+calls the function pointed to by
+<i>fn</i>,
+passing it a pointer to a null-terminated character string containing the name
+of the object, a pointer to a
+<b>stat</b>
+structure containing information about the object, and an integer.
+Possible values of the integer, defined in the
+<i><a href="ftwh52.htm">&lt;ftw.h&gt;</a></i>
+header, are:
+<dl compact>
+
+<dt>FTW_D<dd>
+For a directory.
+
+<dt>FTW_DNR<dd>
+For a directory that cannot be read.
+
+<dt>FTW_F<dd>
+For a file.
+
+<dt>FTW_SL<dd>
+For a symbolic link (but see also FTW_NS below).
+
+<dt>FTW_NS<dd>
+For an object
+other than a symbolic link
+on which
+<i><a href="stat.htm">stat()</a></i>
+could not successfully be executed.
+If the object is a symbolic link and
+<i><a href="stat.htm">stat()</a></i>
+failed, it is unspecified whether
+<i>ftw()</i>
+passes FTW_SL or FTW_NS to the user-supplied function.
+
+</dl>
+<p>
+If the integer is FTW_DNR, descendants of that directory will not be
+processed.
+If the integer is FTW_NS, the
+<b>stat</b>
+structure will contain undefined values.
+An example of an object that would cause FTW_NS
+to be passed to the function pointed to by
+<i>fn</i>
+would be a file in a directory with read but
+without execute (search) permission.
+<p>
+The
+<i>ftw()</i>
+function visits a directory before visiting any of its descendants.
+<p>
+The
+<i>ftw()</i>
+function uses at most one file descriptor for each level in the tree.
+<p>
+The argument <i>ndirs</i> should be in the range of 1 to {OPEN_MAX}.
+<p>
+The tree traversal continues until the tree is exhausted, an invocation of
+<i>fn</i>
+returns a non-zero value, or some error, other than [EACCES], is detected
+within
+<i>ftw()</i>.
+<p>
+The
+<i>ndirs</i>
+argument specifies the maximum number of directory streams or
+file descriptors or both available for use by
+<i>ftw()</i>
+while traversing the tree.  When
+<i>ftw()</i>
+returns it closes any directory streams and file descriptors it
+uses not counting any opened by the application-supplied
+<i>fn()</i>
+function.
+</blockquote><h4><a name = "tag_000_005_386">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the tree is exhausted,
+<i>ftw()</i>
+returns 0.  If the function pointed to by
+<i>fn</i>
+returns a non-zero value,
+<i>ftw()</i>
+stops its tree traversal and returns whatever
+value was returned by the function pointed to by
+<i>fn()</i>.
+If
+<i>ftw()</i>
+detects an error, it returns -1 and sets
+<i>errno</i>
+to indicate the error.
+<p>
+If
+<i>ftw()</i>
+encounters an error other than [EACCES] (see FTW_DNR and FTW_NS above), it
+returns -1 and <i>errno</i> is set to indicate the error.  The external
+variable <i>errno</i> may contain any error value that is possible when a
+directory is opened or when one of the
+<i>stat</i>
+functions is executed on a directory or file.
+<br>
+</blockquote><h4><a name = "tag_000_005_387">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>ftw()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for any component of
+<i>path</i>
+or read permission is denied for
+<i>path.</i>
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>path</i>
+exceeds {PATH_MAX}, or a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file
+or <i>path</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of
+<i>path</i>
+is not a directory.
+
+</dl>
+<p>
+The
+<i>ftw()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of the
+<i>ndirs</i>
+argument is invalid.
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+<p>
+In addition, if the function pointed to by
+<i>fn</i>
+encounters system errors,
+<i>errno</i>
+may be set accordingly.
+<br>
+</blockquote><h4><a name = "tag_000_005_388">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_389">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>ftw()</i>
+may allocate dynamic storage during its operation.  If
+<i>ftw()</i>
+is forcibly terminated, such as by
+<i><a href="longjmp.htm">longjmp()</a></i>
+or
+<i><a href="siglo247.htm">siglongjmp()</a></i>
+being executed by the function pointed to by
+<i>fn</i>
+or an interrupt routine,
+<i>ftw()</i>
+will not have a chance to free that storage,
+so it will remain permanently allocated.
+A safe way to handle interrupts is to store
+the fact that an interrupt has occurred,
+and arrange to have the function pointed to by
+<i>fn</i>
+return a non-zero value at its next invocation.
+</blockquote><h4><a name = "tag_000_005_390">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_391">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="longjmp.htm">longjmp()</a></i>,
+<i><a href="lstat.htm">lstat()</a></i>,
+<i><a href="malloc.htm">malloc()</a></i>,
+<i><a href="nftw.htm">nftw()</a></i>,
+<i><a href="opendir.htm">opendir()</a></i>,
+<i><a href="siglo247.htm">siglongjmp()</a></i>,
+<i><a href="stat.htm">stat()</a></i>,
+<i><a href="ftwh52.htm">&lt;ftw.h&gt;</a></i>,
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

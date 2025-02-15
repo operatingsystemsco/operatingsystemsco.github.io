@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>select</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_261">&nbsp;</a>NAME</h4><blockquote>
+select - synchronous I/O multiplexing
+</blockquote><h4><a name = "tag_000_008_262">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systi275.htm">sys/time.h</a>&gt;
+
+int select(int <i>nfds</i>, fd_set *<i>readfds</i>, fd_set *<i>writefds</i>,
+    fd_set *<i>errorfds</i>, struct timeval *<i>timeout</i>);
+void FD_CLR(int <i>fd</i>, fd_set *<i>fdset</i>);
+int FD_ISSET(int <i>fd</i>, fd_set *<i>fdset</i>);
+void FD_SET(int <i>fd</i>, fd_set *<i>fdset</i>);
+void FD_ZERO(fd_set *<i>fdset</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_263">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>select()</i>
+function indicates which of the specified file descriptors is ready for
+reading, ready for writing, or has an error condition pending.  If the
+specified condition is false for all of the specified file descriptors,
+<i>select()</i>
+blocks, up to the specified timeout interval, until the specified condition is
+true for at least one of the specified file descriptors.
+<p>
+The
+<i>select()</i>
+function supports regular files, terminal and pseudo-terminal devices,
+STREAMS-based files, FIFOs and pipes. The behaviour of
+<i>select()</i>
+on file descriptors that refer to other types of file is unspecified.
+<p>
+The <i>nfds</i> argument specifies the range of file descriptors to be tested.
+The
+<i>select()</i>
+function tests file descriptors in the range of 0 to <i>nfds</i>-1.
+<p>
+If the <i>readfds</i> argument is not a null pointer, it points to an
+object of type <b>fd_set</b> that on input specifies the file
+descriptors to be checked for being ready to read, and on output
+indicates which file descriptors are ready to read.
+<p>
+If the <i>writefds</i> argument is not a null pointer, it points to an
+object of type <b>fd_set</b> that on input specifies the file
+descriptors to be checked for being ready to write, and on output
+indicates which file descriptors are ready to write.
+<p>
+If the <i>errorfds</i> argument is not a null pointer, it points to an
+object of type <b>fd_set</b> that on input specifies the file
+descriptors to be checked for error conditions pending, and on output
+indicates which file descriptors have error conditions pending.
+<p>
+On successful completion, the objects pointed to by the <i>readfds</i>,
+<i>writefds</i>, and <i>errorfds</i> arguments are modified to indicate
+which file descriptors are ready for reading, ready for writing, or
+have an error condition pending, respectively.  For each file
+descriptor less than <i>nfds</i>, the corresponding bit will be set on
+successful completion if it was set on input and the associated
+condition is true for that file descriptor.
+<p>
+If the <i>timeout</i> argument is not a null pointer, it points to an
+object of type <b>struct timeval</b> that specifies a maximum interval
+to wait for the selection to complete.
+If the <i>timeout</i> argument points to an object of type
+<b>struct timeval</b> whose members are 0,
+<i>select()</i>
+does not block.
+If the <i>timeout</i> argument is a null pointer,
+<i>select()</i>
+blocks until an event causes one of the masks to be returned with a valid
+(non-zero) value.  If the time limit expires before any event occurs that
+would cause one of the masks to be set to a non-zero value,
+<i>select()</i>
+completes successfully and returns 0.
+<p>
+The use of a timeout does not affect any pending timers set up by
+<i><a href="alarm.htm">alarm()</a></i>,
+<i><a href="ualarm.htm">ualarm()</a></i>
+or
+<i><a href="setit229.htm">setitimer()</a></i>.
+<p>
+On successful completion, the object pointed to by the <i>timeout</i>
+argument may be modified.
+<p>
+Implementations may place limitations on the maximum timeout interval
+supported.
+On all implementations,
+the maximum timeout interval supported
+will be at least 31 days.
+If the <i>timeout</i> argument specifies a timeout interval greater
+than the implementation-dependent maximum value, the
+maximum value will be used as the actual
+timeout value.  Implementations may also place limitations on the
+granularity of timeout intervals.  If the requested timeout interval
+requires a finer granularity than the implementation supports, the
+actual timeout interval will be rounded up to the next supported
+value.
+<p>
+If the <i>readfds</i>, <i>writefds</i>, and <i>errorfds</i> arguments are
+all null pointers and
+the <i>timeout</i> argument
+is not a null pointer,
+<i>select()</i>
+blocks for the time specified, or until interrupted by a signal.
+If the <i>readfds</i>, <i>writefds</i>, and <i>errorfds</i> arguments are
+all null pointers and the <i>timeout</i> argument is a null pointer,
+<i>select()</i>
+blocks until interrupted by a signal.
+<p>
+File descriptors associated with regular files always select true
+for ready to read, ready to write, and error conditions.
+<p>
+On failure, the objects
+pointed to by the <i>readfds</i>, <i>writefds</i>, and <i>errorfds</i>
+arguments are not modified.  If the timeout interval expires without
+the specified condition being true for any of the specified file
+descriptors, the
+objects pointed to by the <i>readfds</i>, <i>writefds</i>, and <i>errorfds</i>
+arguments have all bits set to 0.
+<p>
+File descriptor masks of type <b>fd_set</b> can be initialised
+and tested with FD_CLR(), FD_ISSET(), FD_SET(), and FD_ZERO().
+It is unspecified whether each of these is a macro or a function.  If a macro
+definition is suppressed in order to access an actual function, or a program
+defines an external identifier with any of these names, the behaviour is
+undefined.
+<dl compact>
+
+<dt>FD_CLR(<i>fd</i>, &amp;<i>fdset</i>)<dd>Clears the bit for the file descriptor <i>fd</i> in
+the file descriptor set <i>fdset</i>.
+
+<dt>FD_ISSET(<i>fd</i>, &amp;<i>fdset</i>)<dd>Returns a non-zero value if the bit for the file descriptor <i>fd</i> is
+set in the file descriptor set pointed to by <i>fdset</i>, and 0 otherwise.
+
+<dt>FD_SET(<i>fd</i>, &amp;<i>fdset</i>)<dd>Sets the bit for the file descriptor <i>fd</i> in the file
+descriptor set <i>fdset</i>.
+
+<dt>FD_ZERO(&amp;<i>fdset</i>)<dd>Initialises the file descriptor set <i>fdset</i>
+to have zero bits for all file descriptors.
+
+</dl>
+<p>
+The behaviour of these macros is undefined if the <i>fd</i> argument is
+less than 0 or greater than or equal to FD_SETSIZE, or if any of the
+arguments are expressions with side effects.
+</blockquote><h4><a name = "tag_000_008_264">&nbsp;</a>RETURN VALUE</h4><blockquote>
+FD_CLR(), FD_SET() and FD_ZERO() return no value.
+FD_ISSET() a non-zero value if the bit for the file descriptor
+<i>fd</i>
+is set in the file descriptor set pointed to by
+<i>fdset</i>,
+and 0 otherwise.
+<p>
+On successful completion,
+<i>select()</i>
+returns the total number of bits set in the bit masks.
+Otherwise, -1 is returned, and <i>errno</i> is set to indicate the error.
+</blockquote><h4><a name = "tag_000_008_265">&nbsp;</a>ERRORS</h4><blockquote>
+Under the following conditions,
+<i>select()</i>
+fails and sets <i>errno</i> to:
+<dl compact>
+
+<dt>[EBADF]<dd>
+One or more of the file descriptor sets specified a file descriptor that is
+not a valid open file descriptor.
+
+<dt>[EINTR]<dd>
+The
+<i>select()</i>
+function was interrupted before any of the selected events occurred and before
+the timeout interval expired.
+
+If SA_RESTART has been set for the interrupting signal, it is
+implementation-dependent whether
+<i>select()</i>
+restarts or returns with [EINTR].
+
+<dt>[EINVAL]<dd>
+An invalid timeout interval was specified.
+
+<dt>[EINVAL]<dd>The <i>nfds</i> argument is less than 0 or greater than
+FD_SETSIZE.
+
+<dt>[EINVAL]<dd>One of the specified file descriptors refers to a STREAM or multiplexer that
+is linked (directly or indirectly) downstream from a multiplexer.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_266">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_267">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_268">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_269">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="poll.htm">poll()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="systi275.htm">&lt;sys/time.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,563 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>Utility Conventions</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade><blockquote>
+<center>
+<h2><a name = "tag_009">&nbsp;</a>Utility Conventions</h2>
+</center>
+<xref type="1" name="utilconv"></xref>
+<h3><a name = "tag_009_001">&nbsp;</a>Utility Argument Syntax</h3>
+<xref type="2" name="utilarg"></xref>
+This section describes the argument syntax of the standard utilities
+and introduces terminology used throughout this specification set for
+describing the arguments processed by the utilities.
+<p>
+Within this specification set, a special notation is used for describing
+the syntax of a utility's arguments.
+Unless otherwise noted, all utility descriptions use this notation,
+which is illustrated by this example
+(see the <b>XCU</b> specification, <a href="../xcu/chap2.htm#tag_001_009_001"><b>Simple Commands</b>&nbsp;</a>):
+<code>
+<pre>
+utility_name<b>[</b>-a<b>][</b>-b<b>][</b>-c<i>option_argument</i><b>][</b>-d|-e<b>][</b>-f<i>option_argument</i><b>][</b><i>operand</i>...<b>]</b>
+</code>
+</pre>
+<p>
+The notation used for the
+<b>SYNOPSIS</b>
+sections imposes requirements on the implementors
+of the standard utilities and provides a simple
+reference for the application developer or system user.
+<ol>
+<p>
+<li>
+The utility in the example is named
+<i>utility_name</i>.
+It is followed by
+<i>options</i> , <i>option-arguments</i>
+and
+<i>operands</i> .
+The arguments
+that consist of hyphens and single letters or digits, such as
+<b>-a</b>,
+are known as
+<i>options</i>
+(or, historically,
+<i>flags</i>).
+Certain options are followed by an
+<i>option-argument</i>,
+as shown with
+<b>[-c</b>&nbsp;<i>option_argument</i><b>]</b>.
+The arguments following the last options
+and option-arguments are named
+<i>operands</i>.
+<p>
+<li>
+Option-arguments are sometimes shown separated
+from their options by
+blank characters,
+sometimes directly adjacent.
+This reflects the situation that
+in some cases an option-argument is included within
+the same argument string as the option; in most cases it is the next argument.
+The Utility Syntax Guidelines in
+<xref href=usg><a href="#tag_009_002">
+Utility Syntax Guidelines
+</a></xref>
+require that the option be a separate argument
+from its option-argument, but there are some exceptions
+in this specification set to ensure continued operation of historical applications:
+<ol type = a>
+<p>
+<li>
+If the
+<b>SYNOPSIS</b>
+of a standard utility shows a
+space character
+between an option and option-argument
+(as with
+<b>[-c</b>&nbsp;<i>option_argument</i><b>]</b>
+in the example),
+a portable application must use separate arguments
+for that option and its option-argument.
+<p>
+<li>
+If a
+space character
+is not shown
+(as with
+<b>[-f</b><i>option_argument</i><b>]</b>
+in the example),
+a portable application must place an
+option and its option-argument directly adjacent
+in the same argument string,
+without intervening
+blank characters.
+<p>
+<li>
+Notwithstanding the preceding requirements on portable applications,
+ systems permit, but do not require,
+an application to specify options and
+option-arguments as separate arguments whether or not a
+space character
+is shown on the synopsis line,
+except in those cases (marked with the <small>EX</small> portability warning)
+where an option-argument is optional and no separation can be used.
+<p>
+<li>
+A standard utility may also be implemented to
+operate correctly when the required separation
+into multiple arguments
+is violated by a non-portable application.
+<p>
+</ol>
+<p>
+In summary, the following table shows allowable combinations:
+<p>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center>&nbsp;
+<th colspan=3 align=center><b>SYNOPSIS Shows:</b>
+<tr valign=top><th align=center>&nbsp;
+<th align=center>-a <i>arg</i>
+<th align=center>-b<i>arg</i>
+<th align=center>-c<b>[</b><i>arg</i><b>]</b>
+<tr valign=top><td align=right>Portable application must use:
+<td align=center>-a <i>arg</i>
+<td align=center>-b<i>arg</i>
+<td align=center>n/a
+<tr valign=top><td align=right>System will support:
+<td align=center>-a <i>arg</i>
+<td align=center>-b<i>arg</i>
+<td align=center>-c<i>arg</i> or -c
+<tr valign=top><td align=right>System may support:
+<td align=center>-a<i>arg</i>
+<td align=center>-b <i>arg</i>
+<td align=center>&nbsp;
+</table>
+<p>
+<li>
+Options are usually listed in alphabetical order unless
+this would make the utility description more confusing.
+There are no implied relationships between the options
+based upon the order in which they appear, unless otherwise
+stated in the
+<b>OPTIONS</b>
+section,
+or unless the exception in
+<xref href=usg><a href="#tag_009_002">
+Utility Syntax Guidelines
+</a></xref>
+guideline 11 applies.
+If an option that does not have option-arguments is repeated,
+the results are undefined, unless otherwise stated.
+<p>
+<li>
+Frequently, names of parameters that require substitution
+by actual values are shown with embedded underscores.
+Alternatively, parameters are shown as follows:
+
+<dl compact><dt> <dd>
+&lt;<i>parameter name</i>&gt;
+</dl>
+</pre>
+<p>
+The angle brackets are used for the symbolic grouping of
+a phrase representing a single parameter
+and must never be included in data submitted to the utility.
+<p>
+<li>
+When a utility has only a few permissible options,
+they are sometimes shown individually, as in the example.
+Utilities with many flags generally show all of the
+individual flags (that do not take option-arguments) grouped, as in:
+<pre><code>
+
+utility_name <b>[</b>-abcDxyz<b>][</b>-p <i>arg</i><b>][</b><i>operand</i><b>]</b>
+</code>
+</pre>
+Utilities with very complex arguments may be shown as follows:
+<pre><code>
+
+utility_name <b>[</b>options<b>][</b><i>operands</i><b>]</b>
+</code>
+</pre>
+<p>
+<li>
+Unless otherwise specified, whenever an operand or
+option-argument is, or contains, a numeric value:
+<ul>
+<p>
+<li>
+The number is interpreted as a decimal integer.
+<p>
+<li>
+Numerals in the range
+0 to 2147483647
+are syntactically recognised as numeric values.
+<p>
+<li>
+When the utility description states that it accepts
+negative numbers as operands or option-arguments,
+numerals in the range
+-2147483647 to 2147483647
+are syntactically recognised as numeric values.
+<p>
+<li>
+Ranges greater than those listed here are allowed.
+<p>
+</ul>
+<p>
+This does not mean that all numbers within the allowable range
+are necessarily semantically correct.
+A standard utility that accepts an option-argument
+or operand that is to be interpreted as a number, and for which
+a range of values smaller than that shown above is permitted by
+the <b>XCU</b> specification, describes that smaller range along with the description of the
+option-argument or operand.
+If an error is generated, the utility's diagnostic message
+will indicate that the value is out of the
+supported range, not that it is syntactically incorrect.
+<p>
+For example, the specification of
+<i><a href="../xcu/dd.htm">dd</a></i>
+obs=3000000000
+would yield undefined behaviour for the application and could be
+a syntax error because the number 3000000000 is outside of
+the range -2147483647 to +2147483647.
+On the other hand,
+<i><a href="../xcu/dd.htm">dd</a></i>
+obs=2000000000
+may cause some error, such as &quot;blocksize too large&quot;,
+rather than a syntax error.
+<p>
+<li>
+Arguments or option-arguments enclosed in the
+<b>[</b>
+and
+<b>]</b>
+notation are optional and can be omitted.
+The
+<b>[</b>
+and
+<b>]</b>
+symbols must never be included in data submitted to the utility.
+<p>
+<li>
+Arguments separated by the
+<b>|</b>
+vertical bar notation are mutually exclusive.
+The
+<b>|</b>
+symbols must never be included in data submitted to the utility.
+Alternatively, mutually exclusive options and operands may be
+listed with multiple
+synopsis
+lines.
+For example:
+<pre><code>
+
+utility_name -d<b>[</b>-a<b>][</b>-c <i>option_argument</i><b>][</b><i>operand</i>...<b>]</b>
+
+utility_name<b>[</b>-a<b>][</b>-b<b>][</b><i>operand</i>...<b>]</b>
+</code>
+</pre>
+<p>
+When multiple synopsis lines are given for a utility, it is an
+indication that the utility has mutually exclusive arguments.
+These mutually exclusive arguments alter the functionality of the
+utility so that only certain other arguments are valid in
+combination with one of the mutually exclusive arguments.
+Only one of the mutually exclusive arguments is allowed for invocation
+of the utility.
+Unless otherwise
+stated in an accompanying
+<b>OPTIONS</b>
+section, the relationships between
+arguments depicted in the
+<b>SYNOPSIS</b>
+sections are mandatory requirements
+placed on portable applications.
+The use of conflicting mutually exclusive
+arguments produces undefined results,
+unless a utility description specifies otherwise.
+When an option is shown without the
+<b>[&nbsp;]</b>
+brackets, it means that option is required for that version of the
+<b>SYNOPSIS</b>.
+However, it is not required to be the first argument,
+as shown in the example above, unless otherwise stated.
+<p>
+The use of
+<i>undefined</i>
+for conflicting argument usage
+and for repeated usage of the same option
+is meant to prevent portable applications
+from using conflicting arguments or repeated options,
+unless specifically allowed, as is the case with
+<i><a href="../xcu/ls.htm">ls</a></i>
+(which allows simultaneous, repeated use of the
+<b>-C</b>,
+<b>-l</b>
+and
+<b>-1</b>
+options).
+Many historical implementations will tolerate this usage,
+choosing either the first or the last applicable argument,
+and this tolerance may continue, but portable applications
+cannot rely upon it.
+(Other implementations may choose to print usage messages instead.)
+<p>
+The use of
+<i>undefined</i>
+for conflicting argument usage also allows
+an implementation to make reasonable extensions to utilities
+where the implementor considers
+mutually exclusive options according to the <b>XCU</b> specification to have a
+sensible meaning and result.
+<p>
+<li>
+Ellipses (...) are used to denote that one or more occurrences of
+an option or operand are allowed.
+When an option or an operand
+followed by ellipses is enclosed in brackets, zero or more
+options or operands can be specified.
+The forms:
+<pre><code>
+
+utility_name -f <i>option_argument</i>...<b>[</b><i>operand</i>...<b>]</b>
+
+utility_name <b>[</b>-g <i>option_argument</i><b>]</b>...<b>[</b><i>operand</i>...<b>]</b>
+</code>
+</pre>
+indicate that multiple occurrences of the option and its
+option-argument preceding the ellipses
+are valid, with semantics as indicated in the
+<b>OPTIONS</b>
+section of the utility.
+(See also Guideline 11 in
+<xref href=usg><a href="#tag_009_002">
+Utility Syntax Guidelines
+</a></xref>.)
+In the first example, each option-argument requires a preceding
+<b>-f</b>
+and at least one
+<b>-f</b>&nbsp;<i>option_argument</i>
+must be given.
+<p>
+The <b>XCU</b> specification does not define the result of a utility when an
+option-argument or operand is not followed by ellipses and
+the application specifies more than one of that option-argument or operand.
+This allows an
+implementation to define valid (although non-standard) behaviour
+for the utility when more than one such option or operand are specified.
+<p>
+<li>
+When the synopsis line is too long to be printed on a single line in
+the <b>XCU</b> specification, the indented lines following the initial line are
+continuation lines.
+An actual use of the command would appear on a single logical line.
+<p>
+</ol>
+<h3><a name = "tag_009_002"><a name="usg">Utility Syntax Guidelines</a>&nbsp;</a></h3>
+<xref type="2" name="usg"></xref>
+The following guidelines are established for the naming of
+utilities and for the specification of options,
+option-arguments and operands.
+The
+<i><a href="../xsh/getopt.htm">getopt()</a></i>
+function in the <b>XSH</b> specification assists utilities
+in handling options and operands that conform to these guidelines.
+<p>
+Operands and option-arguments can contain characters not specified in
+the portable character set.
+<p>
+The guidelines are intended to provide guidance to the
+authors of future utilities, such as those written specific
+to a local system or that are to be components of
+a larger application.
+Some of the standard utilities do not
+conform to all of these guidelines; in those cases, the
+<b>OPTIONS</b>
+sections describe the deviations.
+<dl compact>
+
+<dt><b>Guideline&nbsp;&nbsp;1:</b><dd>Utility names should be between two and nine characters, inclusive.
+
+<dt><b>Guideline&nbsp;&nbsp;2:</b><dd>Utility names should include lower-case letters
+(the
+<b>lower</b>
+character classification)
+and digits only
+from the portable character set.
+
+Guidelines 1 and 2 are offered as guidance for locales
+using Latin alphabets.
+No recommendations are made by this specification set
+concerning utility naming in other locales.
+
+In the <b>XCU</b> specification, <a href="../xcu/chap2.htm#tag_001_009_001"><b>Simple Commands</b>&nbsp;</a>,
+it is further stated that a command used in
+the XSI Shell Command Language cannot be named with a trailing colon.
+
+<dt><b>Guideline&nbsp;&nbsp;3:</b><dd>Each option name should be a single alphanumeric character
+(the
+<b>alnum</b>
+character classification)
+from the portable character set.
+
+Multi-digit options are not allowed.
+Instances of historical utilities that used them
+have been marked <b>LEGACY</b> in the <b>XCU</b> specification, with the numbers
+being changed from option names to option-arguments.
+
+<dt><b>Guideline&nbsp;&nbsp;4:</b><dd>All options should be preceded by the "-" delimiter character.
+
+<dt><b>Guideline&nbsp;&nbsp;5:</b><dd>Options without option-arguments should be
+accepted when grouped behind one "-" delimiter.
+
+<dt><b>Guideline&nbsp;&nbsp;6:</b><dd>Each option and option-argument should be a separate argument,
+except as noted in
+<xref href=utilarg><a href="#tag_009_001">
+Utility Argument Syntax
+</a></xref>,
+item (2).
+
+<dt><b>Guideline&nbsp;&nbsp;7:</b><dd>Option-arguments should not be optional.
+
+<dt><b>Guideline&nbsp;&nbsp;8:</b><dd>When multiple option-arguments are specified to follow a single option,
+they should be presented as a single argument, using commas
+within that argument or
+blank characters
+within that argument to separate them.
+
+It is up to the utility to parse a comma-separated list itself
+because
+<i><a href="../xsh/getopt.htm">getopt()</a></i>
+just returns a single string.
+This situation was retained so that certain historical
+utilities would not violate the guidelines.
+Applications preparing for international use should be aware
+of an occasional problem with comma-separated lists:
+in some locales, the comma is used as the radix character.
+Thus, if an application is preparing operands for a utility
+that expects a comma-separated list, it should avoid generating
+non-integer values through one of the means that is influenced
+by setting the
+<i>LC_NUMERIC</i>
+variable (such as
+<i><a href="../xcu/awk.htm">awk</a></i>,
+<i><a href="../xcu/bc.htm">bc</a></i>,
+<i><a href="../xcu/printf.htm">printf</a></i>
+or
+<i><a href="../xsh/printf.htm">printf()</a></i>).
+
+<dt><b>Guideline&nbsp;&nbsp;9:</b><dd>All options should precede operands on the command line.
+
+<dt><b>Guideline&nbsp;10:</b><dd>The argument
+--
+should be accepted as a delimiter indicating the end of options.
+Any following arguments should be treated as operands, even if they
+begin with the "-" character.
+The
+--
+argument should not be used as an option or as an operand.
+
+Applications calling any utility with a first operand starting with
+-
+should usually specify
+--,
+as indicated by Guideline 10, to mark the end of the options.
+This is true even if the
+<b>SYNOPSIS</b>
+in the <b>XCU</b> specification does not specify any options;
+implementations may provide options as extensions to the <b>XCU</b> specification.
+The standard utilities that do not support Guideline 10 indicate that fact
+in the
+<b>OPTIONS</b>
+section of the utility description.
+
+<dt><b>Guideline&nbsp;11:</b><dd>The order of different options relative to one another should not matter,
+unless the options are documented as
+mutually exclusive and such an option is documented to
+override any incompatible options preceding it.
+If an option that has option-arguments is repeated,
+the option and option-argument combinations should be
+interpreted in the order specified on the command line.
+
+The order of repeated options that also have option-arguments may be
+significant; therefore, such options are required to be
+interpreted in the order that they are specified.
+The
+<i><a href="../xcu/make.htm">make</a></i>
+utility is an instance of a historical utility that
+uses repeated options in which the order is significant.
+Multiple files are specified by giving multiple instances of the
+<b>-f</b>
+option, for example:
+<pre><code>
+
+make -f common_header -f specific_rules target
+</code>
+</pre>
+
+<dt><b>Guideline&nbsp;12:</b><dd>The order of operands may matter and
+position-related interpretations should
+be determined on a utility-specific basis.
+
+<dt><b>Guideline&nbsp;13:</b><dd>For utilities that use operands to represent files
+to be opened for either reading or writing, the "-"
+operand should be used only to mean standard input
+(or standard output when it is clear from context
+that an output file is being specified).
+
+Guideline 13 does not imply that all of the standard utilities
+automatically accept the operand "-"
+to mean standard input or output, nor does it specify
+the actions of the utility upon encountering multiple "-" operands.
+It simply says that, by default, "-"
+operands are not used for other purposes
+in the file reading or writing (but not when using
+<i><a href="../xsh/stat.htm">stat()</a></i>,
+<i><a href="../xsh/unlink.htm">unlink()</a></i>,
+<i><a href="../xcu/touch.htm">touch</a></i>,
+and so forth) utilities.
+All information concerning actual treatment of the "-"
+operand is found in the individual utility sections.
+
+</dl>
+<p>
+The utilities in the <b>XCU</b> specification that
+claim conformance to these guidelines
+were written as if the term
+<i>should</i>
+imposed a specific requirement on their interface
+and applications and users can rely on the behaviour stated here;
+the Guidelines are rules for the standard utilities that
+claim conformance to them.
+On some systems, the utilities will
+accept usage in violation of these guidelines for backward
+compatibility as well as accepting the required form.
+<p>
+It is recommended that all future
+utilities and applications use these guidelines to enhance
+user portability.
+The fact that some historical utilities could not be changed
+(to avoid breaking existing applications) should not deter this
+future goal.
+
+</blockquote>
+<hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

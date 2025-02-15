@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>vwprintw</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_171">&nbsp;</a>NAME</h4><blockquote>
+vwprintw - print formatted output in window (<b>TO BE WITHDRAWN</b>)
+</blockquote><h4><a name = "tag_002_001_172">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="../xsh/varar305.htm">varargs.h</a>&gt;
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int vwprintw(WINDOW *, char *, va_list <i>varglist</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_173">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>vwprintw()</i>
+function achieves the same effect as
+<i><a href="wprintw.htm">wprintw()</a></i>
+using a variable argument list.  The third argument is a <b>va_list</b>, as
+defined in
+<i><a href="../xsh/varar305.htm">&lt;varargs.h&gt;</a></i>.
+</blockquote><h4><a name = "tag_002_001_174">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>vwprintw()</i>
+returns OK.  Otherwise, it returns ERR.
+</blockquote><h4><a name = "tag_002_001_175">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_176">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>vwprintw()</i>
+function is deprecated because it relies on deprecated functions in the <b>XSH</b> specification.
+The
+<i><a href="vwpri156.htm">vw_printw()</a></i>
+function is preferred. The use of the
+<i>vwprintw()</i>
+and the
+<i><a href="vwpri156.htm">vw_printw()</a></i>
+functions in the same file will not work, due to the requirement to
+include <b>varargs.h</b> and <b>stdarg.h</b> which both contain
+definitions of va_list.
+</blockquote><h4><a name = "tag_002_001_177">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mvprintw.htm">mvprintw()</a></i>,
+<i><a href="../xsh/fprintf.htm">fprintf()</a></i>
+(in the <b>XSH</b> specification),
+<i><a href="vwpri156.htm">vw_printw()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>,
+<i><a href="../xsh/varar305.htm">&lt;varargs.h&gt;</a></i>
+(in the <b>XSH</b> specification).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

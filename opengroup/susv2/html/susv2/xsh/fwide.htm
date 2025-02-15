@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fwide</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_395">&nbsp;</a>NAME</h4><blockquote>
+fwide - set stream orientation
+</blockquote><h4><a name = "tag_000_005_396">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+int fwide(FILE *<i>stream</i>, int <i>mode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_397">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fwide()</i>
+function determines the orientation of the stream pointed to by 
+<i>stream</i>.
+If
+<i>mode</i>
+is greater than zero, the function first attempts to make the stream
+wide-orientated.  If
+<i>mode</i>
+is less than zero, the function first attempts to make the stream
+byte-orientated.  Otherwise,
+<i>mode</i>
+is zero and the function does not alter the orientation of the stream.
+<p>
+If the orientation of the stream has already been determined, 
+<i>fwide()</i>
+does not change it.
+<p>
+Because no return value is reserved to indicate an error, an
+application wishing to check for error situations should set
+<i>errno</i>
+to 0, then call
+<i>fwide()</i>,
+then check
+<i>errno</i>
+and if it is non-zero, assume an error has occurred.
+</blockquote><h4><a name = "tag_000_005_398">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>fwide()</i>
+function returns a value greater than zero if, after the call, the
+stream has wide-orientation, a value less than zero if the stream has
+byte-orientation, or zero if the stream has no orientation.
+</blockquote><h4><a name = "tag_000_005_399">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>fwide()</i>
+function may fail if:
+<br>
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>stream</i>
+argument is not a valid stream.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_400">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_401">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+A call to
+<i>fwide()</i>
+with 
+<i>mode</i>
+set to zero can be used to determine the current orientation of a
+stream.
+</blockquote><h4><a name = "tag_000_005_402">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_403">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the ISO/IEC 9899:1990/Amendment 1:1995 (E).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

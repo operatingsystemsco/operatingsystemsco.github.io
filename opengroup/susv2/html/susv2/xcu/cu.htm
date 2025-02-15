@@ -1,0 +1,437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>cu</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_282">&nbsp;</a>NAME</h4><blockquote>
+cu - call another system (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_283">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+cu -n<b>[</b>-dht<b>] [</b>-o | -e <b>][</b>-l <i>line</i><b>][</b>-s <i>speed</i><b>]</b>
+
+cu <b>[</b>-dht<b>] [</b>-o | -e <b>][</b>-l <i>line</i><b>][</b>-s <i>speed</i><b>] </b><i>telno</i>
+
+cu <b>[</b>-dht<b>] [</b>-o | -e <b>][</b>-s <i>speed</i><b>]</b> -l <i>line</i>
+
+cu <b>[</b>-dht<b>] [</b>-o | -e <b>] </b><i>systemname</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_284">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>cu</i>
+utility
+calls up another system.
+It manages an interactive conversation, with possible
+transfers of text files.
+<p>
+On systems where there are no available communications means
+(either temporarily or permanently), this
+utility will write an error message describing the problem
+and exit with a non-zero exit status.
+</blockquote><h4><a name = "tag_001_014_285">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>cu</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+The following options are supported:
+<dl compact>
+
+<dt><b>-s&nbsp;</b><i>speed</i>
+<dd>
+Specify the transmission speed.
+The default value is device-specific.
+
+<dt><b>-l&nbsp;</b><i>line</i>
+<dd>Specify a device name to use as the communication line.
+This can be
+used to override the search that would otherwise take place
+for the first available line having the right
+speed.
+When the
+<b>-l</b>
+option is used without the
+<b>-s</b>
+option, the speed of a line is taken from the devices file.
+When the
+<b>-l</b>
+and
+<b>-s</b>
+options are both used together,
+<i>cu</i>
+will search the devices file to check if the requested speed for the
+requested line is available.
+If so, the connection will be made at the requested speed;
+otherwise, an error message will be written and the call
+will not be made.
+If the specified device
+is associated with an autodialler,
+a telephone number must be provided.
+
+<dt><b>-h</b>
+<dd>Emulate local echo, supporting calls to other computer systems
+that expect terminals to be set to half-duplex mode.
+
+<dt><b>-t</b>
+<dd>Dial a remote modem that has been set to auto-answer.
+Appropriate mapping of carriage-return
+to carriage-return-line-feed
+pairs is set.
+
+<dt><b>-d</b>
+<dd>Write diagnostic traces.
+
+<dt><b>-o</b>
+<dd>Designate that odd parity is to be generated
+for data sent to the remote system.
+
+<dt><b>-e</b>
+<dd>Designate that even parity is to be generated for data sent to the
+remote system.
+
+<dt><b>-n</b>
+<dd>Prompt the user to
+provide the telephone number to be dialled rather than
+taking it from the command line.
+This is for added security.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_286">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>telno</i><dd>When using an automatic dialler, specifies
+the telephone number with equal signs for secondary dial tone or minus
+signs placed appropriately for delays of 4 seconds.
+
+<dt><i>systemname</i><dd>
+Specifies a
+<i><a href="uucp.htm">uucp</a></i>
+system name, which can be used rather than a telephone number;
+in this case,
+<i>cu</i>
+will obtain an appropriate direct line or
+telephone number from a system file.
+
+</dl>
+<br>
+</blockquote><h4><a name = "tag_001_014_287">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is used to accept data to write to the remote system;
+see the EXTENDED DESCRIPTION section.
+</blockquote><h4><a name = "tag_001_014_288">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_289">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>cu</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input data).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_290">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+The
+<i>cu</i>
+utility takes the default action upon receipt of signals,
+with the exception of:
+<dl compact>
+
+<dt>SIGHUP<dd>
+Close the connection and terminate.
+
+<dt>SIGINT<dd>Forward to the remote system.
+
+<dt>SIGQUIT<dd>
+Forward to the remote system.
+
+<dt>SIGUSR1<dd>
+Terminate the
+<i>cu</i>
+process without the normal connection closing sequence.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_291">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output is used to display data to read from the remote system;
+see the EXTENDED DESCRIPTION section.
+</blockquote><h4><a name = "tag_001_014_292">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_293">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_294">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+After making the connection,
+<i>cu</i>
+runs as two processes: the
+<i>transmit</i>
+process reads data from the standard input and,
+except for lines beginning with "~",
+passes it to the remote system; the
+<i>receive</i>
+process accepts data from the remote system and,
+except for lines beginning with "~", passes it to the standard output.
+Normally, an automatic DC3/DC1
+protocol is used to control input from the remote system so that
+the buffer is not overrun.
+Lines beginning with "~" have special meanings.
+<p>
+The
+<i>transmit</i>
+process interprets the following user-initiated commands as:
+<dl compact>
+
+<dt><b>~.</b><dd>Terminate the conversation.
+
+<dt><b>~!</b><dd>Escape to an interactive command interpreter
+on the local system.
+
+<dt><b>~!</b><i>command</i><dd>
+Execute the shell
+<i>command</i>
+on the local system.
+
+<dt><b>~$</b><i>command</i><dd>
+Run the shell
+<i>command</i>
+locally and send its output
+to the remote system for execution.
+
+<dt><b>~%cd</b><dd>Change the directory on the local system.
+
+<dt><b>~%take</b> <i>from</i> <b>[</b><i>to</i><b>]</b>
+<dd>
+Copy file
+<i>from</i>
+(on the remote system) to file
+<i>to</i>
+on the local system.
+If
+<i>to</i>
+is omitted, the
+<i>from</i>
+argument is used in both places.
+
+<dt><b>~%put</b> <i>from</i> <b>[</b><i>to</i><b>]</b>
+<dd>
+Copy file
+<i>from</i>
+(on local system) to file
+<i>to</i>
+on remote system.
+If
+<i>to</i>
+is omitted, the
+<i>from</i>
+argument is used in both places.
+
+<dt><b>~~</b><i>line</i><dd>Send the line
+line
+to the remote system.
+
+<dt><b>~%break&nbsp;</b>or<b>&nbsp;~%b</b><dd>
+Transmit a
+BREAK
+to the remote system.
+
+<dt><b>~%nostop</b><dd>
+Toggle between DC3/DC1
+input control protocol and no input control.
+This is useful in case the remote system is one that does
+not respond properly to the
+DC3
+and
+DC1
+characters.
+
+</dl>
+<p>
+The
+<i>receive</i>
+process normally copies data from the remote system to its standard
+output.
+<p>
+The use of
+<b>~%put</b>
+requires
+<i><a href="stty.htm">stty</a></i>
+and
+<i><a href="cat.htm">cat</a></i>
+on the remote side.
+It also requires that the
+current
+erase
+and
+kill
+characters on the remote
+system be identical to these current control characters on the local system.
+Backslashes are inserted at appropriate places.
+<p>
+The use of
+<b>~%take</b>
+requires the existence of
+<i><a href="echo.htm">echo</a></i>
+and
+<i><a href="cat.htm">cat</a></i>
+on the remote system.
+Also, tabs
+mode (see
+<i><a href="stty.htm">stty</a></i>)
+should be set on the remote system if
+tabs are to be copied without expansion to spaces.
+<p>
+When
+<i>cu</i>
+is used on system
+<i>X</i>
+to connect to system
+<i>Y</i>
+and subsequently used on system
+<i>Y</i>
+to connect to system
+<i>Z</i>,
+commands on system
+<i>Y</i>
+can be executed by using "~~".
+For example,
+<i>uname</i>
+can be executed on
+<i>Z</i>,
+<i>X</i>
+and
+<i>Y</i>
+as follows:
+<pre>
+<code>
+<b>$</b> uname
+<b>Z</b>
+<b>$</b>~<b>[X]</b>!uname
+<b>X</b>
+<b>$</b>~~<b>[Y]</b>!uname
+<b>Y</b>
+</code>
+</pre>
+<p>
+(The darker type indicates system-generated text.
+The bracketed system names are written by the system
+after it has recognised the
+!
+pair, but before it echoed the "!".)
+In general, "~"
+causes the command to be executed on the original machine; "~~"
+causes the command to be executed on the next machine in the chain.
+<br>
+</blockquote><h4><a name = "tag_001_014_295">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;1<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_296">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_297">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Typical implementations of this utility require a communications
+line configured to use the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a> ,
+but other communications means may be used.
+<br>
+</blockquote><h4><a name = "tag_001_014_298">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+To dial a system whose telephone number is 912015551212
+using a device-specific speed
+(where dial tone is expected after the 9):
+<pre>
+<code>
+cu 9=12015551212
+</code>
+</pre>
+<p>
+<li>
+To login to a system connected by a direct line:
+<pre>
+<code>
+cu -l /dev/ttyXX
+</code>
+</pre>
+<p>
+or:
+<pre>
+<code>
+cu -l ttyXX
+</code>
+</pre>
+<p>
+<li>
+To dial a system with the specific line and a specific speed:
+<pre>
+<code>
+cu -s 1200 -l ttyXX
+</code>
+</pre>
+<p>
+<li>
+To dial a system using a specific line associated with an autodialler:
+<pre>
+<code>
+cu -l culXX 9=12015551212
+</code>
+</pre>
+<p>
+<li>
+To use a system name:
+<pre>
+<code>
+cu systemname
+</code>
+</pre>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_299">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_300">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="cat.htm">cat</a></i>,
+<i><a href="echo.htm">echo</a></i>,
+<i><a href="stty.htm">stty</a></i>,
+<i><a href="uname.htm">uname</a></i>,
+<i><a href="uucp.htm">uucp</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_kill</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1405">&nbsp;</a>NAME</h4><blockquote>
+pthread_kill - send a signal to a thread
+</blockquote><h4><a name = "tag_000_007_1406">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="signa248.htm">signal.h</a>&gt;
+
+int pthread_kill(pthread_t <i>thread</i>, int <i>sig</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1407">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pthread_kill()</i>
+function is used to request that a signal be delivered to the specified thread.
+<p>
+As in
+<i><a href="kill.htm">kill()</a></i>,
+if
+<i>sig</i>
+is zero, error checking is performed but no signal is actually sent.
+</blockquote><h4><a name = "tag_000_007_1408">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the function returns a value of zero.
+Otherwise the function returns an error number.
+If the
+<i>pthread_kill()</i>
+function fails, no signal is sent.
+</blockquote><h4><a name = "tag_000_007_1409">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_kill()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ESRCH]<dd>
+No thread could be found corresponding to that specified
+by the given thread ID.
+
+<dt>[EINVAL]<dd>
+The value of the
+<i>sig</i>
+argument is an invalid or unsupported signal number.
+
+</dl>
+<p>
+The 
+<i>pthread_kill()</i>
+function will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1410">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1411">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1412">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1413">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="kill.htm">kill()</a></i>,
+<i><a href="pthre187.htm">pthread_self()</a></i>,
+<i><a href="raise.htm">raise()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

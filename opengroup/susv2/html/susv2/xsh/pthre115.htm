@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_atfork</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1027">&nbsp;</a>NAME</h4><blockquote>
+pthread_atfork - register fork handlers
+</blockquote><h4><a name = "tag_000_007_1028">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systy278.htm">sys/types.h</a>&gt;
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int pthread_atfork(void (*<i>prepare</i>)(void), void (*<i>parent</i>)(void),
+    void (*<i>child</i>)(void));
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1029">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pthread_atfork()</i>
+function declares fork handlers
+to be called before and after
+<i><a href="fork.htm">fork()</a></i>,
+in the context of the thread that called
+<i><a href="fork.htm">fork()</a></i>.
+The
+<i>prepare</i>
+fork handler is called before
+<i><a href="fork.htm">fork()</a></i>
+processing commences.
+The
+<i>parent</i>
+fork handle is called after
+<i><a href="fork.htm">fork()</a></i>
+processing completes in the parent process.
+The
+<i>child</i>
+fork handler is called after
+<i><a href="fork.htm">fork()</a></i>
+processing completes in the child process.
+If no handling is desired at one or more of these three points,
+the corresponding fork handler
+address(es) may be set to NULL.
+<p>
+The order of calls to
+<i>pthread_atfork()</i>
+is significant.
+The
+<i>parent</i>
+and
+<i>child</i>
+fork handlers are called in the order
+in which they were established by calls to
+<i>pthread_atfork()</i>.
+The
+<i>prepare</i>
+fork handlers are called in the opposite order.
+</blockquote><h4><a name = "tag_000_007_1030">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>pthread_atfork()</i>
+returns a value of zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1031">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_atfork()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ENOMEM]<dd>
+Insufficient table space exists to record the
+fork handler addresses.
+
+</dl>
+<p>
+The 
+<i>pthread_atfork()</i>
+function will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1032">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1033">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1034">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1035">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="atexit.htm">atexit()</a></i>,
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995) including PASC 1003.1c-95.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_rcvudata</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_rcvudata - receive a data unit
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_rcvudata(
+    int fd,
+    struct t_unitdata *unitdata,
+    int *flags)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>addr.maxlen
+<td align=center>x
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>addr.len
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>addr.buf
+<td align=center>?
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>opt.maxlen
+<td align=center>x
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>opt.len
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>opt.buf
+<td align=center>?
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>udata.maxlen
+<td align=center>x
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>udata.len
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>udata.buf
+<td align=center>?
+<tr valign=top><td align=left>flags
+<td align=center>/
+<td align=center>x
+</table>
+</pre>
+<p>
+This function is used in connectionless-mode
+to receive a data unit from another transport
+user.
+The argument
+<I>fd</I>
+identifies the local transport endpoint through which data will be
+received,
+<I>unitdata</I>
+holds information associated with the received data unit, and
+<I>flags</I>
+is set on return to indicate that the complete data unit was not
+received.
+The argument
+<I>unitdata</I>
+points to a
+<B>t_unitdata</B>
+structure containing the following members:
+<pre>
+<code>
+struct netbuf addr;
+struct netbuf opt;
+struct netbuf udata;
+</code>
+</pre>
+<p>
+The
+<I>maxlen</I>
+field of
+<I>addr</I>,
+<I>opt</I>
+and
+<I>udata</I>
+must be set before calling this function to indicate the maximum
+size of the buffer for each.
+If the 
+<I>maxlen</I>
+field of 
+<I>addr</I>
+or 
+<I>opt</I>
+is set to zero, no information is returned in the 
+<I>buf</I>
+field of this parameter.
+<p>
+On return from this call,
+<I>addr</I>
+specifies the protocol address of the sending user,
+<I>opt</I>
+identifies options that were
+associated with this data unit, and
+<I>udata</I>
+specifies the user data that was received.
+<p>
+By default,
+<i>t_rcvudata()</i>
+operates in synchronous mode and will
+wait for a data unit to arrive if none is currently available.
+However, if O_NONBLOCK is set (via
+<i><a href="topen55.htm">t_open()</a></i>
+or
+<i><a href="fcntl.htm">fcntl()</a></i>),
+<i>t_rcvudata()</i>
+will execute in asynchronous mode and will fail
+if no data units are available.
+<p>
+If the buffer defined in the
+<I>udata</I>
+field of
+<I>unitdata</I>
+is not large enough to hold the current data unit,
+the buffer will be filled and T_MORE will be set in
+<I>flags</I>
+on return to indicate that another
+<i>t_rcvudata()</i>
+should be called to retrieve the rest of the data unit.  Subsequent calls to
+<i>t_rcvudata()</i>
+will return zero for the length of the address and options
+until the full data unit has been received.
+<p>
+If the call is interrupted,
+<i>t_rcvudata()</i>
+will return [EINTR] and no datagrams will have been removed from the endpoint.
+</blockquote><h4>VALID STATES</h4><blockquote>
+T_IDLE
+<br>
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure,
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TBADF]<dd>The specified file descriptor does not refer to a transport endpoint.
+
+<dt>[TBUFOVFLW]<dd>The number of bytes allocated for the incoming protocol address or
+options
+<I>(maxlen)</I>
+is greater than 0 but not
+sufficient to store the information.
+The unit data information to be returned in
+<I>unitdata</I>
+will be discarded.
+
+<dt>[TLOOK]<dd>An asynchronous event has occurred on this transport endpoint and requires
+immediate attention.
+
+<dt>[TNODATA]<dd>O_NONBLOCK
+was set, but
+no data units are currently available from the transport provider.
+
+<dt>[TNOTSUPPORT]<dd>This function is not supported by the underlying transport
+provider.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by 
+<I>fd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TPROTO]<dd>This error indicates that a communication problem has been detected between
+XTI and the transport provider for which there is no other suitable XTI
+error
+<I>(t_errno)</I>.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, a value of 0 is returned.  Otherwise,
+a value of -1 is returned and
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="tallo43.htm">t_alloc()</a></i>,
+<i><a href="topen55.htm">t_open()</a></i>,
+<i><a href="trcvu63.htm">t_rcvuderr()</a></i>,
+<i><a href="tsndu70.htm">t_sndudata()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

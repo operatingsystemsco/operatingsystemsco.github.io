@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>tsearch</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_157">&nbsp;</a>NAME</h4><blockquote>
+tdelete, tfind, tsearch, twalk - manage a binary search tree
+</blockquote><h4><a name = "tag_000_010_158">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="searc217.htm">search.h</a>&gt;
+
+void *tsearch(const void *<i>key</i>, void **<i>rootp</i>,
+     int (*<i>compar</i>)(const void *, const void *));
+void *tfind(const void *<i>key</i>, void *const *<i>rootp</i>,
+     int(*<i>compar</i>)(const void *, const void *));
+void *tdelete(const void *<i>key</i>, void **<i>rootp</i>,
+     int(*<i>compar</i>)(const void *, const void *));
+void twalk(const void *<i>root</i>,
+     void (*<i>action</i>)(const void *, VISIT, int));
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_159">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>tsearch()</i>,
+<i><a href="tfind.htm">tfind()</a></i>,
+<i><a href="tdelete.htm">tdelete()</a></i>
+and
+<i><a href="twalk.htm">twalk()</a></i>
+functions manipulate binary search trees.  Comparisons are made with a
+user-supplied routine, the address of which is passed as the
+<i>compar</i>
+argument.  This routine is called with two arguments, the pointers to the
+elements being compared.  The user-supplied routine must return an integer
+less than, equal to or greater than 0, according to whether the first argument
+is to be considered less than, equal to or greater than the second argument.
+The comparison function need not compare every byte, so arbitrary data may be
+contained in the elements in addition to the values being compared.
+<p>
+The
+<i>tsearch()</i>
+function is used to build and access the tree.  The
+<i>key</i>
+argument is a pointer to an element to be accessed or stored.  If there is a
+node in the tree whose element is equal to the value pointed to by <i>key</i>,
+a pointer to this found node is returned.  Otherwise, the value pointed to by
+<i>key</i>
+is inserted (that is, a new node is created and the value of
+<i>key</i>
+is copied to this node), and a pointer to this node returned.  Only pointers
+are copied, so the calling routine must store the data.  The
+<i>rootp</i>
+argument points to a variable that points to the root node of the tree.  A
+null pointer value for the variable pointed to by
+<i>rootp</i>
+denotes an empty tree; in this case, the variable will be set to point to the
+node which will be at the root of the new tree.
+<p>
+Like
+<i>tsearch()</i>,
+<i><a href="tfind.htm">tfind()</a></i>
+will search for a node in the tree, returning a pointer to it if found.
+However, if it is not found,
+<i><a href="tfind.htm">tfind()</a></i>
+will return a null pointer.  The arguments for
+<i><a href="tfind.htm">tfind()</a></i>
+are the same as for
+<i>tsearch()</i>.
+<p>
+The
+<i><a href="tdelete.htm">tdelete()</a></i>
+function deletes a node from a binary search tree.  The arguments are the same
+as for
+<i>tsearch()</i>.
+The variable pointed to by
+<i>rootp</i>
+will be changed if the deleted node was the root of the tree.  The
+<i><a href="tdelete.htm">tdelete()</a></i>
+function returns a pointer to the parent of the deleted node,
+or a null pointer if the node is not found.
+<p>
+The
+<i><a href="twalk.htm">twalk()</a></i>
+function traverses a binary search tree.  The
+<i>root</i>
+argument is a pointer to the root node of the tree to be traversed.  (Any node
+in a tree may be used as the root for a walk below that node.) The argument
+<i>action</i>
+is the name of a routine to be invoked at each node.  This routine is, in
+turn, called with three arguments.  The first argument is the address of the
+node being visited.  The structure pointed to by this argument is unspecified
+and must not be modified by the application, but it is guaranteed that a
+pointer-to-node can be converted to pointer-to-pointer-to-element to access
+the element stored in the node.  The second argument is a value from an
+enumeration data type:
+<pre>
+<code>
+typedef enum { preorder, postorder, endorder, leaf } VISIT;
+</code>
+</pre>
+<p>
+(defined in
+<i><a href="searc217.htm">&lt;search.h&gt;</a></i>),
+depending on whether this is the first, second or third time that the node is
+visited (during a depth-first, left-to-right traversal of the tree), or
+whether the node is a leaf.  The third argument is the level of the node in
+the tree, with the root being level 0.
+<p>
+If the calling function alters the pointer to the root, the result is
+undefined.
+</blockquote><h4><a name = "tag_000_010_160">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the node is found, both
+<i>tsearch()</i>
+and
+<i><a href="tfind.htm">tfind()</a></i>
+return a pointer to it.  If not,
+<i><a href="tfind.htm">tfind()</a></i>
+returns a null pointer, and
+<i>tsearch()</i>
+returns a pointer to the inserted item.
+<p>
+A null pointer is returned by
+<i>tsearch()</i>
+if there is not enough space available to create a new node.
+<p>
+A null pointer is returned by
+<i>tsearch()</i>,
+<i><a href="tfind.htm">tfind()</a></i>
+and
+<i><a href="tdelete.htm">tdelete()</a></i>
+if
+<i>rootp</i>
+is a null pointer on entry.
+<p>
+The
+<i><a href="tdelete.htm">tdelete()</a></i>
+function returns a pointer to the parent of the deleted node, or a null
+pointer if the node is not found.
+<p>
+The
+<i><a href="twalk.htm">twalk()</a></i>
+function returns no value.
+</blockquote><h4><a name = "tag_000_010_161">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_010_162">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following code reads in strings and stores structures containing a pointer
+to each string and a count of its length.  It then walks the tree, printing
+out the stored strings and their lengths in alphabetical order.
+<pre>
+<code>
+#include &lt;search.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+
+#define STRSZ    10000
+#define NODSZ    500
+
+struct node {      /* pointers to these are stored in the tree */
+    char    *string;
+    int     length;
+};
+
+char   string_space[STRSZ];  /* space to store strings */
+struct node nodes[NODSZ];    /* nodes to store */
+void  *root = NULL;          /* this points to the root */
+
+int main(int argc, char *argv[])
+{
+    char   *strptr = string_space;
+    struct node    *nodeptr = nodes;
+    void   print_node(const void *, VISIT, int);
+    int    i = 0, node_compare(const void *, const void *);
+
+    while (gets(strptr) != NULL &amp;&amp; i++ &lt; NODSZ)  {
+        /* set node */
+        nodeptr-&gt;string = strptr;
+        nodeptr-&gt;length = strlen(strptr);
+        /* put node into the tree */
+        (void) tsearch((void *)nodeptr, (void **)&amp;root,
+            node_compare);
+        /* adjust pointers, so we do not overwrite tree */
+        strptr += nodeptr-&gt;length + 1;
+        nodeptr++;
+    }
+    twalk(root, print_node);
+    return 0;
+}
+
+/*
+ *  This routine compares two nodes, based on an
+ *  alphabetical ordering of the string field.
+ */
+int
+node_compare(const void *node1, const void *node2)
+{
+    return strcmp(((const struct node *) node1)-&gt;string,
+        ((const struct node *) node2)-&gt;string);
+}
+
+/*
+ *  This routine prints out a node, the second time
+ *  twalk encounters it or if it is a leaf.
+ */
+void
+print_node(const void *ptr, VISIT order, int level)
+{
+    const struct node *p = *(const struct node **) ptr;
+
+    if (order == postorder \(or order == leaf)  {
+        (void) printf("string = %s,  length = %d\n",
+            p-&gt;string, p-&gt;length);
+    }
+}
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_163">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>root</i>
+argument to
+<i><a href="twalk.htm">twalk()</a></i>
+is one level of indirection less than the
+<i>rootp</i>
+arguments to
+<i>tsearch()</i>
+and
+<i><a href="tdelete.htm">tdelete()</a></i>.
+<p>
+There are two nomenclatures used to refer to the order in which tree nodes are
+visited.  The
+<i>tsearch()</i>
+function
+uses <b>preorder</b>, <b>postorder</b> and <b>endorder</b>
+to refer respectively to
+visiting a node before any of its children, after its left child
+and before its right, and after both its children.
+The alternative nomenclature uses <b>preorder</b>, <b>inorder</b> and
+<b>postorder</b> to
+refer to the same visits, which could result in some confusion over
+the meaning of <b>postorder</b>.
+</blockquote><h4><a name = "tag_000_010_164">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_165">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="bsearch.htm">bsearch()</a></i>,
+<i><a href="hsearch.htm">hsearch()</a></i>,
+<i><a href="lsearch.htm">lsearch()</a></i>,
+<i><a href="searc217.htm">&lt;search.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

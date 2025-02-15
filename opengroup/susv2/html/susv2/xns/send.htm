@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>send</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+send - send a message on a socket
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+ssize_t send(int <I>socket</I>, const void *<I>buffer</I>, size_t <I>length</I>, int <I>flags);
+</I></code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<dl compact>
+
+<dt><I>socket</I><dd>Specifies the socket file descriptor.
+
+<dt><I>buffer</I><dd>Points to the buffer containing the message to send.
+
+<dt><I>length</I><dd>Specifies the length of the message in bytes.
+
+<dt><I>flags</I><dd>Specifies the type of message transmission.
+Values of this argument are formed by logically OR'ing
+zero or more of the following flags:
+<dl compact>
+
+<dt>MSG_EOR<dd>Terminates a record (if supported by the protocol)
+
+<dt>MSG_OOB<dd>Sends out-of-band data on sockets that support out-of-band
+communications.
+The significance and semantics of out-of-band data are protocol-specific.
+
+</dl>
+<p>
+</dl>
+<p>
+The
+<i>send()</i>
+function initiates transmission of a message from the specified socket to its
+peer.  The
+<i>send()</i>
+function sends a message only when the socket is connected
+(including when the peer of a connectionless socket has
+been set via
+<i><a href="connect.htm">connect()</a></i>).
+<p>
+The length of the message to be sent is specified by the <I>length</I> argument.
+If the message is too long to pass through the underlying protocol,
+<i>send()</i>
+fails and no data is transmitted.
+<p>
+Successful completion of a call to
+<i>send()</i>
+does not guarantee delivery of the message.  A return value of -1 indicates
+only locally-detected errors.
+<p>
+If space is not available at the sending socket to hold the message to be
+transmitted and the socket file descriptor does not have O_NONBLOCK set,
+<i>send()</i>
+blocks until space is available.  If space is not available at the sending
+socket to hold the message to be transmitted and the socket file descriptor
+does have O_NONBLOCK set,
+<i>send()</i>
+will fail.
+The
+<i><a href="select.htm">select()</a></i>
+and
+<i><a href="poll.htm">poll()</a></i>
+functions can be used to determine when it is possible to send more data.
+<p>
+The socket in use may require the process to have appropriate
+privileges to use the
+<i>send()</i>
+function.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>send()</i>
+returns the number of bytes sent.  Otherwise, -1 is
+returned and <I>errno</I> is set to indicate the error.
+</blockquote><h4>APPLICATION USAGE</h4><blockquote>
+The
+<i>send()</i>
+function is identical to
+<i><a href="sendto.htm">sendto()</a></i>
+with a null pointer <I>dest_len</I> argument, and to
+<i><a href="write.htm">write()</a></i>
+if no flags are used.
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>send()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAGAIN] or [EWOULDBLOCK]<dd><br>
+The socket's file descriptor is marked O_NONBLOCK and the requested operation
+would block.
+
+<dt>[EBADF]<dd>The <I>socket</I> argument is not a valid file descriptor.
+
+<dt>[ECONNRESET]<dd>A connection was forcibly closed by a peer.
+
+<dt>[EDESTADDRREQ]<dd>The socket is not connection-mode and no peer address is set.
+
+<dt>[EFAULT]<dd>The 
+<I>buffer</I>
+parameter can not be accessed. 
+
+<dt>[EINTR]<dd>A signal interrupted
+<i>send()</i>
+before any data was transmitted.
+
+<dt>[EMSGSIZE]<dd>The message is too large be sent all at once, as the socket requires.
+
+<dt>[ENOTCONN]<dd>The socket is not connected or otherwise has not had the peer prespecified.
+
+<dt>[ENOTSOCK]<dd>The <I>socket</I> argument does not refer to a socket.
+
+<dt>[EOPNOTSUPP]<dd>The <I>socket</I> argument is associated with a socket that does not
+support one or more of the values set in <I>flags</I>.
+
+<dt>[EPIPE]<dd>The socket is shut down for writing, or the socket is
+connection-mode and is no longer connected.
+In the latter case, and if the socket is of type SOCK_STREAM, the SIGPIPE
+signal is generated to the calling process.
+
+</dl>
+<p>
+The
+<i>send()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>The calling process does not have the appropriate privileges.
+
+<dt>[EIO]<dd>An I/O error occurred while reading from or writing to the file system.
+
+<dt>[ENETDOWN]<dd>The local interface used to reach the destination is down.
+
+<dt>[ENETUNREACH]<dd>No route to the network is present.
+
+<dt>[ENOBUFS]<dd>Insufficient resources were available in the system to perform the operation.
+
+<dt>[ENOSR]<dd>There were insufficient STREAMS resources available for the operation to
+complete.
+
+</dl>
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="connect.htm">connect()</a></i>,
+<i><a href="getso22.htm">getsockopt()</a></i>,
+<i><a href="poll.htm">poll()</a></i>,
+<i><a href="recv.htm">recv()</a></i>,
+<i><a href="recvfrom.htm">recvfrom()</a></i>,
+<i><a href="recvmsg.htm">recvmsg()</a></i>,
+<i><a href="select.htm">select()</a></i>,
+<i><a href="sendmsg.htm">sendmsg()</a></i>,
+<i><a href="sendto.htm">sendto()</a></i>,
+<i><a href="setso36.htm">setsockopt()</a></i>,
+<i><a href="shutdown.htm">shutdown()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

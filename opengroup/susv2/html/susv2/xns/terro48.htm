@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_error</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_error - produce error message
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_error(
+    const char *errmsg)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>errmsg
+<td align=center>x
+<td align=center>=
+</table>
+</pre>
+<p>
+The
+<i>t_error()</i>
+function produces a message on the standard error output
+which describes the last error encountered during a call to a transport
+function.
+The argument string
+<I>errmsg</I>
+is a user-supplied error message that gives context to
+the error.
+<p>
+The error message is written as follows: first (if <I>errmsg</I> is
+not a null pointer and the character pointed to be <I>errmsg</I> is not
+the null character) the string pointed to by <I>errmsg</I> followed by
+a colon and a space; then a standard error message string for the
+current error defined in <I>t_errno</I>.  If <I>t_errno</I>
+has a value different from [TSYSERR], the standard error
+message string is followed by a newline character.  If, however,
+<I>t_errno</I> is equal to [TSYSERR], the <I>t_errno</I> string
+is followed by
+the standard error
+message string for the current error defined in <I>errno</I>
+followed by a newline.
+<p>
+The language for error message strings written by <I>t_error()</I> is
+that of the current locale.  If it is English, the error message
+string describing the value in <I>t_errno</I> may be derived from
+the comments
+following the <I>t_errno</I> codes defined in <B>xti.h</B>.  The contents of
+the error message strings describing the value in <I>errno</I> are the
+same as those returned by the <I>strerror(3C)</I> function with
+an argument of <I>errno</I>.
+<p>
+The error number,
+<I>t_errno</I>,
+is only set when an error occurs and it is not cleared
+on successful calls.
+</blockquote><h4>EXAMPLE</h4><blockquote>
+If a
+<i><a href="tconn46.htm">t_connect()</a></i>
+function fails on transport endpoint
+<I>fd2</I>
+because a bad address was given, the following call
+might follow the failure:
+<pre>
+<code>
+t_error("t_connect failed on fd2");
+</code>
+</pre>
+<p>
+The diagnostic message to be printed would look like:
+<pre>
+<code>
+t_connect failed on fd2: incorrect addr format
+</code>
+</pre>
+<p>
+where <I>incorrect addr format</I> identifies the
+specific error that occurred,
+and <I>t_connect failed on fd2</I> tells the user which function failed on
+which transport endpoint.
+</blockquote><h4>VALID STATES</h4><blockquote>
+All - apart from T_UNINIT
+</blockquote><h4>ERRORS</h4><blockquote>
+No errors are defined for the
+<i>t_error()</i>
+function.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon completion, a value of 0 is returned.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

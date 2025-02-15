@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_attr_setscope</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1171">&nbsp;</a>NAME</h4><blockquote>
+pthread_attr_setscope, pthread_attr_getscope
+- set and get contentionscope attribute
+(<b>REALTIME THREADS</b>)
+</blockquote><h4><a name = "tag_000_007_1172">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_attr_setscope(pthread_attr_t *<i>attr</i>, int <i>contentionscope</i>);
+int pthread_attr_getscope(const pthread_attr_t *<i>attr</i>, 
+    int *<i>contentionscope</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1173">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pthread_attr_setscope()</i>
+and
+<i>pthread_attr_getscope()</i>
+functions are used to set and get the
+<i>contentionscope</i>
+attribute in the
+<i>attr</i>
+object.
+<p>
+The
+<i>contentionscope</i>
+attribute may have the values
+PTHREAD_SCOPE_SYSTEM,
+signifying system scheduling contention scope,
+or PTHREAD_SCOPE_PROCESS,
+signifying process scheduling contention scope.
+The symbols PTHREAD_SCOPE_SYSTEM and PTHREAD_SCOPE_PROCESS
+are defined by the header
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+</blockquote><h4><a name = "tag_000_007_1174">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>pthread_attr_setscope()</i>
+and
+<i>pthread_attr_getscope()</i>
+functions return zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1175">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_attr_setscope()</i>
+and
+<i>pthread_attr_getscope()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[ENOSYS]<dd>
+The option _POSIX_THREAD_PRIORITY_SCHEDULING is not defined and the
+implementation does not support the function.
+
+</dl>
+<p>
+The
+<i>pthread_attr_setscope()</i>,
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of the attribute being set is not valid.
+
+<dt>[ENOTSUP]<dd>
+An attempt was made to set the attribute to an unsupported value.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_1176">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1177">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+After these attributes have been set, a thread can be created with
+the specified attributes using
+<i><a href="pthre147.htm">pthread_create()</a></i>.
+Using these routines does not affect the current running thread.
+</blockquote><h4><a name = "tag_000_007_1178">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1179">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre125.htm">pthread_attr_init()</a></i>,
+<i><a href="pthre128.htm">pthread_attr_setinheritsched()</a></i>,
+<i><a href="pthre130.htm">pthread_attr_setschedpolicy()</a></i>,
+<i><a href="pthre129.htm">pthread_attr_setschedparam()</a></i>,
+<i><a href="pthre147.htm">pthread_create()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>,
+<i><a href="pthre191.htm">pthread_setschedparam()</a></i>,
+<i><a href="sched208.htm">&lt;sched.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

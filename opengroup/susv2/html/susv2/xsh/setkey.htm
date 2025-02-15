@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>setkey</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_426">&nbsp;</a>NAME</h4><blockquote>
+setkey - set encoding key
+(<b>CRYPT</b>)
+</blockquote><h4><a name = "tag_000_008_427">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+void setkey(const char *<i>key</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_428">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>setkey()</i>
+function provides (rather primitive)
+access to an implementation-dependent encoding algorithm.
+The argument of
+<i>setkey()</i>
+is an array
+of length 64 bytes containing only the bytes
+with numerical value of 0 and 1.
+If this string is divided into groups of 8, the
+low-order bit in each group is ignored;
+this gives a 56-bit key which is used by the algorithm.
+This is the key that will be used with the
+algorithm to encode a string
+<i>block</i>
+passed to
+<i><a href="encrypt.htm">encrypt()</a></i>.
+<p>
+The
+<i>setkey()</i>
+function will not change the setting of 
+<b>errno</b>
+if successful.
+<p>
+This interface need not be reentrant.
+</blockquote><h4><a name = "tag_000_008_429">&nbsp;</a>RETURN VALUE</h4><blockquote>
+No values are returned.
+</blockquote><h4><a name = "tag_000_008_430">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>setkey()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ENOSYS]<dd>
+The functionality is not supported on this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_431">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_432">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Decoding need not be implemented in all environments.  This is related to
+U.S. Government restrictions on encryption and decryption routines:
+the DES decryption algorithm cannot be exported outside the U.S.A.
+Historical practice has been to ship a different version of the encryption
+library without the decryption feature in the routines supplied.
+Thus the exported version of
+<i><a href="encrypt.htm">encrypt()</a></i>
+does encoding but not decoding.
+</blockquote><h4><a name = "tag_000_008_433">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_434">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="crypt.htm">crypt()</a></i>,
+<i><a href="encrypt.htm">encrypt()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>box</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_169">&nbsp;</a>NAME</h4><blockquote>
+box - draw borders from single-byte characters and renditions
+</blockquote><h4><a name = "tag_000_000_170">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int box(WINDOW *<i>win</i>, chtype <i>verch</i>, chtype <i>horch</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_171">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>box()</i>
+function draws a border around the edges of the specified window.
+This function does not advance the cursor position.
+This function does not perform special character processing.
+This function does not perform wrapping.
+<p>
+The function <i>box</i>(<i>win</i>, <i>verch</i>, <i>horch</i>) has an effect
+equivalent to:
+<p>
+<pre>
+<code>
+wborder(<i>win</i>, <i>verch</i>, <i>verch</i>, <i>horch</i>, <i>horch</i>, 0, 0, 0, 0);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_172">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>box()</i>
+returns OK.  Otherwise, it returns ERR.
+</blockquote><h4><a name = "tag_000_000_173">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_174">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+These functions are only guaranteed to operate reliably on character sets in
+which each character fits into a single byte, whose attributes can be
+expressed using only constants with the A_ prefix.
+</blockquote><h4><a name = "tag_000_000_175">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="border.htm">border()</a></i>,
+<i><a href="boxse14.htm">box_set()</a></i>,
+<i><a href="hline.htm">hline()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

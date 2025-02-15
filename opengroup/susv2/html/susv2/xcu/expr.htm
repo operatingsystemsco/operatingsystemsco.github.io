@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>expr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_624">&nbsp;</a>NAME</h4><blockquote>
+expr - evaluate arguments as an expression
+</blockquote><h4><a name = "tag_001_014_625">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+expr <i>operand</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_626">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>expr</i>
+utility will evaluate an expression
+and write the result to standard output.
+</blockquote><h4><a name = "tag_001_014_627">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_628">&nbsp;</a>OPERANDS</h4><blockquote>
+The single expression evaluated by
+<i>expr</i>
+will be formed from the operands, as described in the
+EXTENDED DESCRIPTION section.
+Each of the expression operator symbols:
+<pre>
+<code>
+(   )   |   &amp;   =   &gt;   &gt;=   &lt;   &lt;=   !=   +   -   *   /   %   :
+</code>
+</pre>
+and the symbols
+<i>integer</i>
+and
+<i>string</i>
+in the table must be provided
+as separate arguments to
+<i>expr</i>.
+</blockquote><h4><a name = "tag_001_014_629">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_630">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_631">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>expr</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+within regular expressions and by the
+string comparison operators.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments) and
+the behaviour of character classes within regular expressions.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_632">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+<br>
+</blockquote><h4><a name = "tag_001_014_633">&nbsp;</a>STDOUT</h4><blockquote>
+The
+<i>expr</i>
+utility will evaluate the expression
+and write the result to standard output.
+The character
+0
+will be written to indicate a zero value and nothing will be written
+to indicate a null string.
+</blockquote><h4><a name = "tag_001_014_634">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_635">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_636">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The formation of the expression to be evaluated is shown in
+the following table.
+The symbols
+<i>expr</i>,
+<i>expr1</i>
+and
+<i>expr2</i>
+represent expressions formed from
+<i>integer</i>
+and
+<i>string</i>
+symbols and the expression operator symbols (all separate arguments)
+by recursive application of the constructs described in the table.
+The expressions
+are listed in order of increasing precedence,
+with equal-precedence operators grouped between horizontal lines.
+All of the operators are left-associative.
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Expression</b>
+<th align=center><b>Description</b>
+<tr valign=top><td align=left><i>expr1</i> <b>|</b> <i>expr2</i>
+<td align=left> Returns the evaluation of if it is neither null nor zero; otherwise, returns the evaluation of 
+<tr valign=top><td align=left><i>expr1</i> &amp; <i>expr2</i>
+<td align=left> Returns the evaluation of if neither expression evaluates to null or zero; otherwise, returns zero. 
+<tr valign=top><td align=left>&nbsp;
+<td align=left> Returns the result of a decimal integer comparison if both arguments are integers; otherwise, returns the result of a string comparison using the locale-specific collation sequence. The result of each comparison will be 1 if the specified relationship is true, or 0 if the relationship is false. 
+<tr valign=top><td align=left><i>expr1</i> <b>=</b> <i>expr2</i>
+<td align=left>Equal.
+<tr valign=top><td align=left><i>expr1</i> <b>&gt;</b> <i>expr2</i>
+<td align=left>Greater than.
+<tr valign=top><td align=left><i>expr1</i> <b>&gt;=</b> <i>expr2</i>
+<td align=left>Greater than or equal.
+<tr valign=top><td align=left><i>expr1</i> <b>&lt;</b> <i>expr2</i>
+<td align=left>Less than.
+<tr valign=top><td align=left><i>expr1</i> <b>&lt;=</b> <i>expr2</i>
+<td align=left>Less than or equal.
+<tr valign=top><td align=left><i>expr1</i> <b>!=</b> <i>expr2</i>
+<td align=left>Not equal.
+<tr valign=top><td align=left><i>expr1</i> <b>+</b> <i>expr2</i>
+<td align=left> Addition of decimal integer-valued arguments. 
+<tr valign=top><td align=left><i>expr1</i> <b>-</b> <i>expr2</i>
+<td align=left> Subtraction of decimal integer-valued arguments. 
+<tr valign=top><td align=left><i>expr1</i> <b>*</b> <i>expr2</i>
+<td align=left> Multiplication of decimal integer-valued arguments. 
+<tr valign=top><td align=left><i>expr1</i> <b>/</b> <i>expr2</i>
+<td align=left> Integer division of decimal integer-valued arguments, producing an integer result. 
+<tr valign=top><td align=left><i>expr1</i> % <i>expr2</i>
+<td align=left> Remainder of integer division of decimal integer-valued arguments. 
+<tr valign=top><td align=left><i>expr1</i> <b>:</b> <i>expr2</i>
+<td align=left> Matching expression. See below. 
+<tr valign=top><td align=left>( expr )
+<td align=left> Grouping symbols. Any expression can be placed within parentheses. Parentheses can be nested to a depth of 
+<tr valign=top><td align=left><i>integer</i>
+<td align=left> An argument consisting only of an (optional) unary minus followed by digits. 
+<tr valign=top><td align=left><i>string</i>
+<td align=left> A string argument. See below. 
+</table>
+</pre>
+<h5><a name = "tag_001_014_636_001">&nbsp;</a>Matching Expression</h5>
+The ":" matching operator will compare the string resulting from
+the evaluation of
+<i>expr1</i>
+with the regular expression pattern resulting from the evaluation of
+<i>expr2</i>.
+Regular expression syntax is that defined in the <b>XBD</b> specification, <a href="../xbd/re.htm#tag_007_003"><b>Basic Regular Expressions</b>&nbsp;</a> ,
+except that all patterns are anchored to the beginning of the string
+(that is, only sequences starting at the
+first character of a string will be matched by the regular expression)
+and, therefore, it is unspecified whether "^" is a special character
+in that context.
+Usually, the matching operator will return
+a string representing the number of characters matched
+(0
+on failure).
+Alternatively, if the pattern contains at least one
+regular expression subexpression [<b>\(...</b>\)],
+the string corresponding to
+\1
+will be returned.
+<h5><a name = "tag_001_014_636_002">&nbsp;</a>String Operand</h5>
+A string argument is an argument that cannot be identified as an
+<i>integer</i>
+argument or as one of the expression operator symbols shown in
+the OPERANDS section.
+<p>
+The use of string arguments
+<b>length</b>,
+<b>substr</b>,
+<b>index</b>
+or
+<b>match</b>
+produces unspecified results.
+</blockquote><h4><a name = "tag_001_014_637">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The
+<i>expression</i>
+evaluates to neither null nor zero.
+
+<dt>1<dd>The
+<i>expression</i>
+evaluates to null or zero.
+
+<dt>2<dd>Invalid
+<i>expression</i>.
+
+<dt>&gt;2<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_638">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_639">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+After argument processing by the shell,
+<i>expr</i>
+is not required to be able to tell the difference
+between an operator and an operand
+except by the value.
+If
+<b>$a</b>
+is
+"=",
+the command:
+<pre>
+<code>
+expr $a = '='
+</code>
+</pre>
+looks like:
+<pre>
+<code>
+expr = = =
+</code>
+</pre>
+as the arguments are passed to
+<i>expr</i>
+(and they all may be taken as the
+"="
+operator).
+The following works reliably:
+<pre>
+<code>
+expr X$a = X=
+</code>
+</pre>
+<p>
+Also note that this specification permits implementations to extend utilities.
+The
+<i>expr</i>
+utility permits the integer arguments
+to be preceded with a unary minus.
+This means that an integer argument could look like an option.
+Therefore, the portable application must employ the --
+construct of Guideline 10 of the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> 
+to protect its operands if there is any chance the first operand
+might be a negative integer (or any string with a leading minus).
+</blockquote><h4><a name = "tag_001_014_640">&nbsp;</a>EXAMPLES</h4><blockquote>
+The
+<i>expr</i>
+utility has a rather difficult syntax:
+<ul>
+<p>
+<li>
+Many of the operators are also shell control operators
+or reserved words, so they have to be escaped on the command line.
+<br>
+<p>
+<li>
+Each part of the expression is composed of separate arguments,
+so liberal usage of
+blank characters
+is required.
+For example:
+<br>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Invalid</b>
+<th align=center><b>Valid</b>
+<tr valign=top><td align=left>expr 1+2
+<td align=left>expr 1 + 2
+<tr valign=top><td align=left>expr "1 + 2"
+<td align=left>expr 1 + 2
+<tr valign=top><td align=left>expr 1 + (2 * 3)
+<td align=left>expr 1 + \( 2 \* 3 \)
+</table>
+<p>
+</ul>
+<p>
+In many cases, the arithmetic and string features provided
+as part of the shell command language are easier
+to use than their equivalents in
+<i>expr</i>.
+Newly written scripts should avoid
+<i>expr</i>
+in favour of the new features within the shell.
+See
+<xref href=parms><a href="chap2.htm#tag_001_005">
+Parameters and Variables
+</a></xref>
+and
+<xref href=aritexp><a href="chap2.htm#tag_001_006_004">
+Arithmetic Expansion
+</a></xref>.
+<p>
+The following command:
+<pre>
+<code>
+a=$(expr $a + 1)
+</code>
+</pre>
+adds 1 to the variable
+<i>a</i>.
+<p>
+The following command, for
+<b>$a</b>
+equal to either
+<b>/usr/abc/file</b>
+or just
+<b>file:</b>
+<pre>
+<code>
+expr $a : '.*/\(.*\)' \| $a
+</code>
+</pre>
+returns the last segment of a pathname (that is,
+<b>file</b>).
+Applications should avoid the character "/" used alone as an argument:
+<i>expr</i>
+may interpret it as the division operator.
+<p>
+The following command:
+<pre>
+<code>
+expr "//$a" : '.*/\(.*\)'
+</code>
+</pre>
+is a better representation of the previous example.
+The addition of the
+//
+characters eliminates any ambiguity about the division operator
+and simplifies the whole expression.
+Also note that pathnames may contain characters contained in the
+<i>IFS</i>
+variable and should be quoted to avoid having
+<b>$a</b>
+expand into multiple arguments.
+<p>
+The following command:
+<pre>
+<code>
+expr "$VAR" : '.*'
+</code>
+</pre>
+returns the number of characters in
+<i>VAR</i>.
+</blockquote><h4><a name = "tag_001_014_641">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about 
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_642">&nbsp;</a>SEE ALSO</h4><blockquote>
+<xref href=aritexp><a href="chap2.htm#tag_001_006_004">
+Arithmetic Expansion
+</a></xref>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

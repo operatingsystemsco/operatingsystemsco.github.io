@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;iconv.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_917">&nbsp;</a>NAME</h4><blockquote>
+iconv.h - codeset conversion facility
+</blockquote><h4><a name = "tag_000_005_918">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;iconv.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_919">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;iconv.h&gt;</i>
+header
+defines the following data type through
+<b>typedef</b>:
+<dl compact>
+
+<dt><b>iconv_t</b><dd>Identifies the conversion from one codeset to another.
+
+</dl>
+<p>
+The following are declared as functions and may also be declared as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+iconv_t <a href="iconv79.htm">iconv_open</a>(const char *, const char *);
+size_t  <a href="iconv.htm">iconv</a>(iconv_t, char **, size_t *, char **, size_t *);
+int     <a href="iconv78.htm">iconv_close</a>(iconv_t);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_920">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_921">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_922">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="iconv79.htm">iconv_open()</a></i>,
+<i><a href="iconv.htm">iconv()</a></i>,
+<i><a href="iconv78.htm">iconv_close()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

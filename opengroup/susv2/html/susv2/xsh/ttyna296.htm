@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ttyname</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_175">&nbsp;</a>NAME</h4><blockquote>
+ttyname, ttyname_r - find pathname of a terminal
+</blockquote><h4><a name = "tag_000_010_176">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+char *ttyname(int <i>fildes</i>);
+int ttyname_r(int <i>fildes</i>, char *<i>name</i>, size_t <i>namesize</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_177">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ttyname()</i>
+function returns a pointer to a string containing a
+null-terminated pathname
+of the terminal associated with file descriptor
+<i>fildes</i>.
+The return value may point to static data whose content is
+overwritten by each call.
+<p>
+The
+<i>ttyname()</i>
+interface need not be reentrant.
+<p>
+The
+<i>ttyname_r()</i>
+function stores the null-terminated pathname of the
+terminal associated with the file descriptor
+<i>fildes</i>
+in the character array referenced by
+<i>name</i>.
+The array is
+<i>namesize</i>
+characters long
+and should have space for the name and the terminating null character.
+The maximum length of the terminal name is {TTY_NAME_MAX}.
+</blockquote><h4><a name = "tag_000_010_178">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>ttyname()</i>
+returns a pointer to a string.  Otherwise, a null pointer is returned
+and
+<i>errno</i>
+is set to indicate the error.
+<p>
+If successful, the
+<i>ttyname_r()</i>
+function returns zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_010_179">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>ttyname()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid file descriptor.
+
+<dt>[ENOTTY]<dd>
+The
+<i>fildes</i>
+argument does not refer to a terminal device.
+
+</dl>
+<p>
+The 
+<i>ttyname_r()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid file descriptor.
+
+<dt>[ENOTTY]<dd>
+The
+<i>fildes</i>
+argument does not refer to a tty.
+
+<dt>[ERANGE]<dd>
+The value of
+<i>namesize</i>
+is smaller than the length of the string
+to be returned including the terminating null character.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_180">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_181">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_182">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_183">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+<i>ttyname()</i> derived from Issue 1 of the SVID.
+<P>
+<i>ttyname_r()</i> derived from the POSIX Threads Extension (1003.1c-1995).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

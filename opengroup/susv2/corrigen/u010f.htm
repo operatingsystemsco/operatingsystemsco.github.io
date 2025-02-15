@@ -1,0 +1,552 @@
+<!DOCTYPE HTML SYSTEM "html.dtd">
+<HTML>
+<HEAD>
+<TITLE>Corrigenda U010</TITLE>
+</HEAD>
+<BODY>
+<H2>X/Open Corrigenda: U010</H2>
+<H1> Document: <BR>X/Open DCE: Remote Procedure Call (RPC)</H1>
+X/Open CAE Specification, 08/94<BR>
+X/Open reference C309
+
+<P>
+<H3>Contents</H3>
+<DT>rpc_ns_entry_inq_resolution
+<DT>Missing reserved word
+<DT>Allow parentheses in expressions
+<DT>Union switch type declaration
+<DT>Eliminate double declaration in pipe grammar
+<DT>Declarator grammar errors.
+<DT>Missing NDR structure alignment rules.
+<DT>
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : OSF-1 </H3>
+
+<DT><H3>Source</H3>
+<DD>Open Software Foundation
+<DT><H3>Title</H3>
+<DD> rpc_ns_entry_inq_resolution
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Traversing junctions from CDS to other namespaces
+                (e.g. the registry and DFS namespaces) requires an
+                interface which resolves the cell namespace components
+                of a name and returns partial results.
+
+<P>
+<DT><H3>Change</H3>
+<DL><DT>Chapter 3. Add the rpc_ns_entry_inq_resolution
+                interface to this chapter.
+</DL>
+<P>
+<DT>NAME
+<DD>     rpc_ns_entry_inq_resolution - Resolves the cell namespace components
+     of a name and returns partial results
+<P>
+<DT>SYNOPSIS
+<DD>     #include &lt;dce/rpc.h&gt;
+<P>
+<DL><DT>
+<DD>         void rpc_ns_entry_inq_resolution(
+<DD>         unsigned32 entry_name_syntax,
+<DD>         unsigned_char_t *entry_name,
+<DD>         unsigned_char_t **resolved_name,
+<DD>         unsigned_char_t **unresolved_name,
+<DD>         unsigned32 *status</DL>
+<DD>     );
+<P>
+<DT>PARAMETERS
+<DD>    Input:
+<P>
+     entry_name_syntax
+<DL>
+<DT><DD>     An integer value that specifies the syntax of the
+         argument entry_name. (See Appendix C of the AES/DC RPC
+         document for the possible values of this argument.)
+<P>
+         The value rpc_c_ns_syntax_default specifies the syntax
+         specified by the RPC_DEFAULT_ENTRY_SYNTAX environment
+         variable. The value rpc_c_ns_syntax_dce corresponds to the
+         name syntax specified in Part 1 of this document.</DL>
+     entry_name<DL>
+ <DT><DD>    The composite entry name on which the attempted name
+         resolution is to be done.</DL>
+<P>
+<DD> Input/Output:
+<P>
+<DD> resolved_name
+<DL><DT><DD>         Returns a pointer to the resolved portion of the entry name.
+         The resolved_name is null terminated and does not contain
+         trailing component separators (that is, it contains no
+         trailing ``/'' (slash) characters).
+<P>
+<DD>        If NULL on input, nothing is returned.
+</DL>
+<DD> unresolved_name<DL><DT><DD>
+         Returns a pointer to the unresolved portion of the entry name.
+         The unresolved_name is a relative name, not containing leading
+         component separators (that is, it contains no leading ``/''
+         (slash) characters).
+<P>
+<DD>     If NULL on input, nothing is returned.
+</DL>
+<DD> Output:
+<P>
+<DD> status<DL><DT>
+<DD>     Returns the status code from this routine. The status code
+         indicates whether the routine completed successfully, or if
+         not, why not.
+<P>
+<DD>     Possible status codes and their meanings include
+         (refer to AES/DC Volume \*ERPC, Appendix E for encodings):
+<P>
+<DD>     rpc_s_ok<DL><DT>
+<DD>         Success.</DL>
+<DD>     rpc_s_partial_results<DL><DT>
+<DD>         The entry name was only partially resolved within the
+             cell namespace and the value of unresolved_name points
+             to the residual of the name.</DL>
+<DD>     rpc_s_unsupported_name_syntax<DL><DT>
+<DD>         The requested name syntax is not supported.
+</DL></DL>
+<P>
+<DT>DESCRIPTION
+<DD> The rpc_ns_entry_inq_resolution() routine attempts to read a name
+     entry in the cell namespace.<BR>
+     If the read was successful then the full resolution of the entry name
+     is returned.<BR>
+     If the read was not successful due to the entry not being found
+     in the cell namespace, then the partial result of the name
+     resolution is returned, with status code set to rpc_s_partial_results.
+<P>
+     If the status code is rpc_s_partial_results and the return parameter
+     resolved_name is non-empty, the contents of resolved_name can be used
+     in subsequent calls to the NSI interface to obtain the binding handle
+     for the name server that controls the namespace in which the entry
+     specified by the value of unresolved_name lies.
+<P>
+     The application requires read permission for the name entries that
+     are resolved within the cell namespace.
+<P>
+<DT>RETURN VALUES
+<DD> None.
+<P>
+<DT>RELATED INFORMATION
+<DD> Functions:<DL><DT>
+<DD>     rpc_ns_binding_*() interface routines.</DL>
+<P>
+<DD> CDS remote operations:<DL><DT>
+<DD>     cds_Enumerate*(), cds_ReadAttribute() IDL operations.
+
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : OSF-2 </H3>
+
+<DT><H3>Source</H3>
+<DD>Open Software Foundation
+<DT><H3>Title</H3>
+<DD>       Missing reserved word
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>List is incomplete.
+
+<P>
+<DT><H3>Change</H3>
+<DD>Section 4.6 page 277.
+<P>
+<DL><DT><DD>   Add the identifier "pointer_default" to the list of reserved words
+   when used in the context of an attribute [this is the second list
+   in the section].
+</DL></DL>
+<P>
+<HR>
+
+
+
+<P>
+<DL>
+<DT><H3>Change number : OSF-3 </H3>
+
+<DT><H3>Source</H3>
+<DD>Open Software Foundation
+<DT><H3>Title</H3>
+<DD>   Allow parentheses in expressions
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Rules for parentheses in constant expressions missing from specification.
+<P>
+<DT><H3>Change</H3>
+<DD>
+         Section 4.2.7.1, page 241.
+<P>
+<DL><DT><DD>Near the bottom of the page, change
+</DL>
+<P>
+from
+<PRE>
+&lt;primary_exp&gt; ::= &lt;Integer_literal&gt;
+                | &lt;Identifier&gt;
+</PRE>
+to
+<PRE>
+&lt;primary_exp&gt; ::= &lt;Integer_literal&gt;
+                | &lt;Identifier&gt;
+                | '(' &lt;const_exp&gt; ')'
+</DL></PRE>
+</DL></DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number :   OSF-4 </H3>
+
+<DT><H3>Source</H3>
+<DD>Open Software Foundation
+<DT><H3>Title</H3>
+<DD>   Union switch type declaration
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>An enumeration must be defined before it is used in a (non-encapsulated) union switch
+    type (an enumeration type can be used as a declared type).
+<P>
+<DT><H3>Change</H3>
+<DD>-- Section 4.2.12.1, page 245 --
+<P>
+<DL><DT><DD>In the production for &lt;switch_type_spec&gt;, replace<BR>
+<PRE>|  &lt;enumeration_type&gt;</PRE>
+with
+<PRE>|  &lt;Identifier&gt;</PRE>
+<P>
+</DL
+<DL><DT><DD>-- Section 4.2.12.2, page 246 --
+<P>
+<DL><DT><DD>At the end of the section, add the following text:
+<P>
+    When the &lt;Identifier&gt; alternative is used in the
+    &lt;switch_type_spec&gt; production to declare a switch type,
+    &lt;identifier&gt; must only identify a declared type that resolves to
+    one of the primitive integer type, the char type, the boolean
+    type, or an enum type; it cannot be a pointer, pipe, struct or
+    array type.
+</DL>
+<P>
+<DD>-- Section 4.4.1, page 271 --
+<P>
+<DL><DT><DD>In the production for (49) &lt;switch_type_spec&gt;, replace<BR>
+    <PRE>|  &lt;enumeration_type&gt;</PRE>
+with
+    <PRE>|  &lt;Identifier&gt;</PRE>
+<P>
+</DL>
+<DD>-- Section 4.4.2, page 273 --
+<P>
+<DL><DT><DD>In the table,
+    &lt;enumeration_type&gt;
+<P>Remove 49
+
+</DL></DL>
+<P>
+
+<HR>
+
+<DL>
+<DT><H3>Change number : OSF-5</H3>
+
+<DT><H3>Source</H3>
+<DD>Open Software Foundation
+<DT><H3>Title</H3>
+<DD>   Eliminate double declaration in pipe grammar
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The pipe grammar incorrectly allows double sets of declarations.
+<P>
+<DT><H3>Change</H3>
+<DD>-- Section 4.2.14.1, page 246 --
+<P>
+<DL><DT><DD>Remove the productions:
+        <DL><DT><DD>&lt;pipe_declarator&gt;
+                <DD>&lt;pipe_declarators&gt;
+</DL>
+<P>
+<DD>Replace
+    <DL><DT><DD>&lt;pipe_type&gt; ::= pipe &lt;type_spec&gt; &lt;pipe_declarators&gt;
+</DL>
+with
+    <DL><DT><DD>&lt;pipe_type&gt; ::= pipe &lt;type_spec&gt;
+</DL></DL>
+
+<DD>-- Section 4.4.1 --
+<P>
+<DL><DT><DD>Remove the productions:
+        <DL><DT><DD>(83) &lt;pipe_declarator&gt;    on page 272
+        <DD>        (82) &lt;pipe_declarators&gt;   on page 272
+
+</DL></DL>
+<DD>-- Section 4.4.2 --
+<P>
+<DL><DT><DD>Remove the following rows from the table:
+        <DD>&lt;pipe_declarator&gt;    on page 274
+        <DD>&lt;pipe_declarators&gt;   on page 274
+
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : OSF-6</H3>
+
+<DT><H3>Source</H3>
+<DD>Open Software Foundation
+<DT><H3>Title</H3>
+<DD>   Declarator grammar errors.
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The grammar for declarators does not match the implementation, nor does it follow the textual description.
+
+<P>
+<DT><H3>Change</H3>
+<DD>-- Section 4.2.8, page 242 --
+<P>
+<DL><DT><DD>Remove the productions for
+        <DL><DT><DD>&lt;complex_declarator&gt;
+                <DD>&lt;simple_declarator&gt;
+</DL></DL>
+<P>
+<DL><DT><DD>Replace the production for
+        <DL><DT><DD>&lt;declarator&gt;
+</DL>
+with
+        <DL><DT><DD>&lt;declarator&gt; ::= &lt;pointer_opt&gt; &lt;direct_declarator&gt;
+</DL>
+<P>
+Add the productions
+    <DL><DT><DD>&lt;direct_declarator&gt; ::= &lt;Identifier&gt;
+            <DD> | ( &lt;declarator&gt; )
+            <DD> | &lt;array_declarator&gt;
+            <DD> | &lt;function_declarator&gt;
+</DL></DL>
+<P>
+<DD>-- Section 4.2.15.1., page 247 --
+<P>
+<DL><DT><DD>Remove the production for
+    <DL><DT><DD>&lt;array_bounds_list&gt;
+<P></DL>
+Replace the production for:
+<DL><DT><DD>    &lt;array_declarator&gt;</DL>
+with
+<DL><DT><DD>&lt;array_declarator&gt; ::= &lt;direct_declarator&gt; &lt;array_bounds_declarator&gt;
+<P></DL>
+In the production &lt;array_bound&gt; replace
+<DL><DT><DD>        | &lt;Integer_literal&gt;</DL>
+with
+<DL><DT><DD>        | &lt;integer_const_expr&gt;
+</DL></DL>
+<P>
+<DD>-- Section 4.2.20.1, page 253 --
+<P>
+<DL><DT><DD>Remove the production
+<DL><DT><DD>       "&lt;ptr_declarator&gt;"
+<P></DL>
+Add the productions:
+<DL><DT><DD>    &lt;declarator&gt; ::= &lt;pointer_opt&gt; &lt;direct_declarator&gt;
+        <DD>    &lt;pointer_opt&gt; ::= [&lt;pointer&gt;]
+        <DD>    &lt;pointer&gt; ::= *...
+<P></DL>
+Replace the string
+    <DL><DT><DD>&lt;ptr_declarator&gt;
+</DL>with the string
+    <DL><DT><DD>pointer declaration
+</DL> on pages 253 through 255.
+<P>
+</DL>
+<DD>-- Section 4.2.24.1, page 260 --
+<P>
+<DL><DT><DD>Replace the production for:
+    <DL><DT><DD>&lt;function_ptr_declarator&gt;</DL>
+with
+    <DL><DT><DD>&lt;function_declarator&gt; ::= &lt;direct_declarator&gt; &lt;param_declarators&gt;
+</DL></DL>
+<P>
+<DD>-- Section 4.4.1 --
+<P>
+<DL><DT><DD>Remove the productions:
+        <DL><DT><DD>(24) &lt;simple_declarator&gt;  on page 270
+                <DD>(25) &lt;complex_declarator&gt; on page 270
+                <DD>(60) &lt;array_bounds_list&gt;  on page 271
+                <DD>(70) &lt;ptr_declarator&gt;     on page 272
+</DL>
+<P>
+Replace the production for
+<DL><DT><DD>    (23) &lt;declarator&gt;</DL>
+with
+<DL><DT><DD>    (23) &lt;declarator&gt; ::= &lt;pointer_opt&gt; &lt;direct_declarator&gt;
+</DL>
+<P>
+Replace the production for:
+    <DL><DT><DD>(59) &lt;array_declarator&gt;</DL>
+with
+    <DL><DT><DD>(59) &lt;array_declarator&gt; ::= &lt;direct_declarator&gt; &lt;array_bounds_declarator&gt;
+<P>
+</DL>
+Replace the production for:
+    <DL><DT><DD>(79) &lt;function_ptr_declarator&gt;
+with
+    <DL><DT><DD>(79) &lt;function_declarator&gt; ::= &lt;direct_declarator&gt; &lt;param_declarators&gt;
+<P>
+</DL>
+In the production (63) &lt;array_bound&gt; replace
+<DL><DT><DD>        | &lt;Integer_literal&gt;</DL>
+with
+<DL><DT><DD>        | &lt;integer_const_expr&gt;
+<P>
+</DL></DL>
+Add the productions:
+<DL><DT><DD>    (70) &lt;pointer_opt&gt; ::= [&lt;pointer&gt;]
+        <DD>    (70.1) &lt;pointer&gt; ::= *...
+        <DD>   (24) &lt;direct_declarator&gt; ::= &lt;Identifier&gt;
+                <DL><DT><DD>| ( &lt;declarator&gt; )
+                        <DD>| &lt;array_declarator&gt;
+                        <DD>| &lt;function_declarator&gt;
+<P>
+</DL></DL></DL></DL>
+
+<DD>-- Section 4.4.2 --
+<DL><DT><DD>Remove the following rows from the table:
+        <DL><DT><DD>&lt;simple_declarator&gt;  on page 273
+                <DD>&lt;complex_declarator&gt; on page 273
+                <DD>&lt;ptr_declarator&gt;     on page 274
+                <DD>&lt;array_bounds_list&gt;  on page 274
+                <DD>&lt;function_ptr_declarator&gt; on page 273
+</DL>
+<P>
+Change the following entries to the table:
+    <DL><DT><DD>&lt;declarator&gt;          (23)          21, 24, 75
+            <DD>&lt;array_declarator&gt;    (59)          24
+            <DD>&lt;Integer_literal&gt;                   Remove 63
+            <DD>&lt;integer_const_expr&gt;                Add 63
+</DL>
+<P>
+Add the following entries to the table:
+<DL><DT><DD>    &lt;pointer_opt&gt;         (70)          23
+        <DD>    &lt;pointer&gt;             (70.1)        70
+        <DD>    &lt;direct_declarator&gt;   (24)          23, 59, 79
+        <DD>    &lt;function_declarator&gt; (79)          24
+
+
+</DL></DL>
+<P>
+<HR>
+          
+<P>
+<DL>
+<DT><H3>Change number : OSF-7</H3>
+<DT><H3>Source</H3>
+<DD>Open Software Foundation
+<DT><H3>Title</H3>
+<DD>   Missing NDR structure alignment rules.
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The rules for aligning structures in NDR is missing.
+<P>
+<DT><H3>Change</H3>
+<DD>Section 14.3.5, page 576.
+
+<DL><DT><DD>Add a new section:
+<P>
+        <DL><DT><DD>14.3.1.1  Alignment of Constructed Types
+<P></DL>
+NDR enforces NDR alignment of structured data.  As with primitive data
+types, an alignment, `n', is determined for the structure.  Where
+necessary, an alignment gap of octets of unspecified value preceeds
+the data in the NDR octet stream.  This gap is the smallest size
+sufficient to align the first field of the structure on an NDR octet
+stream index of `n'.
+<P>
+The rules for calculating the alignemnt of constructed types are:
+<P>
+<DL><DT><DD>
+ - If a conformant structure (that is, a conformant or varying-
+   -conformant array, or a structure containing a conformant or
+   varying-conformant array) is embedded in the constructed type, and
+   this is the outer-most containing constructed type (this structure
+   is not contained in another structure), then the size information
+   from the contained conformant structure is positioned so that it
+   preceeds both the containing constructed type (see section 14.3.6
+   for details) and any alignment gap for the constructed type.  The
+   size information is itself aligned according to the alignment rules
+   for primitive data types.  The data of the constructed type is then
+   aligned according to the alignment rules for the constructed type.
+   In other words, the size information preceeds the structure and is
+   aligned independently of the structure alignment.
+<P>
+ - The alignment of a structure in the octet stream is the largest of
+   the alignments of the fields it contains.  These fields may also be
+   constructed types.  The same alignment rules apply recursively to
+   nested constructed types.
+<P>
+ - The fields within the structure are aligned according to the
+   following rules:<BR>
+    + scalar primitives are aligned according to section 14.2.2.<BR>
+    + pointer alignment is always modulo 4.<BR>
+    + struct alignment is determined by recursive application of these
+      rules.<BR>
+    + array alignment is the largest alignment of the array element
+      type and the size information type, if any.<BR>
+    + union alignment is the largest alignment of the union
+      discriminator and all of the union arms.
+<P>
+</DL>
+NOTE:<BR> The above notions of the union alignment and of the array
+      alignment apply only for calculating the NDR alignment of a
+      struct and don't apply to the actual NDR alignment of a union or
+      an array.  For example, the NDR alignment of a union is
+      determined by the tag type and the arm actually to be
+      transmitted, not the largest of the union arms.  Similarly, the
+      NDR alignment of an array is determined by the element type
+      alignment, which would be the largest arm of the union for the
+      case of an array of unions.
+
+</DL></DL>
+<P>
+<HR>
+<P>
+If you can't find the information you need, please contact
+X/Open at any of its <A HREF = "http://www.xopen.co.uk/contact.htm">offices.</A>
+<P>
+<HR>
+<P>
+<A HREF="http://www.xopen.co.uk/cprt.htm">Copyright X/Open Company Limited, &#169; 1995</A>
+<P>
+<HR>
+</BODY>
+</HTML>

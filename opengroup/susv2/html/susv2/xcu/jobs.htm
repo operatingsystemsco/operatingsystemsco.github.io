@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>jobs</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1023">&nbsp;</a>NAME</h4><blockquote>
+jobs - display status of jobs in the current session
+</blockquote><h4><a name = "tag_001_014_1024">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+jobs <b>[</b> -l| -p<b>][</b><i>job_id</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1025">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>jobs</i>
+utility displays the status of jobs
+that were started in the current shell environment; see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>.
+<p>
+When
+<i>jobs</i>
+reports the termination status of a job,
+the shell removes its process ID
+from the list of those &quot;known in the current shell execution environment&quot;;
+see
+<xref href=asyncl><a href="chap2.htm#tag_001_009_003">
+Lists
+</a></xref>.
+</blockquote><h4><a name = "tag_001_014_1026">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>jobs</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-l</b>
+<dd>(The letter ell.)
+Provide more information about each job listed.
+This information includes the
+job number, current job, process group ID, state
+and the command that formed the job.
+
+<dt><b>-p</b>
+<dd>Display only the process IDs for the process group leaders
+of the selected jobs.
+
+</dl>
+<p>
+By default, the
+<i>jobs</i>
+utility displays the status of all stopped jobs,
+running background jobs and all jobs whose status has
+changed and have not been reported by the shell.
+</blockquote><h4><a name = "tag_001_014_1027">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>job_id</i><dd>Specifies the jobs for which the status is to be displayed.
+If no
+<i>job_id</i>
+is given, the status information for all jobs will be displayed.
+The format of
+<i>job_id</i>
+is described in the entry for
+<b>job control job ID</b>
+in
+the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a> .
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1028">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1029">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1030">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>jobs</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1031">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1032">&nbsp;</a>STDOUT</h4><blockquote>
+If the
+<b>-p</b>
+option is specified, the output consists of one line for each
+process ID:
+<p><code>
+<tt>"%d\n"</tt>, &lt;<i>process ID</i>&gt;
+</code>
+<p>
+Otherwise, if the
+<b>-l</b>
+option is not specified, the output is a series of lines of the form:
+<p><code>
+<pre>
+<tt>"[%d] %c %s %s\n"</tt>, &lt;<i>job-number</i>&gt;,
+&lt;<i>current</i>&gt;,
+&lt;<i>state</i>&gt;,
+&lt;<i>command</i>&gt;
+</code>
+</pre>
+where the fields are as follows:
+<dl compact>
+
+<dt><b>&lt;</b><i>current</i><b>&gt;</b><dd>
+The character "+"
+identifies the job that would be used as a default for the
+<i><a href="fg.htm">fg</a></i>
+or
+<i><a href="bg.htm">bg</a></i>
+utilities; this job can also be specified using the
+<i>job_id</i>
+<b>%+</b>
+or
+<b>%%</b>.
+The character "-" identifies the job that would become the default
+if the current default job were to exit;
+this job can also be specified using the
+<i>job_id</i>
+<b>%-</b>.
+For other jobs, this field is a
+space character.
+At most one job can be identified with "+" and at most one job
+can be identified with "-".
+If there is any suspended job, then the current job
+will be a suspended job.
+If there are at least two suspended jobs,
+then the previous job will also be a suspended job.
+
+<dt><b>&lt;</b><i>job-number</i><b>&gt;</b><dd>
+A number that can be used to identify the process group to the
+<i><a href="wait.htm">wait</a></i>,
+<i><a href="fg.htm">fg</a></i>,
+<i><a href="bg.htm">bg</a></i>
+and
+<i><a href="kill.htm">kill</a></i>
+utilities.
+Using these utilities, the job can be identified
+by prefixing the job number with "%".
+
+<dt><b>&lt;</b><i>state</i><b>&gt;</b><dd>One of the following strings (in the POSIX locale):
+<dl compact>
+
+<dt><b>Running</b><dd>
+Indicates that the job has not been suspended
+by a signal and has not exited.
+
+<dt><b>Done</b><dd>Indicates that the job completed and returned exit status zero.
+
+<dt><b>Done(</b><i>code</i><b>)</b><dd>
+Indicates that the job completed normally and
+that it exited with the specified non-zero exit status,
+<i>code</i>,
+expressed as a decimal number.
+
+<dt><b>Stopped</b><br>
+<b>Stopped (SIGTSTP)</b><dd>
+Indicates that the job was suspended by the SIGTSTP signal.
+
+<dt><b>Stopped (SIGSTOP)</b><dd>
+Indicates that the job was suspended by the SIGSTOP signal.
+
+<dt><b>Stopped (SIGTTIN)</b><dd>
+Indicates that the job was suspended by the SIGTTIN signal.
+
+<dt><b>Stopped (SIGTTOU)</b><dd>
+Indicates that the job was suspended by the SIGTTOU signal.
+
+</dl>
+<p>
+The implementation may substitute the string
+<b>Suspended</b>
+in place of
+<b>Stopped</b>.
+If the job was terminated by a signal, the format of
+&lt;<i>state</i>&gt;
+is unspecified, but it will be visibly distinct
+from all of the other
+&lt;<i>state</i>&gt;
+formats shown here and will indicate the name or description
+of the signal causing the termination.
+<p>
+<dt><b>&lt;</b><i>command</i><b>&gt;</b><dd>
+The associated command that was given to the shell.
+<p>
+</dl>
+<p>
+If the
+<b>-l</b>
+option is specified, a field containing
+the process group ID
+is inserted before the
+&lt;<i>state</i>&gt;
+field.
+Also, more processes in a process group may be output
+on separate lines, using only the process ID and
+&lt;<i>command</i>&gt;
+fields.
+</blockquote><h4><a name = "tag_001_014_1033">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1034">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1035">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1036">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1037">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1038">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<b>-p</b>
+option
+is the only portable way to find out the process group of a job
+because different implementations have
+different strategies for defining the process group of the job.
+Usage such as
+$(jobs&nbsp;-p)
+provides a way
+of referring to the process group of the job in an
+implementation-independent way.
+<p>
+The
+<i>jobs</i>
+utility will not work as expected when it
+is operating in its own utility execution environment
+because that environment will have no applicable jobs
+to manipulate.
+See the APPLICATION USAGE section for
+<i><a href="bg.htm">bg</a></i>.
+For this reason,
+<i>jobs</i>
+is generally implemented as a shell regular built-in.
+</blockquote><h4><a name = "tag_001_014_1039">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1040">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1041">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="bg.htm">bg</a></i>,
+<i><a href="fg.htm">fg</a></i>,
+<i><a href="kill.htm">kill</a></i>,
+<i><a href="wait.htm">wait</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

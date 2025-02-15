@@ -1,0 +1,623 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dd</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_358">&nbsp;</a>NAME</h4><blockquote>
+dd - convert and copy a file
+</blockquote><h4><a name = "tag_001_014_359">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+dd <b>[</b><i>operand</i> ...<b>]
+</b></code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_360">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>dd</i>
+utility will copy the specified input file to the specified
+output file with possible conversions using specific input and
+output block sizes.
+It will read the input one block at a time,
+using the specified input block size; it then will process the
+block of data actually returned, which could be smaller than the
+requested block size.
+It will apply any conversions that have been
+specified and write the resulting data to the output in blocks
+of the specified output block size.
+If the
+<bs>bs=</b>expr
+operand is specified and no conversions other than
+<b>sync</b>,
+<b>noerror</b>
+or
+<b>notrunc</b>
+are requested, the data returned from each input block will be written
+as a separate output block;
+if the read returns less than a full
+block and the
+<b>sync</b>
+conversion is not specified, the resulting
+output block will be the same size as the input block.
+If the
+<b>bs=</b>expr
+operand is not specified, or a conversion other than
+<b>sync</b>,
+<b>noerror</b>
+or notrunc
+is requested, the input will be processed and
+collected into full-sized output blocks until the end of the
+input is reached.
+<p>
+The processing order is as follows:
+<ol>
+<p>
+<li>
+An input block is read.
+<p>
+<li>
+If the input block is shorter than the specified input block
+size and the
+<b>sync</b>
+conversion is specified, null
+bytes are appended to the input data up to the specified size.
+(If either
+<b>block</b>
+or
+<b>unblock</b>
+is also specified,
+space
+characters are appended instead of null bytes.)
+The remaining conversions and output include the pad
+characters as if they had been read from the input.
+<p>
+<li>
+If the
+<b>bs=</b>expr
+operand is specified and no conversion other than
+<b>sync</b>
+or
+<b>noerror</b>
+is requested, the resulting data
+will be written to the output as a single block, and the
+remaining steps are omitted.
+<p>
+<li>
+If the
+<b>swab</b>
+conversion is specified, each pair of input data bytes will be swapped.
+If there is an odd number of bytes
+in the input block, the results are unspecified.
+<p>
+<li>
+Any remaining conversions
+(<b>block</b>,
+<b>unblock</b>,
+<b>lcase</b>
+and
+<b>ucase</b>)
+will be performed.
+These conversions will operate on the input
+data independently of the input blocking; an input or output
+fixed-length record may span block boundaries.
+<p>
+<li>
+The data resulting from input or conversion or both will be
+aggregated into output blocks of the specified size.
+After the end of input is reached, any remaining output will be written
+as a block without padding
+if
+<b>conv=sync</b>
+is not specified; thus the final output block may
+be shorter than the output block size.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_361">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_362">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><b>if=</b><i>file</i><dd>Specify the input pathname; the default is standard input.
+
+<dt><b>of=</b><i>file</i><dd>Specify the output pathname; the default is standard output.
+If the
+<b>seek=</b>expr
+conversion is not also specified, the output file
+will be truncated before the copy begins,
+unless
+<b>conv=notrunc</b>
+is specified.
+If
+<b>seek=</b>expr
+is specified, but
+<b>conv=notrunc</b>
+is not,
+the effect of the copy will be to preserve the blocks in the output
+file over which
+<i>dd</i>
+seeks, but no other portion of the output file will be preserved.
+(If the size of the seek plus the size
+of the input file is less than the previous size of the output
+file, the output file will be shortened by the copy.)
+
+<dt><b>ibs=</b><i>expr</i><dd>
+Specify the input block size, in bytes, by
+<i>expr</i>
+(default is 512).
+
+<dt><b>obs=</b><i>expr</i><dd>
+Specify the output block size, in bytes, by
+<i>expr</i>
+(default is 512).
+
+<dt><b>bs=</b><i>expr</i><dd>Set both input and output block sizes to
+<i>expr</i>
+bytes, superseding
+<b>ibs=</b>
+and
+<b>obs=</b>.
+If no conversion other than
+<b>sync</b>,
+<b>noerror</b>
+and
+<b>notrunc</b>
+is specified, each input block will be
+copied to the output as a single block without
+aggregating short blocks.
+
+<dt><b>cbs=</b><i>expr</i><dd>
+Specify the conversion block size for
+<b>block</b>
+and
+<b>unblock</b>
+in bytes by
+<i>expr</i>
+(default is zero).
+If
+<b>cbs=</b>
+is omitted or given a value of zero, using
+<b>block</b>
+or
+<b>unblock</b>
+produces unspecified results.
+
+This operand must also be specified if the 
+<b>conv=</b>
+operand is specified
+with a value of 
+<b>ascii</b>,
+<b>ebcdic</b>
+or 
+<b>ibm</b>.
+For a 
+<b>conv=</b>
+operand with an
+<b>ascii</b>
+value, the input is handled as described for the 
+<b>unblock</b>
+value,
+except that characters are converted to ASCII before any trailing space
+characters are deleted.  For 
+<b>conv=</b>
+operands with 
+<b>ebcdic</b>
+or 
+<b>ibm</b>
+values, 
+the input is handled as described for the 
+<b>block</b>
+value except that the 
+characters are converted to EBCDIC or IBM EBCDIC, respectively, after any 
+trailing space characters are added.  
+
+
+<dt><b>skip=</b><i>n</i><dd>Skip
+<i>n</i>
+input blocks
+(using the specified input block size)
+before starting to copy.
+On seekable files, the implementation will read the blocks or
+seek past them; on non-seekable files, the blocks will be read
+and the data will be discarded.
+
+<dt><b>seek=</b><i>n</i><dd>Skip
+<i>n</i>
+blocks
+(using the specified output block size)
+from beginning of output file before copying.
+On non-seekable files, existing blocks will be read and space
+from the current end-of-file to the specified offset, if any,
+filled with null
+bytes; on seekable files, the
+implementation will seek to the specified offset or read the
+blocks as described for non-seekable files.
+
+<dt><b>count=</b><i>n</i><dd>
+Copy only
+<i>n</i>
+input blocks.
+
+<dt><b>conv=</b><i>value</i><b>[,</b><i>value</i>&nbsp;...<b>]</b><dd>
+
+Where
+<i>value</i>s
+are comma-separated symbols from the following list.
+<dl compact>
+
+<dt><b>ascii</b><dd>Convert EBCDIC to ASCII.
+See
+<xref href=ascebc><a href="#tagt_2">
+ASCII to EBCDIC Conversion
+</a></xref>.
+
+<dt><b>ebcdic</b><dd>Convert ASCII to EBCDIC.
+See
+<xref href=ascebc><a href="#tagt_2">
+ASCII to EBCDIC Conversion
+</a></xref>.
+
+<dt><b>ibm</b><dd>Convert ASCII to a different EBCDIC set.
+See
+<xref href=ascibm><a href="#tagt_3">
+ASCII to IBM EBCDIC Conversion
+</a></xref>.
+
+</dl>
+<p>
+The
+<b>ascii</b>,
+<b>ebcdic</b>
+and
+<b>ibm</b>
+values are mutually exclusive.
+<dl compact>
+
+<dt><b>block</b><dd>Treat the input as a sequence of
+newline-character-terminated
+or end-of-file-terminated
+variable-length records independent of the input block boundaries.
+Each record is converted to a record with a fixed
+length specified by the conversion block size.
+Any
+newline character
+is removed from the input line;
+space characters
+are appended to lines
+that are shorter than their conversion block size to fill the block.
+Lines that are longer than the conversion block size are
+truncated to the largest number of characters that will fit into
+that size; the number of truncated lines is reported (see
+the STDERR section).
+
+The
+<b>block</b>
+and
+<b>unblock</b>
+values are mutually exclusive.
+
+<dt><b>unblock</b><dd>
+Convert fixed-length records to variable length.
+Read a number of bytes equal to the conversion block size
+(or the number of bytes remaining in the input, if less
+than the conversion block size),
+delete all trailing
+space characters,
+and append a
+newline character.
+
+<dt><b>lcase</b><dd>Map upper-case characters specified by the LC_CTYPE keyword
+<b>tolower</b>
+to the corresponding lower-case character.
+Characters
+for which no mapping is specified will not be modified by this
+conversion.
+
+The
+<b>lcase</b>
+and
+<b>ucase</b>
+symbols are mutually exclusive.
+
+<dt><b>ucase</b><dd>Map lower-case characters specified by the LC_CTYPE keyword
+<b>toupper</b>
+to the corresponding upper-case character.
+Characters
+for which no mapping is specified will not be modified by this
+conversion.
+
+<dt><b>swab</b><dd>Swap every pair of input bytes.
+If the current input record is an odd number of bytes,
+the last byte in the input record is ignored.
+
+<dt><b>noerror</b><dd>
+Do not stop processing on an input error.
+When an input error occurs, a diagnostic
+message will be written on standard error, followed by the current
+input and output block counts in the same format as used at
+completion (see the STDERR section).
+If the
+<b>sync</b>
+conversion is
+specified, the missing input will be replaced with null bytes and
+processed normally; otherwise, the input block will be omitted from
+the output.
+
+<dt><b>notrunc</b><dd>
+Do not truncate the output file.
+Preserve blocks in the
+output file not explicitly written by this invocation
+of the
+<i>dd</i>
+utility.
+(See also the preceding
+<b>of=</b>file
+operand.)
+
+<dt><b>sync</b><dd>Pad every input block to the size of the
+<b>ibs=</b>
+buffer, appending null bytes.
+(If either
+<b>block</b>
+or
+<b>unblock</b>
+is also specified, append
+space
+characters, rather than null bytes.)
+
+</dl>
+<p>
+</dl>
+<p>
+The behaviour is unspecified if operands other than
+<b>conv=</b>
+are specified more than once.
+<p>
+For the
+<b>bs=</b>,
+<b>cbs=</b>,
+<b>ibs=</b>
+and
+<b>obs=</b>
+operands, the application must supply an
+expression specifying a size in bytes.
+The expression,
+<i>expr</i>,
+can be:
+<ol>
+<p>
+<li>
+a positive decimal number
+<p>
+<li>
+a positive decimal number followed by
+k,
+specifying multiplication by 1024
+<p>
+<li>
+a positive decimal number followed by
+b,
+specifying multiplication by 512
+<p>
+<li>
+two or more positive decimal numbers (with or without
+k
+or
+b)
+separated by
+x,
+specifying the product of the indicated values.
+<p>
+</ol>
+<p>
+All of the operands will be processed before any input is read.
+<p>
+The following two tables display the octal number character
+values used for the
+<b>ascii</b>
+and
+<b>ebcdic</b>
+conversions (first table)
+and for the
+<b>ibm</b>
+conversion (second table).
+In both tables, the ASCII values are the row and column
+headers and the EBCDIC values are found at their intersections.
+For example, ASCII 0012 (LF) is the second row, third column,
+yielding 0045 in EBCDIC.
+The inverted tables (for EBCDIC to ASCII conversion)
+are not shown, but are in one-to-one correspondence
+with these tables.
+The differences between the two tables are
+highlighted by small boxes drawn around five entries.
+<br>
+<img src="../images/ascebc.gif">
+<h6 align=center><xref table="ASCII to EBCDIC Conversion"><a name="tagt_2">&nbsp;</a></xref>Table: ASCII to EBCDIC Conversion</h6>
+<xref type="7" name="ascebc"></xref>
+<br>
+<img src="../images/ascibm.gif">
+<h6 align=center><xref table="ASCII to IBM EBCDIC Conversion"><a name="tagt_3">&nbsp;</a></xref>Table: ASCII to IBM EBCDIC Conversion</h6>
+<xref type="7" name="ascibm"></xref>
+<br>
+</blockquote><h4><a name = "tag_001_014_363">&nbsp;</a>STDIN</h4><blockquote>
+If no
+<b>if=</b>
+operand is specified,
+the standard input will be used.
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_364">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file can be any file type.
+</blockquote><h4><a name = "tag_001_014_365">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>dd</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files),
+the classification of
+characters as upper- or lower-case, and the mapping
+of characters from one case to the other.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_366">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+For SIGINT, the
+<i>dd</i>
+utility will write status information to standard error before exiting.
+It will take the standard action for all other signals;
+see the ASYNCHRONOUS EVENTS section in
+<a href="utildes.htm">Utility Description Defaults</a>
+<xref href=utildes></xref>.
+</blockquote><h4><a name = "tag_001_014_367">&nbsp;</a>STDOUT</h4><blockquote>
+If no
+<b>of=</b>
+operand is specified, the standard output will be used.
+The nature of the output depends on the operands selected.
+</blockquote><h4><a name = "tag_001_014_368">&nbsp;</a>STDERR</h4><blockquote>
+On completion,
+<i>dd</i>
+will write the number of input and output blocks to standard error.
+In the POSIX locale the following formats will be used:
+<p><code>
+<pre>
+<tt>"%u+%u records in\n"</tt>, &lt;<i>number of whole input blocks</i>&gt;,
+&lt;<i>number of partial input blocks</i>&gt;
+
+<tt>"%u+%u records out\n"</tt>, &lt;<i>number of whole output blocks</i>&gt;,
+&lt;<i>number of partial output blocks</i>&gt;
+<br>
+</pre>
+</code>
+<p>
+A partial input block is one for which
+<i><a href="../xsh/read.htm">read()</a></i>
+returned less than the input block size.
+A partial output block is one that was
+written with fewer bytes than specified by the output block size.
+<p>
+In addition, when there is at least one truncated block, the
+number of truncated blocks will be written to standard error.
+In the POSIX locale, the format is:
+<code>
+<p>
+<tt>"%u truncated %s\n"</tt>, &lt;<i>number of truncated blocks</i>&gt;,
+"record"
+(if
+&lt;<i>number of truncated blocks</i>&gt;
+is one)
+"records"
+(otherwise)
+<br>
+</code>
+<p>
+Diagnostic messages may also be written to standard error.
+</blockquote><h4><a name = "tag_001_014_369">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+If the
+<b>of=</b>
+operand is used, the output will be the same as described in
+the STDOUT section.
+</blockquote><h4><a name = "tag_001_014_370">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_371">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The input file was copied successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_372">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+If an input error is detected and the
+<b>noerror</b>
+conversion has not
+been specified, any partial output block will be written to the
+output file, a diagnostic message will be written, and the copy
+operation will be discontinued.
+If some other error is
+detected, a diagnostic message will be written and the copy
+operation will be discontinued.
+</blockquote><h4><a name = "tag_001_014_373">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The input and output block size can be specified
+to take advantage of raw physical I/O.
+<p>
+There are many different versions of the EBCDIC codesets.
+The ASCII and EBCDIC conversions specified for the
+<i>dd</i>
+utility perform conversions for the version specified by the tables.
+</blockquote><h4><a name = "tag_001_014_374">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following command:
+<pre>
+<code>
+dd if=/dev/rmt0h  of=/dev/rmt1h
+</code>
+</pre>
+copies from tape drive 0 to tape drive 1,
+using a common historical device naming convention.
+<p>
+The following command:
+<pre>
+<code>
+dd ibs=10  skip=1
+</code>
+</pre>
+strips the first 10 bytes from standard input.
+<p>
+This example reads an EBCDIC
+tape blocked ten 80-byte EBCDIC
+card images per block into the ASCII file
+<b>x</b> :
+<pre>
+<code>
+dd if=/dev/tape of=x ibs=800 cbs=80 conv=ascii,lcase
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_375">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about 
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_376">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sed.htm">sed</a></i>,
+<i><a href="tr.htm">tr</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

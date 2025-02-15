@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>socketpair</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+socketpair - create a pair of connected sockets
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+int socketpair(int <I>domain</I>, int <I>type</I>, int <I>protocol</I>,
+               int <I>socket_vector</I>[2]);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The
+<i>socketpair()</i>
+function creates an unbound pair of connected
+sockets in a specified <I>domain</I>, of a specified <I>type</I>, under
+the protocol optionally specified by the <I>protocol</I> argument.  The two
+sockets are identical.  The file descriptors used in referencing the created
+sockets are returned in <I>socket_vector</I>[0] and
+<I>socket_vector</I>[1].
+<p>
+<dl compact>
+
+<dt><I>domain</I><dd>Specifies the communications domain in which the sockets are to be created.
+
+<dt><I>type</I><dd>Specifies the type of sockets to be created.
+
+<dt><I>protocol</I><dd>Specifies a particular protocol to be used with the sockets.
+Specifying a <I>protocol</I> of 0 causes
+<i>socketpair()</i>
+to use an unspecified default protocol appropriate for the
+requested socket type.
+
+<dt><I>socket_vector</I><dd>Specifies a 2-integer array to hold the file descriptors of
+the created socket pair.
+
+</dl>
+<p>
+The <I>type</I> argument specifies the socket type, which determines
+the semantics of communications over the socket.  The socket types
+supported by the system are implementation-dependent.  Possible
+socket types include:
+<dl compact>
+
+<dt>SOCK_STREAM<dd>Provides sequenced, reliable, bidirectional, connection-mode byte streams,
+and may provide a transmission mechanism for out-of-band data.
+
+<dt>SOCK_DGRAM<dd>Provides datagrams, which are connectionless-mode, unreliable messages of fixed
+maximum length.
+
+<dt>SOCK_SEQPACKET<dd>Provides sequenced, reliable, bidirectional, connection-mode transmission
+path for records.  A record can be sent using one or more output operations
+and received using one or more input operations, but a single operation never
+transfers part of more than one record.  Record boundaries are visible to
+the receiver via the MSG_EOR flag.
+
+</dl>
+<p>
+If the <I>protocol</I> argument is non-zero, it must specify a
+protocol that is supported by the address family.  The protocols
+supported by the system are implementation-dependent.
+<p>
+The process may need to have appropriate privileges to use the
+<i>socketpair()</i>
+function or to create some sockets.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, this function returns 0.  Otherwise, -1 is
+returned and <I>errno</I> is set to indicate the error.
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>socketpair()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAFNOSUPPORT]<dd>The implementation does not support the specified address family.
+
+<dt>[EMFILE]<dd>No more file descriptors are available for this process.
+
+<dt>[ENFILE]<dd>No more file descriptors are available for the system.
+
+<dt>[EOPNOTSUPP]<dd>The specified protocol does not permit creation of socket pairs.
+
+<dt>[EPROTONOSUPPORT]<dd><br>
+The protocol is not supported by the address
+family, or the protocol is not supported by the
+implementation.
+
+<dt>[EPROTOTYPE]<dd>The socket type is not supported by the protocol.
+
+</dl>
+<p>
+The
+<i>socketpair()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>The process does not have appropriate privileges.
+
+<dt>[ENOBUFS]<dd>Insufficient resources were available in the system to perform the operation.
+
+<dt>[ENOMEM]<dd>Insufficient memory was available to fulfill the request.
+
+<dt>[ENOSR]<dd>There were insufficient STREAMS resources available for the operation to
+complete.
+
+</dl>
+</blockquote><h4>APPLICATION USAGE</h4><blockquote>
+The documentation for specific address families specifies which protocols each
+address family supports.  The documentation for specific protocols specifies
+which socket types each protocol supports.
+<p>
+The
+<i>socketpair()</i>
+function is used primarily with UNIX domain sockets and need not be supported
+for other domains.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

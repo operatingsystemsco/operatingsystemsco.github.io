@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>tcdrain</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_435">&nbsp;</a>NAME</h4><blockquote>
+tcdrain - wait for transmission of output
+</blockquote><h4><a name = "tag_000_009_436">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="termi288.htm">termios.h</a>&gt;
+
+int tcdrain(int <i>fildes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_437">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>tcdrain()</i>
+function waits until all output written to the object referred to by
+<i>fildes</i>
+is transmitted.  The
+<i>fildes</i>
+argument is an open file descriptor associated with a terminal.
+<p>
+Any attempts to use
+<i>tcdrain()</i>
+from a process which is a member of a background process group on a
+<i>fildes</i>
+associated with its controlling terminal, will cause the process group to be
+sent a SIGTTOU signal.  If the calling process is blocking or ignoring SIGTTOU
+signals, the process is allowed to perform the operation, and no signal is
+sent.
+</blockquote><h4><a name = "tag_000_009_438">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, 0 is returned. Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_009_439">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>tcdrain()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid file descriptor.
+
+<dt>[EINTR]<dd>
+A signal interrupted
+<i>tcdrain()</i>.
+
+<dt>[ENOTTY]<dd>
+The file associated with
+<i>fildes</i>
+is not a terminal.
+
+</dl>
+<p>
+The
+<i>tcdrain()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EIO]<dd>
+The process group of the writing process is orphaned,
+and the writing process is not ignoring or blocking SIGTTOU.
+
+</dl>
+</blockquote><h4><a name = "tag_000_009_440">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_441">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_442">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+In the ISO&nbsp;POSIX-1 standard, the possibility of an [EIO] error occurring is
+described in <b>XBD</b> specification, <a href="../xbd/termios.htm#tag_008_001_004"><b>Terminal Access Control</b>&nbsp;</a>, but it is not mentioned in the
+<i>tcdrain()</i>
+interface definition.
+It has become clear that this omission was unintended,
+so it is likely that the [EIO] error will be reclassified as
+a &quot;will fail&quot; in a future issue of the POSIX standard.
+</blockquote><h4><a name = "tag_000_009_443">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="tcflush.htm">tcflush()</a></i>,
+<i><a href="termi288.htm">&lt;termios.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>,
+the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

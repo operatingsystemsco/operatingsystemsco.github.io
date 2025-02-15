@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>The Compilation Environment (XNS)</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade><blockquote>
+<center>
+<h3><a name = "tag_000_002">&nbsp;</a>The Compilation Environment (XNS)</h3>
+</center>
+Applications should ensure that the feature test macro _XOPEN_SOURCE
+is defined with the value 500 before inclusion of any header.
+This is needed to enable the
+functionality described in this document,
+and possibly to enable functionality defined elsewhere in the Common
+Applications Environment.
+<p>
+The _XOPEN_SOURCE macro may be defined automatically by the
+compilation process, but to ensure maximum portability, applications
+should make sure that _XOPEN_SOURCE is defined by using either
+compiler options or
+<b>#define</b>
+directives in the source files, before any
+<b>#include</b>
+directives.  Identifiers in this document may be undefined using the
+<b>#undef</b>
+directive as described in
+<a href="namespac.htm">The Name Space</a>.
+These
+<b>#undef</b>
+directives must follow all
+<b>#include</b>
+directives of any XSI headers.
+<p>
+Since this specification is aligned with the ISO&nbsp;C standard,
+and since all functionality enabled by _POSIX_C_SOURCE set 
+greater than zero and less than or equal to 199506L
+should be enabled by _XOPEN_SOURCE set equal to 500,
+there should be no need to
+define either _POSIX_SOURCE or _POSIX_C_SOURCE if _XOPEN_SOURCE is
+defined.  
+Therefore if _XOPEN_SOURCE is set equal to 500 and _POSIX_SOURCE is
+defined, or _POSIX_C_SOURCE is set greater than zero and less than
+or equal to 199506L, the behavior is the
+same as if only _XOPEN_SOURCE is defined and set equal to 500.
+However, should _POSIX_C_SOURCE be set to a value greater than 199506L,
+the behaviour is undefined.
+<p>
+The
+<i><a href="../xcu/c89.htm">c89</a></i>
+and
+<i><a href="../xcu/cc.htm">cc</a></i>
+utilities recognise the additional
+<b>-l</b>
+operand for standard libraries:
+<dl compact>
+
+<dt><b>-l&nbsp;xnet</b><dd>If the implementation defines _XOPEN_UNIX, this operand makes visible
+all functions referenced in this document.  An implementation may search this
+library in the absence of this operand.
+
+</dl>
+<p>
+It is unspecified whether the library
+<b>libxnet.a</b>
+exists as a regular file.
+<p>
+If the implementation supports the utilities marked
+<b>DEVELOPMENT</b>
+in the <b>XCU</b> specification, the
+<i><a href="../xcu/lint.htm">lint</a></i>
+utility recognises the additional
+<b>-l</b>
+operand for standard libraries:
+<dl compact>
+
+<dt><b>-l&nbsp;xnet</b><dd>Names the library
+<b>llib-lxnet.ln</b>,
+which will contain functions specified in this document.
+
+</dl>
+<p>
+It is unspecified whether the library
+<b>llib-lxnet.ln</b>
+exists as a regular file.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

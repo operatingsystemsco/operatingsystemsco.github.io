@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>lgamma</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_332">&nbsp;</a>NAME</h4><blockquote>
+lgamma - log gamma function
+</blockquote><h4><a name = "tag_000_007_333">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+double lgamma(double <i>x</i>);
+extern int signgam;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_334">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>lgamma()</i>
+function computes<br>
+<img src="../images/lgamma.gif" border=0>
+<br>
+The sign of 
+<img src="../images/lgamma2.gif" border=0>
+is returned in the external integer
+<i>signgam</i>.
+The argument
+<i>x</i>
+need not be a non-positive integer,
+(<img src="../images/lgamma2.gif" border=0>
+ is defined over
+the reals, except the non-positive integers).
+<p>
+An application wishing to check for error situations should set
+<i>errno</i>
+to 0 before calling
+<i>lgamma()</i>.
+If
+<i>errno</i>
+is non-zero on return,
+or the return value is NaN,
+an error has occurred.
+<p>
+This interface need not be reentrant.
+</blockquote><h4><a name = "tag_000_007_335">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>lgamma()</i>
+returns the logarithmic gamma of
+<i>x</i>.
+<p>
+If
+<i>x</i>
+is NaN, NaN is returned and
+<i>errno</i>
+may be set to [EDOM].
+<p>
+If
+<i>x</i>
+is a non-positive integer, either HUGE_VAL or NaN is returned and
+<i>errno</i>
+may be set to [EDOM].
+<p>
+If the correct value would cause overflow,
+<i>lgamma()</i>
+returns HUGE_VAL and may set
+<i>errno</i>
+to [ERANGE].
+<p>
+If the correct value would cause underflow,
+<i>lgamma()</i>
+returns 0 and may set
+<i>errno</i>
+to [ERANGE].
+</blockquote><h4><a name = "tag_000_007_336">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>lgamma()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>
+The value of
+<i>x</i>
+is a non-positive integer or NaN.
+
+<dt>[ERANGE]<dd>
+The value to be returned would have caused overflow or
+underflow.
+
+</dl>
+<p>
+No other errors will occur.
+</blockquote><h4><a name = "tag_000_007_337">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_338">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_339">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_340">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exp.htm">exp()</a></i>,
+<i><a href="isnan.htm">isnan()</a></i>,
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

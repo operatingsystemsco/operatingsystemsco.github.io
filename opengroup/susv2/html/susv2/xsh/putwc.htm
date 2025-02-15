@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>putwc</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1816">&nbsp;</a>NAME</h4><blockquote>
+putwc - put a wide-character on a stream
+</blockquote><h4><a name = "tag_000_007_1817">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+wint_t putwc(wchar_t <i>wc</i>, FILE *<i>stream</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1818">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>putwc()</i>
+function is equivalent to
+<i><a href="fputwc.htm">fputwc()</a></i>,
+except that if it is implemented as a macro it may evaluate
+<i>stream</i>
+more than once, so the argument should never be an expression
+with side-effects.
+</blockquote><h4><a name = "tag_000_007_1819">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Refer to
+<i><a href="fputwc.htm">fputwc()</a></i>.
+</blockquote><h4><a name = "tag_000_007_1820">&nbsp;</a>ERRORS</h4><blockquote>
+Refer to
+<i><a href="fputwc.htm">fputwc()</a></i>.
+</blockquote><h4><a name = "tag_000_007_1821">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1822">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Because it may be implemented as a macro,
+<i>putwc()</i>
+may treat a
+<i>stream</i>
+argument with side-effects incorrectly.  In particular,
+<i>putwc(wc, *f++)</i>
+need not work correctly.
+Therefore, use of this interface is not recommended;
+<i><a href="fputwc.htm">fputwc()</a></i>
+should be used instead.
+</blockquote><h4><a name = "tag_000_007_1823">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1824">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fputwc.htm">fputwc()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fputws</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_221">&nbsp;</a>NAME</h4><blockquote>
+fputws - put a wide-character string on a stream
+</blockquote><h4><a name = "tag_000_005_222">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+int fputws(const wchar_t *<i>ws</i>, FILE *<i>stream</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_223">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fputws()</i>
+function writes a character string corresponding to
+the (null-terminated) wide-character string pointed to by
+<i>ws</i>
+to the stream pointed to by
+<i>stream</i>.
+No character corresponding to the terminating null
+wide-character code is written.
+<br>
+<p>
+The
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the file will be marked for update between the successful
+execution of
+<i>fputws()</i>
+and the next successful completion of a call to
+<i><a href="fflush.htm">fflush()</a></i>
+or
+<i><a href="fclose.htm">fclose()</a></i>
+on the same stream or a call to
+<i><a href="exit.htm">exit()</a></i>
+or
+<i><a href="abort.htm">abort()</a></i>.
+</blockquote><h4><a name = "tag_000_005_224">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>fputws()</i>
+returns a non-negative number.
+Otherwise
+it returns -1, sets an error indicator for the stream and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_005_225">&nbsp;</a>ERRORS</h4><blockquote>
+Refer to
+<i><a href="fputwc.htm">fputwc()</a></i>.
+</blockquote><h4><a name = "tag_000_005_226">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_227">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>fputws()</i>
+function does not append a newline character.
+</blockquote><h4><a name = "tag_000_005_228">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_229">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fopen.htm">fopen()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the MSE working draft.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

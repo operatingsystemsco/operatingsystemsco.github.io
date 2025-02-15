@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getsockopt</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+getsockopt - get the socket options
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+int getsockopt(int <I>socket</I>, int <I>level</I>, int <I>option_name,</I> 
+     void *<I>option_value</I>, socklen_t *<I>option_len</I>);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The
+<i>getsockopt()</i>
+function retrieves the value for the
+option specified by the <I>option_name</I> argument for the
+socket specified by the <I>socket</I> argument.  If the size
+of the option value is greater than <I>option_len</I>, the
+value stored in the object pointed to by the <I>option_value</I>
+argument will be silently truncated.  Otherwise, the object
+pointed to by the <I>option_len</I> argument will be modified
+to indicate the actual length of the value.
+<p>
+The <I>level</I> argument specifies the protocol level at which
+the option resides.  To retrieve options
+at the socket level, specify the <I>level</I> argument as SOL_SOCKET.  To
+retrieve options at other levels, supply the appropriate protocol number for
+the protocol controlling the option.  For example, to indicate that an option
+will be interpreted by the TCP (Transport Control Protocol), set <I>level</I>
+to the protocol number of TCP, as defined in the &lt;<B>netinet/in.h</B>&gt; header,
+or as determined by using
+<i><a href="getpr15.htm">getprotobyname()</a></i>
+function.
+<p>
+The socket in use may require the process to have appropriate
+privileges to use the
+<i>getsockopt()</i>
+function.
+<p>
+The <I>option_name</I> argument specifies a single option to be retrieved.  It
+can be one of the following values defined in
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>:
+<dl compact>
+
+<dt>SO_DEBUG<dd>Reports whether debugging information is being recorded.
+This option stores an <B>int</B> value.
+This is a boolean option.
+
+<dt>SO_ACCEPTCONN<dd>Reports whether socket listening is enabled.  This option stores an <B>int</B>
+value.
+
+<dt>SO_BROADCAST<dd>Reports whether transmission of broadcast messages is supported, if this is
+supported by the protocol.  This option stores an <B>int</B> value.
+This is a boolean option.
+
+<dt>SO_REUSEADDR<dd>Reports whether the rules used in validating addresses supplied to
+<i><a href="bind.htm">bind()</a></i>
+should allow reuse of local addresses, if this is supported by the protocol.
+This option stores an <B>int</B> value.
+This is a boolean option.
+
+<dt>SO_KEEPALIVE<dd>Reports whether connections are kept active with periodic transmission of
+messages, if this is supported by the protocol.
+
+If the connected socket fails to respond to these messages, the connection is
+broken and processes writing to that socket are notified with a SIGPIPE
+signal.  This option stores an <B>int</B> value.
+
+This is a boolean option.
+
+<dt>SO_LINGER<dd>Reports whether the socket lingers on
+<i><a href="close.htm">close()</a></i>
+if data is present.  If SO_LINGER is set, the system blocks the process during
+<i><a href="close.htm">close()</a></i>
+until it can transmit the data or until the end of the interval indicated by
+the <B>l_linger</B> member, whichever comes first.  If SO_LINGER is not
+specified, and
+<i><a href="close.htm">close()</a></i>
+is issued, the system handles the call in a way that allows the process to
+continue as quickly as possible.  This option stores a <B>linger</B>
+structure.
+
+<dt>SO_OOBINLINE<dd>Reports whether the socket leaves received out-of-band data (data marked
+urgent) in line.  This option stores an <B>int</B> value.
+This is a boolean option.
+
+<dt>SO_SNDBUF<dd>Reports send buffer size information.  This option stores an <B>int</B> value.
+
+<dt>SO_RCVBUF<dd>Reports receive buffer size information.  This option stores an <B>int</B>
+value.
+
+<dt>SO_ERROR<dd>Reports information about error status and clears it.
+This option stores an <B>int</B> value.
+
+<dt>SO_TYPE<dd>Reports the socket type.  This option stores an <B>int</B> value.
+
+<dt>SO_DONTROUTE<dd>Reports whether outgoing messages bypass
+the standard routing facilities.
+The destination must be on a directly-connected 
+network, and messages are directed 
+to the appropriate network interface according
+to the destination address. The effect, if any,
+of this option depends on what protocol is
+in use. 
+This option stores an 
+<B>int</B>
+value.
+This is a boolean option.
+
+<dt>SO_RCVLOWAT<dd>Reports the minimum number of bytes to process 
+for socket input operations.  The default value
+for SO_RCVLOWAT is 1.  If SO_RCVLOWAT is set to 
+a larger value, blocking receive calls normally 
+wait until they have received the smaller of the
+low water mark value or the requested amount. 
+(They may return less than the low water mark 
+if an error occurs, a signal is caught, or the 
+type of data next in the receive queue is
+different than that returned, e.g. out of band 
+data). 
+This option stores an 
+<B>int</B>
+value.
+Note that not all implementations allow this option to be retrieved.
+
+<dt>SO_RCVTIMEO<dd>Reports the timeout value for input operations.
+This option stores a 
+<B>timeval</B>
+structure with the number of
+seconds and microseconds specifying the limit 
+on how long to wait for an input operation
+to complete.  If a receive operation has blocked
+for this much time without receiving additional
+data, it returns with a partial count or
+errno set to [EAGAIN] or [EWOULDBLOCK] if no 
+data were received.  The default for this
+option 
+is zero, which indicates that a receive
+operation
+will not time out.
+Note that not all implementations allow this option to be retrieved.
+
+<dt>SO_SNDLOWAT<dd>Reports the minimum number of bytes to process for
+socket output operations. Non-blocking output
+operations  will process no data if flow control
+does not allow the smaller of the send low
+water mark value or the entire request to be processed.
+This option stores an 
+<B>int</B>
+value.
+Note that not all implementations allow this option to be retrieved.
+
+<dt>SO_SNDTIMEO<dd>Reports the timeout value specifying the amount of time 
+that an output function blocks because flow 
+control prevents data from being sent.
+If a send operation has blocked for this 
+time, it returns with a partial count or
+with errno set to [EAGAIN] or [EWOULDBLOCK] if 
+no data were sent.  The default for this option 
+is zero, which indicates that a send operation
+will not time out.
+The option stores a 
+<B>timeval</B>
+structure.
+Note that not all implementations allow this option to be retrieved.
+
+</dl>
+<p>
+For boolean options, a zero value indicates that the option 
+is disabled and a non-zero value indicates that the
+option is enabled.
+<p>
+Options at other protocol levels vary in format and name.
+<p>
+The socket in use may require the process to have appropriate
+privileges to use the
+<i>getsockopt()</i>
+function.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>getsockopt()</i>
+returns 0.  Otherwise, -1 is returned and
+<I>errno</I> is set to indicate the error.
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>getsockopt()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>The <I>socket</I> argument is not a valid file descriptor.
+
+<dt>[EFAULT]<dd>The 
+<I>option_value</I>
+or 
+<I>option_len</I>
+parameter can not be accessed or written.
+
+<dt>[EINVAL]<dd>The specified option is invalid at the specified socket level.
+
+<dt>[ENOPROTOOPT]<dd>The option is not supported by the protocol.
+
+<dt>[ENOTSOCK]<dd>The <I>socket</I> argument does not refer to a socket.
+
+</dl>
+<p>
+The
+<i>getsockopt()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>The calling process does not have the appropriate privileges.
+
+<dt>[EINVAL]<dd>The socket has been shut down.
+
+<dt>[ENOBUFS]<dd>Insufficient resources are available in the system to complete the call.
+
+<dt>[ENOSR]<dd>There were insufficient STREAMS resources available for the operation to
+complete.
+
+</dl>
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="bind.htm">bind()</a></i>,
+<i><a href="close.htm">close()</a></i>,
+<i><a href="endpr4.htm">endprotoent()</a></i>,
+<i><a href="setso36.htm">setsockopt()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

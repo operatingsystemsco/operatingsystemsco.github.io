@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>readlink</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1915">&nbsp;</a>NAME</h4><blockquote>
+readlink - read the contents of a symbolic link
+</blockquote><h4><a name = "tag_000_007_1916">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int readlink(const char *<i>path</i>, char *<i>buf</i>, size_t <i>bufsize</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1917">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>readlink()</i>
+function places the contents of the symbolic link referred to by <i>path</i> in
+the buffer <i>buf</i> which has size <i>bufsize</i>.  If the number of bytes in
+the symbolic link is less than <i>bufsize</i>,
+the contents of the remainder of <i>buf</i> are unspecified.
+</blockquote><h4><a name = "tag_000_007_1918">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>readlink()</i>
+returns the count of bytes placed in the buffer.  Otherwise, it returns a
+value of -1, leaves the buffer unchanged, and sets <i>errno</i> to indicate
+the error.
+</blockquote><h4><a name = "tag_000_007_1919">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>readlink()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for a component of the path prefix of <i>path</i>.
+
+<dt>[EINVAL]<dd>
+The <i>path</i> argument names a file that is not a symbolic link.
+
+<dt>[EIO]<dd>
+An I/O error occurred while reading from the file system.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file
+or <i>path</i> is an empty string.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of <i>path</i> exceeds {PATH_MAX}, or a pathname component is longer
+than {NAME_MAX}.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+</dl>
+<p>
+The
+<i>readlink()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Read permission is denied for the directory.
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_1920">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1921">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Portable applications should not assume that the returned contents of the
+symbolic link are null-terminated.
+</blockquote><h4><a name = "tag_000_007_1922">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The return value may change in a future issue to align with IEEE PASC.
+</blockquote><h4><a name = "tag_000_007_1923">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="stat.htm">stat()</a></i>,
+<i><a href="symlink.htm">symlink()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

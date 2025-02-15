@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mq_notify</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_742">&nbsp;</a>NAME</h4><blockquote>
+mq_notify - notify process that a message is available
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_007_743">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mqueu106.htm">mqueue.h</a>&gt;
+
+int mq_notify(mqd_t <i>mqdes</i>, const struct sigevent *<i>notification</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_744">&nbsp;</a>DESCRIPTION</h4><blockquote>
+If the argument
+<i>notification</i>
+is not NULL,
+this function registers the calling process to be notified
+of message arrival at an empty message queue
+associated with the specified message queue descriptor,
+<i>mqdes</i>.
+The notification specified by the
+<i>notification</i>
+argument will be sent to the process
+when the message queue transitions from empty to non-empty.
+At any time,
+only one process may be registered for notification by a message queue.
+If the calling process or any other process has already registered
+for notification of message arrival at the specified message queue,
+subsequent attempts to register for that message queue fail.
+<p>
+If
+<i>notification</i>
+is NULL and the process is currently registered for notification
+by the specified message queue,
+the existing registration is removed.
+<p>
+When the notification is sent to the registered process,
+its registration will be removed.
+The message queue will then be available for registration.
+<p>
+If a process has registered for notification of message arrival
+at a message queue and some thread is blocked in
+<i><a href="mqrec102.htm">mq_receive()</a></i>
+waiting to receive a message when a message arrives at the queue,
+the arriving message satisfies the appropriate
+<i><a href="mqrec102.htm">mq_receive()</a></i>.
+The resulting
+behaviour is as if the message queue remains empty,
+and no notification is sent.
+</blockquote><h4><a name = "tag_000_007_745">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the
+<i>mq_notify()</i>
+function returns a value of zero;
+otherwise, the function returns a value of -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_007_746">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>mq_notify()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>mqdes</i>
+argument is not a valid message queue descriptor.
+
+<dt>[EBUSY]<dd>
+A process is already registered for notification by the message queue.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>mq_notify()</i>
+is not supported by this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_747">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_748">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_749">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mqope101.htm">mq_open()</a></i>,
+<i><a href="mqsen103.htm">mq_send()</a></i>,
+<i><a href="mqueu106.htm">&lt;mqueue.h&gt;</a></i>,
+<i><a href="msgctl.htm">msgctl()</a></i>,
+<i><a href="msgget.htm">msgget()</a></i>,
+<i><a href="msgrcv.htm">msgrcv()</a></i>,
+<i><a href="msgsnd.htm">msgsnd()</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,377 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>nm</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1555">&nbsp;</a>NAME</h4><blockquote>
+nm - write the name list of an object file (<b>DEVELOPMENT</b>)
+</blockquote><h4><a name = "tag_001_014_1556">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+nm <b>[</b>-APv<b>][</b>-efox<b>][</b> -g| -u<b>][</b>-t <i>format</i><b>]</b><i> file</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1557">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>nm</i>
+utility displays symbolic information appearing
+in the object file, executable file
+or object-file library named by
+<i>file</i>.
+If no symbolic
+information is available for a valid input file, the
+<i>nm</i>
+utility will report that fact,
+but not consider it an error condition.
+<p>
+The default base used when numeric values are written is
+decimal.
+</blockquote><h4><a name = "tag_001_014_1558">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>nm</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-A</b>
+<dd>Write the full pathname or library name of an object on each line.
+
+<dt><b>-e</b>
+<dd>Write only external (global) and static symbol information.
+
+<dt><b>-f</b>
+<dd>Produce full output.
+Write redundant symbols
+(<i>.text</i>,
+<i>.data</i>
+and
+<i>.bss</i>),
+normally suppressed.
+
+<dt><b>-g</b>
+<dd>Write only external (global) symbol information.
+
+<dt><b>-o</b>
+<dd>Write numeric values in octal
+(equivalent to
+t<b>-o</b>).
+
+<dt><b>-P</b>
+<dd>Write information in a portable output format, as specified in
+the STDOUT section.
+
+<dt><b>-t&nbsp;</b><i>format</i>
+<dd>
+Write each numeric value in the specified format.
+The format is dependent on the single
+character used as the
+<i>format</i>
+option-argument:
+<dl compact>
+
+<dt><b>d</b><dd>The offset is written in decimal
+(default).
+
+<dt><b>o</b><dd>The offset is written in octal.
+
+<dt><b>x</b><dd>The offset is written in hexadecimal.
+
+</dl>
+<br>
+<dt><b>-u</b>
+<dd>Write only undefined symbols.
+<br>
+<dt><b>-v</b>
+<dd>Sort output by value instead of alphabetically.
+<br>
+<dt><b>-x</b>
+<dd>Write numeric values in hexadecimal
+(equivalent to
+t<b>-x</b>).
+<p>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1559">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of
+an object file, executable file or object-file library.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1560">&nbsp;</a>STDIN</h4><blockquote>
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_1561">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file must be an object file, an object-file library
+whose format is the same as those produced by the
+<i><a href="ar.htm">ar</a></i>
+utility for link editing,
+or an executable file.
+The
+<i>nm</i>
+utility may accept additional implementation-dependent object
+library formats for the input file.
+<br>
+</blockquote><h4><a name = "tag_001_014_1562">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>nm</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the
+locale for character collation information
+for the symbol-name and symbol-value
+collation sequences.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1563">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1564">&nbsp;</a>STDOUT</h4><blockquote>
+If symbolic information is present in the input files, then for each
+file or for each member of an archive, the
+<i>nm</i>
+utility will write the following information to standard output.
+By default, the format is unspecified, but the output is sorted
+alphabetically by symbol name.
+<ul>
+<p>
+<li>
+Library or object name, if
+<b>-A</b>
+is specified.
+<p>
+<li>
+Symbol name.
+<p>
+<li>
+Symbol type, which is either one of the following
+single characters or an
+implementation-dependent type represented by a single character:
+<dl compact>
+
+<dt><b>A</b><dd>Global absolute symbol.
+
+<dt><b>a</b><dd>Local absolute symbol.
+
+<dt><b>B</b><dd>Global &quot;bss&quot; (that is, uninitialised data space) symbol.
+
+<dt><b>b</b><dd>Local bss symbol.
+
+<dt><b>D</b><dd>Global data symbol.
+
+<dt><b>d</b><dd>Local data symbol.
+
+<dt><b>T</b><dd>Global text symbol.
+
+<dt><b>t</b><dd>Local text symbol.
+
+<dt><b>U</b><dd>Undefined symbol.
+
+</dl>
+<p>
+<li>
+Value of the symbol.
+<p>
+<li>
+The size associated with the symbol, if applicable.
+<p>
+</ul>
+<p>
+This information
+may be supplemented by additional information specific to the
+implementation.
+<p>
+If the
+<b>-P</b>
+option is specified,
+the previous information is displayed using
+the following portable format.
+The three versions differ depending on whether
+<b>-t d</b>,
+<b>-t o</b>
+or
+<b>-t x</b>
+was specified, respectively:
+<p><code>
+<pre>
+<tt>"%s%s %s %d %d\n"</tt>, &lt;<i>library/object&nbsp;name</i>&gt;,
+&lt;<i>name</i>&gt;,
+&lt;<i>type</i>&gt;,
+&lt;<i>value</i>&gt;,
+&lt;<i>size</i>&gt;
+
+<tt>"%s%s %s %o %o\n"</tt>, &lt;<i>library/object&nbsp;name</i>&gt;,
+&lt;<i>name</i>&gt;,
+&lt;<i>type</i>&gt;,
+&lt;<i>value</i>&gt;,
+&lt;<i>size</i>&gt;
+
+<tt>"%s%s %s %x %x\n"</tt>, &lt;<i>library/object&nbsp;name</i>&gt;,
+&lt;<i>name</i>&gt;,
+&lt;<i>type</i>&gt;,
+&lt;<i>value</i>&gt;,
+&lt;<i>size</i>&gt;
+
+<br>
+</code>
+</pre>
+where
+&lt;<i>library/object&nbsp;name</i>&gt;
+is formatted as follows:
+<ul>
+<p>
+<li>
+If
+<b>-A</b>
+is not specified,
+&lt;<i>library/object&nbsp;name</i>&gt;
+is an empty string.
+<p>
+<li>
+If
+<b>-A</b>
+is specified and the corresponding
+<i>file</i>
+operand does not name a library:
+<p><code>
+<tt>"%s: "</tt>, &lt;<i>file</i>&gt;
+</code>
+<p>
+<li>
+If
+<b>-A</b>
+is specified and the corresponding
+<i>file</i>
+operand names a library.
+In this case,
+&lt;<i>object&nbsp;file</i>&gt;
+names the object file
+in the library containing the symbol being described:
+<p><code>
+<tt>"%s[%s]: "</tt>, &lt;<i>file</i>&gt;,
+&lt;<i>object file</i>&gt;
+</code>
+<p>
+</ul>
+<p>
+If
+<b>-A</b>
+is not specified, then if more than one
+<i>file</i>
+operand is
+specified or if only one
+<i>file</i>
+operand is specified and it names
+a library,
+<i>nm</i>
+will write a line identifying the object containing the following
+symbols before the lines containing those
+symbols, in the form:
+<ul>
+<p>
+<li>
+If the corresponding
+<i>file</i>
+operand does not name a library:
+<p><code>
+<tt>"%s:\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+<p>
+<li>
+If the corresponding
+<i>file</i>
+operand names a library;
+in this case,
+&lt;<i>object&nbsp;file</i>&gt;
+is the name of the
+file in the library containing the
+following symbols:
+<p><code>
+<tt>"%s[%s]:\n"</tt>, &lt;<i>file</i>&gt;,
+&lt;<i>object file</i>&gt;
+</code>
+<p>
+</ul>
+<p>
+If
+<b>-P</b>
+is specified, but
+<b>-t</b>
+is not, the format is as if
+<b>-t x</b>
+had been specified.
+</blockquote><h4><a name = "tag_001_014_1565">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1566">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1567">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1568">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1569">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+<br>
+</blockquote><h4><a name = "tag_001_014_1570">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Mechanisms for dynamic linking make this
+utility less meaningful when applied to an
+executable file because a dynamically
+linked executable may omit numerous library routines that would
+be found in a statically linked executable.
+</blockquote><h4><a name = "tag_001_014_1571">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1572">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1573">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ar.htm">ar</a></i>,
+<i><a href="c89.htm">c89</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

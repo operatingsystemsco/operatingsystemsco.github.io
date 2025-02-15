@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mblen</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_511">&nbsp;</a>NAME</h4><blockquote>
+mblen - get number of bytes in a character
+</blockquote><h4><a name = "tag_000_007_512">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+int mblen(const char *<i>s</i>, size_t <i>n</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_513">&nbsp;</a>DESCRIPTION</h4><blockquote>
+If <i>s</i> is not a null pointer,
+<i>mblen()</i>
+determines the number of bytes constituting the character pointed to by
+<i>s</i>.
+Except that the shift state of
+<i><a href="mbtowc.htm">mbtowc()</a></i>
+is not affected, it is equivalent to:
+<pre>
+<code>
+mbtowc((wchar_t *)0, <i>s</i>, <i>n</i>);
+</code>
+</pre>
+<p>
+The implementation will behave as if no function defined in this document calls
+<i>mblen()</i>.
+<p>
+The behaviour of this function is affected by
+the LC_CTYPE category of the current locale.
+For a state-dependent encoding, this function is placed into its
+initial state by a call for which its character pointer argument,
+<i>s</i>,
+is a null pointer.
+Subsequent calls with
+<i>s</i>
+as other than a null pointer cause the internal state of the
+function to be altered as necessary.
+A call with
+<i>s</i>
+as a null pointer causes this function to return a non-zero
+value if encodings have state dependency, and 0 otherwise.
+If the implementation employs special bytes to change the shift
+state, these bytes do not produce separate wide-character codes,
+but are grouped with an adjacent character.
+Changing the LC_CTYPE category causes the shift state of this
+function to be indeterminate.
+</blockquote><h4><a name = "tag_000_007_514">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If
+<i>s</i>
+is a null pointer,
+<i>mblen()</i>
+returns a non-zero or 0 value, if character encodings, respectively, do or
+do not have state-dependent encodings.  If
+<i>s</i>
+is not a null pointer,
+<i>mblen()</i>
+either returns 0 (if
+<i>s</i>
+points to the null byte), or returns the number of bytes
+that constitute the character (if the next
+<i>n</i>
+or fewer bytes form a valid character), or returns -1
+(if they do not form a valid character) and may set
+<i>errno</i>
+to indicate the error.
+In no case will the value returned be greater than
+<i>n</i>
+or the value of the MB_CUR_MAX macro.
+</blockquote><h4><a name = "tag_000_007_515">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>mblen()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EILSEQ]<dd>
+Invalid character sequence is detected.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_516">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_517">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_518">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_519">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mbtowc.htm">mbtowc()</a></i>,
+<i><a href="mbstowcs.htm">mbstowcs()</a></i>,
+<i><a href="wctomb.htm">wctomb()</a></i>,
+<i><a href="wcstombs.htm">wcstombs()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

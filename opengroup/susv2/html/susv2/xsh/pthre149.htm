@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_equal</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1333">&nbsp;</a>NAME</h4><blockquote>
+pthread_equal - compare thread IDs
+</blockquote><h4><a name = "tag_000_007_1334">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_equal(pthread_t <i>t1</i>, pthread_t <i>t2</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1335">&nbsp;</a>DESCRIPTION</h4><blockquote>
+This function compares the thread IDs
+<i>t1</i>
+and
+<i>t2</i>.
+</blockquote><h4><a name = "tag_000_007_1336">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>pthread_equal()</i>
+function returns a non-zero value if
+<i>t1</i>
+and
+<i>t2</i>
+are equal;
+otherwise, zero is returned.
+<p>
+If either
+<i>t1</i>
+or
+<i>t2</i>
+are not valid thread IDs, the behaviour is undefined.
+</blockquote><h4><a name = "tag_000_007_1337">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined. 
+<p>
+The
+<i>pthread_equal()</i>
+function will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1338">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1339">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1340">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1341">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre147.htm">pthread_create()</a></i>,
+<i><a href="pthre187.htm">pthread_self()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

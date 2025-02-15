@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>lockf</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_399">&nbsp;</a>NAME</h4><blockquote>
+lockf - record locking on files
+</blockquote><h4><a name = "tag_000_007_400">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int lockf(int <i>fildes</i>, int <i>function</i>, off_t <i>size</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_401">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>lockf()</i>
+function allows sections of a file to be locked with advisory-mode
+locks.  Calls to
+<i>lockf()</i>
+from other threads which attempt to lock the locked file section will either
+return an error value or block until the section becomes unlocked.  All the
+locks for a process are removed when the process terminates.
+Record locking with
+<i>lockf()</i>
+is supported for regular files and may be supported for other files.
+<p>
+The <i>fildes</i> argument is an open file descriptor.  The file descriptor
+must have been opened with write-only permission (O_WRONLY) or with read/write
+permission (O_RDWR) to establish a lock with this function.
+<p>
+The <i>function</i> argument is a control value which specifies the action to
+be taken.  The permissible values for <i>function</i> are defined in
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>
+as follows:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Function</b>
+<th align=center><b>Description</b>
+<tr valign=top><td align=left>F_ULOCK
+<td align=left>unlock locked sections
+<tr valign=top><td align=left>F_LOCK
+<td align=left>lock a section for exclusive use
+<tr valign=top><td align=left>F_TLOCK
+<td align=left>test and lock a section for exclusive use
+<tr valign=top><td align=left>F_TEST
+<td align=left>test a section for locks by other processes
+</table>
+<p>
+F_TEST detects if a lock by another process is present on the specified
+section; F_LOCK and F_TLOCK both lock a section of a file if the section is
+available; F_ULOCK removes locks from a section of the file.
+<p>
+The <i>size</i> argument is the number of contiguous bytes to be locked
+or unlocked.
+The section to be locked or unlocked starts at the current offset in the file
+and extends forward for a positive size or backward for a negative size (the
+preceding bytes up to but not including the current offset).
+If <i>size</i> is 0, the section from the current offset through the largest
+possible file offset is locked (that is, from the current offset through the
+present or any future end-of-file).  An area need not be allocated to the file
+to be locked because locks may exist past the end-of-file.
+<p>
+The sections locked with F_LOCK or F_TLOCK may, in whole or in part, contain
+or be contained by a previously locked section for the same process.  When
+this occurs, or if adjacent locked sections would occur, the sections are
+combined into a single locked section.  If the request would cause the number
+of locks to exceed a system-imposed limit, the request will fail.
+<p>
+F_LOCK and F_TLOCK requests differ only by the action taken if the section is
+not available.  F_LOCK blocks the calling thread until the section is
+available.  F_TLOCK makes the function fail if the section is already locked
+by another process.
+<p>
+File locks are released on first close by the locking process of any
+file descriptor for the file.
+<p>
+F_ULOCK requests may release (wholly or in part) one or more locked
+sections controlled by the process.
+Locked sections will be unlocked starting at the current file offset
+through <i>size</i> bytes or to the end of file if <i>size</i>
+is (<b>off_t</b>)0.  When all of a locked section is not released
+(that is, when the beginning or end of the
+area to be unlocked falls within a locked section),
+the remaining portions of that section are still locked by the process.
+Releasing the center portion of a locked section will cause the
+remaining locked beginning and end portions to become two separate
+locked sections.  If the request would cause the number of locks in the system
+to exceed a system-imposed limit, the request will fail.
+<p>
+A potential for deadlock occurs if the threads of a process controlling a 
+locked section are blocked by accessing another process' locked section.
+If the system detects that deadlock would occur,
+<i>lockf()</i>
+will fail with an [EDEADLK] error.
+<p>
+The interaction between
+<i><a href="fcntl.htm">fcntl()</a></i>
+and
+<i>lockf()</i>
+locks is unspecified.
+<p>
+Blocking on a section is interrupted by any signal.
+<p>
+An F_ULOCK request in which 
+<i>size</i>
+is non-zero and the offset of the
+last byte of the requested section is the maximum value for an object
+of type
+<b>off_t</b>,
+when the process has an existing lock in which 
+<i>size</i>
+is 0 and which includes the last byte of the requested section, will be
+treated as a request to unlock from the start of the requested section
+with a size equal to 0.  Otherwise an F_ULOCK request will attempt to
+unlock only the requested section. 
+<p>
+Attempting to lock a section of a file that is associated with a buffered
+stream produces unspecified results.
+</blockquote><h4><a name = "tag_000_007_402">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>lockf()</i>
+returns 0.  Otherwise, it returns -1, sets
+<i>errno</i> to indicate an error, and existing locks are not changed.
+</blockquote><h4><a name = "tag_000_007_403">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>lockf()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not a valid open file descriptor; or
+<i>function</i> is F_LOCK or F_TLOCK and <i>fildes</i> is not a valid file
+descriptor open for writing.
+
+<dt>[EACCES] or [EAGAIN]<dd>
+
+The <i>function</i> argument is F_TLOCK or F_TEST and the
+section is already locked by another process.
+
+<dt>[EDEADLK]<dd>
+The <i>function</i> argument is F_LOCK and a deadlock is detected.
+
+<dt>[EINTR]<dd>
+A signal was caught during execution of the function.
+
+<dt>[EINVAL]<dd>
+The 
+<i>function</i>
+argument is not one of F_LOCK, F_TLOCK, F_TEST or F_ULOCK; or
+<i>size</i>
+plus the current file offset is less than 0. 
+
+<dt>[EOVERFLOW]<dd>
+The offset of the first, or if
+<i>size</i>
+is not 0 then the last, byte in the requested section 
+cannot be represented correctly in an object of
+type
+<b>off_t</b>.
+
+</dl>
+<p>
+The
+<i>lockf()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EAGAIN]<dd>
+The <i>function</i> argument is F_LOCK or F_TLOCK and the file is mapped with
+<i><a href="mmap.htm">mmap()</a></i>.
+
+<dt>[EDEADLK] or [ENOLCK]<dd>
+
+The <i>function</i> argument is F_LOCK, F_TLOCK, or F_ULOCK, and the
+request would cause the number of locks to exceed a system-imposed limit.
+
+<dt>[EOPNOTSUPP] or [EINVAL]<dd>
+
+The implementation does not support the locking of files
+of the type indicated by the <i>fildes</i> argument.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_404">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_405">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Record-locking should not be used in combination with the
+<i><a href="fopen.htm">fopen()</a></i>,
+<i><a href="fread.htm">fread()</a></i>,
+<i><a href="fwrite.htm">fwrite()</a></i>
+and other
+<i>stdio</i>
+functions.  Instead, the more primitive, non-buffered functions (such as
+<i><a href="open.htm">open()</a></i>)
+should be used.  Unexpected results may occur in processes that do buffering
+in the user address space.  The process may later read/write data which is/was
+locked.  The
+<i>stdio</i>
+functions are the most common source of unexpected buffering.
+<p>
+The
+<i><a href="alarm.htm">alarm()</a></i>
+function may be used to provide a timeout facility in applications requiring
+it.
+</blockquote><h4><a name = "tag_000_007_406">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_407">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="alarm.htm">alarm()</a></i>,
+<i><a href="chmod.htm">chmod()</a></i>,
+<i><a href="close.htm">close()</a></i>,
+<i><a href="creat.htm">creat()</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="fopen.htm">fopen()</a></i>,
+<i><a href="mmap.htm">mmap()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

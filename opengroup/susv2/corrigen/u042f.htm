@@ -1,0 +1,514 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Corrigendum</title>
+</head>
+
+<body>
+
+<pre>
+<b>Corrigendum:    U042</b></pre>
+<pre><b>Date:           December 1999</b></pre>
+<pre><b>Document:       C606
+                System Interfaces and Headers, Issue 5</b></pre>
+<pre><b>Code:           23170  12/99  C606/U042</b></pre>
+<pre><b>Contents:       This corrigendum incorporates:
+                U040 (March 1999)
+                U035 (September 1998)
+                U033 (March 1998)
+                U030 (December 1997)
+                U028 (September 1997)
+                U026 (July 1997)
+                U021 (May 1997)</b></pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U042/1</pre>
+<pre>On the &lt;termios.h&gt; manual page (Page 1188, Volume 2):</pre>
+<pre>Add after the line containing TCIOFLUSH:</pre>
+<pre>  TCOFLUSH  Flush untransmitted output.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U042/2</pre>
+<pre>On the msgrcv() manual page (Page 551, Volume 1):</pre>
+<pre>Change the EINVAL &quot;will fail&quot; error case from:</pre>
+<pre>  [EINVAL]  msqid is not a valid message queue identifier;
+            or the value of msgsz is less than 0.</pre>
+<pre>to:</pre>
+<pre>  [EINVAL]  msqid is not a valid message queue identifier.</pre>
+<pre>Rationale:</pre>
+<pre>Since size_t is an unsigned type, msgsz can never be less than zero.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U042/3</pre>
+<pre>On the pthread_getschedparam() manual page (Page 626, Volume 1):</pre>
+<pre>Change the following wording in the second paragraph from:</pre>
+<pre>  &quot;... and reflects any temporary adjustments to its priority as
+   a result of any priority inheritance or ceiling functions.&quot;</pre>
+<pre>to:</pre>
+<pre>  &quot;... and does not reflect any temporary adjustments to its priority
+   as a result of any priority inheritance or ceiling functions.&quot;</pre>
+<pre>----------------------------------------------------------------------------
+----------------------------------------------------------------------------</pre>
+<pre>Start of Corrigendum U040 (March 1999).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U040/1</pre>
+<pre>On the fwprintf() manual page (Page 307, Volume 1):</pre>
+<pre>Add to the end of the RETURN VALUE paragraph:</pre>
+<pre>&quot;If n or more wide characters were requested to be written swprintf()
+returns a negative value.&quot;</pre>
+<pre>Rationale:</pre>
+<pre>Consistency with the ISO C MSE.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U040/2</pre>
+<pre>On the wcscat() manual page (Page 708, Volume 2):</pre>
+<pre>In the RETURN VALUE section, change &quot;s1&quot; to &quot;ws1&quot;.</pre>
+<pre>----------------------------------------------------------------------------
+----------------------------------------------------------------------------</pre>
+<pre>Start of Corrigendum U035 (September 1998).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U035/1</pre>
+<pre>On the tcflush() manual page (Page 926, Volume 2), change the text
+under ERRORS from:</pre>
+<pre>  &quot;the tcflow() function may fail if&quot;</pre>
+<pre>to:</pre>
+<pre>  &quot;the tcflush() function may fail if&quot;</pre>
+<pre>Also change tcflow() in the Application Usage to tcflush().</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U035/2</pre>
+<pre>On the &lt;signal.h&gt; manual page (Page 1131, Volume 2), change:</pre>
+<pre>  &quot;i. Abnormal termination....... except that the status is made...&quot;</pre>
+<pre>to:</pre>
+<pre>  &quot;i. Abnormal termination....... except that the status made...&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U035/3</pre>
+<pre>On the sigwaitinfo() manual page (Page 847, Volume 2), SYNOPSIS, change:</pre>
+<pre>  int sigwaitinfo(const sigset_t *set, siginfo *info);</pre>
+<pre>to:</pre>
+<pre>  int sigwaitinfo(const sigset_t *set, siginfo_t *info);</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U035/4</pre>
+<pre>On the &lt;sys/stat.h&gt; manual page (Page 1169, Volume 2), DESCRIPTION,
+the types blksize_t and blkcnt_t should be added; change:</pre>
+<pre>  &quot;The dev_t, ino_t, mode_t, nlink_t, uid_t, gid_t, off_t and time_t
+  types are defined as described in &lt;sys/types.h&gt;.&quot;</pre>
+<pre>to:</pre>
+<pre>  &quot;The blkcnt_t, blksize_t, dev_t, ino_t, mode_t, nlink_t, uid_t, gid_t,
+  off_t and time_t types are defined as described in &lt;sys/types.h&gt;.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U035/5</pre>
+<pre>On the &lt;sys/statvfs.h&gt; manual page (Page 1172, Volume 2), DESCRIPTION,
+the types fsblkcnt_t and fsfilcnt_t should be described; add:</pre>
+<pre>  &quot;The fsblkcnt_t and fsfilcnt_t are defined as described in
+  &lt;sys/types.h&gt;.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U035/6</pre>
+<pre>On the &lt;time.h&gt; manual page (Page 1190, Volume 2), DESCRIPTION,
+the types clockid_t and timer_t should be described; change:</pre>
+<pre>  &quot;The clock_t, size_t and time_t are defined as described in
+  &lt;sys/types.h&gt;&quot;</pre>
+<pre>to:</pre>
+<pre>  &quot;The clock_t, clockid_t, size_t, time_t and timer_t are defined as
+  described in &lt;sys/types.h&gt;&quot;</pre>
+<pre>(clockid_t and timer_t should be RT shaded.)</pre>
+<pre>----------------------------------------------------------------------------
+----------------------------------------------------------------------------</pre>
+<pre>Start of Corrigendum U033 (March 1998).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/1</pre>
+<pre>Section 2.2.1, The X/Open Name Space, Page 18:</pre>
+<pre>Add uc_ to the Prefix column for &lt;signal.h&gt;
+Add ss_ to the Prefix column for &lt;ucontext.h&gt;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/2</pre>
+<pre>On the regexp() manual page (Page 714, Volume 2), SYNOPSIS, change:</pre>
+<pre>  #define PEEK peek code</pre>
+<pre>to:</pre>
+<pre>  #define PEEKC peek code</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/3</pre>
+<pre>On the pthread_mutexattr_settype() manual page, (Page 646, Volume 1),
+SYNOPSIS, and on the &lt;pthread.h&gt; manual page (Page 1117, Volume 2),
+change:</pre>
+<pre>  int pthread_mutexattr_gettype(pthread_mutexattr_t *attr, int *type);</pre>
+<pre>to:</pre>
+<pre>  int pthread_mutexattr_gettype(const pthread_mutexattr_t *attr, int *type);</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/4</pre>
+<pre>On the limits.h manual page (Page 1103-1104, Volume 2), CHAR_MIN,
+INT_MIN, LONG_MIN, SCHAR_MIN, SHRT_MIN, change:</pre>
+<pre>  Minimum Acceptable Value:</pre>
+<pre>to</pre>
+<pre>  Maximum Acceptable Value:</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/5</pre>
+<pre>On the strptime() manual page (Page 889, Volume 2), change:</pre>
+<pre>  %r is the time as %I:%M:%S %p.</pre>
+<pre>to:</pre>
+<pre>  %r 12-hour clock time using the AM/PM notation if t_fmt_ampm is
+  not an empty string in the LC_TIME portion of the current locale;
+  in the POSIX locale, this will be equivalent to ``%I:%M:%S %p''.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/6</pre>
+<pre>Section 2.5, STREAMS, Page 34, in the paragraph entitled &quot;Priority&quot;,
+change:</pre>
+<pre>  &quot;High-priority messages are always placed at the head of a queue but
+  after any other high-priority messages already in the queue.&quot;</pre>
+<pre>to:</pre>
+<pre>  &quot;High priority messages are always placed at the head of the queue,
+  but will be discarded if there is already a high-priority message in
+  the queue.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/7</pre>
+<pre>On the confstr() manual page, (Page 143, Volume 1), RETURN VALUE,
+add to the end of the first sentence :</pre>
+<pre>  &quot;including the terminating null&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U033/8</pre>
+<pre>On the strftime() manual page (Page 880, Volume 2), change the last
+sentence of the %V conversion specifier from:</pre>
+<pre>  &quot;Otherwise, it is week 53 of the previous year, and the next
+  week is week 1.&quot;</pre>
+<pre>to:</pre>
+<pre>  &quot;Otherwise, it is the last week of the previous year, and the
+  next week is week 1.&quot;</pre>
+<pre>----------------------------------------------------------------------------
+----------------------------------------------------------------------------</pre>
+<pre>Start of Corrigendum U030 (December 1997).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U030/1</pre>
+<pre>On the strcspn() manual page it states:</pre>
+<pre>  &quot;The strcspn() function computes the length of the maximum
+  initial segment of the string pointed to by s1 which consists
+  entirely of bytes not from the string pointed to by s2.</pre>
+<pre>  The strcspn function returns the length of s1 ...&quot;</pre>
+<pre>The return value should indicate that the computed segment length is
+returned, not the s1 length.</pre>
+<pre>Change the text of the RETURN VALUE to:</pre>
+<pre>  &quot;The strcspn() function returns the length of the computed
+  segment of the string pointed to by s1; no return value is
+  reserved to indicate an error.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U030/2</pre>
+<pre>On the getc_unlocked() manual page add the following text
+to the Application Usage section:</pre>
+<pre>  &quot;Because they may be implemented as macros, getc_unlocked() and
+  putc_unlocked() may treat incorrectly a stream argument with side
+  effects. In particular, getc_unlocked(*f++) and putc_unlocked(*f++)
+  will not necessarily work as expected. Therefore, use of these
+  functions should be preceded by the appropriate
+  ``#undef getc_unlocked'' or ``#undef putc_unlocked'' statement in
+  such situations.</pre>
+<pre>----------------------------------------------------------------------------
+----------------------------------------------------------------------------</pre>
+<pre>Start of Corrigendum U028 (September 1997).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/1</pre>
+<pre>On the unistd.h manual page the following changes should be made:</pre>
+<pre>1. Page 1195, the second indented paragraph under the heading
+   &quot;Version Test Macros&quot; should be shaded with an EX marking.</pre>
+<pre>2. Page 1195, the sixth paragraph under the heading &quot;Version
+   Test Macros&quot; should be changed from:</pre>
+<pre>   &quot;_POSIX2_VERSION is defined in the ISO POSIX-2 standard. It
+   changes with each new version of the ISO POSIX-2 standard.&quot;</pre>
+<pre>   to:</pre>
+<pre>   &quot;_POSIX2_VERSION is defined to have the value of the ISO POSIX-2
+   standard's POSIX2_VERSION limit. It changes with each new
+   version of the ISO POSIX-2 standard.&quot;</pre>
+<pre>3. Page 1197, remove the EX shading from _POSIX2_LOCALEDEF since
+   this is specified in POSIX 1003.2 P723, L149.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/2</pre>
+<pre>On the getpmsg pointer page change the NAME section to:</pre>
+<pre>  getpmsg - receive next message from a STREAMS file</pre>
+<pre>and change the #include in the SYNOPSIS section to:</pre>
+<pre>  #include &lt;stropts.h&gt;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/3</pre>
+<pre>On the getgrgid() manual page DESCRIPTION, paragraph 3, getgrid_r():</pre>
+<pre>Change:   &quot;... with a matching gid or name. ...&quot;</pre>
+<pre>To:       &quot;... with a matching gid. ...&quot;</pre>
+<pre>On the getpwnam() manual page DESCRIPTION, paragraph 3, getpwnam_r():</pre>
+<pre>Change:   &quot;... with a matching uid or name. ...&quot;</pre>
+<pre>To:       &quot;... with a matching name. ...&quot;</pre>
+<pre>On the getpwuid() manual page DESCRIPTION, paragraph 3, getpwuid_r():</pre>
+<pre>Change:   &quot;... with a matching gid or name. ...&quot;</pre>
+<pre>To:       &quot;... with a matching uid. ...&quot;</pre>
+<pre>Rationale:</pre>
+<pre>This text is taken directly from POSIX which groups getgrgid_r()
+and getgrnam_r() on the same page. In XSH5 they are on different
+pages, so the generalisation could be misleading.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/4</pre>
+<pre>On the ioctl() manual page, page 409, I_FDINSERT, [EINVAL] error:</pre>
+<pre>Change:   &quot; ... ctlptr.&quot;</pre>
+<pre>To:       &quot; ... ctlbuf.&quot;</pre>
+<pre>Rationale:</pre>
+<pre>The text refers to &quot;ctlptr&quot; when there is no such field defined
+in a strfdinsert structure.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/5</pre>
+<pre>On the wchar.h manual page:</pre>
+<pre>Change:   size_t mbsinit (const mbstate_t *)</pre>
+<pre>To:       int mbsinit (const mbstate_t *)</pre>
+<pre>Rationale:</pre>
+<pre>For consistency with ISO C and the mbsinit() manual page.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/6</pre>
+<pre>On the mmap() manual page, page 527, in the EX shaded section:</pre>
+<pre>Change:   (void *) -1</pre>
+<pre>To:       MAP_FAILED</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/7</pre>
+<pre>On the sigaction manual page, page 814 , in the paragraph titled &quot;Signal
+effects on other functions&quot;, last sentence:</pre>
+<pre>Change:   &quot;Signals that are ignored..... , except as specified for and
+          the sigwait() functions.&quot;</pre>
+<pre>To:       &quot;Signals that are ignored..... , except as specified for the
+          sigpending() and the sigwait() functions.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/8</pre>
+<pre>On the signal.h manual page, page 1135:</pre>
+<pre>Change:   void *sigset(int, void (*)(int)))(int);</pre>
+<pre>To:       void (*sigset(int, void (*)(int)))(int);</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/9</pre>
+<pre>On the stdio.h manual page add:</pre>
+<pre>  EX L_cuserid  Maximum size of character array to hold
+                cuserid() output (LEGACY)</pre>
+<pre>  EX char *cuserid(char *s); (LEGACY)</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/10</pre>
+<pre>On the fscanf manual page, page 277, 3rd paragraph in the &quot;[&quot; clause:</pre>
+<pre>Change:   &quot;all subsequent characters&quot;</pre>
+<pre>To:       &quot;all subsequent bytes&quot;</pre>
+<pre>Change:   &quot;The characters between&quot;</pre>
+<pre>To:       &quot;The bytes between&quot;</pre>
+<pre>Change:   &quot;, unless the character after&quot;</pre>
+<pre>To:       &quot;, unless the byte after&quot;</pre>
+<pre>Change:   &quot;scanset contains all characters&quot;</pre>
+<pre>To:       &quot;scanset contains all bytes&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/11</pre>
+<pre>On the gamma() manual page, page 314, RETURN VALUE:</pre>
+<pre>Change:   &quot;Return to lgamma().&quot;</pre>
+<pre>To:       &quot;Refer to lgamma().&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/12</pre>
+<pre>On the iconv() manual page, page 396, ERRORS, [EBADF] error,
+delete &quot;iX EBADF&quot;.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/13</pre>
+<pre>On the stdlib.h manual page, page 1146:</pre>
+<pre>Change:   int       putenv(const char *);</pre>
+<pre>To:       int       putenv(char *);</pre>
+<pre>Rationale:</pre>
+<pre>For consistency with the change on the putenv() manual page.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/14</pre>
+<pre>On the libgen.h manual page:</pre>
+<pre>Change:   char  *regcmp(const char *, ...);
+          char  *regex(const char *, const char *, ...);</pre>
+<pre>To:       char  *regcmp(const char *, ...); (LEGACY)
+          char  *regex(const char *, const char *, ...); (LEGACY)</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U028/15</pre>
+<pre>In Section 2.2.1, The X/Open Name Space, add at the end of the
+first paragraph a new paragraph:</pre>
+<pre>  &quot;An implementation conforming to the referenced Networking Services,
+  Issue 5 specification will define or declare an additional
+  set of identifiers, as shown in Section 1.3.1, Chapter 9 and
+  Chapter 11 of XNS.</pre>
+<pre>----------------------------------------------------------------------------
+----------------------------------------------------------------------------</pre>
+<pre>Start of Corrigendum U026 (July 1997).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/1</pre>
+<pre>Change:</pre>
+<pre>The following symbols should be added to unistd.h on page 1203
+after _SC_XOPEN_XCU_VERSION:</pre>
+<pre>   _SC_XOPEN_LEGACY
+   _SC_XOPEN_REALTIME
+   _SC_XOPEN_REALTIME_THREADS</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/2</pre>
+<pre>Change:</pre>
+<pre>The pthread_setschedparam prototype on the pthread_getschedparam
+and pthread.h manual pages should have its second argument updated
+from &quot;int *policy&quot;. to &quot;int policy&quot;. The changes are:</pre>
+<pre>pthread_getschedparam page:</pre>
+<pre>   int pthread_setschedparam(pthread_t thread, int policy, const
+   struct sched_param *param);</pre>
+<pre>pthread.h page:</pre>
+<pre>   int pthread_setschedparam(pthread_t , int , const struct
+   sched_param *);</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/3</pre>
+<pre>Change:</pre>
+<pre>On the signal.h manual page change the sigev_notify_function
+member of the sigevent structure from:</pre>
+<pre>   void(*)(unsigned sigval) sigev_notify_function</pre>
+<pre>to:</pre>
+<pre>   void(*)(union sigval) sigev_notify_function</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/4</pre>
+<pre>Change:</pre>
+<pre>On the unistd.h manual page add the following prototype:</pre>
+<pre>   RT int fdatasync(int );</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/5</pre>
+<pre>Change:</pre>
+<pre>In section 2.2.1 add to the table of macros with prefixes, before
+the entry &quot;&lt;fcntl.h&gt; F_ ...&quot;</pre>
+<pre>      Header          Prefix</pre>
+<pre>   EX &lt;dlfcn.h&gt;       RTLD_</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/6</pre>
+<pre>Change:</pre>
+<pre>On the select() manual page, change the occurrences of readfs and
+writefs in the select() DESCRIPTION to be readfds and writefds.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/7</pre>
+<pre>Change:</pre>
+<pre>On the readdir() manual page change the prototype of readdir_r() to:</pre>
+<pre>   int readdir_r (DIR *dirp, struct dirent *entry, struct dirent
+   **result);</pre>
+<pre>On the dirent.h manual page change the prototype of readdir_r() to:</pre>
+<pre>   int readdir_r (DIR *, struct dirent *, struct dirent **);</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/8</pre>
+<pre>Change:</pre>
+<pre>On the readdir() manual page, change the description of
+readdir_r() from:</pre>
+<pre>   &quot;On successful return, the pointer returned at *result will the
+   same value as the argument entry.&quot;</pre>
+<pre>to:</pre>
+<pre>   &quot;On successful return, the pointer returned at *result will have
+   the same value as the argument entry.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U026/9</pre>
+<pre>Change:</pre>
+<pre>In section 1.4.3 &quot;New Interfaces and Headers in Issue 5&quot; change
+pthread_addr_setstacksize() to pthread_attr_setstacksize().</pre>
+<pre>----------------------------------------------------------------------------
+----------------------------------------------------------------------------</pre>
+<pre>Start of Corrigendum U021 (May 1997).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/1</pre>
+<pre>Change:</pre>
+<pre>On the stdlib.h page, replace the declarations of realloc() and
+realpath() to be consistent with the manual pages:</pre>
+<pre>   char *realpath(const char *, char *);
+   void *realloc(void *, size_t );</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/2</pre>
+<pre>Change:</pre>
+<pre>On the strings.h page, replace the declaration of index() to be
+consistent with the manual pages:</pre>
+<pre>   char *index(const char *, int );</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/3</pre>
+<pre>Change:</pre>
+<pre>On the semaphore.h page add to the end of the first paragraph of
+DESCRIPTION:</pre>
+<pre>  The symbol SEM_FAILED is defined (see sem_open()).</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/4</pre>
+<pre>Change:</pre>
+<pre>On the mq_receive() page, change the DESCRIPTION from:</pre>
+<pre>   &quot;If the value of maxsize is greater than {SSIZE_MAX}, the result
+   is implementation-dependent. &quot;</pre>
+<pre>to:</pre>
+<pre>   &quot;If the value of msg_len is greater than {SSIZE_MAX}, the result
+   is implementation-dependent.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/5</pre>
+<pre>Change:</pre>
+<pre> On the mq_unlink() page, change the RETURN VALUE from:</pre>
+<pre>   &quot;Upon successful completion, the function returns a value of zero.
+   Otherwise, the named message queue is changed by this function
+   call, and the function returns a value of -1 and sets errno to
+   indicate the error. &quot;</pre>
+<pre>to:</pre>
+<pre>   &quot;Upon successful completion, the function returns a value of zero.
+   Otherwise, the named message queue is unchanged by this function
+                                         ^^^^^^^^^
+   call, and the function returns a value of -1 and sets errno to
+   indicate the error.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/6</pre>
+<pre>Change:</pre>
+<pre>On the search.h page, DESCRIPTION, replace the prototypes for
+tdelete() and tsearch() with:</pre>
+<pre>   void *tsearch(const void *, void **, int (*)(const void *, const
+   void *));
+   void *tdelete(const void *, void **, int(*)(const void *, const
+   void *));</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/7</pre>
+<pre>Change:</pre>
+<pre>On the fscanf() page, change the first sentence of the '['
+description (on page 277) from:</pre>
+<pre>   &quot;Matches a non-empty sequence of characters from a set of expected
+   characters (the scanset).&quot;</pre>
+<pre>to:</pre>
+<pre>   &quot;Matches a non-empty sequence of bytes from a set of expected
+   bytes (the scanset). &quot;</pre>
+<pre>Similarly, the first sentence of the 'c' description (also on page
+277), change from:</pre>
+<pre>   &quot;Matches a sequence of characters of the number specified by the
+   field width (1 if no field width is present in the conversion
+   specification).&quot;</pre>
+<pre>to:</pre>
+<pre>   &quot;Matches a sequence of bytes of the number specified by the field
+   width (1 if no field width is present in the conversion
+   specification). &quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/8</pre>
+<pre>Change:</pre>
+<pre>On the signal.h page (page 1135) the line:</pre>
+<pre>   &quot;In addition, the following ...&quot;</pre>
+<pre>should be positioned before the previous table (containing Signal,
+Member, Value), and not after it.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/9</pre>
+<pre>Change:</pre>
+<pre>On the pthread.h and pthread_cond_wait manual pages change the
+pthread_cond_wait() prototype from</pre>
+<pre>   int pthread_cond_wait(pthread_cond_t *);</pre>
+<pre>to:</pre>
+<pre>   int pthread_cond_wait(pthread_cond_t *, pthread_mutex_t *);</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/10</pre>
+<pre>Change:</pre>
+<pre>On the wchar.h manual page the prototypes for wcswidth and wcwidth
+should be marked as EX extensions.</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/11</pre>
+<pre>Change:</pre>
+<pre>On the wcswidth manual page the SYNOPSIS should be marked as an EX
+extension.</pre>
+<pre>Add to Application usage:</pre>
+<pre>   &quot;This function was removed from the final ISO C Amendment 1, and
+   the return value for a non-printable wide character is not
+   specified.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/12</pre>
+<pre>Change:</pre>
+<pre>On the wcwidth manual page the SYNOPSIS should be marked as an EX
+extension.</pre>
+<pre>Add to application usage:</pre>
+<pre>   &quot;This function was removed from the final ISO C Amendment 1, and
+   the return value for a non-printable wide character is not
+   specified.&quot;</pre>
+<pre>----------------------------------------------------------------------------</pre>
+<pre>Change Number:  U021/13</pre>
+<pre>Change:</pre>
+<pre>On the shmat() manual page the expression:</pre>
+<pre>   (shmaddr-((ptrdiff_t)shmaddr%SHMLBA))</pre>
+<pre>should be changed to:</pre>
+<pre>   (shmaddr-((uintptr_t)shmaddr%SHMLBA))</pre>
+<pre>----------------------------------------------------------------------------</pre>
+
+</body>
+
+</html>

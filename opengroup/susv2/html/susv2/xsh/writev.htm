@@ -1,0 +1,508 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>write</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_821">&nbsp;</a>NAME</h4><blockquote>
+write, writev, pwrite - write on a file
+</blockquote><h4><a name = "tag_000_010_822">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+ssize_t write(int <i>fildes</i>, const void *<i>buf</i>, size_t <i>nbyte</i>);
+ssize_t pwrite(int <i>fildes</i>, const void *<i>buf</i>, size_t <i>nbyte</i>,
+    off_t offset);
+
+#include &lt;<a href="sysui279.htm">sys/uio.h</a>&gt;
+
+ssize_t writev(int <i>fildes</i>, const struct iovec *<i>iov</i>, int <i>iovcnt</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_823">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>write()</i>
+function attempts to write
+<i>nbyte</i>
+bytes from the buffer pointed to by
+<i>buf</i>
+to the file associated with the
+open file descriptor,
+<i>fildes</i>.
+<p>
+If <i>nbyte</i> is 0,
+<i>write()</i>
+will return 0 and have no other results if the file is a regular file;
+otherwise, the results are unspecified.
+<p>
+On a regular file or other file capable of seeking,
+the actual writing of data proceeds from the position in the file
+indicated by the file offset associated with
+<i>fildes</i>.
+Before successful return from
+<i>write()</i>,
+the file offset is incremented by the number of bytes actually
+written.
+On a regular file,
+if this incremented file offset is greater than the length of the file,
+the length of the file will be set to this file offset.
+<p>
+On a file not capable of seeking, writing always takes place starting at the
+current position.  The value of a file offset associated with such a device is
+undefined.
+<p>
+If the O_APPEND flag of the file status flags is set,
+the file offset will be set to the end of the file prior to each write
+and no intervening file modification operation will occur
+between changing the file offset and the write operation.
+<p>
+If a
+<i>write()</i>
+requests that more bytes be written than there is room for (for example,
+the
+<i>ulimit</i>
+or
+the physical end of a medium), only as many bytes as there is room for will be
+written.  For example, suppose there is space for 20 bytes more in a file
+before reaching a limit.  A write of 512 bytes will return 20.  The next write
+of a non-zero number of bytes will give a failure return (except as noted
+below)
+&nbsp;and the implementation will generate a SIGXFSZ signal for the thread.
+<p>
+If
+<i>write()</i>
+is interrupted by a signal before it writes any data,
+it will return -1 with
+<i>errno</i>
+set to [EINTR].
+<p>
+If
+<i>write()</i>
+is interrupted by a signal after it successfully writes some data,
+it will return
+the number of bytes written.
+<p>
+If the value of
+<i>nbyte</i>
+is greater than {SSIZE_MAX}, the result is implementation-dependent.
+<p>
+After a
+<i>write()</i>
+to a regular file has successfully returned:
+<p>
+<ul>
+<p>
+<li>
+Any successful
+<i><a href="read.htm">read()</a></i>
+from each byte position in the file that was modified by that write will
+return the data specified by the
+<i>write()</i>
+for that position until such byte positions are again modified.
+<p>
+<li>
+Any subsequent successful
+<i>write()</i>
+to the same byte position in the file will overwrite that file data.
+<p>
+</ul>
+<p>
+Write requests to a pipe or FIFO will be handled the same
+as a regular file with the following exceptions:
+<ul>
+<p>
+<li>
+There is no file offset associated with a pipe, hence
+each write request will append to the end of the pipe.
+<p>
+<li>
+Write requests of {PIPE_BUF}
+bytes or less will not be interleaved with data
+from other processes doing writes on the same pipe.
+Writes of greater than {PIPE_BUF}
+bytes may have data interleaved, on arbitrary
+boundaries, with writes by other processes,
+whether or not the O_NONBLOCK flag of the file status flags is set.
+<p>
+<li>
+If the O_NONBLOCK flag is clear, a write request may cause the thread
+to block, but on normal completion it will return
+<i>nbyte</i>.
+<p>
+<li>
+If the O_NONBLOCK flag is set,
+<i>write()</i>
+requests will be handled differently, in the following ways:
+<ul>
+<p>
+<li>
+The
+<i>write()</i>
+function will not block the thread.
+<p>
+<li>
+A write request for {PIPE_BUF} or fewer bytes will have the following effect:
+If there is sufficient space available in the pipe,
+<i>write()</i>
+will transfer all the data and return the number of bytes requested.
+Otherwise,
+<i>write()</i>
+will transfer no data and return -1 with
+<i>errno</i>
+set to [EAGAIN].
+<p>
+<li>
+A write request for more than {PIPE_BUF} bytes will case one of the
+following:
+<ol type = a>
+<p>
+<li>
+When at least one byte can be written,
+transfer what it can and return the number of bytes written.
+When all data previously written to the pipe is read,
+it will transfer at least {PIPE_BUF} bytes.
+<p>
+<li>
+When no data can be written,
+transfer no data and return -1 with
+<i>errno</i>
+set to [EAGAIN].
+<p>
+</ol>
+<p>
+</ul>
+<p>
+</ul>
+<p>
+When attempting to write to a file descriptor (other than
+a pipe or FIFO) that supports non-blocking writes and
+cannot accept the data immediately:
+<ul>
+<p>
+<li>
+If the O_NONBLOCK flag is clear,
+<i>write()</i>
+will block the calling thread until the data can be accepted.
+<p>
+<li>
+If the O_NONBLOCK flag is set,
+<i>write()</i>
+will not block the process.
+If some data can be written without blocking the process,
+<i>write()</i>
+will write what it can and return the number of bytes written.
+Otherwise, it will return -1 and
+<i>errno</i>
+will be set to [EAGAIN].
+<p>
+</ul>
+<p>
+Upon successful completion, where
+<i>nbyte</i>
+is greater than 0,
+<i>write()</i>
+will mark for update the <i>st_ctime</i>
+and <i>st_mtime</i> fields of the file, and if the file is a regular
+file, the S_ISUID and S_ISGID bits of the file mode may be cleared.
+<p>
+If <i>fildes</i> refers to a STREAM, the operation of
+<i>write()</i>
+is determined by the values of the minimum and maximum <i>nbyte</i> range
+("packet size") accepted by the STREAM.  These values are determined by the
+topmost STREAM module.  If <i>nbyte</i> falls within
+the packet size range, <i>nbyte</i> bytes will be written.  If <i>nbyte</i> does
+not fall within the range and the minimum packet size value is 0,
+<i>write()</i>
+will break the buffer into maximum packet size segments prior to sending the
+data downstream (the last segment may contain less than the maximum packet
+size).  If <i>nbyte</i> does not fall within the range and the minimum value is
+non-zero,
+<i>write()</i>
+will fail with <i>errno</i> set to [ERANGE].  Writing a zero-length buffer
+(<i>nbyte</i> is 0) to a STREAMS device sends 0 bytes with 0
+returned.  However, writing a zero-length buffer to a STREAMS-based pipe or
+FIFO sends no message and 0 is returned.  The process may issue I_SWROPT
+<i><a href="ioctl.htm">ioctl()</a></i>
+to enable zero-length messages to be sent across the pipe or FIFO.
+<p>
+When writing to a STREAM, data messages are created with a priority band of
+0.  When writing to a STREAM that is not a pipe or FIFO:
+<ul>
+<p>
+<li>
+If O_NONBLOCK is clear, and the STREAM cannot accept data (the STREAM write
+queue is full due to internal flow control conditions),
+<i>write()</i>
+will block until data can be accepted.
+<p>
+<li>
+If O_NONBLOCK is set and the STREAM cannot accept data,
+<i>write()</i>
+will return -1 and set <i>errno</i> to [EAGAIN].
+<p>
+<li>
+If O_NONBLOCK is set and part of the buffer has been written while a condition
+in which the STREAM cannot accept additional data occurs,
+<i>write()</i>
+will terminate and return the number of bytes written.
+<p>
+</ul>
+<p>
+In addition,
+<i>write()</i>
+and
+<i>writev()</i>
+will fail if the STREAM head had processed an asynchronous error before the
+call.  In this case, the value of
+<i>errno</i>
+does not reflect the result of
+<i>write()</i>
+or
+<i>writev()</i>
+but reflects the prior error.
+<p>
+The
+<i>writev()</i>
+function is equivalent to
+<i>write()</i>,
+but gathers the output data from the
+<i>iovcnt</i>
+buffers specified by the members of the
+<i>iov</i> array:
+<i>iov</i>[0], <i>iov</i>[1], ...,
+<i>iov</i>[<i>iovcnt</i>-1].
+<i>iovcnt</i> is valid if greater than 0 and less than or equal
+to {IOV_MAX}, defined in
+<i><a href="limit88.htm">&lt;limits.h&gt;</a></i>.
+<p>
+Each <b>iovec</b> entry specifies the base address and length of an area in
+memory from which data should be written.  The
+<i>writev()</i>
+function will always write a complete area before proceeding to the next.
+<p>
+If <i>fildes</i> refers to a regular file and all of the <b>iov_len</b> members
+in the array pointed to by <i>iov</i> are 0,
+<i>writev()</i>
+will return 0 and have no other effect.  For other file types, the
+behaviour is unspecified.
+<p>
+If the sum of the <b>iov_len</b> values is greater than SSIZE_MAX, the
+operation fails and no data is transferred.
+<p>
+If the Synchronized Input and Output option is supported:
+<dl compact><dt> <dd>
+If the O_DSYNC bit has been set,
+write I/O operations on the file descriptor complete as defined by
+synchronised I/O data integrity completion.
+</dl>
+<p>
+If the O_SYNC bit has been set, write I/O operations on the file
+descriptor complete as defined by synchronised I/O file integrity
+completion.
+<p>
+If the Shared Memory Objects option is supported:
+<dl compact><dt> <dd>
+If
+<i>fildes</i>
+refers to a shared memory object, the result of the
+<i>write()</i>
+function is unspecified.
+</dl>
+<p>
+For regular files, no data transfer will occur past the offset maximum
+established in the open file description associated with
+<i>fildes</i>.
+<p>
+The
+<i><a href="pwrite.htm">pwrite()</a></i>
+function performs the same action as
+<i>write()</i>,
+except that it writes into a given position without changing the file
+pointer.
+The first three arguments to
+<i><a href="pwrite.htm">pwrite()</a></i>
+are the same as
+<i>write()</i>
+with the addition of a fourth argument offset for the desired position
+inside the file.
+</blockquote><h4><a name = "tag_000_010_824">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>write()</i>
+and
+<i><a href="pwrite.htm">pwrite()</a></i>
+will return the number of bytes actually written
+to the file associated with
+<i>fildes</i>.
+This number will never be greater than
+<i>nbyte</i>.
+Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+<p>
+Upon successful completion,
+<i>writev()</i>
+returns the number of bytes actually written.  Otherwise, it returns a value
+of -1, the file-pointer remains unchanged, and <i>errno</i> is set to
+indicate an error.
+</blockquote><h4><a name = "tag_000_010_825">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>write()</i>,
+<i>writev()</i>
+and
+<i><a href="pwrite.htm">pwrite()</a></i>
+functions will fail if:
+<dl compact>
+
+<dt>[EAGAIN]<dd>
+The O_NONBLOCK flag is set for the file descriptor
+and the thread would be delayed in the
+<i>write()</i>
+operation.
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid file descriptor open for writing.
+
+<dt>[EFBIG]<dd>
+An attempt was made to write a file that exceeds
+the implementation-dependent maximum file size
+&nbsp;or the process' file size limit.
+
+<dt>[EFBIG]<dd>
+The file is a regular file,
+<i>nbyte</i>
+is greater than 0 and the starting
+position is greater than or equal to the offset maximum established in
+the open file description associated with
+<i>fildes</i>.
+
+<dt>[EINTR]<dd>
+The write operation was terminated due to the receipt of a signal, and no data
+was transferred.
+
+<dt>[EIO]<dd>
+A physical I/O error has occurred.
+
+<dt>[EIO]<dd>The process is a member
+of a background process group attempting to write to its
+controlling terminal, TOSTOP is set, the process is neither ignoring nor
+blocking SIGTTOU and the process group of the process is
+orphaned.
+This error may also be returned under implementation-dependent conditions.
+
+<dt>[ENOSPC]<dd>
+There was no free space remaining on the device containing
+the file.
+
+<dt>[EPIPE]<dd>
+An attempt is made to write to a pipe or FIFO that is not open
+for reading by any process,
+or that only has one end open.
+A SIGPIPE signal will also be sent to the thread.
+
+<dt>[ERANGE]<dd>
+The transfer request size was outside the range supported by the STREAMS file
+associated with <i>fildes</i>.
+
+</dl>
+<p>
+The
+<i>writev()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The sum of the <b>iov_len</b> values in the <i>iov</i> array would
+overflow an <b>ssize_t</b>.
+
+</dl>
+<p>
+The
+<i>write()</i>,
+<i>writev()</i>
+and
+<i><a href="pwrite.htm">pwrite()</a></i>
+functions may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The STREAM or multiplexer referenced by <i>fildes</i> is linked (directly or
+indirectly) downstream from a multiplexer.
+
+<dt>[ENXIO]<dd>
+A request was made of a non-existent device, or the request was
+outside the capabilities of the device.
+
+<dt>[ENXIO]<dd>A hangup occurred on the STREAM being written to.
+
+</dl>
+<p>
+A write to a STREAMS file may fail if an error message has been received at
+the STREAM head.  In this case, <i>errno</i> is set to the value included in
+the error message.
+<p>
+The
+<i>writev()</i>
+function may fail and set <i>errno</i> to:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The <i>iovcnt</i> argument was less than or equal to 0, or greater than
+{IOV_MAX}.
+
+</dl>
+<p>
+The
+<i><a href="pwrite.htm">pwrite()</a></i>
+function fails and the file pointer remains unchanged if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>offset</i>
+argument is invalid.
+The value is negative.
+
+<dt>[ESPIPE]<dd>
+<i>fildes</i> is associated with a pipe or FIFO.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_826">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_827">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_828">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_829">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="chmod.htm">chmod()</a></i>,
+<i><a href="creat.htm">creat()</a></i>,
+<i><a href="dup.htm">dup()</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="getrl68.htm">getrlimit()</a></i>,
+<i><a href="lseek.htm">lseek()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="pipe.htm">pipe()</a></i>,
+<i><a href="ulimit.htm">ulimit()</a></i>,
+<i><a href="limit88.htm">&lt;limits.h&gt;</a></i>,
+<i><a href="strop263.htm">&lt;stropts.h&gt;</a></i>,
+<i><a href="sysui279.htm">&lt;sys/uio.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

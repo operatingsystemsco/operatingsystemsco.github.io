@@ -1,0 +1,636 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>prs</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1783">&nbsp;</a>NAME</h4><blockquote>
+prs - print an SCCS file (<b>DEVELOPMENT</b>)
+</blockquote><h4><a name = "tag_001_014_1784">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+prs <b>[</b>-a<b>][</b>-d <i>dataspec</i><b>][</b>-r<b>[</b><i>SID</i><b>]]</b><i> file</i>...
+
+prs <b>[</b> -e| -l<b>]</b> -c <i>cutoff </i><b>[</b>-d <i>dataspec</i><b>]</b><i> file</i>...
+
+prs <b>[</b> -e| -l<b>]</b> -r<b>[</b><i>SID</i><b>][</b>-d <i>dataspec</i><b>]</b><i>file</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1785">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>prs</i>
+utility writes to standard output parts or all of an SCCS file
+in a user-supplied format.
+</blockquote><h4><a name = "tag_001_014_1786">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>prs</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> , except that the
+<b>-r</b>
+option has an optional option-argument.
+This optional option-argument cannot be presented as a separate argument.
+The following options are supported:
+<dl compact>
+
+<dt><b>-d&nbsp;</b><i>dataspec</i>
+<dd>
+Specify the output data specification.
+The
+<i>dataspec</i>
+is a string consisting of SCCS file
+<i>data</i>
+<i>keywords</i>
+(see
+<xref href=prskey><a href="#tag_001_014_1792_001">
+Data Keywords
+</a></xref>)
+interspersed with optional user-supplied text.
+
+<dt><b>-r[</b><i>SID</i><b>]</b><dd>
+Specify the SCCS identification string (SID)
+of a delta for which information is desired.
+If no
+<i>SID</i>
+option-argument
+is specified, the SID of the most recently created delta
+is assumed.
+
+<dt><b>-e</b>
+<dd>Request information for all deltas created earlier
+than and including the delta designated via the
+<b>-r</b>
+option or the date-time given by the
+<b>-c</b>
+option.
+
+<dt><b>-l</b>
+<dd>Request information for all deltas created later
+than and including the delta designated via the
+<b>-r</b>
+option or the date-time given by the
+<b>-c</b>
+option.
+
+<dt><b>-c&nbsp;</b><i>cutoff</i>
+<dd>
+Indicate the
+<i>cutoff</i>
+date-time, in the form:
+<pre>
+<code>
+<i>YY</i><b>[</b><i>MM</i><b>[</b><i>DD</i><b>[</b><i>HH</i><b>[</b><i>MM</i><b>[</b><i>SS</i><b>]]]]]
+</b></code>
+</pre>
+
+For the <i>YY</i> component,
+values in the range [69-99] refer to years in the twentieth century
+(1969 to 1999 inclusive); values in the range [00-68] refer to
+years in the twenty-first century (2000 to 2068 inclusive).
+
+No changes (deltas) to the SCCS file that were created after
+the specified
+<i>cutoff</i>
+date-time are included in the output.
+Units omitted from the date-time default
+to their maximum possible values;
+for example,
+<b>-c 7502</b>
+is equivalent to
+<b>-c 750228235959</b>.
+
+<dt><b>-a</b>
+<dd>Request writing of information for both removed,
+that is, delta type = <i>R</i>
+(see
+rmdel<i>)</i>type
+and existing,
+that is, delta type = <i>D</i>,
+deltas.
+If the
+a<b>-type</b>=
+option is not specified,
+information for existing deltas only is provided.
+
+</dl>
+<p>
+</blockquote><h4><a name = "tag_001_014_1787">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of an existing SCCS file or a directory.
+If
+<i>file</i>
+is a directory,
+<i>prs</i>
+behaves as though each file in the directory were
+specified as a named file,
+except that non-SCCS files
+(last component of the pathname does not begin with
+s.)
+and unreadable files are silently ignored.
+
+If a single instance
+<i>file</i>
+is specified as -,
+the standard input is read;
+each line of the standard input is taken to be the name of an SCCS file
+to be processed.
+Non-SCCS files and unreadable files are silently ignored.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1788">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is a text file used only when the
+<i>file</i>
+operand is specified as -.
+Each line of the text file is interpreted as an SCCS pathname.
+</blockquote><h4><a name = "tag_001_014_1789">&nbsp;</a>INPUT FILES</h4><blockquote>
+Any SCCS files displayed are files of an unspecified format.
+</blockquote><h4><a name = "tag_001_014_1790">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>prs</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1791">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1792">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output is a text file whose format
+is dependent on the data keywords specified with the
+<b>-d</b>
+option.
+<h5><a name = "tag_001_014_1792_001">&nbsp;</a>Data Keywords</h5>
+<xref type="5" name="prskey"></xref>
+Data keywords
+specify which parts of an SCCS file are to be retrieved and output.
+All parts of an SCCS file
+have an associated data keyword.
+A data keyword may appear in a
+<i>dataspec</i>
+multiple times.
+<p>
+The information written by
+<i>prs</i>
+consists of:
+(1) the user-supplied text; and
+(2) appropriate values (extracted from the SCCS file)
+substituted for the recognised data keywords
+in the order of appearance in the
+<i>dataspec</i>.
+The format of a data keyword value is either simple (S), in which
+keyword substitution is direct, or multi-line (M).
+<p>
+User-supplied text is any text other than
+recognised data keywords.
+A tab character is specified by
+\t
+and
+newline
+by
+\n.
+When the
+<b>-r</b>
+option is not specified, the default
+<i>dataspec</i>
+is:
+<pre>
+<code>
+:PN::\n\n
+</code>
+</pre>
+and the following
+<i>dataspec</i>
+is used for each selected delta:
+<pre>
+<code>
+:Dt:\t:DL:\nMRs:\n:MR:COMMENTS:\n:C:\n
+</code>
+</pre>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th colspan=5 align=center><b>SCCS File Data Keywords</b>
+<tr valign=top><th align=center><b>Keyword</b>
+<th align=center><b>Data Item</b>
+<th align=center><b>File Section</b>
+<th align=center><b>Value</b>
+<th align=center><b>Format</b>
+<tr valign=top><td align=center><b>:Dt:</b>
+<td align=left>Delta information
+<td align=center>Delta Table
+<td align=left><b>See below*</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:DL:</b>
+<td align=left> Delta line statistics 
+<td align=center>"
+<td align=left><b>:Li:/:Ld:/:Lu:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Li:</b>
+<td align=left> Lines inserted by Delta 
+<td align=center>"
+<td align=left><b><i>nnnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Ld:</b>
+<td align=left> Lines deleted by Delta 
+<td align=center>"
+<td align=left><b><i>nnnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Lu:</b>
+<td align=left> Lines unchanged by Delta 
+<td align=center>"
+<td align=left><b><i>nnnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:DT:</b>
+<td align=left>Delta type
+<td align=center>"
+<td align=left><b>D or R</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:I:</b>
+<td align=left> SCCS ID string (SID) 
+<td align=center>"
+<td align=left><b>See below**</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:R:</b>
+<td align=left>Release number
+<td align=center>"
+<td align=left><b><i>nnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:L:</b>
+<td align=left>Level number
+<td align=center>"
+<td align=left><b><i>nnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:B:</b>
+<td align=left>Branch number
+<td align=center>"
+<td align=left><b><i>nnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:S:</b>
+<td align=left>Sequence number
+<td align=center>"
+<td align=left><b><i>nnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:D:</b>
+<td align=left> Date delta created 
+<td align=center>"
+<td align=left><b>:Dy:/:Dm:/:Dd:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Dy:</b>
+<td align=left> Year delta created 
+<td align=center>"
+<td align=left><b><i>nn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Dm:</b>
+<td align=left> Month delta created 
+<td align=center>"
+<td align=left><b><i>nn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Dd:</b>
+<td align=left> Day delta created 
+<td align=center>"
+<td align=left><b><i>nn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:T:</b>
+<td align=left> Time delta created 
+<td align=center>"
+<td align=left><b>:Th:::Tm:::Ts:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Th:</b>
+<td align=left> Hour delta created 
+<td align=center>"
+<td align=left><b><i>nn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Tm:</b>
+<td align=left> Minutes delta created 
+<td align=center>"
+<td align=left><b><i>nn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Ts:</b>
+<td align=left> Seconds delta created 
+<td align=center>"
+<td align=left><b><i>nn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:P:</b>
+<td align=left> Programmer who created Delta 
+<td align=center>"
+<td align=left><b><i>logname</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:DS:</b>
+<td align=left> Delta sequence number 
+<td align=center>"
+<td align=left><b><i>nnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:DP:</b>
+<td align=left> Predecessor Delta seq-no. 
+<td align=center>"
+<td align=left><b><i>nnnn</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:DI:</b>
+<td align=left> Seq-no. of deltas included, excluded or ignored 
+<td align=center>"
+<td align=left><b>:Dn:/:Dx:/:Dg:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Dn:</b>
+<td align=left>Deltas included (seq #)
+<td align=center>"
+<td align=left><b>:DS:~:DS:...</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Dx:</b>
+<td align=left>Deltas excluded (seq #)
+<td align=center>"
+<td align=left><b>:DS:~:DS:...</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Dg:</b>
+<td align=left>Deltas ignored (seq #)
+<td align=center>"
+<td align=left><b>:DS:~:DS:...</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:MR:</b>
+<td align=left>MR numbers for delta
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>M
+<tr valign=top><td align=center><b>:C:</b>
+<td align=left>Comments for delta
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>M
+<tr valign=top><td align=center><b>:UN:</b>
+<td align=left>User names
+<td align=center>User Names
+<td align=left><b><i>text</i></b>
+<td align=center>M
+<tr valign=top><td align=center><b>:FL:</b>
+<td align=left>Flag list
+<td align=center>Flags
+<td align=left><b><i>text</i></b>
+<td align=center>M
+<tr valign=top><td align=center><b>:Y:</b>
+<td align=left>Module type flag
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:MF:</b>
+<td align=left> MR validation flag 
+<td align=center>"
+<td align=left><b>yes or no</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:MP:</b>
+<td align=left> MR validation pgm name 
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:KF:</b>
+<td align=left> Keyword error, warning flag 
+<td align=center>"
+<td align=left><b>yes or no</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:KV:</b>
+<td align=left>Keyword validation string
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:BF:</b>
+<td align=left>Branch flag
+<td align=center>"
+<td align=left><b>yes or no</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:J:</b>
+<td align=left>Joint edit flag
+<td align=center>"
+<td align=left><b>yes or no</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:LK:</b>
+<td align=left>Locked releases
+<td align=center>"
+<td align=left><b>:R:...</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Q:</b>
+<td align=left>User-defined keyword
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:M:</b>
+<td align=left>Module name
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:FB:</b>
+<td align=left>Floor boundary
+<td align=center>"
+<td align=left><b>:R:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:CB:</b>
+<td align=left>Ceiling boundary
+<td align=center>"
+<td align=left><b>:R:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Ds:</b>
+<td align=left>Default SID
+<td align=center>"
+<td align=left><b>:I:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:ND:</b>
+<td align=left>Null delta flag
+<td align=center>"
+<td align=left><b>yes or no</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:FD:</b>
+<td align=left> File descriptive text 
+<td align=center>Comments
+<td align=left><b><i>text</i></b>
+<td align=center>M
+<tr valign=top><td align=center><b>:BD:</b>
+<td align=left>Body
+<td align=center>Body
+<td align=left><b><i>text</i></b>
+<td align=center>M
+<tr valign=top><td align=center><b>:GB:</b>
+<td align=left>Gotten body
+<td align=center>"
+<td align=left><b><i>text</i></b>
+<td align=center>M
+<tr valign=top><td align=center><b>:W:</b>
+<td align=left> A form of <i>what</i> string 
+<td align=center>N/A
+<td align=left><b>:Z::M:\t:I:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:A:</b>
+<td align=left> A form of <i>what</i> string 
+<td align=center>N/A
+<td align=left><b>:Z::Y: :M: :I::Z:</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:Z:</b>
+<td align=left><i>what</i> string delimiter 
+<td align=center>N/A
+<td align=left><b>@(#)</b>
+<td align=center>S
+<tr valign=top><td align=center><b>:F:</b>
+<td align=left>SCCS filename
+<td align=center>N/A
+<td align=left><b><i>text</i></b>
+<td align=center>S
+<tr valign=top><td align=center><b>:PN:</b>
+<td align=left>SCCS file pathname
+<td align=center>N/A
+<td align=left><b><i>text</i></b>
+<td align=center>S
+</table>
+<dl compact>
+
+<dt>*<dd>:Dt: = :DT: :I: :D: :T: :P: :DS: :DP:
+
+<dt>**<dd>:R:.:L:.:B:.:S: if the delta is a branch delta
+(:BF:
+== yes)
+
+:R:.:L: if the delta is not a branch delta
+(:BF:
+== no)
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1793">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1794">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1795">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1796">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1797">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1798">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_1799">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+The following example:
+<pre>
+<code>
+prs -d "User Names for :F: are:\n:UN:" s.file
+</code>
+</pre>
+<p>
+<p>
+may write to standard output:
+<p>
+<pre>
+<code>
+User Names for s.file are:
+xyz
+131
+abc
+</code>
+</pre>
+<p>
+<br>
+<p>
+<li>
+The following example:
+<pre>
+<code>
+prs -d "Delta for pgm :M:: :I: - :D: By :P:" -r s.file
+</code>
+</pre>
+<p>
+<p>
+may write to standard output:
+<pre>
+<code>
+Delta for pgm main.c: 3.7 - 77/12/01 By cas
+</code>
+</pre>
+<p>
+<br>
+<p>
+<li>
+As a special case:
+<pre>
+<code>
+prs s.file
+</code>
+</pre>
+<p>
+<p>
+may write to standard output:
+<pre>
+<code>
+s.file:
+&lt;<i>blank line</i>&gt;
+D 1.1 77/12/01 00:00:00 cas 1 000000/00000/00000
+MRs:
+bl78-12345
+bl79-54321
+COMMENTS:
+this is the comment line for s.file initial delta
+&lt;<i>blank line</i>&gt;
+</code>
+</pre>
+<p>
+<p>
+for each delta table entry of the
+<i>D</i>
+type.
+The only option allowed to be used with this
+special case is the
+<b>-a</b>
+option.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_1800">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+A version of
+<i>prs</i>
+that fully supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a>  may be
+introduced in a future issue.
+</blockquote><h4><a name = "tag_001_014_1801">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="admin.htm">admin</a></i>,
+<i><a href="delta.htm">delta</a></i>,
+<i><a href="get.htm">get</a></i>,
+<i><a href="what.htm">what</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

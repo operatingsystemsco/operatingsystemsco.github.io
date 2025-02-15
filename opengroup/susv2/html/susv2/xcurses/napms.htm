@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>napms</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_629">&nbsp;</a>NAME</h4><blockquote>
+napms - suspend the calling process
+</blockquote><h4><a name = "tag_001_009_630">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int napms(int <i>ms</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_631">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>napms()</i>
+function takes at least <i>ms</i> milliseconds to return.
+</blockquote><h4><a name = "tag_001_009_632">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>napms()</i>
+function returns OK.
+</blockquote><h4><a name = "tag_001_009_633">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_634">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+A more reliable method of achieving a timed delay is the
+<i><a href="../xsh/usleep.htm">usleep()</a></i>
+function.
+</blockquote><h4><a name = "tag_001_009_635">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="delay24.htm">delay_output()</a></i>,
+<i><a href="../xsh/usleep.htm">usleep()</a></i>
+(in the <b>XSH</b> specification),
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

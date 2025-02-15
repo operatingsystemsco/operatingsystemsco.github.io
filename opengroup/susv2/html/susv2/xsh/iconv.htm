@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>iconv</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_923">&nbsp;</a>NAME</h4><blockquote>
+iconv - codeset conversion function
+</blockquote><h4><a name = "tag_000_005_924">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="iconv77.htm">iconv.h</a>&gt;
+
+size_t iconv(iconv_t <i>cd</i>, const char *<i>*inbuf</i>, size_t *<i>inbytesleft</i>,
+    char *<i>*outbuf</i>, size_t *<i>outbytesleft</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_925">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>iconv()</i>
+function converts the sequence of characters from one codeset,
+in the array specified by
+<i>inbuf</i>,
+into a sequence of corresponding characters in another codeset,
+in the array specified by
+<i>outbuf</i>.
+The codesets are those specified in the
+<i><a href="iconv79.htm">iconv_open()</a></i>
+call that returned the conversion descriptor,
+<i>cd</i>.
+The
+<i>inbuf</i>
+argument points to a variable that
+points to the first character in the input buffer and
+<i>inbytesleft</i>
+indicates the number of bytes to the end of the buffer to be converted.
+The
+<i>outbuf</i>
+argument points to a variable that
+points to the first available byte in the output buffer and
+<i>outbytesleft</i>
+indicates the number of the available bytes to the end of the buffer.
+<p>
+For state-dependent encodings, the conversion descriptor
+<i>cd</i>
+is placed into its initial shift state
+by a call for which
+<i>inbuf</i>
+is a null pointer, or for which
+<i>inbuf</i>
+points to a null pointer.
+When
+<i>iconv()</i>
+is called in this way, and if
+<i>outbuf</i>
+is not a null pointer or a pointer to a null pointer, and
+<i>outbytesleft</i>
+points to a positive value,
+<i>iconv()</i>
+will place, into the output buffer,
+the byte sequence to change the output buffer to its initial
+shift state.  If the output buffer is not large enough to hold the entire
+reset sequence,
+<i>iconv()</i>
+will fail and set
+<i>errno</i>
+to [E2BIG].
+Subsequent calls with
+<i>inbuf</i>
+as other than a null pointer or a pointer to a null pointer cause the
+conversion to take place from the current state of the conversion descriptor.
+<p>
+If a sequence of input bytes does not form a valid character
+in the specified codeset, conversion stops
+after the previous successfully converted character.
+If the input buffer ends with an incomplete character or shift sequence,
+conversion stops after the previous successfully converted bytes.
+If the output buffer is not large enough to hold the entire converted
+input, conversion stops just prior to the input bytes that would cause the
+output buffer to overflow.
+The variable pointed to by
+<i>inbuf</i>
+is updated to point to the byte following the last byte successfully
+used in the conversion.  The
+value pointed to by
+<i>inbytesleft</i>
+is decremented to reflect the number of bytes still not converted in
+the input buffer.
+The variable pointed to by
+<i>outbuf</i>
+is updated to point to the byte following the last byte of converted
+output data.
+The value pointed to by
+<i>outbytesleft</i>
+is decremented to reflect the number of bytes still available in the
+output buffer.
+For state-dependent encodings, the conversion descriptor is updated
+to reflect the shift state in effect at the end of the last
+successfully converted byte sequence.
+<p>
+If
+<i>iconv()</i>
+encounters a character in the input buffer that is valid, but for which an
+identical character does not exist in the target codeset,
+<i>iconv()</i>
+performs an implementation-dependent conversion on this character.
+</blockquote><h4><a name = "tag_000_005_926">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>iconv()</i>
+function updates the variables pointed to by the arguments to reflect the
+extent of the conversion and returns the number of non-identical conversions
+performed.  If the entire string in the input buffer is converted, the value
+pointed to by
+<i>inbytesleft</i>
+will be 0.  If the input conversion is stopped due to any conditions
+mentioned above, the value pointed to by
+<i>inbytesleft</i>
+will be non-zero and
+<i>errno</i>
+is set to indicate the condition.  If an error occurs
+<i>iconv()</i>
+returns (<b>size_t</b>)-1 and sets
+<i>errno</i>
+to indicate the error.
+<br>
+</blockquote><h4><a name = "tag_000_005_927">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>iconv()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EILSEQ]<dd>
+Input conversion stopped due to an input byte that does not belong to the
+input codeset.
+
+<dt>[E2BIG]<dd>
+Input conversion stopped due to lack of space in the output buffer.
+
+<dt>[EINVAL]<dd>
+Input conversion stopped due to an incomplete
+character or shift sequence at the end of the input buffer.
+
+</dl>
+<p>
+The
+<i>iconv()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>cd</i>
+argument is not a valid open conversion descriptor.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_928">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_929">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>inbuf</i>
+argument indirectly points to the memory area which contains the conversion
+input data. The
+<i>outbuf</i>
+argument indirectly points to the memory area which is to contain the result
+of the conversion.  The objects indirectly pointed to by
+<i>inbuf</i>
+and
+<i>outbuf</i>
+are not restricted to containing data that is directly representable in the
+ISO C language
+<b>char</b>
+data type.  The type of
+<i>inbuf</i>
+and
+<i>outbuf</i>,
+<b>char **</b>,
+does not imply that the objects pointed to are interpreted as
+null-terminated C strings or arrays of characters.  Any interpretation of
+a byte sequence
+that represents a character in a given character set
+encoding scheme is done internally within the codeset
+converters.  For example, the area pointed to indirectly by
+<i>inbuf</i>
+and/or
+<i>outbuf</i>
+can contain all zero octets that are not interpreted as string terminators but
+as coded character data according to the respective codeset encoding scheme.
+The type of the data (<b> char</b> ,
+<b>short int</b>,
+<b>long int</b>,
+and so on) read or stored in the objects is not specified, but may be inferred
+for both the input and output data by the converters determined by the
+<i>fromcode</i>
+and
+<i>tocode</i>
+arguments of
+<i><a href="iconv79.htm">iconv_open()</a></i>.
+<p>
+Regardless of the data type inferred by the converter, the
+size of the remaining space in both input and output objects (the
+<i>intbytesleft</i>
+and
+<i>outbytesleft</i>
+arguments) is always measured in bytes.
+<p>
+For implementations that support the conversion of state-dependent encodings,
+the conversion descriptor must be able to accurately reflect the shift-state
+in effect at the end of the last successful conversion.  It is not required
+that the conversion descriptor itself be updated, which would require it to be
+a pointer type.  Thus, implementations are free to implement the descriptor as
+a handle (other than a pointer type) by which the conversion information can
+be accessed and updated.
+</blockquote><h4><a name = "tag_000_005_930">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_931">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="iconv79.htm">iconv_open()</a></i>,
+<i><a href="iconv78.htm">iconv_close()</a></i>,
+<i><a href="iconv77.htm">&lt;iconv.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the HP-UX manual.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

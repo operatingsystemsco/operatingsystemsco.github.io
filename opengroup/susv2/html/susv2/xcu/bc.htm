@@ -1,0 +1,1500 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>bc</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_153">&nbsp;</a>NAME</h4><blockquote>
+bc - arbitrary-precision arithmetic language
+</blockquote><h4><a name = "tag_000_000_154">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+bc <b>[</b>-l<b>] [</b><i>file</i> ...<b>]
+</b></code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_155">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>bc</i>
+utility implements an arbitrary precision calculator.
+It takes input from any files given, then reads from the standard input.
+If the standard input and standard output to
+<i>bc</i>
+are attached
+to a terminal, the invocation of
+<i>bc</i>
+is considered to be
+<i>interactive</i>,
+causing behavioural constraints described in the following sections.
+</blockquote><h4><a name = "tag_000_000_156">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>bc</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following option is supported:
+<dl compact>
+
+<dt><b>-l</b>
+<dd>(The letter ell.)
+Define the math functions and initialise
+<b>scale</b>
+to 20, instead of the default zero.
+See the EXTENDED DESCRIPTION section.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_157">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a text file containing
+<i>bc</i>
+program statements.
+After all cases of
+<i>file</i>
+have been read,
+<i>bc</i>
+will read the standard input.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_158">&nbsp;</a>STDIN</h4><blockquote>
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_000_000_159">&nbsp;</a>INPUT FILES</h4><blockquote>
+Input files must be text files containing a sequence of comments,
+statements and function definitions
+that will be executed as they are read.
+</blockquote><h4><a name = "tag_000_000_160">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>bc</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_161">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_162">&nbsp;</a>STDOUT</h4><blockquote>
+The output of the
+<i>bc</i>
+utility is controlled by the program read,
+and consists of zero or
+more lines containing the value of all executed
+expressions without assignments.
+The radix and precision of the output are controlled
+by the values of the
+<b>obase</b>
+and
+<b>scale</b>
+variables.
+See the EXTENDED DESCRIPTION section.
+</blockquote><h4><a name = "tag_000_000_163">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_000_000_164">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_165">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+<h5><a name = "tag_000_000_165_001">&nbsp;</a>Grammar</h5>
+The grammar in this section and the lexical
+conventions in the following section together describe the syntax for
+<i>bc</i>
+programs.
+The general conventions for this style of grammar are described in
+<xref href=grammar></xref>.
+A valid program can be represented as the non-terminal symbol
+<b>program</b>
+in the grammar.
+This formal syntax takes precedence over
+the preceding text syntax description.
+<p><table <tr valign=top><th align=left>%token
+<th align=left>EOF NEWLINE STRING LETTER NUMBER
+<tr valign=top><td align=left>%token
+<td align=left>MUL_OP
+<tr valign=top><td align=left>/*
+<td align=left>'*', '/', '%'                           */
+<tr valign=top><td align=left>%token
+<td align=left>ASSIGN_OP
+<tr valign=top><td align=left>/*
+<td align=left>'=', '+=', '-=', '*=', '/=', '%=', '^=' */
+<tr valign=top><td align=left>%token
+<td align=left>REL_OP
+<tr valign=top><td align=left>/*
+<td align=left>'==', '&lt;=', '&gt;=', '!=', '&lt;', '&gt;'        */
+<tr valign=top><td align=left>%token
+<td align=left>INCR_DECR
+<tr valign=top><td align=left>/*
+<td align=left>'++', '--'                              */
+<tr valign=top><td align=left>%token
+<td align=left> Define    Break    Quit    Length
+<tr valign=top><td align=left>/*
+<td align=left>'define', 'break', 'quit', 'length'     */
+<tr valign=top><td align=left>%token
+<td align=left> Return    For    If    While    Sqrt
+<tr valign=top><td align=left>/*
+<td align=left>'return', 'for', 'if', 'while', 'sqrt'  */
+<tr valign=top><td align=left>%token
+<td align=left> Scale    Ibase    Obase    Auto
+<tr valign=top><td align=left>/*
+<td align=left>'scale', 'ibase', 'obase', 'auto'       */
+<tr valign=top><td align=left>%start
+<td align=left>program
+</table>
+<p><table <tr valign=top><th align=left>%%
+<tr valign=top><td align=left>program
+<td align=left>:
+<td align=center>EOF
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>input_item program
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>input_item
+<td align=left>:
+<td align=center>semicolon_list NEWLINE
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>function
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>semicolon_list
+<td align=left>:
+<td align=center>/* empty */
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>statement
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>semicolon_list ';' statement
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>semicolon_list ';'
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>statement_list
+<td align=left>:
+<td align=center>/* empty */
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>statement
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>statement_list NEWLINE
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>statement_list NEWLINE statement
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>statement_list ';'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>statement_list ';' statement
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>statement
+<td align=left>:
+<td align=center>expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>STRING
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Break
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Quit
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Return
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Return '(' return_expression ')'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>For '(' expression ';'
+<tr valign=top><td align=left>
+<td align=left>
+<td align=center>    relational_expression ';'
+<tr valign=top><td align=left>
+<td align=left>
+<td align=center>    expression ')' statement
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>If '(' relational_expression ')' statement
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>While '(' relational_expression ')' statement
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>'{' statement_list '}'
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>function
+<td align=left>:
+<td align=center>Define LETTER '(' opt_parameter_list ')'
+<tr valign=top><td align=left>
+<td align=left>
+<td align=center>    '{' NEWLINE opt_auto_define_list
+<tr valign=top><td align=left>
+<td align=left>
+<td align=center>    statement_list '}'
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>opt_parameter_list
+<td align=left>:
+<td align=center>/* empty */
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>parameter_list
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>parameter_list
+<td align=left>:
+<td align=center>LETTER
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>define_list ',' LETTER
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>opt_auto_define_list
+<td align=left>:
+<td align=center>/* empty */
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Auto define_list NEWLINE
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Auto define_list ';'
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>define_list
+<td align=left>:
+<td align=center>LETTER
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>LETTER '[' ']'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>define_list ',' LETTER
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>define_list ',' LETTER '[' ']'
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>opt_argument_list
+<td align=left>:
+<td align=center>/* empty */
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>argument_list
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>argument_list
+<td align=left>:
+<td align=center>expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>argument_list ',' expression
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>relational_expression
+<td align=left>:
+<td align=center>expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>expression REL_OP expression
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>return_expression
+<td align=left>:
+<td align=center>/* empty */
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>expression
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>expression
+<td align=left>:
+<td align=center>named_expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>NUMBER
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>'(' expression ')'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>LETTER '(' opt_argument_list ')'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>'-' expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>expression '+' expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>expression '-' expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>expression MUL_OP expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>expression '^' expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>INCR_DECR named_expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>named_expression INCR_DECR
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>named_expression ASSIGN_OP expression
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Length '(' expression ')'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Sqrt '(' expression ')'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Scale '(' expression ')'
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>named_expression
+<td align=left>:
+<td align=center>LETTER
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>LETTER '[' expression ']'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Scale
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Ibase
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>Obase
+<tr valign=top><td align=left>
+<td align=left>;
+</table>
+<h5><a name = "tag_000_000_165_002">&nbsp;</a>Lexical Conventions in bc</h5>
+<xref type="5" name="bclex"></xref>
+The lexical conventions for
+<i>bc</i>
+programs, with respect to the preceding grammar, are as follows:
+<ol>
+<p>
+<li>
+Except as noted,
+<i>bc</i>
+recognises the longest possible
+token or delimiter beginning at a given point.
+<p>
+<li>
+A comment consists of any characters beginning with the two
+adjacent characters /* and terminated by the next occurrence of
+the two adjacent characters */.
+Comments have no effect except to delimit lexical tokens.
+<p>
+<li>
+The character
+newline
+is recognised as the token
+<b>NEWLINE</b>.
+<br>
+<p>
+<li>
+The token
+<b>STRING</b>
+represents a string constant; it consists of
+any characters beginning with the double-quote character
+( )
+and terminated by
+another occurrence of the double-quote character.
+The value of the string
+is the sequence of all characters between, but not including, the
+two double-quote characters.
+All characters are taken literally from the
+input, and there is no way to specify a string containing a double-quote
+character.
+The length of the value of each string is limited to
+{BC_STRING_MAX}
+bytes.
+<p>
+<li>
+A blank character
+has no effect except as an ordinary
+character if it appears within a
+<b>STRING</b>
+token, or to delimit a lexical token other than
+<b>STRING</b>.
+<p>
+<li>
+The combination of a backslash character immediately followed by a
+newline character
+has no effect other than to
+delimit lexical tokens with the following exceptions:
+<ul>
+<p>
+<li>
+It is interpreted as the character sequence
+\newline
+in
+<b>STRING</b>
+tokens.
+<p>
+<li>
+It is ignored as part of a multi-line
+<b>NUMBER</b>
+token.
+<p>
+</ul>
+<p>
+<li>
+The token
+<b>NUMBER</b>
+represents a numeric constant.
+It is recognised by the following grammar:
+<pre>
+<code>
+<table <tr valign=top><th align=left>NUMBER
+<th align=left>:
+<th align=center>integer
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>'.' integer
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>integer '.'
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>integer '.' integer
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>integer
+<td align=left>:
+<td align=center>digit
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>integer digit
+<tr valign=top><td align=left>
+<td align=left>;
+<tr valign=top><td align=left>digit
+<td align=left>:
+<td align=center>0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+<tr valign=top><td align=left>
+<td align=left>|
+<td align=center>8 | 9 | A | B | C | D | E | F
+<tr valign=top><td align=left>
+<td align=left>;
+</table>
+</code>
+</pre>
+<p>
+<li>
+The value of a
+<b>NUMBER</b>
+token is interpreted as a numeral in the
+base specified by the value of the internal register
+<b>ibase</b>
+(described below).
+Each of the
+<b>digit</b>
+characters has the value from 0 to 15 in the order listed here, and the
+period character represents the radix point.
+The behaviour is undefined if digits greater than or equal to the value of
+<b>ibase</b>
+appear in the token.
+However, note the exception for single-digit values being assigned to
+<b>ibase</b>
+and
+<b>obase</b>
+themselves, in
+<xref href=bcops><a href="#tag_000_000_165_003">
+Operations in bc
+</a></xref>.
+<p>
+<li>
+The following keywords are recognised as tokens:
+<pre>
+<dl compact><dt> <dd>
+<table <tr valign=top><th align=left>auto
+<th align=left>for
+<th align=left>length
+<th align=left>return
+<th align=left>sqrt
+<tr valign=top><td align=left>break
+<td align=left>ibase
+<td align=left>obase
+<td align=left>scale
+<td align=left>while
+<tr valign=top><td align=left>define
+<td align=left>if
+<td align=left>quit
+</table>
+</dl>
+</pre>
+<p>
+<li>
+Any of the following characters occurring anywhere except within
+a keyword are recognised as the token
+<b>LETTER</b>:
+<pre>
+<code>
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+</code>
+</pre>
+<p>
+<li>
+The following single-character and two-character sequences are
+recognised as the token
+<b>ASSIGN_OP</b>:
+<pre>
+<code>
+=   +=   -=   *=   /=   %=   ^=
+</code>
+</pre>
+<p>
+<li>
+If an = character, as the beginning of a token, is followed by
+a - character with no intervening delimiter, the behaviour is undefined.
+<p>
+<li>
+The following single-characters are recognised as the token
+<b>MUL_OP</b>:
+<pre>
+<code>
+*     /     %
+</code>
+</pre>
+<p>
+<li>
+The following single-character and two-character sequences are
+recognised as the token
+<b>REL_OP</b>:
+<pre>
+<code>
+==     &lt;=     &gt;=     !=     &lt;     &gt;
+</code>
+</pre>
+<p>
+<li>
+The following two-character sequences are recognised as the token
+<b>INCR_DECR</b>:
+<pre>
+<code>
+++    --
+</code>
+</pre>
+<p>
+<li>
+The following single characters are recognised as tokens whose
+names are the character:
+<pre>
+<code>
+&lt;newline&gt;  (  )  ,  +  -  ;  [  ]  ^  {  }
+</code>
+</pre>
+<p>
+<li>
+The token
+<b>EOF</b>
+will be returned when the end of input is reached.
+<p>
+</ol>
+<h5><a name = "tag_000_000_165_003">&nbsp;</a>Operations in bc</h5>
+<xref type="5" name="bcops"></xref>
+There are three kinds of identifiers:
+ordinary identifiers, array identifiers and function identifiers.
+All three types consist of single lower-case letters.
+Array identifiers are followed by square brackets
+([&nbsp;]).
+An array subscript is required except in an argument or
+auto list.
+Arrays are singly dimensioned and can contain up to
+{BC_DIM_MAX}
+elements.
+Indexing begins at zero so an array is indexed from 0 to
+{BC_DIM_MAX}-1.
+Subscripts will be truncated to integers.
+Function identifiers must be followed by parentheses, possibly
+enclosing arguments.
+The three types of identifiers do not conflict.
+<p>
+The following table
+summarises the rules for precedence and associativity
+of all operators.
+Operators on the same line have the same
+precedence; rows are in order of decreasing precedence.
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Operator</b>
+<th align=center><b>Associativity</b>
+<tr valign=top><td align=left>++,    --
+<td align=left>not applicable
+<tr valign=top><td align=left>unary -
+<td align=left>not applicable
+<tr valign=top><td align=left>^
+<td align=left>right to left
+<tr valign=top><td align=left>*,    /,    %
+<td align=left>left to right
+<tr valign=top><td align=left>+, binary -
+<td align=left>left to right
+<tr valign=top><td align=left>=, +=, -=, *=, /=, %=, ^=
+<td align=left>right to left
+<tr valign=top><td align=left>==, &lt;=, &gt;=, !=, &lt;, &gt;
+<td align=left>none
+</table>
+</pre>
+<h6 align=center><xref table="Operators in <I>bc</i>"></xref>Table: Operators in <i>bc</i></h6>
+<p>
+Each expression or named expression has a
+<i>scale</i>,
+which is the number of
+decimal digits that are maintained as the fractional portion of
+the expression.
+<p>
+<i>Named expressions</i>
+are places where values are stored.
+Named expressions are valid on the left side of an assignment.
+The value
+of a named expression is the value stored in the place named.
+Simple identifiers and array elements are named expressions;
+they have an initial value of zero and an initial scale of zero.
+<p>
+The internal registers <b>scale</b>, <b>ibase</b>
+and
+<b>obase</b>
+are all named expressions.
+The scale of an expression consisting of the name of one of
+these registers is zero; values assigned to any of these
+registers will be truncated to integers.
+The
+<b>scale</b>
+register contains a global value used in computing the scale of
+expressions (as described below).
+The value of the register
+<b>scale</b>
+is limited to
+0 &lt;=
+<b>scale</b>
+&lt;=
+{BC_SCALE_MAX}
+and has a default value of zero.
+The
+<b>ibase</b>
+and
+<b>obase</b>
+registers are the input and output number radix, respectively.
+The value of
+<b>ibase</b>
+is limited to:
+<pre>
+<code>
+2 &lt;= ibase &lt;= 16
+</code>
+</pre>
+The value of
+<b>obase</b>
+is limited to:
+<pre>
+<code>
+2 &lt;= obase &lt;= {BC_BASE_MAX}
+</code>
+</pre>
+When either
+<b>ibase</b>
+or
+<b>obase</b>
+is assigned a single
+<b>digit</b>
+value from the list in
+<xref href=bclex><a href="#tag_000_000_165_002">
+Lexical Conventions in bc
+</a></xref>,
+the value is assumed in hexadecimal.
+(For example,
+ibase=A
+sets to base ten, regardless of the current
+<b>ibase</b>
+value.)
+Otherwise, the behaviour is undefined when digits greater than or equal to
+the value of
+<b>ibase</b>
+appear in the input.
+Both
+<b>ibase</b>
+and
+<b>obase</b>
+have initial values of 10.
+<p>
+Internal computations will be conducted as if in decimal, regardless
+of the input and output bases, to the specified number of decimal digits.
+When an exact result is not achieved, (for example,
+scale=0; 3.2/1)
+the result will be truncated.
+<p>
+For all values of
+<b>obase</b>
+specified by this specification,
+numerical values will be output as follows:
+<ol>
+<p>
+<li>
+If the value is less than zero, a hyphen
+(-)
+character will be output.
+<p>
+<li>
+One of the following will be output, depending
+on the numerical value:
+<ul>
+<p>
+<li>
+If the absolute value of the numerical value is
+greater than or equal to one, the integer portion of
+the value will be output as a series of digits appropriate to
+<b>obase</b>
+(as described below).
+The most significant non-zero digit will be output next, followed
+by each successively less significant digit.
+<p>
+<li>
+If the absolute value of the numerical value is less
+than one but greater than zero and the scale of the
+numerical value is greater than zero, it is unspecified
+whether the character 0 is output.
+<p>
+<li>
+If the numerical value is zero, the character 0 will be output.
+<p>
+</ul>
+<p>
+<li>
+If the scale of the value is greater than
+zero, a period character will be output, followed by a
+series of digits appropriate to
+<b>obase</b>
+(as described below) representing the most significant
+portion of the fractional part of the value.
+If
+<i>s</i>
+represents the scale of the value being output, the
+number of digits output will be
+<i>s</i>
+if
+<b>obase</b>
+is 10, less than or equal to
+<i>s</i>
+if
+<b>obase</b>
+is greater than 10, or greater than or equal to
+<i>s</i>
+if
+<b>obase</b>
+is less than 10.
+For
+<b>obase</b>
+values other than 10, this should be the number of digits needed to represent
+a precision of 10<sup><small><i>s</i></small></sup>.
+<p>
+</ol>
+<p>
+For
+<b>obase</b>
+values from 2 to 16, valid digits are the first
+<b>obase</b>
+of the single characters:
+<pre>
+<code>
+0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+</code>
+</pre>
+which represent the values zero to 15, inclusive, respectively.
+<p>
+For bases greater than 16, each digit is written as a separate
+multi-digit decimal number.
+Each digit except the most
+significant fractional digit will be preceded a single
+space
+character.
+For bases from 17 to 100,
+<i>bc</i>
+will write two-digit decimal numbers;
+for bases from 101 to
+1000, three-digit decimal strings and so on.
+For example, the decimal number 1024 in base 25 would be written as:
+<pre>
+<code>
+ <img src="../images/delta.gif" border=0>01<img src="../images/delta.gif" border=0>15<img src="../images/delta.gif" border=0>24
+</code>
+</pre>
+in base 125, as:
+<pre>
+<code>
+ <img src="../images/delta.gif" border=0">008<img src="../images/delta.gif" border=0">024
+</code>
+</pre>
+<p>
+Very large numbers will be split across lines with 70
+characters per line in the POSIX locale;
+other locales may split at different character boundaries.
+Lines that are continued must end with a backslash
+(\).
+<p>
+A function call consists of a function name followed by parentheses
+containing a comma-separated list of expressions, which are the
+function arguments.
+A whole array passed as an argument is specified
+by the array name followed by empty square brackets.
+All function
+arguments are passed by value.
+As a result, changes made to the
+formal parameters have no effect on the actual arguments.
+If the
+function terminates by executing a
+<b>return</b>
+statement, the value of the
+function will be the value of the expression in the parentheses of the
+<b>return</b>
+statement or will be zero if no expression is provided or if there
+is no
+<b>return</b>
+statement.
+<p>
+The result of
+<b>sqrt</b>(<i>expression</i>) will be the square root of the expression.
+The result will be truncated in the least significant decimal place.
+The scale of the result will be the scale of the expression or the value of
+<b>scale</b>,
+whichever is larger.
+<p>
+The result of
+<b>length</b>(<i>expression</i>)
+will be the total number of significant decimal
+digits in the expression.
+The scale of the result will be zero.
+<p>
+The result of
+<b>scale</b>(<i>expression</i>) will be the scale of the expression.
+The scale of the result will be zero.
+<p>
+A numeric constant will be an expression.
+The scale will be the number of
+digits that follow the radix point in the input representing the
+constant, or zero if no radix point appears.
+<p>
+The sequence
+<b>(</b>&nbsp;<i>expression</i>&nbsp;<b>)</b>
+will be an expression with the same value and scale as
+<i>expression</i>.
+The parentheses can be used to alter the normal precedence.
+<p>
+The semantics of the unary and binary operators are as follows:
+<dl compact>
+
+<dt>-<i>expression</i><dd>
+The result will be the negative of the <i>expression</i>.
+The scale of the result will be the scale of
+<i>expression</i>.
+
+</dl>
+<p>
+The unary increment and decrement operators will not modify the
+scale of the named expression upon which they operate.
+The scale of the result will be the scale of that named expression.
+<dl compact>
+
+<dt>++<i>named-expression</i><dd>
+The named expression will be incremented by one.
+The result will be
+the value of the named expression after incrementing.
+
+<dt>--<i>named-expression</i><dd>
+The named expression will be decremented by one.
+The result will be
+the value of the named expression after decrementing.
+
+<dt><i>named-expression</i>++<dd>
+The named expression will be incremented by one.
+The result will be
+the value of the named expression before incrementing.
+
+
+<dt><i>named-expression</i>--<dd>
+The named expression will be decremented by one.
+The result will be
+the value of the named expression before decrementing.
+
+</dl>
+<p>
+The exponentiation operator, circumflex
+(^),
+binds right to left.
+<dl compact>
+
+<dt><i>expression</i>^<i>expression</i><dd>
+The result will be the first
+<i>expression</i>
+raised to the power
+of the second <i>expression</i>.
+If the second expression is not an integer, the behaviour is undefined.
+If
+a
+is the scale of the left expression and
+b
+is the absolute value of the right expression,
+the scale of the result will be:
+<pre>
+<code>
+if b &gt;= 0 min(a * b, max(scale, a))
+if b &lt;  0 scale
+</code>
+</pre>
+
+</dl>
+The multiplicative operators ("*", "/", "%")
+bind left to right.
+<dl compact>
+
+<dt><i>expression</i> * <i>expression</i><dd>
+The result will be the product of the two expressions.
+If
+a
+and
+b
+are the scales of the two expressions, then the scale of
+the result will be:
+<pre>
+<code>
+min(a+b,max(scale,a,b))
+</code>
+</pre>
+
+<dt><i>expression</i> / <i>expression</i><dd>
+The result will be the quotient of the two expressions.
+The
+scale of the result will be the value of <b>scale</b>.
+
+<dt><i>expression</i> % <i>expression</i><dd>
+For expressions
+<i>a</i>
+and
+<i>b</i>,
+a % b
+will be evaluated equivalent to the steps:
+<ol>
+
+<li>
+Compute
+a/b
+to current scale.
+
+<li>
+Use the result to compute:
+<pre>
+<code>
+a - (a / b) * b
+</code>
+</pre>
+to scale:
+<pre>
+<code>
+max(scale + scale(b), scale(a))
+</code>
+</pre>
+
+</ol>
+The scale of the result will be:
+<pre>
+<code>
+max(scale + scale(b), scale(a))
+</code>
+</pre>
+
+When
+<b>scale</b>
+is zero, the "%" operator is the mathematical remainder operator.
+
+</dl>
+<p>
+The additive operators ("+", "-") bind left to right.
+<dl compact>
+
+<dt><i>expression</i> + <i>expression</i><dd>
+The result will be the sum of the two expressions.
+The scale of
+the result will be the maximum of the scales of the expressions.
+
+<dt><i>expression</i> - <i>expression</i><dd>
+The result will be the difference of the two expressions.
+The
+scale of the result will be the maximum of the scales of the
+expressions.
+
+</dl>
+<p>
+The assignment operators ("=", "+=", "-=", "*=", "/=", "%=", "^=")
+bind right to left.
+<dl compact>
+
+<dt><i>named-expression</i> = <i>expression</i><dd>
+This expression results in assigning the value of the
+expression on the right to the named expression on the left.
+The scale of both the named expression and the result will be the scale of
+<i>expression</i>.
+
+</dl>
+<p>
+The compound assignment forms:
+<pre>
+<code>
+<i>named-expression &lt;operator&gt;</i>= <i>expression
+</i></code>
+</pre>
+are equivalent to:
+<pre>
+<code>
+<i>named-expression</i> = <i>named-expression &lt;operator&gt; expression</i>
+</code>
+</pre>
+except that the
+<i>named-expression</i>
+will be evaluated only once.
+<p>
+Unlike all other operators, the relational operators
+("&lt;", "&gt;", "&lt;=", "&gt;=", "==", "!=")
+will be only valid as the object of an <b>if</b>, <b>while</b>
+or inside a
+<b>for</b>
+statement.
+<dl compact>
+
+<dt><i>expression1</i> &lt; <i>expression2</i><dd>
+The relation will be true if the value of
+<i>expression1</i>
+is
+strictly less than the value of <i>expression2</i>.
+
+<dt><i>expression1</i> &gt; <i>expression2</i><dd>
+The relation will be true if the value of
+<i>expression1</i>
+is
+strictly greater than the value of <i>expression2</i>.
+
+<dt><i>expression1</i> &lt;= <i>expression2</i><dd>
+The relation will be true if the value of
+<i>expression1</i>
+is less
+than or equal to the value of <i>expression2</i>.
+
+<dt><i>expression1</i> &gt;= <i>expression2</i><dd>
+The relation will be true if the value of
+<i>expression1</i>
+is
+greater than or equal to the value of <i>expression2</i>.
+
+<dt><i>expression1</i> == <i>expression2</i><dd>
+The relation will be true if the values of
+<i>expression1</i>
+and
+<i>expression2</i>
+are equal.
+
+<dt><i>expression1</i> != <i>expression2</i><dd>
+The relation will be true if the values of
+<i>expression1</i>
+and
+<i>expression2</i>
+are unequal.
+
+</dl>
+<p>
+There are only two storage classes in
+<i>bc</i>,
+global and automatic
+(local).
+Only identifiers that are to be local to a function need
+be declared with the
+<b>auto</b>
+command.
+The arguments to a function
+will be local to the function.
+All other identifiers are assumed to
+be global and available to all functions.
+All identifiers, global
+and local, have initial values of zero.
+Identifiers declared as
+auto will be allocated on entry to the function and released on returning
+from the function.
+They therefore do not retain values between
+function calls.
+Auto arrays will be specified by the array name followed
+by empty square brackets.
+On entry to a function,
+the old values of the names that appear as parameters and as automatic
+variables are pushed onto a stack.
+Until the function returns,
+reference to these names refers only to the new values.
+<p>
+References to any of these names from other functions that
+are called from this function also refer to the new value
+until one of those functions uses the same name for a local variable.
+<p>
+When a statement is an expression, unless the main operator is
+an assignment, execution of the statement will write the value
+of the expression followed by a
+newline
+character.
+<p>
+When a statement is a string, execution of the statement
+will write the value of the string.
+<p>
+Statements separated by semicolons or
+newline characters
+will be executed sequentially.
+In an interactive invocation of
+<i>bc</i>,
+each time a
+newline
+character is read that satisfies the grammatical production:
+<pre>
+<code>
+input_item : semicolon_list NEWLINE
+</code>
+</pre>
+the sequential list of statements making up the
+<b>semicolon_list</b>
+will be executed immediately and any output produced by that
+execution will be written without any delay due to buffering.
+<p>
+In an
+<b>if</b>
+statement
+(<b>if</b> (<i>relation</i>) <i>statement</i>), the
+<i>statement</i>
+will be executed if the relation is true.
+<p>
+The
+<b>while</b>
+statement
+(<b>while</b> (<i>relation</i>) <i>statement</i>)
+implements a loop in which the
+<i>relation</i>
+is tested; each time the
+<i>relation</i>
+is true, the
+<i>statement</i>
+will be executed and the
+<i>relation</i>
+retested.
+When the
+<i>relation</i>
+is false, execution will resume after
+<i>statement</i>.
+<p>
+A
+<b>for</b>
+statement
+(<b>for</b> (<i>expression</i>; <i>relation</i>; <i>expression</i>) <i>statement</i>)
+is the same as:
+<pre>
+<code>
+<i>first-expression</i>
+while (<i>relation</i>) {
+    <i>statement</i>
+    <i>last-expression</i>
+}
+</code>
+</pre>
+All three expressions must be present.
+<p>
+The
+<b>break</b>
+statement causes termination
+of a
+<b>for</b>
+or
+<b>while</b>
+statement.
+<p>
+The
+<b>auto</b>
+statement
+(<b>auto</b> <i>identifier</i><b>[</b>,<i>identifier</i><b>]</b>&nbsp;...)
+will cause the values of the identifiers to be pushed down.
+The identifiers can be
+ordinary identifiers or array identifiers.
+Array identifiers are
+specified by following the array name by empty square brackets.
+The
+<b>auto</b>
+statement must be the first statement in a function definition.
+<p>
+A
+<b>define</b>
+statement:
+<pre>
+<code>
+define <i>LETTER</i> ( <i>opt_parameter_list</i> ) {
+    <i>opt_auto_define_list</i>
+    <i>statement_list</i>
+}
+</code>
+</pre>
+defines a function named
+<i>LETTER</i>.
+If a function named
+<i>LETTER</i>
+was previously defined, the
+<b>define</b>
+statement will replace the previous definition.
+The expression:
+<pre>
+<code>
+<i>LETTER</i> ( <i>opt_argument_list</i> )
+</code>
+</pre>
+will invoke the function named
+<i>LETTER</i>.
+The behaviour is undefined
+if the number of arguments in the invocation does not match the
+number of parameters in the definition.
+Functions will be defined before they are invoked.
+A function will be considered to be
+defined within its own body, so recursive calls are valid.
+The values of numeric constants within a function will be
+interpreted in the base specified by the value of the
+<b>ibase</b>
+register when the function is invoked.
+<p>
+The
+<b>return</b>
+statements
+(<b>return</b> and <b>return</b>(<i>expression</i>)) will cause
+termination of a function, popping of its auto variables and
+specifies the result of the function.
+The first form is equivalent to
+return(0).
+The value and scale of an invocation of the function will be the
+value and scale of the expression in parentheses.
+<p>
+The
+<b>quit</b>
+statement (<b>quit</b>) will stop execution of a
+<i>bc</i>
+program at the
+point where the statement occurs in the input, even if it occurs
+in a function definition, or in an
+<b>if</b>,
+<b>for</b>
+or
+<b>while</b>
+statement.
+<p>
+The following functions will be defined when the
+<b>-l</b>
+option is specified:
+<dl compact>
+
+<dt><b>s</b> ( <i>expression</i> )<dd>
+Sine of argument in radians.
+
+<dt><b>c</b> ( <i>expression</i> )<dd>
+Cosine of argument in radians.
+
+<dt><b>a</b> ( <i>expression</i> )<dd>
+Arctangent of argument.
+
+<dt><b>l</b> ( <i>expression</i> )<dd>
+Natural logarithm of argument.
+
+<dt><b>e</b> ( <i>expression</i> )<dd>
+Exponential function of argument.
+
+<dt><b>j</b> ( <i>expression</i> , <i>expression</i> )<dd>
+Bessel function of integer order.
+
+</dl>
+<p>
+The scale of an invocation of each of these functions will be the
+value of the
+<b>scale</b>
+register when the function is invoked.
+The behaviour is undefined if any of these functions is
+invoked with an argument outside the domain of the mathematical function.
+</blockquote><h4><a name = "tag_000_000_166">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>All input files were processed successfully.
+
+<dt><i>unspecified</i><dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_167">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+If any
+<i>file</i>
+operand is specified and the named file cannot be accessed,
+<i>bc</i>
+will write a diagnostic message to standard
+error and terminate without any further action.
+<p>
+In an interactive invocation of
+<i>bc</i>,
+the utility should
+print an error message and recover following any error in the input.
+In a non-interactive invocation of
+<i>bc</i>,
+invalid input causes undefined behaviour.
+</blockquote><h4><a name = "tag_000_000_168">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Automatic variables in
+<i>bc</i>
+do not work in exactly the same way as in either C or PL/1.
+<p>
+For historical reasons, the exit status from
+<i>bc</i>
+cannot be relied upon to indicate that an error has occurred.
+Returning zero after an error is possible.
+Therefore,
+<i>bc</i>
+should be used primarily by interactive users (who can
+react to error messages) or by application programs
+that can somehow validate the answers returned
+as not including error messages.
+<p>
+The
+<i>bc</i>
+utility always uses the period
+(.)
+character to represent a
+radix point, regardless of any decimal-point character specified
+as part of the current locale.
+In languages like C or
+<i><a href="awk.htm">awk</a></i>,
+the period character is used in program source, so it can be
+portable and unambiguous, while the locale-specific character is
+used in input and output.
+Because there is no distinction
+between source and input in
+<i>bc</i>,
+this arrangement would not be possible.
+Using the locale-specific character in
+<i>bc</i>'s
+input would introduce ambiguities into the language; consider the
+following example in a locale with a comma as the decimal-point character:
+<pre>
+<code>
+define f(a,b) {
+    ...
+}
+...
+
+f(1,2,3)
+</code>
+</pre>
+<p>
+Because of such ambiguities, the period character is used in input.
+Having input follow different conventions from output
+would be confusing in either pipeline usage or interactive
+usage, so the period is also used in output.
+</blockquote><h4><a name = "tag_000_000_169">&nbsp;</a>EXAMPLES</h4><blockquote>
+In the shell, the following assigns an approximation of the first ten digits
+of  to the variable
+<i>x</i>:
+<pre>
+<code>
+x=$(printf "%s\n" 'scale = 10; 104348/33215' | bc)
+</code>
+</pre>
+<p>
+The following
+<i>bc</i>
+program prints the same approximation of ,
+with a label, to standard output:
+<pre>
+<code>
+scale = 10
+"pi equals "
+104348 / 33215
+</code>
+</pre>
+<p>
+The following defines a function to compute an approximate value of
+the exponential function
+(note that such a function is predefined if the
+<b>-l</b>
+option is specified):
+<pre>
+<code>
+scale = 20
+define e(x){
+    auto a, b, c, i, s
+    a = 1
+    b = 1
+    s = 1
+    for (i = 1; 1 == 1; i++){
+        a = a*x
+        b = b*i
+        c = a/b
+        if (c == 0) {
+             return(s)
+        }
+        s = s+c
+    }
+}
+</code>
+</pre>
+<p>
+The following prints approximate values of the exponential function of
+the first ten integers:
+<pre>
+<code>
+for (i = 1; i &lt;= 10; ++i) {
+    e(i)
+}
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_170">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about parts of this interface
+definition to the IEEE PASC Shell and Utilities Working Group which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_000_000_171">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="awk.htm">awk</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

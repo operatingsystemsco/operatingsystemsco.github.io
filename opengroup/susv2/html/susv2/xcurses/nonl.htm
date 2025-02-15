@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>nl</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_677">&nbsp;</a>NAME</h4><blockquote>
+nl, nonl - enable/disable newline translation
+</blockquote><h4><a name = "tag_001_009_678">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int nl(void);
+
+int nonl(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_679">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>nl()</i>
+function enables a mode in which carriage return is translated to newline on
+input.  The
+<i>nonl()</i>
+function disables the above translation.
+Initially, the above translation is enabled.
+</blockquote><h4><a name = "tag_001_009_680">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.  Otherwise, they return
+ERR.
+</blockquote><h4><a name = "tag_001_009_681">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_682">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The default translation adapts the terminal to environments in which newline
+is the line termination character.  However, by disabling the translation with
+<i>nonl()</i>,
+the application can sense the pressing of the carriage return key.
+</blockquote><h4><a name = "tag_001_009_683">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

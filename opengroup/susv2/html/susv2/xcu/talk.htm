@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>talk</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2201">&nbsp;</a>NAME</h4><blockquote>
+talk - talk to another user
+</blockquote><h4><a name = "tag_001_014_2202">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+talk <i>address </i><b>[</b><i>terminal</i><b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2203">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>talk</i>
+utility is a two-way, screen-oriented communication program.
+<p>
+When first invoked,
+<i>talk</i>
+sends a message similar to:
+<pre>
+<code>
+Message from <i>&lt;unspecified string&gt;</i>
+talk: connection requested by <i>your_address</i>
+talk: respond with: talk <i>your_address</i>
+</code>
+</pre>
+to the specified
+<i>address</i>.
+At this point, the recipient
+of the message can reply by typing:
+<pre>
+<code>
+talk &nbsp;<i>your_address
+</i></code>
+</pre>
+<p>
+Once communication is established, the two parties can type
+simultaneously, with their output
+displayed in separate regions
+of the screen.
+Characters are processed as follows:
+<ul>
+<p>
+<li>
+Typing the
+alert
+character will alert
+the recipient's terminal.
+<p>
+<li>
+Typing
+&lt;control&gt;-L
+will cause the sender's
+screen regions to be refreshed.
+<p>
+<li>
+Typing the erase and kill
+characters will affect the sender's terminal
+in the manner described by the
+<b>termios</b>
+interface in
+the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a> .
+<p>
+<li>
+Typing the interrupt or end-of-file characters will terminate the local
+<i>talk</i>
+utility.
+Once the
+<i>talk</i>
+session has been terminated on one side, the other
+side of the
+<i>talk</i>
+session will be notified that the
+<i>talk</i>
+session has been terminated and will be able to do nothing except exit.
+<p>
+<li>
+Typing characters from LC_CTYPE classifications
+<b>print</b>
+or
+<b>space</b>
+will cause those characters to be sent to the recipient's terminal.
+<p>
+<li>
+When and only when the
+<i><a href="stty.htm">stty</a></i>
+<i>iexten</i>
+local mode
+is enabled,
+the existence and processing of
+additional special control
+characters and
+multi-byte or single-byte functions is implementation-dependent.
+<p>
+<li>
+Typing other non-printable characters
+will cause implementation-dependent sequences of
+printable characters to be sent to the recipient's terminal.
+<p>
+</ul>
+<p>
+Permission to
+be a recipient of a
+<i>talk</i>
+message can be denied or granted by use of the
+<i><a href="mesg.htm">mesg</a></i>
+utility.
+However, a user's privilege may further constrain
+the domain of accessibility of other users' terminals.
+The
+<i>talk</i>
+utility
+will fail when the user lacks the appropriate privileges
+to perform the requested action.
+<p>
+Certain block-mode terminals do not have all the capabilities necessary
+to support the simultaneous exchange of messages required for
+<i>talk</i>.
+When this type of exchange cannot be supported on such terminals, the
+implementation may support an exchange with reduced levels of
+simultaneous interaction or it may report an error describing the
+terminal-related deficiency.
+</blockquote><h4><a name = "tag_001_014_2204">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2205">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>address</i><dd>The recipient of the
+<i>talk</i>
+session.
+One form of
+<i>address</i>
+is the
+&lt;<i>user&nbsp;name</i>&gt;,
+as returned by the
+<i><a href="who.htm">who</a></i>
+utility.
+Other address formats and how they are handled are unspecified.
+
+<dt><i>terminal</i><dd>
+If the recipient is logged in more than once, the
+<i>terminal</i>
+argument can be used to indicate the appropriate terminal name.
+If
+<i>terminal</i>
+is not specified, the
+<i>talk</i>
+message will be displayed on one or more accessible terminals
+in use by the recipient.
+The format of
+<i>terminal</i>
+will be the same as that returned by the
+<i><a href="who.htm">who</a></i>
+utility.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2206">&nbsp;</a>STDIN</h4><blockquote>
+Characters read from standard input will be copied to the
+recipient's terminal in an unspecified manner.
+If standard input is not a terminal, talk will write a diagnostic
+message and exit with a non-zero status.
+</blockquote><h4><a name = "tag_001_014_2207">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2208">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>talk</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+If the recipient's locale does not use an LC_CTYPE equivalent
+to the sender's, the results are undefined.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TERM</i><dd>Determine
+the name of the invoker's terminal type.
+If this variable is
+unset or null, an unspecified default terminal type will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2209">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+When the
+<i>talk</i>
+utility receives a SIGINT signal,
+the utility will terminate and exit with a zero status.
+It will take the standard action for all other signals.
+</blockquote><h4><a name = "tag_001_014_2210">&nbsp;</a>STDOUT</h4><blockquote>
+If standard output is a terminal,
+characters copied from the recipient's standard input
+may be written to standard output.
+Standard output also may be used for diagnostic messages.
+If standard output is not a terminal,
+<i>talk</i>
+will exit with a non-zero status.
+</blockquote><h4><a name = "tag_001_014_2211">&nbsp;</a>STDERR</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2212">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2213">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2214">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred or
+<i>talk</i>
+was invoked on a terminal incapable of supporting it.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2215">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2216">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Because the handling of non-printable, non-space characters
+is tied to the
+<i><a href="stty.htm">stty</a></i>
+description of
+<i>iexten</i>,
+implementation extensions within the terminal driver
+can be accessed.
+For example, some implementations provide line editing
+functions with certain control character sequences.
+</blockquote><h4><a name = "tag_001_014_2217">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2218">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2219">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mesg.htm">mesg</a></i>,
+<i><a href="who.htm">who</a></i>,
+<i><a href="write.htm">write</a></i>,
+the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a> .
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

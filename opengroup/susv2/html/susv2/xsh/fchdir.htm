@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fchdir</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_004_110">&nbsp;</a>NAME</h4><blockquote>
+fchdir - change working directory
+</blockquote><h4><a name = "tag_000_004_111">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int fchdir(int <i>fildes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_004_112">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fchdir()</i>
+function has the same effect as
+<i><a href="chdir.htm">chdir()</a></i>
+except that the directory that is to be the new current working directory is
+specified by the file descriptor
+<i>fildes</i>.
+</blockquote><h4><a name = "tag_000_004_113">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>fchdir()</i>
+returns 0.  Otherwise, it returns -1 and sets
+<i>errno</i> to indicate the error.
+On failure the current working directory remains unchanged.
+</blockquote><h4><a name = "tag_000_004_114">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>fchdir()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for the directory referenced by <i>fildes</i>.
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not an open file descriptor.
+
+<dt>[ENOTDIR]<dd>
+The open file descriptor <i>fildes</i> does not refer to a directory.
+
+</dl>
+<p>
+The
+<i>fchdir()</i>
+may fail if:
+<dl compact>
+
+<dt>[EINTR]<dd>
+A signal was caught during the execution of
+<i>fchdir()</i>.
+
+<dt>[EIO]<dd>
+An I/O error occurred while reading from or writing to the file system.
+
+</dl>
+</blockquote><h4><a name = "tag_000_004_115">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_116">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_117">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_118">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="chdir.htm">chdir()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

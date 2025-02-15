@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_strerror</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_strerror - produce an error message string
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+const char *t_strerror(
+    int errnum)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>errnum
+<td align=center>x
+<td align=center>/
+</table>
+</pre>
+<p>
+The
+<i>t_strerror()</i>
+function maps the error number in
+<I>errnum</I>
+that corresponds to an XTI error to a language-dependent error message
+string and returns a pointer to the string. The string pointed to will not
+be modified by the program, but may be overwritten by a subsequent
+call to the
+<I>t_strerror</I>
+function. The string is not terminated by a
+newline character. The language for error message strings written by
+<i>t_strerror()</i>
+is that of the current locale. If it is English,
+the error message string describing the value in
+<I>t_errno</I>
+may be derived from the comments following the
+<I>t_errno</I>
+codes defined in <B>&lt;xti.h&gt;</B>. If an
+error code is unknown, and the language is English,
+<i>t_strerror()</i>
+returns the string:
+<pre>
+<code>
+"&lt;error&gt;: error unknown"
+</code>
+</pre>
+<p>
+where &lt;error&gt; is the error number supplied as input.  In other
+languages, an equivalent text is provided.
+</blockquote><h4>VALID STATES</h4><blockquote>
+ALL - apart from T_UNINIT
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+The function
+<i>t_strerror()</i>
+returns a pointer to the generated message string.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="terro48.htm">t_error()</a></i>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

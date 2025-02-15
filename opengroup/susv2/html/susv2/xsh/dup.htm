@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dup</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_178">&nbsp;</a>NAME</h4><blockquote>
+dup, dup2 - duplicate an open file descriptor
+</blockquote><h4><a name = "tag_000_003_179">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int dup(int <i>fildes</i>);
+int dup2(int <i>fildes</i>, int <i>fildes2</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_180">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>dup()</i>
+and
+<i>dup2()</i>
+functions provide an alternative interface to the service provided by
+<i><a href="fcntl.htm">fcntl()</a></i>
+using the F_DUPFD command.  The call:
+<pre>
+<code>
+fid = dup(<i>fildes</i>);
+</code>
+</pre>
+is equivalent to:
+<pre>
+<code>
+fid = fcntl(<i>fildes</i>, F_DUPFD, 0);
+</code>
+</pre>
+The call:
+<pre>
+<code>
+fid = dup2(<i>fildes</i>, <i>fildes2</i>);
+</code>
+</pre>
+is equivalent to:
+<pre>
+<code>
+close(<i>fildes2</i>);
+fid = fcntl(<i>fildes</i>, F_DUPFD, <i>fildes2</i>);
+</code>
+</pre>
+except for the following:
+<ul>
+<p>
+<li>
+If
+<i>fildes2</i>
+is less than 0 or greater than or equal to {OPEN_MAX},
+<i>dup2()</i>
+returns -1 with
+<i>errno</i>
+set to [EBADF].
+<p>
+<li>
+If
+<i>fildes</i>
+is a valid file descriptor and is equal to
+<i>fildes2</i>,
+<i>dup2()</i>
+returns
+<i>fildes2</i>
+without closing it.
+<p>
+<li>
+If
+<i>fildes</i>
+is not a valid file descriptor,
+<i>dup2()</i>
+returns -1 and does not close
+<i>fildes2</i>.
+<p>
+<li>
+The value returned is equal to the value of
+<i>fildes2</i>
+upon successful completion, or is -1 upon failure.
+<p>
+</ul>
+</blockquote><h4><a name = "tag_000_003_181">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion a non-negative integer, namely the file descriptor,
+is returned.  Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_003_182">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>dup()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid open file descriptor.
+
+<dt>[EMFILE]<dd>
+The number of file descriptors in use by this process would exceed {OPEN_MAX}.
+
+</dl>
+<p>
+The
+<i>dup2()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid open file descriptor or the argument
+<i>fildes2</i>
+is negative or greater than or equal to
+{OPEN_MAX} .
+
+<dt>[EINTR]<dd>
+The
+<i>dup2()</i>
+function was interrupted by a signal.
+
+</dl>
+</blockquote><h4><a name = "tag_000_003_183">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_184">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_185">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_186">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="close.htm">close()</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

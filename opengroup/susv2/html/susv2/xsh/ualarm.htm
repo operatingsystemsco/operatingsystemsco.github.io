@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ualarm</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_208">&nbsp;</a>NAME</h4><blockquote>
+ualarm - set the interval timer
+</blockquote><h4><a name = "tag_000_010_209">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+useconds_t ualarm(useconds_t <i>useconds</i>, useconds_t <i>interval</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_210">&nbsp;</a>DESCRIPTION</h4><blockquote>
+<br>
+The
+<i>ualarm()</i>
+function causes the SIGALRM signal to be generated for the calling process
+after the number of real-time microseconds specified by the <i>useconds</i>
+argument has elapsed.  When the <i>interval</i> argument is non-zero, repeated
+timeout notification occurs with a period in microseconds specified by the
+<i>interval</i> argument.  If the notification signal, SIGALRM, is not caught
+or ignored, the calling process is terminated.
+<p>
+Implementations may place limitations on the granularity of timer values.
+For each interval timer, if the requested timer value requires a finer
+granularity than the implementation supports, the actual timer value will be
+rounded up to the next supported value.
+<p>
+Interactions between
+<i>ualarm()</i>
+and any of the following are unspecified:
+<p>
+<i><a href="alarm.htm">alarm()</a></i>
+<pre>
+<i><a href="nanos108.htm">nanosleep()</a></i>
+<i><a href="setit229.htm">setitimer()</a></i>
+<i><a href="timer290.htm">timer_create()</a></i>
+<i><a href="timer291.htm">timer_delete()</a></i>
+<i><a href="timer292.htm">timer_getoverrun()</a></i>
+<i><a href="timer293.htm">timer_gettime()</a></i>
+<i><a href="timer294.htm">timer_settime()</a></i>
+<i><a href="sleep.htm">sleep()</a></i>
+</pre>
+</blockquote><h4><a name = "tag_000_010_211">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>ualarm()</i>
+function returns the number of microseconds remaining from the previous
+<i>ualarm()</i>
+call.  If no timeouts are pending or if
+<i>ualarm()</i>
+has not previously been called,
+<i>ualarm()</i>
+returns 0.
+</blockquote><h4><a name = "tag_000_010_212">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_010_213">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_214">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>ualarm()</i>
+function is a simplified interface to
+<i><a href="setit229.htm">setitimer()</a></i>,
+and uses the ITIMER_REAL interval timer.
+</blockquote><h4><a name = "tag_000_010_215">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_216">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="alarm.htm">alarm()</a></i>,
+<i><a href="nanos108.htm">nanosleep()</a></i>,
+<i><a href="setit229.htm">setitimer()</a></i>,
+<i><a href="sleep.htm">sleep()</a></i>,
+<i><a href="timer290.htm">timer_create()</a></i>,
+<i><a href="timer291.htm">timer_delete()</a></i>,
+<i><a href="timer292.htm">timer_getoverrun()</a></i>,
+<i><a href="timer293.htm">timer_gettime()</a></i>,
+<i><a href="timer294.htm">timer_settime()</a></i>
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>iswctype</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_161">&nbsp;</a>NAME</h4><blockquote>
+iswctype - test character for a specified class
+</blockquote><h4><a name = "tag_000_007_162">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wctyp311.htm">wctype.h</a>&gt;
+
+int iswctype(wint_t <i>wc</i>, wctype_t <i>charclass</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_163">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>iswctype()</i>
+function determines whether the wide-character code
+<i>wc</i>
+has the character class
+<i>charclass</i>,
+returning true or false.
+The
+<i>iswctype()</i>
+function is defined on WEOF and wide-character codes corresponding to the
+valid character encodings in the current locale.
+If the
+<i>wc</i>
+argument is not in the domain of the function, the result is undefined.
+If the value of
+<i>charclass</i>
+is invalid (that is, not obtained by a call to
+<i><a href="wctype.htm">wctype()</a></i>
+or
+<i>charclass</i>
+is invalidated by a
+subsequent call to
+<i><a href="setlo231.htm">setlocale()</a></i>
+that has affected category LC_CTYPE)
+the result is implementation-dependent.
+</blockquote><h4><a name = "tag_000_007_164">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>iswctype()</i>
+function returns 0 for false and non-zero for true.
+</blockquote><h4><a name = "tag_000_007_165">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_007_166">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_167">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The twelve strings -
+"alnum",
+"alpha",
+"blank"
+"cntrl",
+"digit",
+"graph",
+"lower",
+"print",
+"punct",
+"space",
+"upper" and
+"xdigit" -
+are reserved for the standard character classes.
+In the table below,
+the functions in the left column are equivalent to
+the functions in the right column.
+<p><table <tr valign=top><th align=left>iswalnum(<i>wc</i>)
+<th align=left>iswctype(<i>wc</i>, wctype("alnum"))
+<tr valign=top><td align=left>iswalpha(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("alpha"))
+<tr valign=top><td align=left>iswcntrl(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("cntrl"))
+<tr valign=top><td align=left>iswdigit(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("digit"))
+<tr valign=top><td align=left>iswgraph(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("graph"))
+<tr valign=top><td align=left>iswlower(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("lower"))
+<tr valign=top><td align=left>iswprint(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("print"))
+<tr valign=top><td align=left>iswpunct(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("punct"))
+<tr valign=top><td align=left>iswspace(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("space"))
+<tr valign=top><td align=left>iswupper(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("upper"))
+<tr valign=top><td align=left>iswxdigit(<i>wc</i>)
+<td align=left>iswctype(<i>wc</i>, wctype("xdigit"))
+</table>
+<dl><dt><b>Note:</b>
+<dd>The call:
+<pre>
+<code>
+iswctype(<i>wc</i>, wctype("blank"))
+</code>
+</pre>
+does not have an equivalent
+<i>isw*()</i>
+function.
+</dl>
+</blockquote><h4><a name = "tag_000_007_168">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_169">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="iswalnum.htm">iswalnum()</a></i>,
+<i><a href="iswalpha.htm">iswalpha()</a></i>,
+<i><a href="iswcntrl.htm">iswcntrl()</a></i>,
+<i><a href="iswdigit.htm">iswdigit()</a></i>,
+<i><a href="iswgraph.htm">iswgraph()</a></i>,
+<i><a href="iswlower.htm">iswlower()</a></i>,
+<i><a href="iswprint.htm">iswprint()</a></i>,
+<i><a href="iswpunct.htm">iswpunct()</a></i>,
+<i><a href="iswspace.htm">iswspace()</a></i>,
+<i><a href="iswupper.htm">iswupper()</a></i>,
+<i><a href="iswxd85.htm">iswxdigit()</a></i>,
+<i><a href="wctype.htm">wctype()</a></i>,
+<i><a href="wctyp311.htm">&lt;wctype.h&gt;</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

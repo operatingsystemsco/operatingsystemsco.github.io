@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>spell</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2049">&nbsp;</a>NAME</h4><blockquote>
+spell - find spelling errors (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_2050">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+spell <b>[</b>-bvx<b>][</b>+<i>local_file</i><b>][</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2051">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>spell</i>
+utility
+collects words from the named
+files
+and looks them up in a spelling list.
+A
+<i>word</i>
+in this context is a series of characters from the set:
+<pre>
+<code>
+[A-Za-z0-9'&amp;.,;?:]
+</code>
+</pre>
+in the POSIX locale, where the first and last characters are alphanumeric.
+Words that neither occur among nor are derivable
+(by applying certain inflections,
+prefixes and suffixes) from words in the spelling list
+are written to standard output.
+<p>
+Within the file, certain character sequences are treated specially;
+if the file contains lines that begin with a period
+or apostrophe or that contain backslashes in any position,
+the results are unspecified.
+</blockquote><h4><a name = "tag_001_014_2052">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>spell</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that the
+<i>+local_file</i>
+option takes a leading plus sign instead of minus.
+The following options are supported:
+<p>
+<dl compact>
+
+<dt><b>-v</b>
+<dd>Write all words not literally in the spelling list.
+Plausible derivations from the words in the spelling list
+may be indicated.
+
+<dt><b>-b</b>
+<dd>Check British spelling.
+Besides preferring
+<i>centre</i>,
+<i>colour</i>,
+<i>programme</i>,
+<i>speciality</i>,
+<i>travelled</i>,
+and so on, this option insists upon
+<i>-ise</i>
+in words like
+<i>standardise</i>.
+
+<dt><b>-x</b>
+<dd>Write every plausible stem with
+"="
+for each word.
+
+<dt><i>+local_file</i><dd>
+Remove words found in
+<i>local_file</i>
+from the
+<i>spell</i>
+command output.
+The argument
+<i>local_file</i>
+is the name of a user-provided file that contains a sorted list of words,
+one per line.
+With this option, the user can specify a set of words
+that are correct spellings (in addition to
+<i>spell</i>'s
+own spelling list) for each job.
+
+</dl>
+<br>
+</blockquote><h4><a name = "tag_001_014_2053">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a text file to check for spelling errors.
+If no files are named, words are collected from the standard input.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2054">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is a text file used only if no
+<i>file</i>
+operands are specified.
+</blockquote><h4><a name = "tag_001_014_2055">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files are text files.
+</blockquote><h4><a name = "tag_001_014_2056">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables may affect the execution of
+<i>spell</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2057">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2058">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output consists of single misspelled words separated by newlines.
+If the
+<b>-x</b>
+option is used, words can be preceded by
+"=".
+</blockquote><h4><a name = "tag_001_014_2059">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2060">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2061">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2062">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2063">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2064">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None of the internationalisation variables
+are required to affect the processing of the input source language.
+In the POSIX locale, the
+<i>spell</i>
+utility recognises English (American or British
+dialects, depending on the
+<b>-b</b>
+option) text.
+<p>
+The unspecified nature of
+<i>spell</i>
+when presented files with backslashes or leading periods or leading
+apostrophes results from its complex attempts to deal with files
+formatted for
+<i>troff</i>,
+<i>tbl</i>
+and
+<i>eqn</i>
+processing (none of which are specified by this specification).
+Constructs such as
+.so,
+.nx,
+.TS,
+.EQ,
+.ig,
+\s
+and
+\f
+are frequently dealt with in a manner that is
+most useful for determining spelling errors.
+However, such algorithms are historically less
+than perfect and are very difficult to describe precisely.
+<p>
+This utility is marked LEGACY because there is no known
+technology that can be used to make it recognise
+general language for user-specified input without
+providing a complete dictionary along with the input file.
+</blockquote><h4><a name = "tag_001_014_2065">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2066">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2067">&nbsp;</a>SEE ALSO</h4><blockquote>
+None.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

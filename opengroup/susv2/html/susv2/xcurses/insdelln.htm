@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>insdelln</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_534">&nbsp;</a>NAME</h4><blockquote>
+insdelln, winsdelln - delete or insert lines into a window
+</blockquote><h4><a name = "tag_002_001_535">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int insdelln(int <i>n</i>);
+
+int winsdelln(WINDOW *<i>win</i>, int <i>n</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_536">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>insdelln()</i>
+and
+<i>winsdelln()</i>
+functions perform the following actions:
+<ul>
+<p>
+<li>
+If <i>n</i> is positive, these functions insert <i>n</i> lines into the current
+or specified window before the current line.  The <i>n</i> last lines are
+no longer displayed.
+<p>
+<li>
+If <i>n</i> is negative, these functions delete <i>n</i> lines from the current
+or specified window starting with the current line, and move the remaining
+lines toward the cursor.  The last <i>n</i> lines are cleared.
+<p>
+</ul>
+<p>
+The current cursor position remains the same.
+</blockquote><h4><a name = "tag_002_001_537">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_538">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_539">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="deleteln.htm">deleteln()</a></i>,
+<i><a href="insertln.htm">insertln()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

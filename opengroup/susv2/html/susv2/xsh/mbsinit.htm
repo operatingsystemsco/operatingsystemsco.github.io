@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mbsinit</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_538">&nbsp;</a>NAME</h4><blockquote>
+mbsinit - determine conversion object status
+</blockquote><h4><a name = "tag_000_007_539">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+int mbsinit(const mbstate_t *<i>ps</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_540">&nbsp;</a>DESCRIPTION</h4><blockquote>
+If
+<i>ps</i>
+is not a null pointer, the
+<i>mbsinit()</i>
+function determines whether the object pointed to by
+<i>ps</i>
+describes an initial conversion state.
+</blockquote><h4><a name = "tag_000_007_541">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>mbsinit()</i>
+function returns non-zero if 
+<i>ps</i>
+is a null pointer, or if the pointed-to object describes an initial
+conversion state; otherwise, it returns zero.
+<p>
+If an
+<b>mbstate_t</b>
+object is altered by any of the functions described as "restartable",
+and is then used with a different character sequence, or in
+the other conversion direction, or with a different LC_CTYPE category
+setting than on earlier function calls, the behaviour is undefined.
+</blockquote><h4><a name = "tag_000_007_542">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_007_543">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_544">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<b>mbstate_t</b>
+object is used to describe the current conversion state from a
+particular character sequence to a wide-character sequence (or vice
+versa) under the rules of a particular setting of the LC_CTYPE
+category of the current locale.
+<p>
+The initial conversion state corresponds, for a conversion in either
+direction, to the beginning of a new character sequence in the
+initial shift state.  A zero valued
+<b>mbstate_t</b>
+object is at least one way to describe an initial conversion state.  A
+zero valued
+<b>mbstate_t</b>
+object can be used to initiate conversion involving any character
+sequence, in any LC_CTYPE category setting.  
+</blockquote><h4><a name = "tag_000_007_545">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_546">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mbrlen.htm">mbrlen()</a></i>,
+<i><a href="mbrtowc.htm">mbrtowc()</a></i>,
+<i><a href="wcrtomb.htm">wcrtomb()</a></i>,
+<i><a href="mbsrt96.htm">mbsrtowcs()</a></i>,
+<i><a href="wcsrt310.htm">wcsrtombs()</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the ISO/IEC 9899:1990/Amendment 1:1995 (E).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

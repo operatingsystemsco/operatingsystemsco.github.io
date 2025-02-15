@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_sysconf</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_sysconf - get configurable XTI variables
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_sysconf(
+    int name);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>name
+<td align=center>x
+<td align=center>/
+</table>
+</pre>
+<p>
+The 
+<i>t_sysconf()</i>
+function provides a method for the application to
+determine the current value of configurable and 
+implementation-dependent XTI limits or options.
+<p>
+The 
+<I>name</I>
+argument represents the XTI system variable to be queried.  The
+following table lists the minimal set of XTI system variables from 
+<i><a href="xtih78.htm">&lt;xti.h&gt;</a></i>
+that can be returned by 
+<i>t_sysconf()</i>,
+and the symbolic constants,
+defined in 
+<i><a href="xtih78.htm">&lt;xti.h&gt;</a></i>
+that are the corresponding values used for 
+<I>name</I>.
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=left><b>Variable</b>
+<th align=left><b>Value of Name</b>
+<tr valign=top><td align=left>T_IOV_MAX
+<td align=left>_SC_T_IOV_MAX
+</table>
+<p>
+</blockquote><h4>VALID STATES</h4><blockquote>
+All.
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure, 
+<I>t_errno</I>
+is set to the following:
+<dl compact>
+
+<dt>[TBADFLAG]<dd><I>name</I>
+has an invalid value.
+
+</dl>
+</blockquote><h4>RETURN VALUES</h4><blockquote>
+If 
+<I>name</I>
+is valid, 
+<i>t_sysconf()</i>
+returns the value of the requested
+limit/option (which might be -1) and leaves 
+<I>t_errno</I>
+unchanged.
+Otherwise, a value of -1 is returned and 
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="trcvv64.htm">t_rcvv()</a></i>,
+<i><a href="trcvv65.htm">t_rcvvudata()</a></i>,
+<i><a href="tsndv71.htm">t_sndv()</a></i>,
+<i><a href="tsndv72.htm">t_sndvudata()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

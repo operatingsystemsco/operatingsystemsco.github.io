@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;varargs.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_355">&nbsp;</a>NAME</h4><blockquote>
+varargs.h - handle variable argument list
+(<b>LEGACY</b>)
+</blockquote><h4><a name = "tag_000_010_356">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;varargs.h&gt;
+
+va_alist
+va_dcl
+void va_start(pvar)
+va_list pvar;
+<i>type</i> va_arg(pvar, <i>type</i>)
+va_list pvar;
+void va_end(pvar)
+va_list pvar;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_357">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;varargs.h&gt;</i>
+header contains a set of macros which allows
+portable procedures that accept variable argument lists to be written.
+Routines that have variable argument lists (such as
+<i><a href="printf.htm">printf()</a></i>
+but do not use
+<i>&lt;varargs.h&gt;</i>
+are inherently non-portable, as different
+machines use different argument-passing conventions.
+<dl compact>
+
+<dt><b>va_alist</b><dd>Used as the parameter list in a function header.
+
+<dt><b>va_dcl</b><dd>A declaration for
+<b>va_alist</b>.
+No semicolon should follow
+<b>va_dcl</b>.
+
+<dt><b>va_list</b><dd><index term="data type, va_list"></index>
+A type defined for the variable used to traverse the list.
+
+<dt><i>va_start</i>()<dd>Called to initialise
+<i>pvar</i>
+to the beginning of the list.
+
+<dt><i>va_arg</i>()<dd>Will return the next argument in the list pointed to by
+The argument
+<i>type</i>
+is the type the argument is expected to be.
+Different types can be mixed, but it is up
+to the routine to know what type of argument is
+expected, as it cannot be determined at run time.
+
+<dt><i>va_end</i>()<dd>Used to clean up.
+
+</dl>
+<p>
+Multiple traversals, each bracketed by
+<i><a href="vasta304.htm">va_start()</a></i>
+<i><a href="vaend303.htm">va_end()</a></i>,
+are possible.
+</blockquote><h4><a name = "tag_000_010_358">&nbsp;</a>EXAMPLES</h4><blockquote>
+This example is a possible implementation of
+<i><a href="exec.htm">execl()</a></i>.
+<pre>
+<code>
+#include &lt;varargs.h&gt;
+
+#define MAXARGS    100
+
+/*    execl is called by
+ *        execl(file, arg1, arg2, ..., (char *)0);
+ */
+execl(va_alist)
+va_dcl
+{
+    va_list ap;
+    char *file;
+    char *args[MAXARGS];
+    int argno = 0;
+
+    va_start(ap);
+    file = va_arg(ap, char *);
+    while ((args[argno++] = va_arg(ap, char *)) != (char *)0)
+        ;
+    va_end(ap);
+    return execv(file, args);
+}
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_359">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+It is up to the calling routine to specify how many arguments
+there are, since it is not always possible to determine this from the
+stack frame.  For example,
+<i><a href="exec.htm">execl()</a></i>
+is passed a zero pointer to signal the end of the list.
+The
+<i><a href="printf.htm">printf()</a></i>
+function can tell how many arguments are there by the format.
+<p>
+It is non-portable to specify a second argument of
+<b>char</b>,
+<b>short</b>
+or
+<b>float</b>
+to
+<i><a href="vaarg302.htm">va_arg()</a></i>,
+since arguments seen by the called function are not type
+<b>char</b>,
+<b>short</b>
+or
+<b>float</b>.
+C language converts type
+<b>char</b>
+and
+<b>short</b>
+arguments to
+<b>int</b>
+and converts type
+<b>float</b>
+arguments to
+<b>double</b>
+before passing them to a function.
+<p>
+For backward compatibility with Issue 3, XSI-conformant systems support
+<i>&lt;varargs.h&gt;</i>
+as well as
+<i><a href="stdar255.htm">&lt;stdarg.h&gt;</a></i>.
+Use of
+<i>&lt;varargs.h&gt;</i>
+is not recommended.
+</blockquote><h4><a name = "tag_000_010_360">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_361">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="printf.htm">printf()</a></i>,
+<i><a href="stdar255.htm">&lt;stdarg.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

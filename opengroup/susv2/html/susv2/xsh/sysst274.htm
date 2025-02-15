@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;sys/statvfs.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_354">&nbsp;</a>NAME</h4><blockquote>
+sys/statvfs.h - VFS Filesystem information structure
+</blockquote><h4><a name = "tag_000_009_355">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;sys/statvfs.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_356">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;sys/statvfs.h&gt;</i>
+header defines the
+<b>statvfs</b>
+structure that includes at least the following members:
+<pre>
+<code>
+unsigned long f_bsize    file system block size
+unsigned long f_frsize   fundamental filesystem block size
+fsblkcnt_t    f_blocks   total number of blocks on file system in units of <b>f_frsize</b>
+fsblkcnt_t    f_bfree    total number of free blocks
+fsblkcnt_t    f_bavail   number of free blocks available to
+                         non-privileged process
+fsfilcnt_t    f_files    total number of file serial numbers
+fsfilcnt_t    f_ffree    total number of free file serial numbers
+fsfilcnt_t    f_favail   number of file serial numbers available to
+                         non-privileged process
+unsigned long f_fsid     file system id
+unsigned long f_flag     bit mask of <b>f_flag</b> values
+unsigned long f_namemax  maximum filename length
+</code>
+</pre>
+<p>
+The
+<b>fsblkcnt_t</b>,
+and
+<b>fsfilcnt_t</b>,  
+types are defined as described in
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<p>
+The following flags for the <b>f_flag</b> member are defined:
+<pre>
+<code>
+ST_RDONLY                read-only file system
+ST_NOSUID                does not support setuid/setgid semantics
+</code>
+</pre>
+<p>
+The header &lt;<b>sys/statvfs.h</b>&gt; declares the following functions which
+may also be defined as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int <a href="statvfs.htm">statvfs</a>(const char *, struct statvfs *);
+int <a href="fstatvfs.htm">fstatvfs</a>(int, struct statvfs *);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_357">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_358">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_359">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fstatvfs.htm">fstatvfs()</a></i>,
+<i><a href="statvfs.htm">statvfs()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

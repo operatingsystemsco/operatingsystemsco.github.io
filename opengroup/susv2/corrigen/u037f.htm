@@ -1,0 +1,514 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Corrigendum: U031</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<pre><font face="Times New Roman" size="5"><strong>Corrigendum:    U037</strong></font><font
+size="6" face="Times New Roman">
+
+</font><font size="3" face="Times New Roman"><strong>Date: </strong>           5 February 1999
+
+<strong>Document</strong>:    C523 Networking Services (XNS), Issue 5
+
+<strong>Code: </strong>          02/99 C523/U037
+
+<strong>Contents:</strong>    This corrigendum comprises two new items:
+			U037/XNS-500
+			U037/XNS-501
+		    plus two items originally contained in Corrigendum U031:
+			U031/XNS-001
+			U031/XNS-002
+		    This Corrigendum therefore supersedes U031.</font></pre>
+
+<hr>
+
+<p><font face="Times New Roman"><strong>Change Number</strong>:&nbsp; U037/XNS-500<br>
+<br>
+<strong>Title:</strong>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Behaviour of various headers under different values of _XOPEN_SOURCE<br>
+<br>
+<strong>Qualifier:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Major technical and
+editorial<br>
+<br>
+<strong>Rationale:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The &quot;Networking
+Services, Issue 5&quot; as published has some significant editorial and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+technical problems and ambiguities relating to the behaviour of various headers under <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+different values of _XOPEN_SOURCE:</font></p>
+
+<blockquote>
+  <blockquote>
+    <ol>
+      <li><font face="Times New Roman">Any text that relates to behaviour of the implementation
+        when _XOPEN_SOURCE is less than 500 is informative, not normative. This behaviour is
+        specified normatively in earlier issues of XNS.</font></li>
+      <li><font face="Times New Roman">Conformant systems are not required to provide the
+        OPT_NEXTHDR macro. </font></li>
+      <li><font face="Times New Roman">Protocol-specific symbols defined in &lt;xti_inet.h&gt; or
+        &lt;xti_osi.h&gt; are not required to be available when &lt;xti.h&gt; is included by the
+        application but &lt;xti_inet.h&gt; or &lt;xti_osi.h&gt; (respectively) is not included by
+        the application.</font></li>
+      <li><font face="Times New Roman">An implementation is only required to provide
+        protocol-specific headers for those protocols that it supports.</font></li>
+      <li><font face="Times New Roman">An implementation need not make available symbols marked in
+        XNS5 as &quot;LEGACY&quot;.</font></li>
+      <li><font face="Times New Roman">Although identifiers marked as &quot;LEGACY&quot; are not
+        specified as being reserved for any use by the implementation, implementations may make
+        them available.</font></li>
+    </ol>
+    <p><font face="Times New Roman">While these changes may mean that XNS5 applications will
+    have to be changed if they are to remain portable, it is believed that few, if any, such
+    applications have been written at the time of publication of this Corrigendum, and that
+    these changes are necessary, so they should therefore be made now.</font></p>
+  </blockquote>
+</blockquote>
+
+<p><strong><font face="Times New Roman">Changes:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></strong><br>
+<br>
+<strong>Changes relating to _XOPEN_SOURCE</strong><br>
+<br>
+(1.1) Appendix A (ISO Transport Protocol Information), section A.1 (General), page 215<br>
+&nbsp;&nbsp;&nbsp; Replace paragraph<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Applications written to ......inclusion
+of &lt;xti.h&gt;&quot; <br>
+&nbsp;&nbsp;&nbsp; with replacement text [R2] below.<br>
+<br>
+(1.2) Appendix B (Internet Protocol Specific Information), section B.1 (General), page 229<br>
+&nbsp;&nbsp;&nbsp; Replace paragraph<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Applications written to ......inclusion
+of &lt;xti.h&gt;&quot; <br>
+&nbsp;&nbsp;&nbsp; with replacement text [R2] below.<br>
+<br>
+(1.3) Appendix D (Use of XTI to Access NetBIOS), section D.1(Introduction), last
+paragraph,<br>
+&nbsp;&nbsp;&nbsp; Replace lines<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Application written to ......inclusion of
+&lt;xti.h&gt; on platforms where XTI interfaces use is <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; supported for NetBIOS transports&quot;<br>
+&nbsp;&nbsp;&nbsp; with replacement text [R2] below.<br>
+<br>
+(1.4) Appendix I (SNA Transport Provider), Section I.1 (Introduction), <br>
+&nbsp;&nbsp;&nbsp; Replace paragraph<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Applications written to .....inclusion of
+&lt;xti.h&gt; on platforms where XTI interface use is <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; supported for SNA transports.&quot; <br>
+&nbsp;&nbsp;&nbsp; with replacement text [R2] below.<br>
+<br>
+(1.5) Appendix F (Headers and definitions for XTI), page 281, second paragraph<br>
+&nbsp;&nbsp;&nbsp; Replace paragraph,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Applications written to .... providers
+for which this may be the case.&quot;<br>
+&nbsp;&nbsp;&nbsp; with replacement text [R1] below.<br>
+<br>
+Replacement text [R1] was formulated from existing text in Appendix F and Replacement text
+[R2]<br>
+from existing text in Appendices A,B,D,I <br>
+Changes in creating the replacement text from existing text are addition of prefix
+&quot;Note&quot;, and use of <br>
+the word &quot;may&quot; instead of &quot;will&quot; (since compatibility support for
+&quot;_XOPEN_SOURCE less than 500&quot; <br>
+environments is optional and not required, it seems more appropriate to use the word
+&quot;may&quot;). <br>
+In [R1] only, &quot;these&quot; was changed to &quot;the&quot;, to correct the English
+syntax. </p>
+
+<p>The notes in replacement texts [R1] and [R2] are designated as informative, not
+normative. <br>
+<br>
+Replacement text [R1]</p>
+
+<blockquote>
+  <p>Note<br>
+  Applications written to compilation environments earlier than those required by this issue
+  of the specification (see section 1.3 on page 3) and defining _XOPEN_SOURCE to be less
+  than 500 may have the data structures and constants of certain protocol specific headers
+  automatically exposed by the inclusion of &lt;xti.h&gt; for compatibility. The individual
+  protocol-specific appendices document the providers for which this may be the case.</p>
+</blockquote>
+
+<p>Replacement text [R2]</p>
+
+<blockquote>
+  <p>Note<br>
+  Applications written to compilation environments earlier than those required by this issue
+  of the specification<br>
+  (see section 1.3 on page 3) and defining _XOPEN_SOURCE to be less than 500, may have these
+  data<br>
+  structures and constants exposed through the inclusion of &lt;xti.h&gt;</p>
+</blockquote>
+
+<p><strong>Changes relating to LEGACY symbols</strong><br>
+<br>
+(2.1) Appendix A (ISO Transport Protocol Information)<br>
+(2.1.1) Section A.4 delete all symbol definitions marked with (LEGACY)<br>
+(2.1.2) Delete on page 227, all symbols with TCO_ and TCL_ prefix. (TCO_LTPDU through upto<br>
+&nbsp;&nbsp;&nbsp; TCL_CHECKSUM on page 227 retaining all T_ prefix symbols.) <br>
+&nbsp;&nbsp;&nbsp; [Note These are symbols which have a T_ prefixed versions specified but
+(LEGACY) was missed from<br>
+&nbsp;&nbsp;&nbsp; being added as editorial/typographical error. ]<br>
+(2.1.3) Delete on page 225, the symbol T_LTPDUDFLT which has the legend &quot;/* define
+obsolete <br>
+&nbsp;&nbsp;&nbsp; in XPG4 */&quot;.<br>
+(2.1.4) Create a new section &quot;A.5 Compatibility&quot; which mentions those
+comatibility symbols which may <br>
+&nbsp;&nbsp;&nbsp; be exposed:</p>
+
+<blockquote>
+  <p>A.5 Compatibility.<br>
+  <br>
+  Certain symbols may be exposed to applications including &lt;xti_osi.h&gt; for
+  compatibility with applications transitioning from older issues of this specification
+  where their semantics are specified. <br>
+  Exposing these symbols is allowed but not required. Symbols that may be exposed in this
+  implementation-dependent manner are:<br>
+  <br>
+  T_LTPDUDFLT, ISO_TP, TCO_THROUGHPUT, TCO_TRANSDEL, <br>
+  TCO_RESERRORRATE, TCO_TRANSFFAILPROB, TCO_ESTFAILPROB, TCO_RELFAILPROB, TCO_ESTDELAY,
+  TCO_RELDELAY, TCO_CONNRESIL, <br>
+  TCO_PROTECTION, TCO_PRIORITY, TCO_EXPD, TCL_TRANSDEL, <br>
+  TCL_RESERRORRATE, TCL_PROTECTION, TCL_PRIORITY, TCO_LTPDU, <br>
+  TCO_ACKTIME, TCO_REASTIME, TCO_EXTFORM, TCO_FLOWCTRL,<br>
+  TCO_CHECKSUM, TCO_NETEXP, TCO_NETRECPTCF, TCO_PREFCLASS,<br>
+  TCO_ALTCLASS1, TCO_ALTCLASS2, TCO_ALTCLASS3, TCO_ALTCLASS4,<br>
+  TCL_CHECKSUM</p>
+</blockquote>
+
+<p>(2.2) Appendix B (Internet Protocol-specific Information)<br>
+(2.2.1) Section B.4 delete all symbol definitions marked with (LEGACY)<br>
+(2.2.2) Delete symbol T_GARBAGE on page 238.<br>
+(2.2.3) Create a new section &quot;B.5 Compatibility&quot; which mentions those
+compatibility symbols <br>
+&nbsp;&nbsp;&nbsp; which may be exposed.</p>
+
+<blockquote>
+  <p>B.5 Compatibility.<br>
+  <br>
+  Certain symbols may be exposed to applications including &lt;xti_inet.h&gt; for
+  compatibility with applications transitioning from older issues of this specification
+  where their semantics are specified. Exposing these symbols is allowed but not required.
+  Symbols that may be exposed in this implementation-dependent manner are:<br>
+  <br>
+  INET_TCP<br>
+  TCP_NODELAY, TCP_MAXSEG, TCP_KEEPALIVE<br>
+  T_GARBAGE<br>
+  INET_UDP<br>
+  INET_IP<br>
+  IP_OPTIONS, IP_TOS, IP_TTL, IP_REUSEADDR, IP_DONTROUTE, IP_BROADCAST</p>
+</blockquote>
+
+<p>(2.3) Appendix D (Use of XTI to Access NetBIOS)<br>
+(2.3.1) In appendix D, delete all symbol definitions marked with (LEGACY)<br>
+&nbsp;&nbsp;&nbsp; These are in sections D.5 (page 269) and section D.8 (page 275)<br>
+(2.3.2) Create a new section &quot;D.9 Compatibility&quot; which mentions those
+compatibility symbols which may be<br>
+&nbsp;&nbsp;&nbsp; exposed:</p>
+
+<blockquote>
+  <p>D.9 Compatibility.<br>
+  <br>
+  Certain symbols may be exposed to applications including &lt;xti_netbios.h&gt; for
+  compatibility with applications transitioning from older issues of this specification
+  where their semantics are specified. <br>
+  Exposing these symbols is allowed but not required.<br>
+  <br>
+  Symbols that may be exposed in this implementation-dependent manner are<br>
+  <br>
+  NB_UNIQUE, NB_GROUP, NB_LOCAL, NB_NAMELEN, NB_BCAST_NAME<br>
+  NB_ABORT, NB_CLOSED, NB_NOANSWER, NB_OPREJ</p>
+</blockquote>
+
+<p>(2.4) Appendix I (SNA Transport Provider)<br>
+(2.4.1) In appendix I, delete all symbol definitions marked with (LEGACY). These are in
+Section I.2.2 <br>
+&nbsp;&nbsp;&nbsp; (page 321), Section I.2.4, (page 325)<br>
+(2.4.2) Create a new section &quot;I.4 Compatibility&quot; which mentions those
+compatibility symbols which <br>
+&nbsp;&nbsp;&nbsp; may be exposed:</p>
+
+<blockquote>
+  <p>I.4 Compatibility.<br>
+  <br>
+  Certain symbols may be exposed to applications including &lt;xti_sna.h&gt; for
+  compatibility with applications transitioning from older issues of this specification
+  where their semantics are specified. Exposing these symbols is allowed but not required.
+  Symbols that may be exposed in this implementation-dependent manner are:<br>
+  <br>
+  SNA_MAX_NETID_LEN, SNA_MAX_LU_LEN, SNA_MAX_TPN_LEN<br>
+  SNA_CONNECTION_SETUP_FAILURE, SNA_USER_DISCONNECT,<br>
+  SNA_SYSTEM_DISCONNECT, SNA_TIMEOUT, SNA_CONNECTION_OUTAGE</p>
+</blockquote>
+
+<p><strong>Changes relating to OPT_NEXTHDR macro</strong></p>
+
+<p>(3.1) t_optmgmt() man page, page 85, delete the text:<br>
+&nbsp;&nbsp;&nbsp; &quot;Note that OPT_NEXTHDR is also available for backward
+compatibility.&quot;<br>
+<br>
+(3.2) Appendix F (Headers and Definitions for XTI)<br>
+&nbsp;&nbsp;&nbsp; Create a new section &quot;Compatibility&quot; and add it to the end of
+the appendix:</p>
+
+<blockquote>
+  <p>Compatibility<br>
+  <br>
+  Certain symbols or macros may be exposed to applications including &lt;xti.h&gt; for
+  compatibility with<br>
+  applications transitioning from older issues of this specification where their semantics
+  are specified. Exposing<br>
+  these symbols or macros is allowed but not required. Symbols or macros that may be exposed
+  in this<br>
+  implementation-dependent manner are<br>
+  <br>
+  OPT_NEXTHDR<br>
+  T_ALIGN<br>
+  <br>
+  All protocol specific symbols exposed through &lt;xti_osi.h&gt; as specified in Appendix
+  A.<br>
+  <br>
+  All protocol specific symbols exposed through &lt;xti_inet.h&gt; as specified in Appendix
+  B.</p>
+</blockquote>
+
+<p><strong>Changes to Appendix F related to protocol-specific symbols</strong><br>
+<br>
+Appendix F (Headers and Definitions for XTI)<br>
+<br>
+(4.1) Appendix F, page 281, delete paragraph:<br>
+&nbsp;&nbsp;&nbsp; Certain items in this appendix are marked LEGACY...equivalent
+functionality<br>
+<br>
+(4.2) Appendix F, page 288-293:<br>
+&nbsp;&nbsp;&nbsp; Delete text including and following the comment on page 288<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;/* SPECIFIC ISO OPTION AND MANAGEMENT
+PARAMETERS */&quot;<br>
+&nbsp;&nbsp;&nbsp; through to page 293 SET_TOS macro definitions (end of printed appendix)</p>
+
+<hr>
+
+<p><strong>Change: Number</strong>:&nbsp;&nbsp;&nbsp; U037/XNS-501<br>
+<br>
+<strong>Title:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>Various
+clarifications, including some header and macro definitions/examples</p>
+
+<p><strong>Qualifier:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Major editorial
+and technical<br>
+<br>
+<strong>Rationale:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>Various as listed below:</p>
+
+<blockquote>
+  <blockquote>
+    <ol>
+      <li>The name T_OPT_NXTHDR and T_OPT_NEXTHDR are both used (inconsistent spelling). Adopt
+        T_OPT_NEXTHDR consistently. </li>
+      <li>Macro formal parameters are missing from t_optmgmt() man page specification </li>
+      <li>Clarify macro definition of T_OPT_NEXTHDR with respect to identifying last t_opthdr in
+        option buffer. This definition is located in t_optmgmt() man page (currently uses spelling
+        T_OPT_NXTHDR). </li>
+      <li>Alignment interactions for option buffers can affect portability and need clarifications
+        and can be interpreted ambiguously. </li>
+      <li>Clarify that implementing compatibility by padding &quot;struct t_opthdr&quot; is
+        allowed. </li>
+      <li>Provide example macro definition examples with clear articulation of assumptions about
+        implementation environment. Current printed macros have errors and are inconsistent with
+        prototypes in the specification. </li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<p><strong>Changes:</strong> <br>
+<br>
+<strong>(1) Change all instances of T_OPT_NXTHDR to T_OPT_NEXTHDR in the specification.</strong><br>
+<br>
+(1.1) Section 6.2, page 40, 3rd paragraph, change T_OPT_NXTHDR to T_OPT_NEXTHDR<br>
+<br>
+(1.2) t_optmgmt() man page, pages 84-85, change (two) instances of T_OPT_NXTHDR to<br>
+&nbsp;&nbsp;&nbsp; T_OPT_NEXTHDR<br>
+<br>
+(<strong>2) On t_optmgmt() man page, add macro formal parameters and clarify
+identification of <br>
+&nbsp;&nbsp;&nbsp; &quot;last t_opthdr&quot; in option buffer.</strong><br>
+<br>
+(2.1) On page 85, macro definitions, add macro formal parameters consistent with section
+6.2 <br>
+&nbsp;&nbsp;&nbsp; on page 40.<br>
+&nbsp;&nbsp;&nbsp; The change here for T_OPT_NXTHDR overlaps with the case (1) change.<br>
+&nbsp;&nbsp;&nbsp; Thus &quot;T_OPT_DATA&quot; would become &quot;T_OPT_DATA(tohp)&quot;<br>
+&nbsp;&nbsp;&nbsp; &quot;T_OPT_NXTHDR&quot; becomes &quot;T_OPT_NEXTHDR(nbp,tohp)&quot;,
+and<br>
+&nbsp;&nbsp;&nbsp; &quot;T_OPT_FIRSTHDR&quot; becomes &quot;T_OPT_FIRSTHDR(nbp)&quot;<br>
+<br>
+(2.2) On page 85, t_optmgmt() page, add to description of T_OPT_NEXTHDR macro definition <br>
+&nbsp;&nbsp;&nbsp; (name spelling fixed from T_OPT_NXTHDR), add after the text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;....or a null pointer if this t_opthdr is
+the last t_opthdr in the the option buffer.&quot;<br>
+&nbsp;&nbsp;&nbsp; the words:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;In this case, the space remaining in the
+option buffer is none or too small to accommodate <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a t_opthdr.&quot;<br>
+<br>
+<strong>(3) Clarify alignment interactions for 'struct netbuf' option buffers and related
+portability issues.</strong><br>
+<br>
+(3.1) Section 7.4 &quot;Use of struct netbuf&quot;, page 53, after the &quot;void
+*buf&quot;, add the following paragraph:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot; For guaranteed portability, the space
+pointed to by <em>buf</em> should be aligned appropriate <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to the most restrictive alignment of any of the
+data types it contains.&quot;<br>
+<br>
+(3.2) Page 58, t_alloc() definition, add to the second paragraph the text:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;The pointer references to space
+allocations embedded in <strong>struct netbuf</strong> fields (pointed by <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the <em>buf</em> pointers) are also aligned in
+the same way.<br>
+<br>
+(3.3) Appendix F, page 285, change comment:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* followed by option value */<br>
+&nbsp;&nbsp;&nbsp; to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* implementation may add padding here */<br>
+<br>
+<strong>(4) Provide example definitions of option macros consistent with the specification
+and <br>
+taking into account changes (1) and (2) above.</strong><br>
+<br>
+(4.1) In Appendix F, page 287, replace current content starting from (and including) the
+T_ALIGN <br>
+&nbsp;&nbsp;&nbsp; definition up to (and including) the T_OPT_FIRSTHDR definition. The new
+content is as follows:</p>
+
+<blockquote>
+  <p>/*<br>
+  * The following T_OPT_FIRSTHDR, T_OPT_NEXTHDR and T_OPT_DATA <br>
+  * macros have the semantics required by the standard. They are used to store and <br>
+  * retrieve multiple variable length objects delimited by a 'header' descriptor and <br>
+  * the variable length value content while allowing aligned access to each in an<br>
+  * arbitrary memory buffer.<br>
+  *<br>
+  * The required minimum alignment (based on types used internally in the<br>
+  * specification for header and data alignment is &quot;sizeof (t_uscalar_t)&quot;<br>
+  *<br>
+  * The definitions shown for macro bodies are examples only and other forms<br>
+  * are not only possible but are specifically permitted.<br>
+  *<br>
+  * The examples shown assume that the implementation chooses to align the<br>
+  * header and data parts at the required minimum of &quot;sizeof (t_uscalar_t)<br>
+  * Stricter alignment is permitted by an implementation.<br>
+  * <br>
+  * Helper macros starting with &quot;_T&quot; prefix are used below.<br>
+  * These are not a requirement of the specification and only used for<br>
+  * constructing example macro body definitions.<br>
+  */<br>
+  <br>
+  /*<br>
+  * Helper macro<br>
+  * _T_USCALAR_ALIGN - macro aligns to &quot;sizeof (t_uscalar_t) boundary<br>
+  */<br>
+  <br>
+  #define _T_USCALAR_ALIGN(p) (((uintptr_t)(p) + (sizeof (t_scalar_t) - 1))\<br>
+  &amp; ~(sizeof (t_scalar_t)-1))<br>
+  <br>
+  /*<br>
+  * struct t_opthdr *T_OPT_FIRSTHDR(struct netbuf *nbp)<br>
+  * Get aligned start of first option header<br>
+  *<br>
+  * This implementation assumes option buffers are allocated by t_alloc().<br>
+  * Hence appropriate alignment to start any sized object (including option<br>
+  * header) is guaranteed.<br>
+  */<br>
+  <br>
+  #define T_OPT_FIRSTHDR(nbp) \<br>
+  ((((char *)(nbp)-&gt;buf + sizeof (struct t_opthdr)) &lt;= \<br>
+  (char *)(nbp)-&gt;buf + (nbp)-&gt;len) ? \<br>
+  (struct t_opthdr *)(nbp)-&gt;buf (struct t_opthdr *)0)<br>
+  <br>
+  /*<br>
+  * unsigned char *T_OPT_DATA(struct t_opthdr *tohp)<br>
+  * Get aligned start of data part after option header<br>
+  *<br>
+  * This implementation assumes &quot;sizeof (t_uscalar_t)&quot; as the alignment size<br>
+  * for its option data and option header with no padding in &quot;struct t_opthdr&quot;<br>
+  * definition.<br>
+  */<br>
+  <br>
+  #define T_OPT_DATA(tohp) \<br>
+  ((unsigned char *)(tohp) + sizeof (struct t_opthdr))<br>
+  <br>
+  /*<br>
+  * struct t_opthdr *_T_NEXTHDR(char *pbuf, unsigned int buflen,<br>
+  * struct t_opthdr *popt)<br>
+  * <br>
+  * Helper macro for defining T_OPT_NEXTHDR macro.<br>
+  * This implementation assumes &quot;sizeof (t_uscalar_t)&quot; as the alignment<br>
+  * for its option data and option header. Also it assumes &quot;struct t_opthdr&quot;<br>
+  * definitions contains no padding.<br>
+  */<br>
+  <br>
+  #define _T_NEXTHDR(pbuf, buflen, popt) \<br>
+  (((char *)(popt) + _T_USCALAR_ALIGN((popt)-&gt;len) + \<br>
+  sizeof (struct t_opthdr) &lt;= \<br>
+  ((char *)(pbuf) + (buflen))) ? \<br>
+  (struct t_opthdr *)((char *)(popt) + _T_USCALAR_ALIGN((popt)-&gt;len) \<br>
+  (struct t_opthdr *)0))<br>
+  <br>
+  /*<br>
+  * struct t_opthdr *T_OPT_NEXTHDR(struct netbuf *nbp, struct t_opthdr *tohp)<br>
+  * Skip to next option header<br>
+  * This implementation assumes &quot;sizeof (t_uscalar_t)&quot; as the alignment size<br>
+  * for its option data and option header.<br>
+  */<br>
+  <br>
+  #define T_OPT_NEXTHDR(nbp, tohp) _T_NEXTHDR((nbp)-&gt;buf, (nbp)-&gt;len, (tohp))</p>
+</blockquote>
+
+<hr>
+
+<pre><big><big><strong><font face="Times New Roman">Corrigendum U031 (12 Feb 1998)</font></strong></big></big></pre>
+
+<hr>
+
+<pre><font face="Times New Roman"><strong>Change Number</strong>:  U031/XNS-001
+
+<strong>Title:</strong>		Incorrect specification of &quot;type&quot; for getnetbyaddr()
+
+<strong>Qualifier:</strong>	Major technical
+
+<strong>Rationale:</strong>	The description in the endnetent() reference page (Page 190) of the &quot;net&quot; argument 
+			of getnetbyaddr() being of type &quot;in_addr_t&quot; is an erratum. It should be of 
+			type &quot;uint32_t&quot;, as in the getnetbyaddr() reference page (Page 196) and on 
+			Page 212. [Page numbers refer to The Open Group's printed XNS Issue 5 publication.]
+
+<strong>Change:</strong>		Change the endnetent() reference page from:
+				struct netent *getnetbyaddr(in_addr_t net, int type);
+			to:
+				struct netent *getnetbyaddr(uint32_t net, int type);</font></pre>
+
+<hr>
+
+<pre><font face="Times New Roman"><strong>Change Number:</strong>  U031/XNS-002
+
+<strong>Title:		</strong>Typographical error
+
+<strong>Qualifier:	</strong>Minor editorial
+
+<strong>Rationale:	</strong>In the list of thread-safe interfaces in Section 1.5,  Thread Safety, the first item in the list
+			is incompletely shown.
+
+<strong>Change</strong>:		Change the first item in the list of thread-safe interfaces shown in Section 1.5, Thread 
+			Safety from:
+				byaddr()
+			to:
+				gethostbyaddr()</font></pre>
+
+<hr>
+</body>
+</html>

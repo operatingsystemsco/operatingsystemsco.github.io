@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>zcat</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2961">&nbsp;</a>NAME</h4><blockquote>
+zcat - expand and concatenate data
+</blockquote><h4><a name = "tag_001_014_2962">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+zcat <b>[</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2963">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>zcat</i>
+utility will write to standard output the uncompressed form of
+files that have been compressed using the
+<i><a href="compress.htm">compress</a></i>
+utility.
+It is the equivalent of
+<i><a href="uncom2.htm">uncompress</a></i>
+<b>-c</b>.
+Input files are not affected.
+</blockquote><h4><a name = "tag_001_014_2964">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2965">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>The pathname of a file previously processed by the
+<i><a href="compress.htm">compress</a></i>
+utility.
+If
+<i>file</i>
+already has the
+.Z
+suffix specified,
+it is used as submitted.
+Otherwise, the
+.Z
+suffix is appended to the filename prior to processing.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2966">&nbsp;</a>STDIN</h4><blockquote>
+The standard input will be used only if no
+<i>file</i>
+operands are specified, or if a
+<i>file</i>
+operand is "-".
+</blockquote><h4><a name = "tag_001_014_2967">&nbsp;</a>INPUT FILES</h4><blockquote>
+Input files must be compressed files that are in the format produced by the
+<i><a href="compress.htm">compress</a></i>
+utility.
+</blockquote><h4><a name = "tag_001_014_2968">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>zcat</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2969">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2970">&nbsp;</a>STDOUT</h4><blockquote>
+The compressed files given as input will be written on standard
+output in their uncompressed form.
+</blockquote><h4><a name = "tag_001_014_2971">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2972">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2973">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2974">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2975">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2976">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2977">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2978">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2979">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="compress.htm">compress</a></i>,
+<i><a href="uncom2.htm">uncompress</a></i>,
+<i>zcat</i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dis</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_472">&nbsp;</a>NAME</h4><blockquote>
+dis - disassembler (<b><a href="intro.htm#tag_001_003_001">DEVELOPMENT</a></b>, <b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_473">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+dis <b>[</b>-oLV<b>][</b>-F <i>function</i><b>]</b>... <b>[</b>-l <i>string</i><b>]</b><i> file</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_474">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>dis</i>
+utility
+produces an assembly language listing
+of each of its
+<i>file</i>
+arguments, each of which may be an object file
+or an archive of object files.
+The listing includes assembly statements
+and an octal or hexadecimal representation of
+the binary that produced those statements.
+</blockquote><h4><a name = "tag_001_014_475">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>dis</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+The following options are supported:
+<p>
+<dl compact>
+
+<dt><b>-o</b>
+<dd>Write numbers in octal.
+The default is hexadecimal.
+
+<dt><b>-L</b>
+<dd>Invoke a lookup of C-language source labels in the symbol table for
+subsequent writing to standard output.
+
+<dt><b>-V</b>
+<dd>Write the version number of the disassembler to standard error.
+
+<dt><b>-F&nbsp;</b><i>function</i>
+<dd>
+Disassemble only the named
+<i>function</i>
+in each object file specified on the command line.
+
+<dt><b>-l&nbsp;</b><i>string</i>
+<dd>
+Disassemble the library file specified as
+<i>string</i>.
+For example, the command
+<i>dis</i>
+<b>-l</b>m
+will disassemble the math library.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_476">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of an object file or an archive (see
+<i><a href="ar.htm">ar</a></i>)
+of object files.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_477">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_478">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files are object files or archives of object files, or both.
+</blockquote><h4><a name = "tag_001_014_479">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables may affect the execution of
+<i>dis</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_480">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_481">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output consists of an assembly listing of unspecified format.
+</blockquote><h4><a name = "tag_001_014_482">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_483">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_484">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_485">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_486">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_487">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_488">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_489">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_490">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ar.htm">ar</a></i>,
+<i><a href="cc.htm">cc</a></i>,
+<i><a href="c89.htm">c89</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

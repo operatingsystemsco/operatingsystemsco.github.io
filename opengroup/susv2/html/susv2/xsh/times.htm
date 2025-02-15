@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>times</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_070">&nbsp;</a>NAME</h4><blockquote>
+times - get process and waited-for child process times
+</blockquote><h4><a name = "tag_000_010_071">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systi277.htm">sys/times.h</a>&gt;
+
+clock_t times(struct tms *<i>buffer</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_072">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>times()</i>
+function fills the
+<b>tms</b>
+structure pointed to by
+<i>buffer</i>
+with time-accounting information.
+The structure
+<b>tms</b>
+is defined in
+<i><a href="systi277.htm">&lt;sys/times.h&gt;</a></i>.
+<p>
+All times are measured in terms of the number of clock ticks used.
+<p>
+The times of a terminated child process are included in the
+<b>tms_cutime</b>
+and
+<b>tms_cstime</b>
+elements of the parent when
+<i><a href="wait.htm">wait()</a></i>
+or
+<i><a href="waitpid.htm">waitpid()</a></i>
+returns the process ID of this terminated child.  If a child process has not
+waited for its children, their times will not be included in its times.
+<ul>
+<p>
+<li>
+The
+<b>tms_utime</b>
+structure member is the CPU
+time charged for the execution of user instructions of the
+calling process.
+<p>
+<li>
+The
+<b>tms_stime</b>
+structure member is the CPU
+time charged for execution by the system on behalf of the
+calling process.
+<p>
+<li>
+The
+<b>tms_cutime</b>
+structure member is the sum of the
+<b>tms_utime</b>
+and
+<b>tms_cutime</b>
+times of the child processes.
+<p>
+<li>
+The
+<b>tms_cstime</b>
+structure member is the sum of the
+<b>tms_stime</b>
+and
+<b>tms_cstime</b>
+times of the child processes.
+<p>
+</ul>
+</blockquote><h4><a name = "tag_000_010_073">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>times()</i>
+returns the elapsed real time, in
+clock ticks, since an arbitrary
+point in the past (for example, system start-up time).
+This point does not change from one invocation of
+<i>times()</i>
+within the process to another.  The return value may overflow the possible
+range of type
+<b>clock_t</b>.
+If
+<i>times()</i>
+fails, (<b>clock_t</b>)-1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_010_074">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_010_075">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_076">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Applications should use
+to determine the number of clock ticks per
+second as it may vary from system to system.
+</blockquote><h4><a name = "tag_000_010_077">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_078">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="sysconf.htm">sysconf()</a></i>,
+<i><a href="time.htm">time()</a></i>,
+<i><a href="wait.htm">wait()</a></i>,
+<i><a href="systi277.htm">&lt;sys/times.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

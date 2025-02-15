@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>hline_set</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_678">&nbsp;</a>NAME</h4><blockquote>
+hline_set, mvhline_set, mvvline_set, mvwhline_set, mvwvline_set, vline_set,
+whline_set, wvline_set - draw lines from complex characters and renditions
+</blockquote><h4><a name = "tag_002_001_679">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int hline_set(const cchar_t *<i>wch</i>, int <i>n</i>);
+
+int mvhline_set(int <i>y</i>, int <i>x</i>, const cchar_t *<i>wch</i>, int <i>n</i>);
+
+int mvvline_set(int <i>y</i>, int <i>x</i>, const cchar_t *<i>wch</i>, int <i>n</i>);
+
+int mvwhline_set(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, const cchar_t *<i>wch</i>, int <i>n</i>);
+
+int mvwvline_set(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, const cchar_t *<i>wch</i>, int <i>n</i>);
+
+int vline_set(const cchar_t *<i>wch</i>, int <i>n</i>);
+
+int whline_set(WINDOW *<i>win</i>, const cchar_t *<i>wch</i>, int <i>n</i>);
+
+int wvline_set(WINDOW *<i>win</i>, const cchar_t *<i>wch</i>, int <i>n</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_680">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions draw a line in the current or specified window starting at the
+current or specified position, using <i>ch</i>.  The line is at most <i>n</i>
+positions long, or as many as fit into the window.
+<p>
+These functions do not advance the cursor position.
+These functions do not perform special character processing.
+These functions do not perform wrapping.
+<p>
+The
+<i>hline_set()</i>,
+<i>mvhline_set()</i>,
+<i>mvwhline_set()</i>
+and
+<i>whline_set()</i>
+functions draw a line proceeding toward the last column of the same line.
+<p>
+The
+<i><a href="vline155.htm">vline_set()</a></i>,
+<i>mvvline_set()</i>,
+<i>mvwvline_set()</i>
+and
+<i>wvline_set()</i>
+functions draw a line proceeding toward the last line of the window.
+</blockquote><h4><a name = "tag_002_001_681">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_682">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_683">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="borde13.htm">border_set()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

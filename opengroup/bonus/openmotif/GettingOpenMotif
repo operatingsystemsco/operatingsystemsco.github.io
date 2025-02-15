@@ -1,0 +1,80 @@
+
+			OBTAINING OPEN MOTIF
+
+Thank you for your interest in the OPEN MOTIF, Release 2.1.30 and later
+
+The software in this release is not in the public domain, but is 
+redistributable under terms defined in the License file accompanying
+the release.  Vendors are actively encouraged to base products on this software.
+
+Sites that have network file transfer ability can retrieve the release 
+from the network location nearest them listed further below.  
+
+		FTP SITES PROVIDING RELEASE 2.1.30 and later
+
+
+(additional mirror sites will become available shortly; please check
+your favorite site first.)
+
+
+Location	Address
+------------------------
+
+[Primary site]
+UK		ftp://openmotif.opengroup.org/pub/openmotif 
+
+Eastern USA	ftp://ftp.opengroup.org/pub/openmotif
+
+
+Official mirror sites for Open Motif:
+
+[Australia]:
+ftp://mirror.aarnet.edu.au/pub/openmotif/
+http://mirror.aarnet.edu.au/pub/openmotif/
+
+[USA Iowa]:
+ftp://ftp.isca.uiowa.edu/pub/mirrors/openmotif/
+http://ftp.isca.uiowa.edu/pub/mirrors/openmotif/
+
+
+[USA San Francisco]: 
+ftp://ftp.freesoftware.com/pub/openmotif 
+
+[Japan]: 
+ftp://ftp.kddlabs.co.jp:/X11/openmotif     
+ftp://ftp.u-aizu.ac.jp/pub/x11/opengroup/openmotif     
+
+
+[Czech Republic]: 
+ftp://ftp.gin.cz/pub/MIRRORS/ftp.opengroup.org/pub/openmotif/     
+
+[Hungary]: 
+ftp://ftp.kutdiak.kee.hu/pub/mirrors/openmotif/ 
+http://www.kutdiak.kee.hu/pub/mirrors/openmotif/     
+
+
+[France]: 
+ftp://ftp.medasys-digital-systems.fr/pub/unix/openmotif     
+
+ftp://ftp.uvsq.fr/pub/X11/openmotif     
+
+
+[Greece]: 
+ftp://ftp.ntua.gr/mirror/openmotif     
+
+
+[Korea]: 
+ftp://ftp1.kreonet.re.kr/pub/openmotif 
+ftp://ftp2.kreonet.re.kr/pub/openmotif 
+
+Open Motif Supporter Distributions 
+
+[USA East]: 
+ftp://download.motifzone.net/pub 
+
+And via The MotifZone at http://www.motifzone.net/download/mirrors.php an 
+additional 100+ mirrors thanks to RedHat Inc. 
+
+If you would like to become an official mirror site please
+send email to openmotif-admin@opengroup.org
+

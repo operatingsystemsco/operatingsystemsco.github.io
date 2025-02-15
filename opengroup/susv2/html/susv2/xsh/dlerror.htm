@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dlerror</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_127">&nbsp;</a>NAME</h4><blockquote>
+dlerror - get diagnostic information
+</blockquote><h4><a name = "tag_000_003_128">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="dlfcn40.htm">dlfcn.h</a>&gt;
+
+char *dlerror(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_129">&nbsp;</a>DESCRIPTION</h4><blockquote>
+<i>dlerror()</i>
+returns a null-terminated character string (with no trailing newline)
+that describes the last error that occurred during dynamic linking
+processing. If no dynamic linking errors have occurred since the last
+invocation of
+<i>dlerror()</i>,
+<i>dlerror()</i>
+returns NULL.
+Thus, invoking 
+<i>dlerror()</i>
+a second time, immediately following a prior invocation, will result in
+NULL being returned.
+</blockquote><h4><a name = "tag_000_003_130">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, 
+<i>dlerror()</i>
+returns a null-terminated character string.  Otherwise, NULL is returned.
+</blockquote><h4><a name = "tag_000_003_131">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_003_132">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_133">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The messages returned by 
+<i>dlerror()</i>
+may reside in a static buffer that is overwritten on each call to
+<i>dlerror()</i>.
+Application code should not write to this buffer. 
+Programs wishing to preserve an error message should make their
+own copies of that message. Depending on the application environment 
+with respect to asynchronous execution events, such as signals or other
+asynchronous computation sharing the address space, portable
+applications should use a critical section to retrieve the error pointer and 
+buffer.
+</blockquote><h4><a name = "tag_000_003_134">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_135">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="dlclose.htm">dlclose()</a></i>,
+<i><a href="dlopen.htm">dlopen()</a></i>,
+<i><a href="dlsym.htm">dlsym()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

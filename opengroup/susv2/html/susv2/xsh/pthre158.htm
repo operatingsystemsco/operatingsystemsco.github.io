@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_mutex_init</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1432">&nbsp;</a>NAME</h4><blockquote>
+pthread_mutex_init, pthread_mutex_destroy - initialise or destroy a mutex
+</blockquote><h4><a name = "tag_000_007_1433">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_mutex_init(pthread_mutex_t *<i>mutex</i>, 
+    const pthread_mutexattr_t *<i>attr</i>);
+int pthread_mutex_destroy(pthread_mutex_t *<i>mutex</i>);
+pthread_mutex_t <i>mutex</i> = PTHREAD_MUTEX_INITIALIZER;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1434">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pthread_mutex_init()</i>
+function initialises the mutex referenced by
+<i>mutex</i>
+with attributes specified
+by
+<i>attr</i>.
+If
+<i>attr</i>
+is NULL,
+the default mutex attributes are used; the effect is the same as
+passing the address of a default mutex attributes object.
+Upon successful initialisation, the state of the mutex becomes
+initialised and unlocked.
+<p>
+Attempting to initialise an already initialised
+mutex results in
+undefined behaviour.
+<p>
+The
+<i>pthread_mutex_destroy()</i>
+function destroys the mutex object referenced by
+<i>mutex</i>;
+the mutex object becomes, in effect, uninitialised.
+An implementation may cause
+<i>pthread_mutex_destroy()</i>
+to set the object referenced by
+<i>mutex</i>
+to an invalid value.
+A destroyed mutex object
+can be re-initialised using
+<i>pthread_mutex_init()</i>;
+the results of otherwise referencing the object after it has been destroyed
+are undefined.
+<p>
+It is safe to destroy an initialised mutex that is unlocked.
+Attempting to destroy a locked mutex results in
+undefined behaviour.
+<p>
+In cases where default mutex attributes are appropriate,
+the macro PTHREAD_MUTEX_INITIALIZER
+can be used to initialise mutexes that are statically allocated.
+The effect is equivalent to dynamic initialisation by a call to
+<i>pthread_mutex_init()</i>
+with parameter
+<i>attr</i>
+specified as NULL,
+except that no error checks are performed.
+</blockquote><h4><a name = "tag_000_007_1435">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>pthread_mutex_init()</i>
+and
+<i>pthread_mutex_destroy()</i>
+functions return zero.
+Otherwise, an error number is returned to indicate the error.
+The [EBUSY] and [EINVAL] error checks, if implemented,
+act as if they were performed immediately
+at the beginning of processing for the function
+and cause an error return
+prior to modifying the state of the mutex specified by
+<i>mutex</i>.
+</blockquote><h4><a name = "tag_000_007_1436">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_mutex_init()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAGAIN]<dd>
+The system lacked the necessary resources (other than memory)
+to initialise another mutex.
+
+<dt>[ENOMEM]<dd>
+Insufficient memory exists to initialise the mutex.
+
+<dt>[EPERM]<dd>
+The caller does not have the privilege to perform the operation.
+
+</dl>
+<p>
+The
+<i>pthread_mutex_init()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+The implementation has detected an attempt
+to re-initialise the object referenced by
+<i>mutex</i>,
+a previously initialised, but
+not yet destroyed, mutex.
+
+<dt>[EINVAL]<dd>
+The value specified by
+<i>attr</i>
+is invalid.
+
+</dl>
+<p>
+The
+<i>pthread_mutex_destroy()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+The implementation has detected an attempt to destroy
+the object referenced by
+<i>mutex</i>
+while it is locked or referenced
+(for example, while being used in a
+<i><a href="pthre142.htm">pthread_cond_wait()</a></i>
+or
+<i><a href="pthre141.htm">pthread_cond_timedwait()</a></i>)
+by another thread.
+
+<dt>[EINVAL]<dd>
+The value specified by
+<i>mutex</i>
+is invalid.
+
+</dl>
+<p>
+These functions will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1437">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1438">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1439">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1440">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre159.htm">pthread_mutex_getprioceiling()</a></i>,
+<i><a href="pthre161.htm">pthread_mutex_lock()</a></i>,
+<i><a href="pthre164.htm">pthread_mutex_unlock()</a></i>,
+<i><a href="pthre162.htm">pthread_mutex_setprioceiling()</a></i>,
+<i><a href="pthre163.htm">pthread_mutex_trylock()</a></i>,
+<i><a href="pthre168.htm">pthread_mutexattr_getpshared()</a></i>,
+<i><a href="pthre173.htm">pthread_mutexattr_setpshared()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

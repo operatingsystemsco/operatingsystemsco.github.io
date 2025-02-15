@@ -1,0 +1,500 @@
+<!DOCTYPE HTML SYSTEM "html.dtd">
+<HTML>
+<HEAD>
+<TITLE>Corrigenda U003</TITLE>
+</HEAD>
+<BODY>
+<H2>X/Open Corrigenda: U003</H2>
+<H1> Document: X/Open Transport Interface (XTI) Specification Version 2</H1>
+X/Open CAE Specification, 10/93<BR>
+X/Open reference C318
+<P>
+<H3>Contents</H3>
+<DT>                XTI-1.1 through XTI-1.5  Major Technical changes
+<DT>                XTI-1.6 through XTI-1.11 Minor Technical changes..
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XTI-1.1</H3>
+
+<DT><H3>Title</H3>
+<DD>t_accept() address binding for resfd in state T_IDLE
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Although some transport implementations (e.g., ISO)
+                    support multiple endpoints binding to the same protocol
+                    address, most TCP implementations do not.  This
+                    limitation has led to the following widespread practice.
+<P>
+<DD>                    A user calls t_bind() to bind resfd to an arbitrary
+                    port on the local host, then calls t_accept() (with
+                    fd != resfd) which binds resfd the same address as fd.
+                    For resfd, a change of address takes place.  Thus this
+                    behavior is called "the magic address switch".
+<P>
+<DD>                    Appendix B.3, t_accept(), second paragraph, second
+                    sentence, states that "Also, resfd must be bound to the
+                    same address as fd."  This requirement is not true for
+                    most TCP implementations.  Moreover, this requirement
+                    makes the implementation of a compliant XTI interface
+                    over these TCP providers very difficult, if not
+                    impossible.  Finally, the current practice based on the
+                    magic address switch works and applications are using
+                    it.
+<P>
+<DD>                In order to allow implementations that perform the magic
+                    address switch to comply with XTI, the following change
+                    is needed.
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                In Appendix B section B.3 (page 113), t_accept(), second
+                    paragraph:
+<P>
+<DT>                Remove second sentence:
+<DD>                      "Also, resfd must be bound to the same address as fd."
+<P>
+<DT>                Add the following text at the end of the same paragraph:
+<DD>                  "If such a restriction exists, a user has the
+                      following alternatives for accepting a connection
+                      on a different endpoint (resfd != fd): (1) call
+                      t_accept() while resfd is in state T_UNBND; or
+                      (2) bind to an arbitrary unused local address,
+                      and then call t_accept() in the T_IDLE state.  In
+                      the second case, t_accept() will change the resfd
+                      address to be the same as that of fd.  For
+                      portability, the first alternative is recommended.
+<P>
+<DT>                On page 113, t_bind(), second paragraph change the
+                    beginning of the first sentence from:
+<DD>                  "In connection-oriented mode, ..."
+<DT>                to:
+<DD>                  "In some implementations, in connection-oriented
+                      mode,..."
+<P>
+<DT><I>Branding</I>
+<DD>                Branding should require that a vendor state if multiple
+                    binds of an endpoint to the same address are allowed,
+                    and if not, whether the implementation performs the
+                    magic address during t_accept().
+<P>
+<DT><I>Testing</I>
+<DD>                An XTI implementation can and should be tested for
+                    allowing multiple binds of an endpoint to the same
+                    address and for performing the magic address switch.
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : XTI-1.2</H3>
+<DT><H3>Title</H3>
+<DD>Add t_close() semantics to appendix C.4.
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Appendix C of the XTI spec. needs to be modified
+                    to alert application writers they can not always
+                    depend on the behavior of the t_close().
+<P>
+<DT><H3>Change</H3><DL>
+<DT>At the end of Appendix C section C.4, add the following text:
+
+<DD>                    11. The semantics of closing a connection may be
+                        different across transport providers. For example,
+                        closing a connection to ISO is abortive while
+                        closing a connection to TCP is orderly. A portable
+                        application should not assume either facility is
+                        available. If the service provider is of type
+                        COTS_ORD, a portable application should use the
+                        t_sndrel()/t_rcvrel() prior to calling t_close().
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : XTI-1.3</H3>
+<DT><H3>Title</H3>
+<DD>Add t_close() semantics to Appendix B.
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Appendix B of the XTI spec. needs to clarify Internet
+                    transport protocol TCP action on t_close().
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                Insert the following text in the alphabetically
+                    appropriate place in Section "B.3 Functions" (after
+                    t_bind() description and before t_connect() description):
+
+<DD>                t_close()<BR>
+                    The t_close() call will result in close() call to be made
+                    on the descriptor of this XTI communication endpoint.
+                    If there are no other descriptors in this process or any
+                    other process which reference this communication endpoint,
+                    the close() call will perform an orderly connection
+                    termination according to the rules of a  TCP CLOSE call on
+                    this connection endpoint as specified in standards RFC 793
+                    and RFC 1122. If the XTI_LINGER option is supported and is
+                    used to enable the linger option, the linger time will
+                    affect the time an implementation lingers in the
+                    execution of t_close() or close(). A linger time of 0
+                    specified with XTI_LINGER option may cause an abortive
+                    release of a TCP connection resulting in lost data.
+</DL></DL>
+<P>
+<HR>
+
+
+<P>
+<DL>
+<DT><H3>Change number : XTI-1.4</H3>
+<DT><H3>Title</H3>
+<DD>Add t_close() semantics to Appendix A.
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Appendix A of the XTI spec. needs to clarify ISO transport
+                    protocol action on t_close(); this clarification needs
+                    to take into account that:
+<P>
+<DL><DT><DD>
+<DT>                (1) ISO transport does not support the orderly release
+                       function.
+<P>
+                    (2) without orderly release, the XTI_LINGER option has no
+                       meaning for an ISO transport provider.
+</DL>
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                Insert the following text in the alphabetically
+                    appropriate place in Section "A.3 Functions" (after
+                    t_bind() description and before t_connect() description):
+<P>
+                    t_close()
+                    The t_close() call will cause a close() call to be made
+                    on the descriptor of this XTI communication endpoint.
+                    If there are no other descriptors in this process or any
+                    other process which reference this communication
+                    endpoint, the close() call will perform an abortive
+                    release on any connection associated with this endpoint.
+</DL></DL>
+<P>
+<HR>
+
+
+
+<P>
+<DL>
+<DT><H3>Change number : XTI-1.5</H3>
+<DT><H3>Title</H3>
+<DD>Add t_close() semantics to Appendix I.
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Change the semantics of mapping a t_close() to being
+                    an orderly close. t_close() can map to the close
+                    semantics of the underlying provider. Since SNA provides
+                    an orderly close, and since mapping to an orderly close
+                    makes it easier to map XTI applications to an SNA
+                    transport, mapping t_close() to an orderly SNA close
+                    makes more sense.
+<P>
+                    Appendix I of the XTI Specification needs to be modified
+                    to alert application writers of the t_close() semantics
+                    for the SNA Transport Provider.
+
+<P>
+<DT><H3>Change</H3>
+<DD>                   (1)  Replace section I.2.1, item 6 "Orderly release",
+                        with the following text:
+<DL><DT><DD>
+<P>
+                        "6. t_close()
+<P>
+                            The semantics of t_close() on an SNA Transport
+                            Provider is simplex orderly, that is, the send
+                            pipe of the XTI application issuing the
+                            t_close() is closed, but the receive pipe
+                            remains open. Any data sent prior to the
+                            t_close() will be delivered to the partner."
+</DL>
+<P>
+<DD>               (2)  In table I-5, page 216, t_close() entry:
+<P>
+<DL><DT><DD>
+                        - Replace "DEALLOCATE TYPE(ABEND)"<BR>
+                          with    "DEALLOCATE TYPE(FLUSH)"<BR>
+<P>
+                        - Remove sentence that says "May be a delay if
+                          XTI_LINGER ooption activated with non-zero
+                          linger value."
+<P>
+</DL>
+<DD>               (3)  In table I-9, page 221, change "TYPE(ABEND_PROG)"
+                        to "TYPE(FLUSH)"
+</DL></DL>
+<P>
+<HR>
+ <P>
+<DL>
+<DT><H3>Change number : XTI-1.6</H3>
+<DT><H3>Title</H3>
+<DD>RT_UNUSED not used. so delete its definition.
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>With regard to the "General purpose defines", T_UNUSED
+                    is not used elsewhere in the document.
+
+<P>
+<DT><H3>Change</H3><DL>
+<DD>               In Appendix F page 164, remove its definition.
+</DL></DL>
+<P>
+<HR>
+ <P>
+<DL>
+<DT><H3>Change number : XTI-1.7</H3>
+<DT><H3>Title</H3>
+<DD>Zero value of maxlen
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>With regard to the sentence "If maxlen is not large
+                    enough to hold the returned address, an error will result"
+                    in the description of t_bind() on page 54, and to similar
+                    text in the descriptions of functions t_connect(),
+                    t_getprotaddr(), t_listen(), t_rcvconnect(), t_optmgmt(),
+                    t_rcvdis(), t_rcvudata(), t_rcvuderr(): if the maxlen
+                    value of an output parameter is too small, the function
+                    fails with [TBUFOVFLW] only if maxlen > 0, but not if
+                    maxlen=0 (see the description for [TBUFOVFLW] in the
+                    Errors section. The idea was that a user is allowed to
+                    selectively discard output information by setting the
+                    maxlen field of the appropriate output parameter to zero.
+                    (Setting the complete output structure to NULL would
+                    result in a total information loss.) Unfortunately,
+                    the behaviour of the call in case that maxlen = 0 was
+                    only implicitly described in the decription of [TBUFOVFLW].
+<P>
+                    This change removes conflicting statements from the XTI
+                    specification.  Applications and implementations that
+                    follow the descriptions of the TBUFOVFLW error will be
+                    unaffected by this change. Applications and implementations
+                    that follow the function descriptions could be affected.
+                    There could be implications for testing and branding
+                    if the test suite follows the function descriptions rather
+                    than the TBUFOVFLW error descriptions.
+
+<P>
+<DT><H3>Change</H3><DL>
+<DD>               (1) In the description of t_bind(), replace the sentence
+<DL><DT><DD>
+                       "If maxlen is not ..."
+</DL>
+                       by
+<DL><DT><DD>
+                       "If maxlen equals zero, no address is returned. If
+                        maxlen is greater than zero and less than the length
+                        of the address, t_bind() fails."
+</DL>
+<P>
+<DD>               (2) In the description of t_connect(), replace
+<DL><DT><DD>
+                       "However, rcvcall may be a null . . t_connect()"
+</DL>
+                       by
+<DL><DT><DD>
+                       "However, maxlen can be set to zero, in which case no
+                        information to this specific argument is given to
+                        the user on the return from t_connect(). If rcvcall
+                        is set to NULL, no information at all is returned."
+</DL>
+<P>
+<DD>               (3) At the end of the description of t_getprotaddr(),
+                       add "If the maxlen field of boundaddr
+                       or peeraddr is set to zero, no address is returned."
+<P>
+<DD>               (4) In the description of t_listen(), after " . . maximum
+                       size of the buffer for each" (page 71), add "If the
+                       maxlen field of call->addr, call->opt, or call->udata
+                       is set to zero, no information is returned for this
+                       parameter."
+<P>
+<DD>               (5) In the description of t_optmgmt(), after the sentence
+                       ending ".. options are to be placed." add
+                       the sentence: "If maxlen in ret is set to zero, no
+                       options values are returned.".
+<P>
+<DD>               (6) In the description of t_rcvconnect(),
+                       replace the sentence "However, call may be a null
+                       pointer,.." by "However, maxlen can be set to zero,
+                       in which case no information to this specific argument
+                       is given to the user on the return from t_rcvconnect().
+                       If call is set to NULL, no information at all is
+                       returned.".
+<P>
+<DD>               (7) In the description of t_rcvdis(), replace
+                       the sentence "If a user does not care..." by "The
+                       maxlen field of udata may be set to zero, if the user
+                       does not care about incoming data. If, in addition,
+                       the user does not need to know the value of reason
+                       or sequence, discon may be set to NULL and any user
+                       data associated with the disconnect indication shall
+                       be discarded."
+<P>
+<DD>               (8) In the descriptions of t_rcvudata() (page 92) and
+                       rcvvudata() (TBA), after " . . maximum size of the
+                       buffer for each", add "If the maxlen field of addr
+                       or opt is set to zero, no information is returned
+                       in the buf field of this parameter."
+<P>
+<DD>               (9) In the description of t_rcvuderr(), after
+                       " . . maximum size of the buffer for each" (page 92),
+                       add "If this field is set to zero for addr or opt,
+                       no information is returned in the buf field of this
+</DL></DL>
+
+
+<P>
+<HR>
+ <P>
+<DL>
+<DT><H3>Change number : XTI-1.8</H3>
+<DT><H3>Title</H3>
+<DD>System error on t_close()
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>t_close is eventually mapped to close(). A close could
+                    fail with EINTR. Consequently, one should allow for a
+                    system error.
+
+<P>
+<DT><H3>Change</H3>
+<DD>Add<P>
+                    "[TSYSERR] A system error has occurred during execution
+                               of this function."
+<P>
+                    to the list of errors of t_close() on page 48.
+</DL>
+
+ <P>
+<HR>
+ <P>
+<DL>
+<DT><H3>Change number : XTI-1.9</H3>
+<DT><H3>Title</H3>
+<DD>TOUTSTATE and t_optmgmt()
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>t_optmgmt() is valid in all states and so cannot generate
+                    [TOUTSTATE].
+
+<P>
+<DT><H3>Change</H3>
+<DD>Remove the TOUTSTATE entry from the list of ERRORS for
+                    t_optmgmt() on page 73.
+</DL>
+
+
+ <P>
+<HR>
+ <P>
+<DL>
+<DT><H3>Change number : XTI-1.10</H3>
+<DT><H3>Title</H3>
+<DD>TACCes and t_optmgmt()
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The description for the T_NEGOTIATE flag on page 69 says
+                    that the status T_NOTSUPPORT is returned is the status
+                    field, if the user attempts to negotiate a privileged
+                    option. Thus, [TACCES] can not be generated by t_optmgmt().
+<P>
+                    This change should not affect existing applications (if
+                    there are any that test for return of TACCES by
+                    t_optmgmt(), then they can continue to do so, but the
+                    test will of course always fail). It will only affect
+                    implementations if there are any that actually generate
+                    TACCES from t_optmgmt(). Similarly, it will not affect
+                    the test suite unless this actually tests that TACCES
+                    is returned by t_optmgmt() under certain conditions
+                    (in which case, it would be interesting to know what
+                    those condidtions are).
+
+<P>
+<DT><H3>Change</H3>
+<DD>Remove [TACCES] from the list on page 73.
+</DL>
+
+-----------------------------------------------------------------------------
+ <P>
+<HR>
+ <P>
+<DL>
+<DT><H3>Change number : XTI-1.11</H3>
+<DT><H3>Title</H3>
+<DD>Expedited data and RFC 1006
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>This text is not in the XTI CAE Specification, but is
+                    probably intended to be added in order to describe support
+                    for RFC 1006. In the text in the table in Appendix A
+                    section A.3 on page 105, for "ISO over TCP", it should
+                    be made clear that the value of info->etsdu depends on
+                    the negotiation of expedited data transfer.
+<P>
+                    As this relates to a possible future change, rather to the
+                    existing specification, there is no effect on existing
+                    applications or implementations, or on testing or branding.
+
+<P>
+<DT><H3>Change</H3>
+<DD>Ensure that the relevant entry is annotated "(3)" when
+                    describing support for RFC 1006.
+</DL>
+<P>
+<HR>
+<P>
+If you can't find the information you need, please contact
+X/Open at any of its <A HREF = "http://www.xopen.co.uk/contact.htm">offices.</A>
+<P>
+<HR>
+<P>
+<A HREF="http://www.xopen.co.uk/cprt.htm">Copyright X/Open Company Limited, &#169; 1995</A>
+<P>
+<HR>
+</BODY>
+</HTML>
+

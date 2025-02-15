@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>realpath</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1936">&nbsp;</a>NAME</h4><blockquote>
+realpath - resolve a pathname
+</blockquote><h4><a name = "tag_000_007_1937">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+char *realpath(const char *<i>file_name</i>, char *<i>resolved_name</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1938">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>realpath()</i>
+function derives, from the pathname pointed to by
+<i>file_name</i>,
+an absolute pathname that names the same file, whose resolution does not
+involve ".", "..", or symbolic links.  The generated pathname is stored, up to
+a maximum of {PATH_MAX} bytes, in the buffer pointed to by
+<i>resolved_name</i>.
+</blockquote><h4><a name = "tag_000_007_1939">&nbsp;</a>RETURN VALUE</h4><blockquote>
+On successful completion,
+<i>realpath()</i>
+returns a pointer to the resolved name.  Otherwise,
+<i>realpath()</i>
+returns a null pointer and sets <i>errno</i> to indicate the error, and the
+contents of the buffer pointed to by <i>resolved_name</i> are undefined.
+</blockquote><h4><a name = "tag_000_007_1940">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>realpath()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Read or search permission was denied for a component of
+<i>file_name</i>.
+
+<dt>[EINVAL]<dd>
+Either the <i>file_name</i> or <i>resolved_name</i> argument is a null pointer.
+
+<dt>[EIO]<dd>
+An error occurred while reading from the file system.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The <i>file_name</i> argument is longer than {PATH_MAX} or
+a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>file_name</i> does not name an existing file
+or <i>file_name</i> points to an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+</dl>
+<p>
+The
+<i>realpath()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[ENOMEM]<dd>
+Insufficient storage space is available.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_1941">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1942">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1943">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1944">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getcwd.htm">getcwd()</a></i>,
+<i><a href="sysconf.htm">sysconf()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

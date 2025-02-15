@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>wcstod</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_617">&nbsp;</a>NAME</h4><blockquote>
+wcstod - convert a wide-character string to a double-precision number
+</blockquote><h4><a name = "tag_000_010_618">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+double wcstod(const wchar_t *<i>nptr</i>, wchar_t **<i>endptr</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_619">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>wcstod()</i>
+function converts the initial portion of the wide-character string pointed to by
+<i>nptr</i>
+to
+<b>double</b>
+representation.
+First it decomposes the input wide-character string into three parts: an
+initial, possibly empty, sequence of white-space wide-character
+codes (as specified by
+<i><a href="iswspace.htm">iswspace()</a></i>);
+a subject sequence interpreted as a floating-point
+constant; and a final wide-character string of one or more unrecognised
+wide-character codes, including the terminating null
+wide-character code of the input wide-character string.
+Then it attempts to convert the subject sequence to a
+floating-point number, and returns the result.
+<p>
+The expected form of the subject sequence is an optional + or -
+sign, then a non-empty sequence of digits optionally containing a
+radix, then an optional exponent part.
+An exponent part consists of e or E,
+followed by an optional sign, followed by one or more decimal digits.
+The subject sequence is defined as the longest initial subsequence of
+the input wide-character string, starting with the first non-white-space
+wide-character code, that is of the expected form.
+The subject sequence contains no wide-character codes if the
+input wide-character string
+is empty or consists entirely of white-space wide-character codes,
+or if the first wide-character code that is not white space other
+than a sign, a digit or a radix.
+<p>
+If the subject sequence has the expected form, the sequence of
+wide-character codes starting with the first digit or the radix
+(whichever occurs first) is interpreted as a floating constant as defined in
+the C language, except that the radix is used in
+place of a period, and that if neither an exponent part nor a
+radix appears, a radix is assumed to
+follow the last digit in the wide-character string.
+If the subject sequence begins with a minus sign, the value
+resulting from the conversion is negated.
+A pointer to the final wide-character string is stored in the
+object pointed to by
+<i>endptr</i>,
+provided that
+<i>endptr</i>
+is not a null pointer.
+<p>
+The radix is defined in the program's locale (category LC_NUMERIC).
+In the POSIX locale, or in a locale where the radix is
+not defined, the radix defaults to a period (.).
+<p>
+In other than the POSIX
+locale, other implementation-dependent subject sequence forms may
+be accepted.
+<p>
+If the subject sequence is empty or does not have the expected
+form, no conversion is performed; the value of
+<i>nptr</i>
+is stored in the object pointed to by
+<i>endptr,</i>
+provided that
+<i>endptr</i>
+is not a null pointer.
+<br>
+<p>
+The
+<i>wcstod()</i>
+function will not change the setting of 
+<b>errno</b>
+if successful.
+<p>
+Because 0 is returned on error and is also a valid return on success, an
+application wishing to check for error situations should set
+<i>errno</i>
+to 0, then call
+<i>wcstod()</i>,
+then check
+<i>errno</i>.
+</blockquote><h4><a name = "tag_000_010_620">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>wcstod()</i>
+function returns the converted value, if any.
+If no conversion could be performed, 0 is returned
+&nbsp;and
+<i>errno</i>
+may be set to [EINVAL].
+<p>
+If the correct value is outside the range of representable values,
+&plusmn;HUGE_VAL is returned (according to the sign of the value), and
+<i>errno</i>
+is set to [ERANGE] .
+<p>
+If the correct value would cause underflow, 0 is returned and
+<i>errno</i>
+is set to [ERANGE] .
+</blockquote><h4><a name = "tag_000_010_621">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>wcstod()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ERANGE]<dd>
+The value to be returned would cause overflow or underflow.
+
+</dl>
+<p>
+The
+<i>wcstod()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+No conversion could be performed.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_622">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_623">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_624">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_625">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="iswspace.htm">iswspace()</a></i>,
+<i><a href="local91.htm">localeconv()</a></i>,
+<i><a href="scanf.htm">scanf()</a></i>,
+<i><a href="setlo231.htm">setlocale()</a></i>,
+<i><a href="wcstol.htm">wcstol()</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>,
+the <b>XBD</b> specification, <a href="../xbd/locale.htm"><b>Locale</b>&nbsp;</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the MSE working draft.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

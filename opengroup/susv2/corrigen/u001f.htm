@@ -1,0 +1,491 @@
+<!DOCTYPE HTML SYSTEM "html.dtd">
+<HTML>
+<HEAD>
+<TITLE>Corrigenda U001</TITLE>
+</HEAD>
+<BODY>
+
+<H2>X/Open Corrigenda: U001<BR>
+Corrigendum Ref: XAPcor-01</H2>
+
+<H1> Document: ACSE/Presentation Services API (XAP)</H1>
+
+X/Open CAE Specification, September 1993,<BR>
+X/Open reference C303, ISBN 1-872630-91-X
+
+<H3>Description</H3>
+This is the first Corrigendum to the above specification
+
+<H3>Contents</H3>
+<DL>
+<DT>XAP-1.1
+<DD>"Major Technical" change
+<P>
+<DT>XAP-1.2 - XAP-1.13
+<DD>"Minor Technical/Editorial" changes
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XAP-1.1</H3>
+<DT><H3>Title</H3>
+<DD>ap_cdrl_t member name is incorrect
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The member name "m_ap_cdl" in the "ap_cdrl_t" structure is incorrect. It is named
+the same as the member in the "ap_cdl_t" structure.
+<P>
+The reason this is major technical is because this structure is seen by the user of XAP
+in their programs and future versions of XAP would have to be compatable with this mistake
+not to break these programs.
+<P>
+<DT><H3>Change</H3>
+<DL>
+<DT>                    Page 49, the "ap_cdrl_t" structure:
+<DD>                      change the member name "m_ap_cdl" to "m_ap_cdrl".
+<P>
+<DT>                    Page 223, the "ap_cdrl_t" structure:
+<DD>                      change the member name "m_ap_cdl" to "m_ap_cdrl".
+<DD>                      change the member name "m_ap_cdl" to "m_ap_cdrl".
+<P>
+<DT>                    Page 223, the "ap_cdrl_t" structure:
+<DD>                      change the member name "m_ap_cdl" to "m_ap_cdrl".
+</DL>
+<P>
+<HR>
+<P>
+<DT><H3>Change number : XAP-1.2</H3>
+<DT><H3>Title</H3>
+<DD>"ap_rcv" function, P_DATA_IND "valid in states" not complete
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>"AP_WRESYNcnf_RESYNreq" must be a valid state for P_DATA_INDdue to the "data separation"
+functional unit's ability to allow reception of data sent after a P_RESYNC_REQ has been issued.
+<P>
+<DT><H3>Change</H3>
+<DD>                    Page 82, add "AP_WRESYNcnf_RESYNreq" into the
+                    "valid in states" column of the Primitive/Attribute &
+                    Primitive/State Relationships table for P_DATA_IND.
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3> Change number : XAP-1.3</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Add "token_assignment" member to "ap_cdata_t" structure
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3> Rationale</H3>
+<DD>The "token_assignment" member of the "ap_cdata_t" structure is referenced in a
+number of places throughout the XAP specification and needs to be used by the various
+                    primitives that reference it.
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                    Page 59, "ap_cdata_t" structure, add the following line
+                    to the structure after the "tokens" member line:
+<DD>                      "unsigned long token_assignment; /* token assignment */"
+<P>
+<DT>                    Page 227, "ap_cdata_t" structure, add the following line
+                    to the structure after the "tokens" member line:
+<DD>                      "unsigned long token_assignment; /* token assignment */"
+</DL>
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3> Change number : XAP-1.4</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>"Environment File" Integer Constant example is incorrect.
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3> Rationale</H3>
+<DD>The example given references an encoded string attribute. The attribute should change
+to make the reference correct.
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                    Page 108, Integer Constant section, Example:<BR>
+<P>
+<DD>                      change
+<DD>                        "AP_CLD_AEID = 0xA2"
+<DD>                      to
+<DD>                        "AP_QLEN = 0x05"
+</DL>
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XAP-1.5</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Error "AP_BADSAVEF" in "ap_restore" function defined incorrectly
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3> Rationale</H3>
+<DD>The "ap_restore" function can have a NULL pointer for the "*savef" parameter for the
+use by Association Listeners - so the description for error "AP_BADSAVEF" is incorrect.
+<P>
+<DT><H3>Change</H3>
+<DL>
+<DT>                    Page 89, ERRORS section, [AP_BADSAVEF] error:
+<P>
+<DD>                      change
+<DD>                        "savef is NULL or was opened improperly.
+<DD>                      to
+<DD>                        "savef was opened improperly."
+</DL>
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3> Change number : XAP-1.6</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>typos in the "ap_look" function description
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Editorial
+<P>
+<DT><H3> Rationale</H3>
+<DD>the description of "ap_look" there are two references to
+                    "ap_osi_dbuf-t", which should be to "ap_osi_dbuf_t".
+<P>
+<DT><H3>Change</H3>
+<DL>
+<DT>                    Page 72, 1st paragraph, 3rd line:
+<P>
+<DD>                      change
+<DD>                        "Data blocks, which are represented by ap_osi_dbuf-t"
+<DD>                      to
+<DD>                        "Data blocks, which are represented by ap_osi_dbuf_t"
+<P>
+<DT>                    Page 72, 3rd paragraph, 2nd line:
+<P>
+<DD>                      change
+<DD>                        "updates b_wptr - no other fields in the
+                         ap_osi_vbuf_t/ap_osi_dbuf-t..."
+<DD>                      to
+<DD>                        "updates b_wptr - no other fields in the
+                         ap_osi_vbuf_t/ap_osi_dbuf_t..."
+</DL>
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3> Change number : XAP-1.7</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Meaningless sentence fragment in paragraph
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Editorial
+<P>
+<DT><H3> Rationale</H3>
+<DD>There is a sentence fragment in the A_ASSOC_CNF primitive
+                    section that is completely unreferenced.
+<P>
+<DT><H3>Change</H3>
+<DL>
+<DT>                    Page 127, 7th line from the bottom, delete the fragment
+<DD>                      "  returned in the cdata argument."
+</DL></DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3> Change number : XAP-1.8</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>More Data Flag final send must always have data.
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Agreement on the required behaviour in the situation
+                    where if a primitive was using AP_MORE to send user data,
+                    the final invocation of ap_snd() MUST have at
+                    least 1 octet of user data, or may have a zero-length
+                    final fragment, is not concluded. However, it is agreed
+                    that the XAP CAE Specification should be made
+                    self-consistent in the direction which requires at least
+                    1 octet of user data.
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                    Page 29,
+<DD>                      change the 3rd paragraph from the top, commencing
+                        "Primitives that are not...."
+<DD>                      to
+<DD>                        "Primitives cannot be terminated by a final ap_snd()
+                        invocation that does not carry any user data.  Thus
+                        a final ap_snd() invocation always carries 1 or more
+                        octets of user data."
+</DL></DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3> Change number : XAP-1.9</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Correct the AP_ALLOC flag definition
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Revise parts of the description of AP_ALLOC which are
+                    inconsistent with the true behaviour.
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                   Page 85: description of AP_ALLOC flag,
+<P>
+ <DD>                   1. delete the sentence  "Regardless of the setting of
+                       AP_ALLOC, the user ..."
+<P>
+<DD>                    2. replace
+                        "If the AP_ALLOC flag is set and space was available
+                         in the supplied buffer chain, the user allocation
+                         routine ...."
+<DD>                      with
+<DD>                        "If the AP_ALLOC flag is set, the user allocation
+                         routine ..."
+<P>
+<DD>                    3. replace
+<DD>                        "If the AP_ALLOC flag is not set and space was
+                         available in the supplied buffers, then the
+                         AP_MORE flag is set and 0 is returned."
+<DD>                       with
+<DD>                        "If the AP_ALLOC flag is not set, then the AP_MORE
+                         flag is set and 0 is returned."
+<P>
+<DT>                    Page 85: description of AP_MORE flag,
+<P>
+<DD>                    4. replace
+<DD>                        "Upon return, ..., the AP_MORE bit of the flags
+                         argument will be set, and the error code [AP_AGAIN]
+                         or [AP_NOBUF] is returned."
+<DD>                       with
+<DD>                        "Upon return, ..., the AP_MORE bit of the flags
+                         argument will be set, and 0 is returned."
+<P>
+<DT>                    Page 85: last paragraph,
+<P>
+<DD>                   5. replace
+<DD>                        "If XAP is being used in non-blocking execution
+                         mode ....  to the [AP_AGAIN] error code."
+<DD>                       with
+<DD>                        "If XAP is being used in non-blocking execution mode
+                         (AP_NDELAY bit is set) and no data is available to
+                         be received, ap_rcv() returns -1 and ... [AP_AGAIN]
+                         error code. If some data is received for a primitive,
+                         but no further data is currently available, ap_rcv()
+                         returns a value of 0 and the AP_MORE flag is set."
+<P>
+<DT>                    Page 24, Section 2.2.11: Execution Mode,
+<P>
+<DD>                    6. replace text in 4th paragraph:
+<DD>                        "In the non-blocking mode, ap_rcv() reads data ....
+                         .. If the AP_MORE bit of the flags argument is set .."
+<DD>                       with
+<DD>                        "In the non-blocking mode, ap_rcv() reads data ....
+                         Once one of these three events occurs, ap_rcv()
+                         returns 0. The [AP_AGAIN] error is signalled when
+                         no data is available to be received. When no error
+                         is returned the service user may examine the flags
+                         argument to determine whether a primitive was
+                         partially received. If the AP_MORE bit of the
+                         flags argument is set ..."
+<P>
+<DT>                  Page 73, description for ap_look():
+<P>
+<DD>                    7. for AP_ALLOC, repeat changes 1, 2 and 3 above.
+<P>
+<DD>                    8. for AP_MORE, replace
+<DD>                        "Upon return, ..., the AP_MORE bit of the flags
+                         argument will be set."
+<DD>                       with
+<DD>                        "Upon return, ..., the AP_MORE bit of the flags
+                         argument will be set, and 0 is returned."
+<P>
+<DT>                    Page 74:
+<P>
+<DD>                    9. add to end of 1st paragraph, after
+<DD>                        "Some or all of the user data .....  returned to
+                         the user."
+<DD>                       a new sentence
+<DD>                        "If some data is received for a primitive, but no
+                         further data is currently available, ap_look()
+                         returns a value of 0 and the AP_MORE flag is set."
+<P>
+<DT>                    Page 85:
+<P>
+<DD>                    10. Integrate the flow diagrams (XAP 556) into the
+                        XAP CAE Specification following the last paragraph on Page 85
+                        (ap_rcv function blocking/non-blocking mode).
+</DL>
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XAP-1.10</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Setting AP_MORE flag unneccessary for AP_LOOK error
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>If ap_rcv() is interrupted by an unsequenced primitive,
+                    ap_rcv() returns -1 and sets [AP_LOOK]. In this case,
+                    the setting of the AP_MORE flag does not provide any
+                    additional information to the service user - setting
+                    the AP_MORE flag is unneccessary.
+<P>
+<DT><H3>Change</H3>
+<DD>
+<DL>
+<DT>                    Page 86, first paragraph, delete
+<DD>                     "The AP_MORE bit of the flags argument is set."
+<P>
+</DL></DL>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XAP-1.11</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Clarify attribute deletion function of ap_set_env()
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Editorial
+<P>
+<DT><H3>Rationale</H3>
+<DD>It should be made clear that the ap_set_env() function
+                    can be used to delete attributes of structured type
+                    from the environment.
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                    Page 91, change NAME,
+<DD>                    from:
+<DD>                      "ap_set_env -- set XAP environment attribute"
+<DD>                    to:
+<DD>                      "ap_set_env -- set or delete XAP environment attribute"
+<P>
+<DT>                 After second paragraph of description add a new paragraph:
+<P>
+<DD>                      "ap_set_env() can be used to delete an attribute of
+                       structured type from the environment by setting the
+                       v member of the val argument to NULL. Only those
+                       attributes which are marked as "default: not present"
+                       in the environment attribute description table of
+                       Chapter 3 may be deleted in this manner."
+</DL></DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XAP-1.12</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Translation limits for ap_osic command
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The ISO C standard specifies<BR>
+                      "The implementation shall be able to translate and
+                       execute at least one program that contains at least
+                       one instance of every one of the following limits:<BR>
+                            .<BR>
+                            .<BR>
+                         - 509 characters in a logical source line.<BR>
+                            .<BR>
+                            .<BR>
+                    The example refered to above (AP_QOS) contains more
+                    than 1500 characters.<BR>
+                    This Change requires that an implementation supports
+                    entries of at least 2043 characters (2045 characters
+                    plus CR/LF/NUL).
+<P>
+<DT><H3>Change</H3><DL>
+<DT>                    Page 105.
+<P>
+<DD>                    Add the following text to the end of the
+                    paragraph "An entry may be split ...":
+<P>
+<DD>                      An implementation shall be capable of translating
+                      an input file containing entries of up to 2045
+                      characters (after concatenation of entries split
+                      across multiple input lines).
+<P>
+<DD>                      Note:<BR>
+                      This allows the entry, plus a possible CR/LF/NUL
+                      control character sequence, to be accommodated in
+                      a 2048 byte buffer. Implementations should avoid
+                      placing fixed translation limits where possible.
+</DL></DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XAP-1.13</H3>
+<P>
+<DT><H3>Title</H3>
+<DD>Syntax of ap_osic command option -o
+<P>
+<DT><H3> Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The specification of the ap_osic command should make it
+                    absolutely clear that the option -o is seperated from
+                    its argument by a space.
+
+<P>
+<DT><H3>Change</H3><DL>
+<P>
+<DT>                    Page 102, SYNOPSIS subsection: replace with the following:
+                      ap_osic [ -o outfile ] [ -v ] file ...
+<P>
+<DT>                    Page 102, DESCRIPTON subsection: reformat the list:
+<DD><PRE>
+         -o outfile      Write output to...
+         -v              By default ...
+</PRE></DL>
+<P>
+</FONT>
+<HR>
+<P>
+If you can't find the information you need, please contact
+X/Open at any of its <A HREF = "http://www.xopen.co.uk/contact.htm">offices.</A>
+<P>
+<HR>
+<P>
+<A HREF="http://www.xopen.co.uk/cprt.htm">Copyright X/Open Company Limited, &#169; 1995</A>
+<P>
+<HR>
+</BODY>
+</HTML>

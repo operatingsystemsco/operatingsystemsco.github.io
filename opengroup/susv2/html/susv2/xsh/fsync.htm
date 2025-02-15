@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fsync</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_320">&nbsp;</a>NAME</h4><blockquote>
+fsync - synchronise changes to a file
+</blockquote><h4><a name = "tag_000_005_321">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int fsync(int <i>fildes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_322">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fsync()</i>
+function can be used by an application to indicate that all
+data for the open file description named by
+<i>fildes</i>
+is to be transferred to the storage device associated with
+the file described by
+<i>fildes</i>
+in an implementation-dependent manner.
+The
+<i>fsync()</i>
+function does not return until the system has completed that action
+or until an error is detected.
+<p>
+The
+<i>fsync()</i>
+function forces all currently queued I/O operations associated with 
+the file indicated by file descriptor
+<i>fildes</i>
+to the synchronised I/O completion state.
+All I/O operations are completed as defined for
+synchronised I/O file integrity completion.
+</blockquote><h4><a name = "tag_000_005_323">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>fsync()</i>
+returns 0.  Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+If the
+<i>fsync()</i>
+function fails,
+outstanding I/O operations are not guaranteed to have been completed.
+</blockquote><h4><a name = "tag_000_005_324">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>fsync()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid descriptor.
+
+<dt>[EINTR]<dd>
+The
+<i>fsync()</i>
+function was interrupted by a signal.
+
+<dt>[EINVAL]<dd>
+The
+<i>fildes</i>
+argument does not refer to a file on which this operation
+is possible.
+
+<dt>[EIO]<dd>
+An I/O error occurred while reading from or writing to the file system.
+
+</dl>
+<p>
+In the event that any of the queued I/O operations fail,
+<i>fsync()</i>
+returns the error conditions defined for
+<i><a href="read.htm">read()</a></i>
+and
+<i><a href="write.htm">write()</a></i>.
+</blockquote><h4><a name = "tag_000_005_325">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_326">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>fsync()</i>
+function
+should be used by programs which require modifications to a file
+to be completed before continuing; for example, a program which contains
+a simple transaction facility might use it to ensure that all
+modifications to a file or files caused by a transaction are
+recorded.
+</blockquote><h4><a name = "tag_000_005_327">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_328">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sync.htm">sync()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

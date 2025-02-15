@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>seekdir</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_252">&nbsp;</a>NAME</h4><blockquote>
+seekdir - set position of directory stream
+</blockquote><h4><a name = "tag_000_008_253">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systy278.htm">sys/types.h</a>&gt;
+#include &lt;<a href="diren39.htm">dirent.h</a>&gt;
+
+void seekdir(DIR *<i>dirp</i>, long int <i>loc</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_254">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>seekdir()</i>
+function sets the position of the next
+<i><a href="readdir.htm">readdir()</a></i>
+operation on the directory stream specified by
+<i>dirp</i>
+to the position specified by
+<i>loc</i>.
+The value of
+<i>loc</i>
+should have been returned from an earlier call to
+<i>telldir</i>().
+The new position reverts to the one associated with the directory
+stream when
+<i><a href="telldir.htm">telldir()</a></i>
+was performed.
+<p>
+If the value of
+<i>loc</i>
+was not obtained from an earlier call to
+<i><a href="telldir.htm">telldir()</a></i>
+or if a call to
+<i><a href="rewin207.htm">rewinddir()</a></i>
+occurred between the call to
+<i><a href="telldir.htm">telldir()</a></i>
+and the call to
+<i>seekdir()</i>,
+the results of subsequent calls to
+<i><a href="readdir.htm">readdir()</a></i>
+are unspecified.
+</blockquote><h4><a name = "tag_000_008_255">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>seekdir()</i>
+function returns no value.
+</blockquote><h4><a name = "tag_000_008_256">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_008_257">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_258">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_259">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_260">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="opendir.htm">opendir()</a></i>,
+<i><a href="readdir.htm">readdir()</a></i>,
+<i><a href="telldir.htm">telldir()</a></i>,
+<i><a href="diren39.htm">&lt;dirent.h&gt;</a></i>
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

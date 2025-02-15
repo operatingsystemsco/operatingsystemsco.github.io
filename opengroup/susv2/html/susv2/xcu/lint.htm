@@ -1,0 +1,636 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>lint</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1137">&nbsp;</a>NAME</h4><blockquote>
+lint - check C-language programs (<b><a href="intro.htm#tag_001_003_001">DEVELOPMENT</a></b>, <b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_1138">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+lint <b>[</b>-abcnpuxv<b>] [</b>-D <i>name</i>=<i>value</i><b>]][</b>-I <i>directory</i><b>][</b>-L <i>directory</i><b>]
+[</b>-o <i>x</i><b>][</b>-U <i>name</i><b>] </b><i>operand</i>... 
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1139">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>lint</i>
+utility cross-checks multiple C-language source files and library
+definitions and reports potential errors.
+Among the error conditions that are detected are:
+<ul>
+<p>
+<li>
+unreachable statements
+<p>
+<li>
+loops not entered at the top
+<p>
+<li>
+automatic variables declared and not used
+<p>
+<li>
+inconsistent declarations between files
+<p>
+<li>
+non-portable constructions
+<p>
+<li>
+logical expressions whose value is constant
+<p>
+<li>
+functions that return values in some places and not in others
+<p>
+<li>
+functions called with varying numbers or types of arguments
+<p>
+<li>
+functions whose values are not used or whose values are used
+when none are returned.
+<p>
+</ul>
+<p>
+The
+<i>lint</i>
+utility takes all the files with
+.c
+and
+.ln
+suffixes, and
+any additional lint libraries specified by the
+<b>-l</b>
+operand,
+and processes them in their command-line order.
+By default,
+<i>lint</i>
+appends the standard C lint library
+to the end of the list of files.
+However, if the
+<b>-p</b>
+option is used, the portable C lint library
+<b>(llib-port.ln)</b>
+if it exists,
+will be appended instead.
+When the
+<b>-c</b>
+option is not used,
+<i>lint</i>
+checks this list of files for mutual compatibility.
+When the
+<b>-c</b>
+option is used, the
+.ln
+files and the lint libraries are ignored.
+<p>
+Certain conventional comments in the C source
+change the behaviour of
+<i>lint</i>:
+<dl compact>
+
+<dt>/*NOTREACHED*/<dd>Stop comments about unreachable code at appropriate points.
+
+<dt>/*VARARGS<i>n</i>*/<dd>Suppress
+the usual checking for variable numbers of arguments
+in the following function declaration.
+The data types of the first
+<i>n</i>
+arguments are checked;
+a missing
+<i>n</i>
+is taken to be zero.
+
+<dt>/*ARGSUSED*/<dd>Suppress diagnostic messages about unused arguments in the next function.
+
+<dt>/*LINTLIBRARY*/<dd>Suppress, at the beginning of a file,
+diagnostic messages about unused functions
+and function arguments in this file.
+This is equivalent to using the
+<b>-v</b>
+and
+<b>-x</b>
+options.
+
+</dl>
+<p>
+Other comments in the C source of the form:
+<pre>
+<code>
+/\*[[:upper:]][[:upper:][:digit:]]*\*/
+</code>
+</pre>
+(where the form is expressed using the syntax of basic regular expressions,
+defined in
+the <b>XBD</b> specification, <a href="../xbd/re.htm#tag_007_003"><b>Basic Regular Expressions</b>&nbsp;</a> )
+may be interpreted by
+<i>lint</i>
+in implementation-dependent ways.
+<p>
+If the
+<b>-c</b>
+option is specified, then for all pathname operands of the form
+<i>file</i>.c
+the files:
+<pre>
+<code>
+$(basename <i>pathname</i> .c).ln
+</code>
+</pre>
+are produced.
+<p>
+If the
+<b>-o</b>
+option is present with option-argument
+<i>x</i>,
+a file with the name:
+<pre>
+<code>
+llib-l$(basename <i>x</i>).ln
+</code>
+</pre>
+is produced.
+<p>
+The
+<i>lint</i>
+utility produces its first output on a per-source-file basis.
+Diagnostic messages
+regarding input files are collected and printed
+after all source files have been processed.
+Finally, if the
+<b>-c</b>
+option is not used,
+information gathered from all input files is collected and checked for
+consistency.
+At this point,
+if it is not clear whether a diagnostic message
+stems from a given source file or from
+one of its included files,
+the source filename will be printed followed by a question mark.
+<p>
+During the execution of
+<i>lint</i>,
+values are established for certain predefined macros from the ISO&nbsp;C standard:
+__LINE__,
+__FILE__,
+__DATE__,
+__TIME__
+and
+__STDC__.
+</blockquote><h4><a name = "tag_001_014_1140">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>lint</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that the
+<b>-l</b>
+operands have the format of options, but their
+position within a list of operands affects the
+order in which libraries are searched.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-a</b>
+<dd>Suppress diagnostic messages
+about assignments of long values to variables that are not long.
+
+<dt><b>-b</b>
+<dd>Suppress diagnostic messages about
+<b>break</b>
+statements that cannot be reached.
+
+<dt><b>-c</b>
+<dd>Produce a
+<b>.ln</b>
+file for every
+<b>.c</b>
+file on the command line.
+These
+<b>.ln</b>
+files are not checked for interfunction compatibility.
+
+<dt><b>-h</b>
+<dd>Do not apply heuristic tests that attempt to diagnose bugs intuitively,
+improve style and reduce waste.
+
+<dt><b>-n</b>
+<dd>Do not check compatibility against either the standard or the portable
+lint library.
+
+<dt><b>-o&nbsp;</b><i>x</i>
+<dd>Produce a lint library with the name:
+<pre>
+<code>
+llib-l$(basename&nbsp;<i>x</i>).ln.
+</code>
+</pre>
+The
+<b>-c</b>
+option nullifies any use of the
+<b>-o</b>
+option.
+The
+<b>-o</b>
+option causes this file to be saved in the named lint library.
+To produce the lint library
+without extraneous messages, the
+<b>-x</b>
+option should be used.
+The
+<b>-v</b>
+option is useful if the source files for the lint library
+are just external interfaces.
+These option settings are also available through the
+use of the &quot;lint comments&quot; listed in the DESCRIPTION section.
+
+<dt><b>-p</b>
+<dd>Cause all non-external names to be treated as if they were
+truncated to thirty-one characters and all external
+names truncated to six characters, folded to one case.
+Append the portable C lint library, if it exists,
+to the end of the list of files.
+
+<dt><b>-u</b>
+<dd>Suppress diagnostic messages
+about functions and external
+variables used and not defined, or defined and not used.
+(This option is suitable for running
+<i>lint</i>
+on a subset of files of a larger program.)
+
+<dt><b>-v</b>
+<dd>Suppress diagnostic messages
+about unused arguments in functions.
+
+<dt><b>-x</b>
+<dd>Do not report variables referred to by external declarations but never used.
+
+</dl>
+<p>
+The
+<b>-D</b>,
+<b>-U</b>,
+<b>-L</b>
+and
+<b>-I</b>
+options of the C compiler
+(see
+<i><a href="cc.htm">cc</a></i>
+and
+<i><a href="c89.htm">c89</a></i>)
+are also recognised as separate arguments.
+<p>
+The
+<b>-g</b>
+and
+<b>-O</b>
+options of the C compiler
+are also recognised as separate arguments,
+but are ignored.
+(By recognising these options, the behaviour of
+<i>lint</i>
+is closer to that of the
+<i><a href="cc.htm">cc</a></i>
+utility.)
+Other options are ignored, and a warning message may be issued.
+The pre-defined macro lint (for common-usage C) or __LINT__
+(for the ISO&nbsp;C standard) is defined to allow certain questionable
+code to be altered or removed for
+<i>lint</i>.
+</blockquote><h4><a name = "tag_001_014_1141">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><b>.c</b><dd>A pathname naming a C-language source file.
+
+<dt><i>file</i><b>.ln</b><dd>A pathname of a file analogous to a
+<b>.o</b>
+file produced by the C compiler.
+
+</dl>
+<p>
+An operand of the form
+<b>-l</b>&nbsp;<i>x</i>
+means search the library named
+<b>llib-l</b><i>x</i><b>.ln</b>
+or
+<b>llib-l</b><i>x</i>
+if
+<b>llib-l</b><i>x</i><b>.ln</b>
+is not readable.
+<p>
+The processing of other files is implementation-dependent.
+<p>
+The
+<i>lint</i>
+utility will recognise the following
+<b>-l</b>
+operands for standard libraries:
+<dl compact>
+
+<dt><b>-l c</b>
+<dd>Names the Standard C library,
+<b>llib-lc.ln</b>,
+which will contain everything else defined by the ISO&nbsp;C standard.
+The library searched
+also will include all functions defined by the <b>XSH</b> specification.
+This operand is not required to
+be present to cause a search of the Standard C library.
+
+<dt><b>-l l</b>
+<dd>Names the library
+<b>llib-ll.ln</b>,
+which will contain functions required by the C-language output of
+<i><a href="lex.htm">lex</a></i>
+that are not available through the Standard C library.
+
+<dt><b>-l m</b>
+<dd>Names the library
+<b>llib-lm.ln</b>,
+which contains the functions described by the ISO&nbsp;C standard
+with prototypes in the
+<i><a href="../xsh/mathh95.htm">&lt;math.h&gt;</a></i>
+header.
+
+<dt><b>-l pthread</b>
+<dd>
+Names the library
+<b>llib-lpthread.ln</b>,
+which contains the functions declared in
+<i><a href="../xsh/pthre114.htm">&lt;pthread.h&gt;</a></i>
+and
+<i><a href="../xsh/pthre115.htm">pthread_atfork()</a></i>
+referenced in
+<i><a href="../xsh/unist299.htm">&lt;unistd.h&gt;</a></i>.
+
+<dt><b>-l rt</b>
+<dd>Names the library 
+<b>llib-lrt.ln</b>,
+which contains the functions described by the Realtime Feature Group.
+
+<dt><b>-l y</b>
+<dd>Names the library
+<b>llib-ly.ln</b>,
+which contains functions required by the C-language output of
+<i><a href="yacc.htm">yacc</a></i>
+that are not available through the Standard C library.
+
+</dl>
+<p>
+It is unspecified whether the libraries
+<b>llib-lc.ln</b>,
+<b>llib-ll.ln</b>,
+<b>llib-lm.ln</b>,
+<b>llib-lpthread.ln</b>,
+<b>llib-lrt.ln</b>,
+or
+<b>llib-ly.ln</b>
+(or any other library accessed via
+<b>-l</b>)
+exist as regular files.
+</blockquote><h4><a name = "tag_001_014_1142">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1143">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file must be one of the following:
+a
+<b>.c</b>
+suffixed text file containing C-language source or a
+<b>.ln</b>
+suffixed file of unspecified format produced by
+a previous invocation of
+<i>lint</i>
+with a
+<b>-c</b>
+or
+<b>-o</b>
+option.
+</blockquote><h4><a name = "tag_001_014_1144">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables may affect the execution of
+<i>lint</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1145">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1146">&nbsp;</a>STDOUT</h4><blockquote>
+The format of the report produced by
+<i>lint</i>
+is unspecified.
+</blockquote><h4><a name = "tag_001_014_1147">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic and warning messages.
+</blockquote><h4><a name = "tag_001_014_1148">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The format of
+<b>.ln</b>
+files is unspecified.
+</blockquote><h4><a name = "tag_001_014_1149">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The
+<i>lint</i>
+utility supports the same programming environments specified in
+<xref href=c89><a href="c89.htm#tag_000_000">
+
+</a></xref>,
+EXTENDED DESCRIPTION.
+The default programming environment supported by
+<i>lint</i>
+will be the same as the default programming environment supported by
+<i><a href="c89.htm">c89</a></i>.
+To use
+<i>lint</i>
+to cross-check C-language source files and library definitions for
+other supported programming environments, provide the corresponding
+<i>lint</i>
+flags as the first options on the
+<i>lint</i>
+command line.
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Programming Environment<br><i>getconf</i> Name</b>
+<th align=center><b>Corresponding <i>lint</i> Arguments<br><i>getconf</i> Name</b>
+<tr valign=top><td align=left>_XBS5_ILP32_OFF32
+<td align=left>XBS5_ILP32_OFF32_LINTFLAGS
+<tr valign=top><td align=left>_XBS5_ILP32_OFFBIG
+<td align=left>XBS5_ILP32_OFFBIG_LINTFLAGS
+<tr valign=top><td align=left>_XBS5_LP64_OFF64
+<td align=left>XBS5_LP64_OFF64_LINTFLAGS
+<tr valign=top><td align=left>_XBS5_LPBIG_OFFBIG
+<td align=left>XBS5_LPBIG_OFFBIG_LINTFLAGS
+</table>
+</pre>
+<h6 align=center><xref table="Programming Environments - <I>lint</i> Flags"></xref>Table: Programming Environments - <i>lint</i> Flags</h6>
+</blockquote><h4><a name = "tag_001_014_1150">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1151">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1152">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The behaviour of the
+<b>-c</b>
+and the
+<b>-o</b>
+options allows for incremental use of
+<i>lint</i>
+on a set of C source files.
+Generally,
+<i>lint</i>
+is invoked once for each source file with the
+<b>-c</b>
+option.
+Each of these invocations produces a
+<b>.ln</b>
+file that corresponds to the
+<b>.c</b>
+file, and prints all messages that
+pertain to just that source file.
+After all the source files have been separately run through
+<i>lint</i>,
+it is invoked once more (without the
+<b>-c</b>
+option), listing all the
+<b>.ln</b>
+files with the needed
+<b>-l</b>&nbsp;<i>x</i>
+options.
+This will print all the interfile inconsistencies.
+This scheme works well with
+<i><a href="make.htm">make</a></i>;
+it allows
+<i><a href="make.htm">make</a></i>
+to be used to lint only the source files that have been modified since
+the last time the set of source files were checked by
+<i>lint</i>.
+If used incrementally on a set of files, the result
+of partial checks can be saved to speed subsequent
+intermodule consistency checks.
+<p>
+The
+lint
+library often contains all routines in that library
+stripped of everything but prototypes.
+<p>
+The intent of allowing unrecognised suffixes
+is to permit implementations to recognise things
+like archives and source of other languages,
+but not require all implementations to do so.
+Portable applications should use only the suffixes described
+in this specification.
+<p>
+Programs produced by
+<i><a href="lex.htm">lex</a></i>
+or
+<i><a href="yacc.htm">yacc</a></i>
+will often result in many diagnostic messages about
+<b>break</b>
+statements that cannot be reached.
+Use of
+<b>-b</b>
+is recommended.
+<br>
+</blockquote><h4><a name = "tag_001_014_1153">&nbsp;</a>EXAMPLES</h4><blockquote>
+Assuming a file hierarchy as shown here:
+<pre>
+<code>
+<b>$</b> ls -R<b>
+ libsrc:
+applib1.c
+applib2.c
+applib3.c
+applib.a
+ appsrc:
+app1.c
+app2.c
+$ </b>cd libsrc
+</code>
+</pre>
+<p>
+The following creates
+<b>llib-applib.ln</b>
+for later use:
+<pre>
+<code>
+<b>$</b> lint -o applib applib*.c
+<b>$</b> cd ../appsrc
+</code>
+</pre>
+<p>
+The following checks the source for both applications
+against the previously created library:
+<pre>
+<code>
+<b>$</b> for app in *.c
+<b>&gt;</b> do
+<b>&gt;</b>        lint -L ../libsrc $app -l applib
+<b>&gt;</b> done
+</code>
+</pre>
+<p>
+If the application source and libraries in the previous example had
+all been built in the _XBS5_LP64_OFF64 programming model, the
+<b>for</b>
+loop in the last example would be changed to:
+<pre>
+<code>
+<b>$</b> LFLAGS=$(getconf XBS5_LP64_OFF64_LINTFLAGS)
+<b>$</b> for app in *.c
+<b>&gt;</b> do
+<b>&gt;</b> lint $LFLAGS -L ../libsrc $app -l applib
+<b>&gt;</b> done
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1154">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1155">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="cc.htm">cc</a></i>,
+<i><a href="c89.htm">c89</a></i>,
+<i><a href="getconf.htm">getconf</a></i>,
+<i><a href="lex.htm">lex</a></i>,
+<i><a href="make.htm">make</a></i>,
+<i><a href="yacc.htm">yacc</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

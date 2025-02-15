@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>lseek</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_469">&nbsp;</a>NAME</h4><blockquote>
+lseek - move the read/write file offset
+</blockquote><h4><a name = "tag_000_007_470">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systy278.htm">sys/types.h</a>&gt;
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+off_t lseek(int <i>fildes</i>, off_t <i>offset</i>, int <i>whence</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_471">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>lseek()</i>
+function will set the file offset for the open file description
+associated with the file descriptor
+<i>fildes,</i>
+as follows:
+<ul>
+<p>
+<li>
+If
+<i>whence</i>
+is SEEK_SET the file offset is set to
+<i>offset</i>
+bytes.
+<p>
+<li>
+If
+<i>whence</i>
+is SEEK_CUR the file offset is set to its current location plus
+<i>offset</i>.
+<p>
+<li>
+If
+<i>whence</i>
+is SEEK_END the file offset is set to the size of the file plus
+<i>offset</i>.
+<p>
+</ul>
+<p>
+The symbolic constants SEEK_SET, SEEK_CUR and SEEK_END
+are defined in the header
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+<p>
+The behaviour of
+<i>lseek()</i>
+on devices which are incapable of seeking is implementation-dependent.  The
+value of the file offset associated with such a device is undefined.
+<p>
+The
+<i>lseek()</i>
+function will allow the file offset to be set beyond the end of the existing
+data in the file.  If data is later written at this point, subsequent reads of
+data in the gap will return bytes with the value 0 until data is actually
+written into the gap.
+<p>
+The
+<i>lseek()</i>
+function will not, by itself, extend the size of a file.
+<p>
+If
+<i>fildes</i>
+refers to a shared memory object, the result of the
+<i>lseek()</i>
+function is unspecified.
+</blockquote><h4><a name = "tag_000_007_472">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the resulting offset,
+as measured in bytes from the beginning of the file, is returned.
+Otherwise, (<b>off_t</b>)-1 is returned,
+<i>errno</i>
+is set to indicate the error and the file offset will remain unchanged.
+</blockquote><h4><a name = "tag_000_007_473">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>lseek()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not an open file descriptor.
+
+<dt>[EINVAL]<dd>
+The
+<i>whence</i>
+argument is not a proper value, or the resulting file offset
+would be invalid.
+
+<dt>[EOVERFLOW]<dd>
+The resulting file offset would be a value which cannot be represented
+correctly in an object of type 
+<b>off_t</b>.
+
+<dt>[ESPIPE]<dd>
+The
+<i>fildes</i>
+argument is associated with a pipe or FIFO.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_474">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_475">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_476">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_477">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="open.htm">open()</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

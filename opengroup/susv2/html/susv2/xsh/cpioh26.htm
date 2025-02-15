@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;cpio.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_002_032">&nbsp;</a>NAME</h4><blockquote>
+cpio.h - cpio archive values
+</blockquote><h4><a name = "tag_000_002_033">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;cpio.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_002_034">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Values needed by the
+<i>c_mode</i>
+field of the
+<i>cpio</i>
+archive format are described by:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Name</b>
+<th align=center><b>Description</b>
+<th align=center><b>Value (octal)</b>
+<tr valign=top><td align=left>C_IRUSR
+<td align=left>read by owner
+<td align=center>0000400
+<tr valign=top><td align=left>C_IWUSR
+<td align=left>write by owner
+<td align=center>0000200
+<tr valign=top><td align=left>C_IXUSR
+<td align=left>execute by owner 
+<td align=center>0000100
+<tr valign=top><td align=left>C_IRGRP
+<td align=left>read by group
+<td align=center>0000040
+<tr valign=top><td align=left>C_IWGRP
+<td align=left>write by group
+<td align=center>0000020
+<tr valign=top><td align=left>C_IXGRP
+<td align=left>execute by group 
+<td align=center>0000010
+<tr valign=top><td align=left>C_IROTH
+<td align=left>read by others
+<td align=center>0000004
+<tr valign=top><td align=left>C_IWOTH
+<td align=left>write by others
+<td align=center>0000002
+<tr valign=top><td align=left>C_IXOTH
+<td align=left>execute by others 
+<td align=center>0000001
+<tr valign=top><td align=left>C_ISUID
+<td align=left>set user ID
+<td align=center>0004000
+<tr valign=top><td align=left>C_ISGID
+<td align=left>set group ID
+<td align=center>0002000
+<tr valign=top><td align=left>C_ISVTX
+<td align=left>on directories, restricted deletion flag
+<td align=center>0001000
+<tr valign=top><td align=left>C_ISDIR
+<td align=left>directory
+<td align=center>0040000
+<tr valign=top><td align=left>C_ISFIFO
+<td align=left>FIFO
+<td align=center>0010000
+<tr valign=top><td align=left>C_ISREG
+<td align=left>regular file
+<td align=center>0100000
+<tr valign=top><td align=left>C_ISBLK
+<td align=left>block special
+<td align=center>0060000
+<tr valign=top><td align=left>C_ISCHR
+<td align=left>character special
+<td align=center>0020000
+<tr valign=top><td align=left>C_ISCTG
+<td align=left>reserved
+<td align=center>0110000
+<tr valign=top><td align=left>C_ISLNK
+<td align=left> symbolic link 
+<td align=center>0120000
+<tr valign=top><td align=left>C_ISSOCK
+<td align=left> socket 
+<td align=center>0140000
+</table>
+<p>
+The header defines the symbolic constant:
+<pre>
+<code>
+MAGIC    "070707"
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_002_035">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_036">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_037">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="../xcu/cpio.htm">cpio</a></i>,
+the <b>XCU</b> specification.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

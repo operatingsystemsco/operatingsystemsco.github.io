@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getcwd</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_488">&nbsp;</a>NAME</h4><blockquote>
+getcwd - get the pathname of the current working directory
+</blockquote><h4><a name = "tag_000_005_489">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+char *getcwd(char *<i>buf</i>, size_t <i>size</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_490">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getcwd()</i>
+function places an absolute pathname of the current working directory in the
+array pointed to by
+<i>buf</i>,
+and returns
+<i>buf</i>.
+The
+<i>size</i>
+argument is the size in bytes of the character array
+pointed to by the
+<i>buf</i>
+argument.
+If
+<i>buf</i>
+is a null pointer, the behaviour of
+<i>getcwd()</i>
+is undefined.
+</blockquote><h4><a name = "tag_000_005_491">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>getcwd()</i>
+returns the
+<i>buf</i>
+argument.  Otherwise,
+<i>getcwd()</i>
+returns a null pointer and sets
+<i>errno</i>
+to indicate the error.  The contents of the array pointed to by
+<i>buf</i>
+is then undefined.
+</blockquote><h4><a name = "tag_000_005_492">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>getcwd()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>size</i>
+argument is 0.
+
+<dt>[ERANGE]<dd>
+The size argument is greater than 0, but is smaller than the
+length of the pathname +1.
+
+</dl>
+<p>
+The
+<i>getcwd()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Read or search permission was denied for a component of the pathname.
+
+<dt>[ENOMEM]<dd>
+Insufficient storage space is available.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_493">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_494">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+If
+<i>buf</i>
+is a null pointer, 
+<i>getcwd()</i>
+may obtain
+<i>size</i>
+bytes of memory using
+<i><a href="malloc.htm">malloc()</a></i>.
+In this case, the pointer returned by
+<i>getcwd()</i>
+may be used as the argument in a subsequent call to
+<i><a href="free.htm">free()</a></i>.
+Invoking
+<i>getcwd()</i>
+with
+<i>buf</i>
+as a null pointer is not recommended.
+</blockquote><h4><a name = "tag_000_005_495">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_496">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="malloc.htm">malloc()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

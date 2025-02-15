@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_errno</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_errno - XTI error return value
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<I>t_errno</I>
+is used by XTI functions to return error values.
+<p>
+XTI functions provide an error number in 
+<I>t_errno</I>
+which has type 
+<I>int</I>
+and is defined in 
+<i><a href="xtih78.htm">&lt;xti.h&gt;</a></i>.
+The value of 
+<I>t_errno</I>
+will be defined only
+after a call to a XTI function for which it is explicitly
+stated to
+be set and until it is changed by the next XTI function call.
+The value of 
+<I>t_errno</I>
+should only be examined when it is indicated to
+be valid by a function's return value. Programs should obtain
+the definition of 
+<I>t_errno</I>
+by the inclusion of 
+<i><a href="xtih78.htm">&lt;xti.h&gt;</a></i>.
+The practice of defining 
+<I>t_errno</I>
+in program as 
+<I>extern</I>in
+<I>t_errno</I>
+is obsolescent.
+No XTI function sets 
+<I>t_errno</I>
+to 0 to indicate an error.
+<p>
+It is unspecified whether
+<I>t_errno</I>
+is a macro or an identifier with external linkage. 
+It represents a modifiable 
+<B>lvalue</B>
+of type
+<I>int</I>.
+If a macro definition is suppressed in order to access an actual
+object or a program defines an identifier with name 
+<I>t_errno</I>,
+the behavior is undefined.
+<p>
+The symbolic values stored in 
+<I>t_errno</I>
+by an XTI function are defined
+in the
+<B>ERRORS</B>
+sections in all relevant XTI function definition pages.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

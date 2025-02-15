@@ -1,0 +1,567 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>admin</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_001">&nbsp;</a>NAME</h4><blockquote>
+admin - create and administer SCCS files (<b>DEVELOPMENT</b>)
+</blockquote><h4><a name = "tag_000_000_002">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+admin -i<b>[</b><i>name</i><b>][</b>-n<b>][</b>-a <i>login</i><b>][</b>-d <i>flag</i><b>][</b>-f <i>flag</i><b>][</b>-m <i>mrlist</i><b>]
+[</b>-r <i>rel</i><b>][</b>-t<b>[</b><i>name</i><b>][</b>-y<b>[</b><i>comment</i><b>]] </b><i>newfile</i>
+admin <i>-n</i><b>[</b>-a <i>login</i><b>][</b>-d <i>flag</i><b>][</b>-f <i>flag</i><b>][</b>-m <i>mrlist</i><b>][</b>-t<b>[</b><i>name</i><b>]][</b>-y<b>[</b><i>comment</i><b>]]
+</b><i>newfile</i> ... 
+admin <b>[</b>-a <i>login</i><b>][</b>-d <i>flag</i><b>][</b>-m <i>mrlist</i><b>][</b>-r <i>rel</i><b>][</b>-t<b>[</b><i>name</i><b>]]
+</b><i>file</i> ... 
+admin -h <i>file</i> ... 
+admin -z <i>file</i> ... 
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_003">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>admin</i>
+utility
+is used to create new SCCS files
+and change parameters of existing ones.
+If a named file does not exist, it is created,
+and its parameters are initialised according to the specified options.
+Parameters not initialised by an option
+are assigned a default value.
+If a named file does exist,
+parameters corresponding to specified options are changed,
+and other parameters are left as is.
+<p>
+All SCCS filenames must be of the form
+s.<i>filename</i>.
+New SCCS filenames are
+given read-only permission mode.
+Write permission in the parent directory is required to create a file.
+All writing done by
+<i>admin</i>
+is to a temporary
+<i>x-file ,</i>
+named
+x.<i>filename</i>
+(see
+<i>get )</i>
+created with read-only mode if
+<i>admin</i>
+is creating a new SCCS file, or created with the same mode as that
+of the SCCS file if the file already exists.
+After successful execution of
+<i>admin,</i>
+the SCCS file is removed (if it exists), and the
+<i>x-file</i>
+is renamed
+with the name of the SCCS file.
+This ensures that changes are made to the SCCS file only if no
+errors occur.
+<p>
+The
+<i>admin</i>
+utility also uses a transient lock file (named
+z.<i>filename</i>)
+which is used to
+prevent simultaneous updates to the SCCS file.
+See
+<i><a href="get.htm">get</a></i>
+for further information.
+</blockquote><h4><a name = "tag_000_000_004">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>admin</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that the <b>-i</b>, <b>-t</b> and <b>-y</b>
+options have optional option-arguments.
+These optional option-arguments cannot be presented as separate arguments.
+The following options are supported:
+<dl compact>
+
+<dt><b>-n</b><dd>Create a new SCCS file.
+When
+<b>-n</b>
+is used without
+<b>-i</b>,
+the SCCS file is created
+with control information but without any file data.
+
+<dt><b>-i[</b><i>name</i><b>]</b><dd>
+Specify the
+<i>name</i>
+of a file from which
+the text for a new SCCS file is to be taken.
+The text constitutes the first delta of the file
+(see
+<b>-r</b>
+option for delta numbering scheme).
+If the
+<b>-i</b>
+option is used, but the
+<i>name</i>
+option-argument is omitted,
+the text is obtained by reading the standard input.
+If this option is omitted,
+the SCCS file is created
+with control information but without any file data.
+The
+<b>-i</b>
+option implies the
+<b>-n</b>
+option.
+
+<dt><b>-r&nbsp;</b><i>rel</i><dd>Specify the
+<i>rel</i>ease
+into which the initial delta is inserted.
+If the
+<b>-r</b>
+option is not used,
+the initial delta is inserted into release 1.
+The level of the initial delta is always 1
+(by default initial deltas are named 1.1).
+
+<dt><b>-t[</b><i>name</i><b>]</b><dd>
+Specify the
+<i>name</i>
+of a file from which descriptive text for the SCCS file is to be taken.
+In the case of existing SCCS files
+(neither
+<b>-i</b>
+nor
+<b>-n</b>
+is specified):
+<ul>
+
+<li>
+A
+<b>-t</b>
+option without a
+<i>name</i>
+option-argument causes the removal of descriptive text
+(if any) currently in the SCCS file.
+
+<li>
+A
+<b>-t</b>
+option with a
+<i>name</i>
+option-argument causes the text (if any) in the
+named file to replace
+the descriptive text (if any) currently in the SCCS file.
+
+</ul>
+
+<dt><b>-f&nbsp;</b><i>flag</i>
+<dd>Specify a
+<i>flag</i>,
+and, possibly, a value for the
+<i>flag</i>,
+to be placed in the SCCS file.
+Several
+<b>-f</b>
+options may be supplied on a single
+<i>admin</i>
+command line.
+The allowable flags and their values are:
+<dl compact>
+
+<dt><b>b</b><dd>Allow use of the
+<b>-b</b>
+option on a
+<i><a href="get.htm">get</a></i>
+command to create branch deltas.
+
+<dt><b>c</b><i>ceil</i><dd>Specify the highest release (that is, ceiling),
+a number less than or equal to 9999, which may be
+retrieved by a
+<i><a href="get.htm">get</a></i>
+command for editing.
+The default value for an unspecified
+<b>c</b>
+flag is 9999.
+
+<dt><b>f</b><i>floor</i><dd>Specify the lowest release (that is, floor),
+a number greater than 0 but less than 9999,
+which may be retrieved by a
+<i><a href="get.htm">get</a></i>
+command for editing.
+The default value for an unspecified
+<b>f</b>
+flag is 1.
+
+<dt><b>d</b><i>SID</i><dd>Specify the default delta number (SID) to be used by a
+<i><a href="get.htm">get</a></i>
+command.
+
+<dt><b>i</b><i>str</i><dd>Treat the &quot;No id keywords&quot; message issued by
+<i><a href="get.htm">get</a></i>
+or
+<i><a href="delta.htm">delta</a></i>
+as a fatal error.
+In the absence of this flag, the message is only a warning.
+The message is issued if no SCCS identification keywords (see
+<i><a href="get.htm">get</a></i>)
+are found
+in the text retrieved or stored in the SCCS file.
+If a value is supplied, the keywords must exactly
+match the given string; however, the string must contain
+a keyword, and no embedded newlines.
+
+<dt><b>j</b><dd>Allow concurrent
+<i><a href="get.htm">get</a></i>
+commands for editing on the same SID of an SCCS file.
+This allows multiple concurrent updates to the same
+version of the SCCS file.
+
+<dt><b>l</b><i>list</i><dd>Specify a
+<i>list</i>
+of releases to which deltas can no longer be made (that is,
+<i><a href="get.htm">get</a></i>
+<b>-e</b>
+against one of these locked releases fails).
+The
+<i>list</i>
+has the following syntax:
+<pre>
+<code>
+&lt;list&gt; ::= &lt;range&gt; |  &lt;list&gt;, &lt;range&gt;
+&lt;range&gt; ::= SID | a
+</code>
+</pre>
+
+The character
+a
+in the
+<i>list</i>
+is equivalent to specifying all releases for the named SCCS file.
+
+<dt><b>n</b><dd>Cause
+<i><a href="delta.htm">delta</a></i>
+to create a null delta
+in each of those releases (if any) being skipped when a delta is made
+in a new
+release (for example, in making delta 5.1 after delta 2.7, releases 3 and 4
+are skipped).
+These null deltas serve as anchor points so that branch deltas
+may later be created from them.
+The absence of this flag causes skipped releases to be
+non-existent in the SCCS file,
+preventing branch deltas from being created from them in the future.
+
+<dt><b>q</b><i>text</i><dd>Substitute user-definable
+<i>text</i>
+for all occurrences
+of the <b>%Q%</b> keyword in the SCCS file text retrieved by
+<i><a href="get.htm">get</a></i>.
+
+<dt><b>m</b><i>mod</i><dd>Specify the module name of the SCCS file substituted for all
+occurrences of the <b>%M%</b> keyword in the SCCS file
+text retrieved by
+<i><a href="get.htm">get</a></i>.
+If the
+<b>m</b>
+flag is not specified, the value
+assigned is the name of the SCCS file with the leading <b>s.</b> removed.
+
+<dt><b>t</b><i>type</i><dd>Specify the
+<i>type</i>
+of module in the SCCS file substituted for all occurrences of the
+<b>%Y%</b> keyword in the SCCS file text retrieved by
+<i><a href="get.htm">get</a></i>.
+
+
+<dt><b>v</b><i>pgm</i><dd>Cause
+<i><a href="delta.htm">delta</a></i>
+to prompt for modification request (MR) numbers as the
+reason for creating a delta.
+The optional value specifies the name of an MR number validation
+program.
+(If this flag is set when creating an SCCS file, the
+<b>m</b>
+option must also be used even if its value is null.)
+
+</dl>
+<br>
+<dt><b>-d&nbsp;</b><i>flag</i>
+<dd>Remove (delete) the specified
+<i>flag</i>
+from an SCCS file.
+Several
+<b>-d</b>
+options may be supplied on a single
+<i>admin</i>
+command.
+See the
+<b>-f</b>
+option for allowable
+<i>flag</i>
+names.
+(The
+flag gives a
+<i>list</i>
+of releases to be unlocked.
+See the
+<b>-f</b>
+option for further description of the
+<b>l</b>
+flag and the syntax of a
+<i>list</i>.)
+<br>
+<dt><b>-a&nbsp;</b><i>login</i>
+<dd>
+Specify a
+<i>login</i>
+name, or numerical group ID,
+to be added to the list of users who
+may make deltas (changes) to the SCCS file.
+A group ID is equivalent to specifying all
+<i>login</i>
+names common to that group ID.
+Several
+<b>-a</b>
+options may be used on a single
+<i>admin</i>
+command line.
+As many
+<i>login</i>s,
+or numerical group IDs,
+as desired may be on the list simultaneously.
+If the list of users is empty, then anyone may add deltas.
+If
+<i>login</i>
+or group ID
+is preceded by a !,
+the users so specified are denied permission to make deltas.
+<br>
+<dt><b>-e&nbsp;</b><i>login</i>
+<dd>
+Specify a
+<i>login</i>
+name, or numerical group ID,
+to be erased from the list of users
+allowed to make deltas (changes) to the SCCS file.
+Specifying a group ID is equivalent to specifying all
+<i>login</i>
+names common to that group ID.
+Several
+<b>-e</b>
+options may be used on a single
+<i>admin</i>
+command line.
+<br>
+<p>
+<dt><b>-y[</b><i>comment</i><b>]</b><dd>
+Insert the
+<i>comment</i>
+text into the SCCS file as a comment
+for the initial delta in a manner identical to that of
+<i><a href="delta.htm">delta</a></i>.
+In the POSIX locale, omission of the
+<b>-y</b>
+option results in a default
+comment line being inserted in the form:
+<code>
+<p>
+<tt>"date and time created %s %s by %s"</tt>, &lt;<i>date</i>&gt;,
+&lt;<i>time</i>&gt;,
+&lt;<i>login</i>&gt;
+</code>
+where
+&lt;<i>date</i>&gt;
+is expressed in the
+<i><a href="date.htm">date</a></i>
+utility's %y/%m/%d format,
+&lt;<i>time</i>&gt;
+in the
+<i><a href="date.htm">date</a></i>
+utility's %T format and
+&lt;<i>login</i>&gt;
+is the login name of the user creating the file.
+<br>
+<br>
+<dt><b>-m&nbsp;</b><i>mrlist</i>
+<dd>
+Insert the list of modification request (MR) numbers
+into the SCCS file
+as the reason for creating the initial delta in a manner identical to
+<i><a href="delta.htm">delta</a></i>.
+The
+<b>v</b>
+flag must be set and the MR numbers are validated if the
+<b>v</b>
+flag has a value (the name of an MR number validation program).
+Diagnostics will occur if the
+<b>v</b>
+flag is not set or MR validation fails.
+<br>
+<br>
+<dt><b>-h</b>
+<dd>Check the structure of the SCCS file
+and compare the newly
+computed checksum (the sum of all the characters in the SCCS file
+except those in the first line) with the checksum that is stored
+in the first line of the SCCS file.
+Appropriate error diagnostics are produced.
+<br>
+<dt><b>-z</b>
+<dd>Recompute the
+SCCS file checksum and store it in the first line
+of the SCCS file (see
+<b>-h</b>
+above).
+Note that use of this option on a truly corrupted file
+may prevent future detection of the corruption.
+<p>
+</dl>
+<br>
+</blockquote><h4><a name = "tag_000_000_005">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of an existing SCCS file or a directory.
+If
+<i>file</i>
+is a directory,
+<i>admin</i>
+behaves as though each file in the directory were
+specified as a named file,
+except that non-SCCS files
+(last component of the pathname does not begin with
+s.)
+and unreadable files are silently ignored.
+
+<dt><i>newfile</i><dd>A pathname of an SCCS file to be created.
+
+</dl>
+<p>
+If a single instance
+<i>file</i>
+or
+<i>newfile</i>
+is specified as
+-,
+the standard input is read;
+each line of the standard input is taken to be the name of an SCCS file
+to be processed.
+Non-SCCS files and unreadable files are silently ignored.
+</blockquote><h4><a name = "tag_000_000_006">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is a text file used only if the
+<b>-i</b>
+is specified without an option-argument or if a
+<i>file</i>
+or
+<i>newfile</i>
+operand is specified as -.
+If the first character of any standard input line
+is SOH (binary 001), the results are unspecified.
+</blockquote><h4><a name = "tag_000_000_007">&nbsp;</a>INPUT FILES</h4><blockquote>
+The existing SCCS files are text files of an unspecified format.
+The file named by the
+<b>-i</b>
+option's
+<i>name</i>
+option-argument is a text file;
+if the first character of any line in this file
+is SOH (binary 001), the results are unspecified.
+</blockquote><h4><a name = "tag_000_000_008">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>admin</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error and the contents of the default
+<b>-y</b>
+comment.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_000_000_009">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_010">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_000_000_011">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+<br>
+</blockquote><h4><a name = "tag_000_000_012">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+Any SCCS files created are text files of an unspecified format.
+During processing of a
+<i>file</i>,
+a locking
+<i>z-file</i>,
+as described in
+<i><a href="get.htm">get</a></i>,
+may be created and deleted.
+<br>
+</blockquote><h4><a name = "tag_000_000_013">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_014">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_015">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_016">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+It is recommended that directories containing SCCS files be
+writable by the owner only,
+and that SCCS files themselves be read-only.
+The mode of the directories
+should allow
+only the owner to modify SCCS files contained in the directories.
+The mode of the SCCS files prevents any modification
+at all except by SCCS commands.
+</blockquote><h4><a name = "tag_000_000_017">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_018">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+A version of
+<i>admin</i>
+that fully supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a>  may be
+introduced in a future issue.
+</blockquote><h4><a name = "tag_000_000_019">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="delta.htm">delta</a></i>,
+<i><a href="get.htm">get</a></i>,
+<i><a href="prs.htm">prs</a></i>,
+<i><a href="what.htm">what</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

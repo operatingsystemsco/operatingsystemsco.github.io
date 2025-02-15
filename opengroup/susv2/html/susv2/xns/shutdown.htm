@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>shutdown</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+shutdown - shut down socket send and receive operations
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+int shutdown(int <I>socket</I>, int <I>how</I>);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<dl compact>
+
+<dt><I>socket</I><dd>Specifies the file descriptor of the socket.
+
+<dt><I>how</I><dd>Specifies the type of shutdown.  The values are as follows:
+<dl compact>
+
+<dt>SHUT_RD<dd>Disables further receive operations.
+
+<dt>SHUT_WR<dd>Disables further send operations.
+
+<dt>SHUT_RDWR<dd>Disables further send and receive operations.
+
+</dl>
+<p>
+</dl>
+<p>
+The
+<i>shutdown()</i>
+function disables subsequent send and/or receive operations on a socket,
+depending on the value of the <I>how</I> argument.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>shutdown()</i>
+returns 0.  Otherwise, -1 is returned and <I>errno</I>
+is set to indicate the error.
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>shutdown()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>The <I>socket</I> argument is not a valid file descriptor.
+
+<dt>[EINVAL]<dd>The <I>how</I> argument is invalid.
+
+<dt>[ENOTCONN]<dd>The socket is not connected.
+
+<dt>[ENOTSOCK]<dd>The <I>socket</I> argument does not refer to a socket.
+
+</dl>
+<p>
+The
+<i>shutdown()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENOBUFS]<dd>Insufficient resources were available in the system to perform the operation.
+
+<dt>[ENOSR]<dd>There were insufficient STREAMS resources available for the operation to
+complete.
+
+</dl>
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="getso22.htm">getsockopt()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="recv.htm">recv()</a></i>,
+<i><a href="recvfrom.htm">recvfrom()</a></i>,
+<i><a href="recvmsg.htm">recvmsg()</a></i>,
+<i><a href="select.htm">select()</a></i>,
+<i><a href="send.htm">send()</a></i>,
+<i><a href="sendto.htm">sendto()</a></i>,
+<i><a href="setso36.htm">setsockopt()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

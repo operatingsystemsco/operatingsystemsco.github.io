@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sendmsg</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+sendmsg - send a message on a socket using a message structure
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+ssize_t sendmsg (int <I>socket</I>, const struct msghdr *<I>message</I>, int <I>flags</I>);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The
+<i>sendmsg()</i>
+function sends a message through a connection-mode or connectionless-mode
+socket.  If the socket is connectionless-mode, the message will be sent to the
+address specified by <I>msghdr</I>.  If the socket is connection-mode, the
+destination address in <I>msghdr</I> is ignored.
+<p>
+The function takes the following arguments:
+<dl compact>
+
+<dt><I>socket</I><dd>Specifies the socket file descriptor.
+
+<dt><I>message</I><dd>Points to a <B>msghdr</B> structure, containing both the destination
+address and the buffers for the outgoing message.
+The length and format of the address depend on the address
+family of the socket.  The <B>msg_flags</B> member is ignored.
+
+<dt><I>flags</I><dd>Specifies the type of message transmission.
+The application may specify 0 or the following flag:
+<dl compact>
+
+<dt>MSG_EOR<dd>Terminates a record (if supported by the protocol)
+
+<dt>MSG_OOB<dd>Sends out-of-band data on sockets that support out-of-bound data.
+The significance and semantics of out-of-band data are protocol-specific.
+
+</dl>
+<p>
+</dl>
+<p>
+The 
+<I>msg_iov</I>
+and 
+<I>msg_iovlen</I>
+fields of message specify
+zero or more buffers containing the data to be sent.
+<I>msg_iov</I>
+points to an array of 
+<B>iovec</B>
+structures; 
+<I>msg_iovlen</I>
+must be set to the dimension of this array.
+In each 
+<B>iovec</B>
+structure, the 
+<I>iov_base</I>
+field specifies 
+a storage area and the 
+<I>iov_len</I>
+field gives its size 
+in bytes. Some of these sizes can be zero. The data
+from each storage area indicated by 
+<I>msg_iov</I>
+is sent in turn.
+<p>
+Successful completion of a call to
+<i>sendmsg()</i>
+does not guarantee delivery of the message.
+A return value of -1 indicates only locally-detected errors.
+<p>
+If space is not available at the sending socket to hold the message to be
+transmitted and the socket file descriptor does not have O_NONBLOCK set,
+<i>sendmsg()</i>
+function blocks until space is available.  If space is not available at the
+sending socket to hold the message to be transmitted and the socket file
+descriptor does have O_NONBLOCK set,
+<i>sendmsg()</i>
+function will fail.
+<p>
+If the socket protocol supports broadcast and the specified address
+is a broadcast address for the socket protocol,
+<i>sendmsg()</i>
+will fail if the SO_BROADCAST option is not set for the socket.
+<p>
+The socket in use may require the process to have appropriate
+privileges to use the
+<i>sendmsg()</i>
+function.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>sendmsg()</i>
+function returns the number of bytes sent.  Otherwise, -1
+is returned and <I>errno</I> is set to indicate the error.
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>sendmsg()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAGAIN] or [EWOULDBLOCK]<dd><br>
+The socket's file descriptor is marked O_NONBLOCK and the requested operation
+would block.
+
+<dt>[EAFNOSUPPORT]<dd>Addresses in the specified address family cannot be used with this socket.
+
+<dt>[EBADF]<dd>The <I>socket</I> argument is not a valid file descriptor.
+
+<dt>[ECONNRESET]<dd>A connection was forcibly closed by a peer.
+
+<dt>[EFAULT]<dd>The 
+<I>message</I>
+parameter, or storage pointed to by the 
+<I>msg_name</I>,
+<I>msg_control</I>
+or 
+<I>msg_iov</I>
+fields of the 
+<I>message</I>
+parameter, or storage pointed to by the
+<B>iovec</B>
+structures pointed to by the 
+<I>msg_iov</I>
+field can not be accessed.
+
+<dt>[EINTR]<dd>A signal interrupted
+<i>sendmsg()</i>
+before any data was transmitted.
+
+<dt>[EINVAL]<dd>The sum of the <B>iov_len</B> values overflows an <B>ssize_t</B>.
+
+<dt>[EMSGSIZE]<dd>The message is to large to be sent all at once (as the socket
+requires), or the
+<B>msg_iovlen</B>
+member of the
+<B>msghdr</B>
+structure pointed to by
+<I>message</I>
+is less than or equal to 0 or is greater than {IOV_MAX}.
+
+<dt>[ENOTCONN]<dd>The socket is connection-mode but is not connected.
+
+<dt>[ENOTSOCK]<dd>The <I>socket</I> argument does not refer a socket.
+
+<dt>[EOPNOTSUPP]<dd>The <I>socket</I> argument is associated with a socket that does not
+support one or more of the values set in <I>flags</I>.
+
+<dt>[EPIPE]<dd>The socket is shut down for writing, or the socket is
+connection-mode and is no longer connected.
+In the latter case, and if the socket is of type SOCK_STREAM, the SIGPIPE
+signal is generated to the calling process.
+
+</dl>
+<p>
+If the address family of the socket is AF_UNIX, then
+<i>sendmsg()</i>
+will fail if:
+<dl compact>
+
+<dt>[EIO]<dd>An I/O error occurred while reading from or writing to the file system.
+
+<dt>[ELOOP]<dd>Too many symbolic links were encountered in translating the pathname in the
+socket address.
+
+<dt>[ENAMETOOLONG]<dd>A component of a pathname exceeded {NAME_MAX} characters, or an entire
+pathname exceeded {PATH_MAX} characters.
+
+<dt>[ENOENT]<dd>A component of the pathname does not name an existing file or the pathname is
+an empty string.
+
+<dt>[ENOTDIR]<dd>A component of the path prefix of the pathname in the socket address is not a
+directory.
+
+</dl>
+<p>
+The
+<i>sendmsg()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>Search permission is denied for a component of the path prefix;
+or write access to the named socket is denied.
+
+<dt>[EDESTADDRREQ]<dd>The socket is not connection-mode and does not have its peer address set,
+and no destination address was specified.
+
+<dt>[EHOSTUNREACH]<dd>The destination host cannot be reached (probably because the host is down or
+a remote router cannot reach it).
+
+<dt>[EIO]<dd>An I/O error occurred while reading from or writing to the file system.
+
+<dt>[EISCONN]<dd>A destination address was specified and the socket
+is already connected.
+
+<dt>[ENETDOWN]<dd>The local interface used to reach the destination is down.
+
+<dt>[ENETUNREACH]<dd>No route to the network is present.
+
+<dt>[ENOBUFS]<dd>Insufficient resources were available in the system to perform the operation.
+
+<dt>[ENOMEM]<dd>Insufficient memory was available to fulfill the request.
+
+<dt>[ENOSR]<dd>There were insufficient STREAMS resources available for the operation to
+complete.
+
+</dl>
+<br>
+<p>
+If the address family of the socket is AF_UNIX, then
+<i>sendmsg()</i>
+may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+</blockquote><h4>APPLICATION USAGE</h4><blockquote>
+The
+<i><a href="select.htm">select()</a></i>
+and
+<i><a href="poll.htm">poll()</a></i>
+functions can be used to determine when it is possible to send more data.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="getso22.htm">getsockopt()</a></i>,
+<i><a href="poll.htm">poll()</a></i>
+<i><a href="recv.htm">recv()</a></i>,
+<i><a href="recvfrom.htm">recvfrom()</a></i>,
+<i><a href="recvmsg.htm">recvmsg()</a></i>,
+<i><a href="select.htm">select()</a></i>,
+<i><a href="send.htm">send()</a></i>,
+<i><a href="sendto.htm">sendto()</a></i>,
+<i><a href="setso36.htm">setsockopt()</a></i>,
+<i><a href="shutdown.htm">shutdown()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

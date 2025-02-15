@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>cbreak</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_691">&nbsp;</a>NAME</h4><blockquote>
+cbreak, nocbreak, noraw, raw - input mode control functions
+</blockquote><h4><a name = "tag_001_009_692">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int cbreak(void);
+
+int nocbreak(void);
+
+int noraw(void);
+
+int raw(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_693">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>cbreak()</i>
+function sets the input mode for the current terminal to <i>cbreak</i> mode and
+overrides a call to
+<i><a href="raw.htm">raw()</a></i>.
+<p>
+The
+<i>nocbreak()</i>
+function sets the input mode for the current terminal to Cooked Mode without
+changing the state of ISIG and IXON.
+<p>
+The
+<i>noraw()</i>
+function sets the input mode for the current terminal to Cooked Mode and sets
+the ISIG and IXON flags.
+<p>
+The
+<i><a href="raw.htm">raw()</a></i>
+function sets the input mode for the current terminal to Raw Mode.
+</blockquote><h4><a name = "tag_001_009_694">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_001_009_695">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_696">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+If the application is not certain what the input mode of the process was at
+the time it called
+<i><a href="initscr.htm">initscr()</a></i>,
+it should use these functions to specify the desired input mode.
+</blockquote><h4><a name = "tag_001_009_697">&nbsp;</a>SEE ALSO</h4><blockquote>
+<xref href=inputmode><a href="intov.htm#tag_001_005_002">
+Input Mode
+</a></xref>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>,
+<b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a> .
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

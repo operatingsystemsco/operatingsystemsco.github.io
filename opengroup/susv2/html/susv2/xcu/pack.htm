@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pack</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1612">&nbsp;</a>NAME</h4><blockquote>
+pack - compress files (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_1613">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+pack <b>[</b>-f<b>][</b>-<b>] </b><i>file</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1614">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pack</i>
+utility attempts to store the specified files in a compressed form.
+Each input file is replaced by a packed file
+<i>file</i><b>.z</b>.
+If the invoking process has appropriate privileges, the ownership, modes,
+access time, and modification time of the original file are preserved.  If
+<i>pack</i>
+is successful,
+<i>file</i>
+will be removed.
+Packed files can be restored to their original form using
+<i><a href="unpack.htm">unpack</a></i>
+or
+<i><a href="pcat.htm">pcat</a></i>.
+<p>
+No packing will occur if:
+<ul>
+<p>
+<li>
+The file appears to be already packed.
+<p>
+<li>
+The filename has more than
+{NAME_MAX}-2
+bytes.
+<p>
+<li>
+The file has links.
+<p>
+<li>
+The file is a directory.
+<p>
+<li>
+The file cannot be opened.
+<p>
+<li>
+The file is empty.
+<p>
+<li>
+No disk storage will be saved by packing.
+<p>
+<li>
+A file called
+<i>file</i><b>.z</b>
+already exists.
+<p>
+<li>
+The
+<b>.z</b>
+file cannot be created.
+<p>
+<li>
+An I/O error occurred during processing.
+<p>
+</ul>
+<p>
+The last segment of the filename must contain no more than
+{NAME_MAX}-2
+bytes to allow space for the appended
+<b>.z</b>
+extension.
+</blockquote><h4><a name = "tag_001_014_1615">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>pack</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+The following option is supported:
+<p>
+<dl compact>
+
+<dt><b>-f</b>
+<dd>Force packing of files.
+This is useful for causing an entire directory to be packed
+even if some of the files will not benefit.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1616">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><b>-</b>
+<dd>Sets an internal flag that causes the number of times each
+byte is used, its relative frequency and the code for the byte
+to be written to standard output.
+Additional occurrences of - in place of
+<i>file</i>
+will cause the internal flag to be set and reset.
+
+<dt><i>file</i><dd>A pathname of a file to be packed;
+<i>file</i>
+can include or omit the
+<b>.z</b>
+suffix.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1617">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1618">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files are regular files.
+<br>
+</blockquote><h4><a name = "tag_001_014_1619">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables may affect the execution of
+<i>pack</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error,
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1620">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+If an error or signal occurs, the
+<i>file</i><b>.z</b>
+file is not created and the original file is unchanged.
+</blockquote><h4><a name = "tag_001_014_1621">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output is a text file containing one line for
+each file packed, with the following format
+used in the POSIX locale:
+<p><code>
+<tt>"pack: %s: %2.1f%% Compression\n"</tt>, <i>file</i>,
+&lt;<i>percent&nbsp;compression</i>&gt;
+</code>
+or:
+<pre>
+<code>
+<tt>"pack: %s: no saving - file unchanged\n"</tt>, <i>file</i>
+</code>
+</pre>
+<p>
+If the - operand is specified and the internal flag is set,
+additional messages of unspecified format will be written to
+standard output as indicated in the OPERANDS section.
+</blockquote><h4><a name = "tag_001_014_1622">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1623">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+Packed files of unspecified format are created with names of the form
+<i>file</i><b>.z</b>.
+</blockquote><h4><a name = "tag_001_014_1624">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1625">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1626">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1627">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The amount of compression obtained depends on the size of the
+input file and the character frequency distribution.
+Because a decoding
+tree may form the first part of each
+<b>.z</b>
+file, it is usually not worthwhile
+to pack small files, unless the character frequency
+distribution is very skewed, which may occur with printer plots or pictures.
+<p>
+Typically, text files are reduced to 60-75% of their original size.
+Object files, which use a larger character set and have a more
+uniform distribution of characters, show little compression, the
+packed versions typically being about 90% of the original size.
+<p>
+Packed files are not necessarily portable to other systems.
+<p>
+Applications should migrate to the
+<i><a href="compress.htm">compress</a></i>
+utility.
+The
+<i><a href="compress.htm">compress</a></i>
+utility offers two advantages over
+<i>pack</i>:
+<ul>
+<p>
+<li>
+The algorithm used to create the output files is
+frequently more effective in reducing the sizes of files.
+<p>
+<li>
+The
+<i><a href="compress.htm">compress</a></i>
+utility can compress data from its standard input,
+not just a named regular file.
+Thus, it is useful in pipelines.
+<p>
+</ul>
+</blockquote><h4><a name = "tag_001_014_1628">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1629">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1630">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pcat.htm">pcat</a></i>,
+<i><a href="unpack.htm">unpack</a></i>,
+<i><a href="compress.htm">compress</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

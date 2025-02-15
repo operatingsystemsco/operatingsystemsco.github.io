@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_accept</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_accept - accept a connection request
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_accept(
+    int fd,
+    int resfd,
+    const struct t_call *call)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>resfd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>call-&gt
+<td align=center>addr.maxlen
+<td align=center>=
+<tr valign=top><td align=left>call-&gt
+<td align=center>addr.len
+<td align=center>x
+<tr valign=top><td align=left>call-&gt
+<td align=center>addr.buf
+<td align=center>? (?)
+<tr valign=top><td align=left>call-&gt
+<td align=center>opt.maxlen
+<td align=center>=
+<tr valign=top><td align=left>call-&gt
+<td align=center>opt.len
+<td align=center>x
+<tr valign=top><td align=left>call-&gt
+<td align=center>opt.buf
+<td align=center>? (?)
+<tr valign=top><td align=left>call-&gt
+<td align=center>udata.maxlen
+<td align=center>=
+<tr valign=top><td align=left>call-&gt
+<td align=center>udata.len
+<td align=center>x
+<tr valign=top><td align=left>call-&gt
+<td align=center>udata.buf
+<td align=center>? (?)
+<tr valign=top><td align=left>call-&gt
+<td align=center>sequence
+<td align=center>x
+</table>
+</pre>
+<p>
+This function is issued by a transport user to accept a connection request.  The
+parameter <I>fd</I> identifies the local transport endpoint where the connection
+indication arrived; <I>resfd</I> specifies the local transport endpoint where
+the connection is to be established, and <I>call</I> contains information
+required by the transport provider to complete the connection.  The parameter
+<I>call</I> points to a <B>t_call</B> structure which contains the following
+members:
+<pre>
+<code>
+struct netbuf addr;
+struct netbuf opt;
+struct netbuf udata;
+int sequence;
+</code>
+</pre>
+<p>
+In <I>call</I>, <I>addr</I> is the protocol address of the calling transport
+user, <I>opt</I> indicates any options associated with the connection,
+<I>udata</I> points to any user data to be returned to the caller, and
+<I>sequence</I> is the value returned by
+<i><a href="tlist53.htm">t_listen()</a></i>
+that uniquely associates the response with a previously received connection
+indication.  The address of the caller, <I>addr</I> may be null (length zero).
+Where <I>addr</I> is not null then it may optionally be checked by XTI.
+<p>
+A transport user may accept a connection on either the same, or on a
+different, local transport endpoint than the one on which the connection
+indication arrived.  Before the connection can be accepted on the same
+endpoint (<I>resfd==fd</I>), the user must have responded to any previous
+connection indications received on that transport endpoint (via
+<i>t_accept()</i>
+or
+<i><a href="tsndd67.htm">t_snddis()</a></i>).
+Otherwise,
+<i>t_accept()</i>
+will fail and set <I>t_errno</I> to [TINDOUT].
+<p>
+If a different transport endpoint is specified (<I>resfd!=fd</I>), then the
+user may or may not choose to bind the endpoint before the
+<i>t_accept()</i>
+is issued. 
+If the endpoint is not bound prior to the 
+<i>t_accept()</i>,
+the endpoint must be in the T_UNBND state before the 
+<i>t_accept()</i>
+is issued, and the transport provider will
+automatically bind it to an address that is appropriate
+for the protocol concerned.
+If the transport user chooses to bind the
+endpoint it must be bound to a protocol address with a <I>qlen</I> of zero and
+must be in the T_IDLE state before the
+<i>t_accept()</i>
+is issued.
+<p>
+Responding endpoints should be supplied to 
+<i>t_accept()</i>
+in the state T_UNBND.
+<p>
+The call to 
+<i>t_accept()</i>
+may fail with t_errno set
+to [TLOOK] if there are indications (for example connect or
+disconnect) waiting to be received on endpoint 
+<I>fd</I>.
+Applications should be prepared for such a failure.
+<p>
+The <I>udata</I> argument enables the called transport user to send user data
+to the caller and the amount of user data must not exceed the limits supported
+by the transport provider as returned in the <I>connect</I> field of the
+<I>info</I> argument of
+<i><a href="topen55.htm">t_open()</a></i>
+or
+<i><a href="tgeti50.htm">t_getinfo()</a></i>.
+If the <I>len</I> field of <I>udata</I> is zero, no data will be sent to the
+caller.  All the <I>maxlen</I> fields are meaningless.
+<p>
+When the user does not indicate any option (<I>call-&gt;opt.len</I> = 0)
+the connection shall be accepted with the option values currently
+set for the responding endpoint 
+<I>resfd</I>
+(see 
+<xref href=rnprop></xref>
+and
+<xref href=omtep></xref>).
+</blockquote><h4>CAVEATS</h4><blockquote>
+There may be transport provider-specific restrictions on address binding.  See
+<xref href=istpi></xref>
+and
+<xref href=ipsi></xref>.
+<p>
+Some transport providers do not differentiate between a connection 
+indication and
+the connection itself.  If the connection has already been established after a
+successful return of
+<i><a href="tlist53.htm">t_listen()</a></i>,
+<i>t_accept()</i>
+will assign the existing connection to the transport endpoint specified by
+<I>resfd</I> (see
+<xref href=ipsi></xref>).
+</blockquote><h4>VALID STATES</h4><blockquote>
+fd: T_INCON
+<br>
+resfd (fd!=resfd): T_IDLE, T_UNBND
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure,
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TACCES]<dd>The user does not have permission to accept a connection on the responding
+transport endpoint or to use the specified options.
+
+<dt>[TBADADDR]<dd>The specified protocol address was in an incorrect format or
+contained illegal information.
+
+<dt>[TBADDATA]<dd>The amount of user data specified was not within the bounds allowed by the
+transport provider.
+
+<dt>[TBADF]<dd>The file descriptor <I>fd</I> or <I>resfd</I> does not refer to a transport
+endpoint.
+
+<dt>[TBADOPT]<dd>The specified options were in an incorrect format or contained illegal
+information.
+
+<dt>[TBADSEQ]<dd>Either an invalid sequence number was specified, or a
+valid sequence number was specified but the connection
+request was aborted by the peer.
+In the latter case, its T_DISCONNECT event 
+will be received on the listening endpoint.
+
+<dt>[TINDOUT]<dd>The function was called with <I>fd==resfd</I> but there are outstanding
+connection indications on the endpoint.  Those other connection indications
+must be handled either by rejecting them via <I>t_snddis</I>(3) or accepting
+them on a different endpoint via <I>t_accept</I>(3).
+
+<dt>[TLOOK]<dd>An asynchronous event has occurred on the transport endpoint referenced by
+<I>fd</I> and requires immediate attention.
+
+<dt>[TNOTSUPPORT]<dd>This function is not supported by the underlying transport provider.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by 
+<I>fd</I>
+or 
+<I>resfd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TPROTO]<dd>This error indicates that a communication problem has been detected between
+XTI and the transport provider for which there is no other suitable XTI
+error
+<I>(t_errno)</I>.
+
+<dt>[TPROVMISMATCH]<dd>The file descriptors <I>fd</I> and <I>resfd</I> do not refer to the same
+transport provider.
+
+<dt>[TRESADDR]<dd>This transport provider requires both <I>fd</I> and <I>resfd</I> to be bound to
+the same address.  This error results if they are not.
+
+<dt>[TRESQLEN]<dd>The endpoint referenced by <I>resfd</I> (where <I>resfd</I> != <I>fd</I>) was
+bound to a protocol address with a <I>qlen</I> that is greater than zero.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, a value of 0 is returned.  Otherwise, a value of
+-1 is returned and
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="tconn46.htm">t_connect()</a></i>,
+<i><a href="tgets52.htm">t_getstate()</a></i>,
+<i><a href="tlist53.htm">t_listen()</a></i>,
+<i><a href="topen55.htm">t_open()</a></i>,
+<i><a href="toptm56.htm">t_optmgmt()</a></i>,
+<i><a href="trcvc58.htm">t_rcvconnect()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

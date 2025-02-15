@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pipe</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_973">&nbsp;</a>NAME</h4><blockquote>
+pipe - create an interprocess channel
+</blockquote><h4><a name = "tag_000_007_974">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int pipe(int <i>fildes</i>[2]);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_975">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pipe()</i>
+function will create a pipe and place two file descriptors, one
+each into the arguments
+<i>fildes</i>[0]
+and
+<i>fildes</i>[1],
+that refer to the open file descriptions for the read and write
+ends of the pipe.
+Their integer values will be the two lowest available at the time
+of the
+<i>pipe()</i>
+call.
+The O_NONBLOCK and FD_CLOEXEC flags shall be clear on both file
+descriptors.
+(The
+<i><a href="fcntl.htm">fcntl()</a></i>
+function can be used to set both these flags.)
+<p>
+Data can be written to the file descriptor
+<i>fildes</i>[1]
+and read from file descriptor
+<i>fildes</i>[0].
+A read on the file descriptor
+<i>fildes</i>[0]
+will access data written to file descriptor
+<i>fildes</i>[1]
+on a first-in-first-out basis.
+It is unspecified whether <i>fildes</i>[0] is also open for writing
+and whether <i>fildes</i>[1] is also open for reading.
+<p>
+A process has the pipe open for reading (correspondingly writing)
+if it has a file descriptor open that refers to the read end,
+<i>fildes</i>[0]
+(write end,
+<i>fildes</i>[1]).
+<p>
+Upon successful completion,
+<i>pipe()</i>
+will mark for update the
+<i>st_atime</i>,
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the pipe.
+</blockquote><h4><a name = "tag_000_007_976">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, 0 is returned.  Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_977">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>pipe()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EMFILE]<dd>
+More than {OPEN_MAX} minus two file descriptors are already in
+use by this process.
+
+<dt>[ENFILE]<dd>
+The number of simultaneously open files in the system would
+exceed a system-imposed limit.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_978">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_979">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_980">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_981">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="fcntl43.htm">&lt;fcntl.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

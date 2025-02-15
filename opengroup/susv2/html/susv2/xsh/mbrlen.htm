@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mbrlen</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_520">&nbsp;</a>NAME</h4><blockquote>
+mbrlen - get number of bytes in a character (restartable)
+</blockquote><h4><a name = "tag_000_007_521">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+size_t mbrlen(const char *<i>s</i>, size_t <i>n</i>, mbstate_t *<i>ps</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_522">&nbsp;</a>DESCRIPTION</h4><blockquote>
+If
+<i>s</i>
+is not a null pointer, 
+<i>mbrlen()</i>
+determines the number of bytes constituting the character pointed to by 
+<i>s</i>.
+It is equivalent to:
+<pre>
+<code>
+mbstate_t internal;
+mbrtowc(NULL, s, n, ps != NULL ? ps : &amp;internal);
+</code>
+</pre>
+<p>
+If
+<i>ps</i>
+is a null pointer, the
+<i>mbrlen()</i>
+function uses its own internal
+<b>mbstate_t</b>
+object, which is initialised at program startup to the initial
+conversion state.  
+Otherwise, the 
+<b>mbstate_t</b>
+object pointed to by
+<i>ps</i>
+is used to completely describe the current conversion state of the
+associated character sequence.
+The implementation will behave as if no function defined in this
+specification calls
+<i>mbrlen()</i>.
+<p>
+The behaviour of this function is affected by the LC_CTYPE category of
+the current locale.  
+</blockquote><h4><a name = "tag_000_007_523">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>mbrlen()</i>
+function returns the first of the following that applies:
+<dl compact>
+
+<dt>0<dd>If the next
+<i>n</i>
+or fewer bytes complete the character that corresponds to
+the null wide-character.
+
+<dt><i>positive</i><dd>If the next
+<i>n</i>
+or fewer bytes complete a valid character; the value
+returned is the number of bytes that complete the character.
+
+<dt><b>(size_t)-2</b><dd>If the next
+<i>n</i>
+bytes contribute to an incomplete but potentially valid 
+character, and all
+<i>n</i>
+bytes have been processed.
+When
+<i>n</i>
+has at least the value of the MB_CUR_MAX macro, this case can only
+occur if 
+<i>s</i>
+points at a sequence of redundant shift sequences (for implementations
+with state-dependent encodings).
+
+<dt><b>(size_t)-1</b><dd>If an encoding error occurs, in which case the next
+<i>n</i>
+or fewer bytes do not contribute to a complete and valid 
+character.  In this case, EILSEQ is stored in
+<i>errno</i>
+and the conversion state is undefined.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_524">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>mbrlen()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+<i>ps</i>
+points to an object that contains an invalid conversion state.
+
+<dt>[EILSEQ]<dd>
+Invalid character sequence is detected.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_525">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_526">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_527">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_528">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mbsinit.htm">mbsinit()</a></i>,
+<i><a href="mbrtowc.htm">mbrtowc()</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the ISO/IEC 9899:1990/Amendment 1:1995 (E).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

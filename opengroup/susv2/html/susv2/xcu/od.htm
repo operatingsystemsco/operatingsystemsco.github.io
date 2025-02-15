@@ -1,0 +1,772 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>od</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1593">&nbsp;</a>NAME</h4><blockquote>
+od - dump files in various formats
+</blockquote><h4><a name = "tag_001_014_1594">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+od <b>[</b>-v<b>][</b>-A <i>address_base</i><b>][</b>-j <i>skip</i><b>][</b>-N <i>count</i><b>][</b>-t <i>type_string</i><b>]</b>...
+<b>[</b><i>file</i>...<b>]</b>
+
+od <b>[</b>-bcdosx<b>][</b><i>file</i><b>] [[</b>+<b>]</b><i>offset</i><b>[</b>.<b>][</b>b<b>]]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1595">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>od</i>
+utility will write the contents of its input files
+to standard output in a user-specified format.
+</blockquote><h4><a name = "tag_001_014_1596">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>od</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that the order of presentation of the
+<b>-t</b>
+options
+and the
+<b>-bcdosx</b>
+options
+is significant.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-A&nbsp;</b><i>address_base</i>
+<dd>
+Specify the input offset base (see the EXTENDED DESCRIPTION section).
+The
+<i>address_base</i>
+option-argument must be a character.
+The characters
+d,
+o
+and
+x
+specify that the offset base
+will be written in decimal, octal or hexadecimal, respectively.
+The character
+n
+specifies that the offset will not be written.
+
+<dt><b>-b</b>
+<dd>Interpret bytes in octal.
+This is equivalent to
+t<b>-o1</b>.
+
+<dt><b>-c</b>
+<dd>Interpret bytes as characters specified by the current setting of the
+LC_CTYPE category.
+Certain non-graphic characters appear as C escapes:
+NUL=<b>\0</b>,
+BS=<b>\b</b>,
+FF=<b>\f</b>,
+NL=<b>\n</b>,
+CR=<b>\r</b>,
+HT=<b>\t</b>;
+others appear as 3-digit octal numbers.
+
+<dt><b>-d</b>
+<dd>Interpret
+<i>word</i>s
+(two-byte units)
+in unsigned decimal.
+This is equivalent to
+t<b>-u2</b>.
+
+<dt><b>-j&nbsp;</b><i>skip</i>
+<dd>Jump over
+<i>skip</i>
+bytes from the beginning of the input.
+The
+<i>od</i>
+utility will read or seek past the first
+<i>skip</i>
+bytes in the concatenated input files.
+If the combined input is not at
+least
+<i>skip</i>
+bytes long, the
+<i>od</i>
+utility will write a diagnostic
+message to standard error and exit with a non-zero exit status.
+
+By default, the
+<i>skip</i>
+option-argument
+is interpreted as a decimal number.
+With a leading
+0x
+or
+0X,
+the offset is
+interpreted as a hexadecimal number; otherwise, with a leading
+0,
+the offset will be interpreted as an octal number.
+Appending the character
+b,
+k
+or
+m
+to offset will cause it to be interpreted as a multiple of 512,
+1024 or 1048576 bytes, respectively.
+If the
+<i>skip</i>
+number is hexadecimal, any appended
+b
+is considered to be the final hexadecimal digit.
+
+<dt><b>-N&nbsp;</b><i>count</i>
+<dd>
+Format no more than
+<i>count</i>
+bytes of input.
+By default,
+<i>count</i>
+is interpreted as a decimal number.
+With a leading
+0x
+or
+0X,
+<i>count</i>
+is interpreted as a
+hexadecimal number; otherwise, with a leading
+0,
+it is interpreted as an octal number.
+If
+<i>count</i>
+bytes of input (after successfully skipping, if
+<b>-j</b>&nbsp;<i>skip</i>
+is specified) are not available, it will not be considered
+an error; the
+<i>od</i>
+utility will format the input that is available.
+
+<dt><b>-o</b>
+<dd>Interpret
+<i>word</i>s
+(two-byte units)
+in octal.
+This is equivalent to
+t<b>-o2</b>.
+
+<dt><b>-s</b>
+<dd>Interpret
+<i>word</i>s
+(two-byte units)
+in signed decimal.
+This is equivalent to
+t<b>-d2</b>.
+
+<dt><b>-t&nbsp;</b><i>type_string</i>
+<dd>
+Specify one or more output types (see the EXTENDED DESCRIPTION
+section).
+The
+<i>type_string</i>
+option-argument must be a string specifying
+the types to be used when writing the input data.
+The string must consist of the type specification characters
+a,
+c,
+d,
+f,
+o,
+u
+and
+x,
+specifying named character,
+character, signed decimal, floating point, octal, unsigned
+decimal and hexadecimal, respectively.
+The type specification characters
+d,
+f,
+o,
+u
+and
+x
+can be followed by an
+optional unsigned decimal integer that specifies the
+number of bytes to be transformed by each instance of the output type.
+The type specification character
+f
+can be followed by an optional
+F,
+D
+or
+L
+indicating that the conversion should be
+applied to an item of type
+<i>float</i>,
+<i>double</i>
+or
+<i>long double</i>,
+respectively.
+The type specification characters
+d,
+o,
+u
+and
+x
+can be followed by an optional
+C,
+S,
+I
+or
+L
+indicating that the
+conversion should be applied to an item of type
+<b>char</b>,
+<b>short</b>,
+<b>int</b>
+or
+<b>long</b>,
+respectively.
+Multiple types can be concatenated within the same
+<i>type_string</i>
+and multiple
+<b>-t</b>
+options can be specified.
+Output lines are written for each type specified in the order
+in which the type specification characters are specified.
+
+<dt><b>-v</b>
+<dd>Write all input data.
+Without the
+<b>-v</b>
+option, any number of groups of output lines, which would be identical to the
+immediately preceding group of output lines (except for
+the byte offsets), will be replaced with a line
+containing only an asterisk
+(*).
+
+<dt><b>-x</b>
+<dd>Interpret
+<i>word</i>s
+(two-byte units)
+in hexadecimal.
+This is equivalent to
+t<b>-x2</b>.
+
+</dl>
+<p>
+Multiple types
+can be specified by using multiple
+<b>-bcdostx</b>
+options.
+Output lines are written for each type specified in the order
+in which the types are specified.
+</blockquote><h4><a name = "tag_001_014_1597">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to be written.
+If no file operands
+are specified, the standard input will be used.
+If the first character of
+<i>file</i>
+is a plus sign
+(+)
+or the first character of the first file
+operand is numeric,
+no more than two operands are given,
+and none of the
+<b>-A</b>,
+<b>-j</b>,
+<b>-N</b>
+or
+<b>-t</b>
+options is specified,
+the operand is assumed to be an
+<i>offset</i>.
+
+<dt><b>[+]</b><i>offset</i><b>[.][b]</b><dd>
+The
+<i>offset</i>
+operand specifies the offset
+in the file where dumping is to commence.
+This operand is normally interpreted as octal bytes.
+If . is appended, the offset is interpreted in
+decimal.
+If
+b
+is appended, the offset is interpreted in
+units of 512 bytes.
+If the
+<i>file</i>
+argument is omitted,
+and none of the
+<b>-A</b>,
+<b>-j</b>,
+<b>-N</b>
+or
+<b>-t</b>
+options is specified,
+the offset argument must be preceded by +.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1598">&nbsp;</a>STDIN</h4><blockquote>
+The standard input is used only if no
+<i>file</i>
+operands are specified.
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_1599">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files can be any file type.
+</blockquote><h4><a name = "tag_001_014_1600">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>od</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LC_NUMERIC</i><dd>
+Determine the locale
+for selecting the radix character used when
+writing floating-point formatted output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1601">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1602">&nbsp;</a>STDOUT</h4><blockquote>
+See the EXTENDED DESCRIPTION section.
+</blockquote><h4><a name = "tag_001_014_1603">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1604">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1605">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The
+<i>od</i>
+utility copies sequentially each input file to standard output,
+transforming the input data according to the output types specified
+by the
+<b>-t</b>
+options
+or the
+<b>-bcdosx</b>
+options.
+If no output type is specified, the default output
+is as if
+<b>-t o2</b>
+had been specified.
+<p>
+The number of bytes transformed by the output type specifier
+c
+may be variable depending on the LC_CTYPE category.
+<p>
+The default number of bytes transformed by output type specifiers
+d,
+f,
+o,
+u
+and
+x
+will correspond to the various C-language types as follows.
+If the
+<i><a href="c89.htm">c89</a></i>
+compiler is present on the system, these specifiers
+will correspond to the sizes used by default in that compiler.
+Otherwise, these sizes are implementation-dependent.
+<ul>
+<p>
+<li>
+For the type specifier characters
+d,
+o,
+u
+and
+x,
+the default number of
+bytes will correspond to the size of the
+underlying implementation's basic integral data type.
+For these specifier characters,
+the implementation will support values of the
+optional number of bytes to be converted corresponding to the number of
+bytes in the C-language types
+<b>char</b>,
+<b>short</b>,
+<b>int</b>
+and
+<b>long.</b>
+These numbers can also be specified by an application as
+the characters
+C,
+S,
+I
+and
+L,
+respectively.
+The byte order
+used when interpreting numeric values
+is implementation-dependent, but
+will correspond to the order in which a constant of the corresponding
+type is stored in memory on the system.
+<br>
+<p>
+<li>
+For the type specifier character
+f,
+the default number of bytes
+will correspond to the number of bytes in
+the underlying
+implementation's basic double precision floating-point data type.
+The implementation will support values of
+the optional number of bytes to be
+converted corresponding to the number of bytes in the C-language types
+<b>float,</b>
+<b>double</b>
+and
+<b>long double</b>.
+These numbers can also be
+specified by an application as the characters
+F,
+D
+and
+L,
+respectively.
+<p>
+</ul>
+<p>
+The type specifier character
+a
+specifies that bytes are interpreted
+as named characters from the
+International Reference Version (IRV) of the ISO/IEC&nbsp;646:1991 standard.
+Only the least significant seven bits of each byte will be used for
+this type specification.
+Bytes with the values listed in the following table
+will be written using the corresponding names for those characters.
+<br>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Value</b>
+<th align=center><b>Name</b>
+<th align=center><b>Value</b>
+<th align=center><b>Name</b>
+<th align=center><b>Value</b>
+<th align=center><b>Name</b>
+<th align=center><b>Value</b>
+<th align=center><b>Name</b>
+<tr valign=top><td align=left>\000
+<td align=left><b>nul</b>
+<td align=left>\001
+<td align=left><b>soh</b>
+<td align=left>\002
+<td align=left><b>stx</b>
+<td align=left>\003
+<td align=left><b>etx</b>
+<tr valign=top><td align=left>\004
+<td align=left><b>eot</b>
+<td align=left>\005
+<td align=left><b>enq</b>
+<td align=left>\006
+<td align=left><b>ack</b>
+<td align=left>\007
+<td align=left><b>bel</b>
+<tr valign=top><td align=left>\010
+<td align=left><b>bs</b>
+<td align=left>\011
+<td align=left><b>ht</b>
+<td align=left>\012
+<td align=left><b>lf or nl<sup><small>*</small></sup></b>
+<td align=left>\013
+<td align=left><b>vt</b>
+<tr valign=top><td align=left>\014
+<td align=left><b>ff</b>
+<td align=left>\015
+<td align=left><b>cr</b>
+<td align=left>\016
+<td align=left><b>so</b>
+<td align=left>\017
+<td align=left><b>si</b>
+<tr valign=top><td align=left>\020
+<td align=left><b>dle</b>
+<td align=left>\021
+<td align=left><b>dc1</b>
+<td align=left>\022
+<td align=left><b>dc2</b>
+<td align=left>\023
+<td align=left><b>dc3</b>
+<tr valign=top><td align=left>\024
+<td align=left><b>dc4</b>
+<td align=left>\025
+<td align=left><b>nak</b>
+<td align=left>\026
+<td align=left><b>syn</b>
+<td align=left>\027
+<td align=left><b>etb</b>
+<tr valign=top><td align=left>\030
+<td align=left><b>can</b>
+<td align=left>\031
+<td align=left><b>em</b>
+<td align=left>\032
+<td align=left><b>sub</b>
+<td align=left>\033
+<td align=left><b>esc</b>
+<tr valign=top><td align=left>\034
+<td align=left><b>fs</b>
+<td align=left>\035
+<td align=left><b>gs</b>
+<td align=left>\036
+<td align=left><b>rs</b>
+<td align=left>\037
+<td align=left><b>us</b>
+<tr valign=top><td align=left>\040
+<td align=left><b>sp</b>
+<td align=left>\177
+<td align=left><b>del</b>
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+</table>
+<h6 align=center><xref table="Named Characters in <I>od</i>"></xref>Table: Named Characters in <i>od</i></h6>
+<dl><dt><b>Note:</b>
+<dd>The
+<b>\012</b>
+value may be written either as
+<b>lf</b>
+or
+<b>nl</b>.
+</dl>
+<p>
+The type specifier character
+c
+specifies that bytes will be interpreted
+as characters specified by the current setting of the LC_CTYPE locale category.
+Characters listed in the table in
+the <b>XBD</b> specification, <a href="../xbd/notation.htm"><b>File Format Notation</b>&nbsp;</a> 
+(\\,
+\a,
+\b,
+\f,
+\n,
+\r,
+\t,
+\v)
+will be written as
+the corresponding escape sequences, except that backslash will be
+written as a single backslash
+and a NUL will be written as
+\0.
+Other non-printable characters will be
+written as one three-digit octal number
+for each byte in the character.
+If the size of a byte on the system is greater than nine bits,
+the format used for non-printable characters is implementation-dependent.
+Printable multi-byte characters will be written
+in the area corresponding to the first byte of the character; the
+two-character sequence
+**
+will be written in the area corresponding to
+each remaining byte in the character, as an indication that the character
+is continued.
+When either the
+<b>-j</b>&nbsp;<i>skip</i>
+or
+<b>-N</b>&nbsp;<i>count</i>
+option is specified along with the
+c
+type specifier, and this results in an attempt to start or finish
+in the middle of a multi-byte character, the result is
+implementation-dependent.
+<p>
+The input data is manipulated in blocks, where a block is defined
+as a multiple of the least common multiple of the number of bytes
+transformed by the specified output types.
+If the least common multiple
+is greater than 16, the results are unspecified.
+Each input block will be written
+as transformed by each output type, one per written line, in
+the order that the output types were specified.
+If the input block size
+is larger than the number of bytes transformed by the output type, the
+output type will sequentially transform the parts of the input block, and
+the output from each of the transformations will be separated by one or
+more
+blank characters.
+<p>
+If, as a result of the specification of the
+<b>-N</b>
+option or end-of-file
+being reached on the last input file,
+input data only partially satisfies
+an output type, the input will be extended sufficiently with null bytes
+to write the last byte of the input.
+<p>
+Unless
+<b>-A n</b>
+is specified, the first output line produced for each input
+block will be preceded by the input offset, cumulative across input
+files, of the next byte to be written.
+The format of the input offset
+is unspecified;
+however, it will not contain any
+blank characters,
+will start at the
+first character of the output line, and will be
+followed by one or more
+blank characters.
+In addition, the offset of the byte following the last byte written
+will be written after all the input data has been processed, but will not
+be followed by any
+blank characters.
+<p>
+If no
+<b>-A</b>
+option is specified, the input offset base is unspecified.
+</blockquote><h4><a name = "tag_001_014_1606">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>All input files were processed successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1607">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1608">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Applications are
+warned not to use filenames starting with + or a first operand
+starting with a numeric character so that the old functionality
+can be maintained by implementations,
+unless they specify one of the new options specified by the ISO/IEC 9945-2:1993 standard.
+To guarantee that one of these
+filenames will always be interpreted as a filename, an
+application could always specify the address base format with the
+<b>-A</b>
+option.
+</blockquote><h4><a name = "tag_001_014_1609">&nbsp;</a>EXAMPLES</h4><blockquote>
+If a file containing 128 bytes with decimal values zero to
+127, in increasing order, is supplied as standard input to the command:
+<pre>
+<code>
+od -A d -t a
+</code>
+</pre>
+on an implementation using an input block size of 16 bytes, the
+standard output, independent of the current locale setting,
+would be similar to:
+<pre>
+<code>
+0000000 nul soh stx etx eot enq ack bel  bs  ht  nl  vt  ff  cr  so  si
+0000016 dle dc1 dc2 dc3 dc4 nak syn etb can  em sub esc  fs  gs  rs  us
+0000032  sp   !   "   #   $   %   &amp;   '   (   )   *   +   ,   -   .   /
+0000048   0   1   2   3   4   5   6   7   8   9   :   ;   &lt;   =   &gt;   ?
+0000064   @   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O
+0000080   P   Q   R   S   T   U   V   W   X   Y   Z   [   \   ]   ^   _
+0000096   `   a   b   c   d   e   f   g   h   i   j   k   l   m   n   o
+0000112   p   q   r   s   t   u   v   w   x   y   z   {   |   }   ~ del
+0000128
+</code>
+</pre>
+<p>
+Note that this specification allows
+<b>nl</b>
+or
+<b>lf</b>
+to be used as the name for the ISO/IEC&nbsp;646:1991 standard
+IRV character with decimal value 10.
+The IRV names this character
+<b>lf</b>
+(line feed), but traditional
+implementations have referred to this
+character as newline
+(nl)
+and the POSIX locale character set
+symbolic name for the corresponding character is a
+newline character.
+<p>
+The command:
+<pre>
+<code>
+od -A o -t o2x2x -n 18
+</code>
+</pre>
+on a system with 32-bit words and an implementation using an input block
+size of 16 bytes could write 18 bytes in approximately the following format:
+<pre>
+<code>
+0000000 032056 031440 041123 042040 052516 044530 020043 031464
+          342e   3320   4253   4420   554e   4958   2023   3334
+             342e3320      42534420      554e4958      20233334
+0000020 032472
+          353a
+             353a0000
+0000022
+</code>
+</pre>
+<p>
+The command:
+<pre>
+<code>
+od -A d -t f -t o4 -t x4 -n 24 -j 0x15
+</code>
+</pre>
+on a system with 64-bit doubles (for example, the IEEE Std. 754 double
+precision floating-point format) would skip 21 bytes of input data and
+then write 24 bytes in approximately the following format:
+<pre>
+<code>
+0000000    1.00000000000000e+00    1.57350000000000e+01
+        07774000000 00000000000 10013674121 35341217270
+           3ff00000    00000000    402f3851    eb851eb8
+0000016    1.40668230000000e+02
+        10030312542 04370303230
+           40619562    23e18698
+0000024
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1610">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+All option and operand interfaces marked as extensions may be
+withdrawn in a future issue.
+<p>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC 1003.2 Interpretations Committee
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_1611">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sed.htm">sed</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

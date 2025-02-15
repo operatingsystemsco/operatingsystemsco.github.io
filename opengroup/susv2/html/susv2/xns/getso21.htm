@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getsockname</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+getsockname - get the socket name
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+int getsockname(int <I>socket</I>, struct sockaddr *<I>address</I>,
+                socklen_t *<I>address_len</I>);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The
+<i>getsockname()</i>
+function retrieves the locally-bound name of the specified socket, stores this
+address in the <B>sockaddr</B> structure pointed to by the <I>address</I>
+argument, and stores the length of this address in the object pointed to by
+the <I>address_len</I> argument.
+<p>
+If the actual length of the address is greater than the length of the
+supplied <B>sockaddr</B> structure, the stored address will be
+truncated.
+<p>
+If the socket has not been bound to a local name, the value stored in the
+object pointed to by <I>address</I> is unspecified.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, 0 is returned, the <I>address</I>
+argument points to the address of the socket, and the <I>address_len</I>
+argument points to the length of the address.  Otherwise, -1 is
+returned and <I>errno</I> is set to indicate the error.
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>getsockname()</i>
+function will fail:
+<dl compact>
+
+<dt>[EBADF]<dd>The <I>socket</I> argument is not a valid file descriptor.
+
+<dt>[EFAULT]<dd>The 
+<I>address</I>
+or 
+<I>address_len</I>
+parameter can not be accessed or written.
+
+<dt>[ENOTSOCK]<dd>The <I>socket</I> argument does not refer to a socket.
+
+<dt>[EOPNOTSUPP]<dd>The operation is not supported for this socket's protocol.
+
+</dl>
+<p>
+The
+<i>getsockname()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>The socket has been shut down.
+
+<dt>[ENOBUFS]<dd>Insufficient resources were available in the system to complete the call.
+
+<dt>[ENOSR]<dd>There were insufficient STREAMS resources available for the operation to
+complete.
+
+</dl>
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="accept.htm">accept()</a></i>,
+<i><a href="bind.htm">bind()</a></i>,
+<i><a href="getpe14.htm">getpeername()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

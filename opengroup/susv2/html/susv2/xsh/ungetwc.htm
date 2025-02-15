@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ungetwc</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_265">&nbsp;</a>NAME</h4><blockquote>
+ungetwc - push wide-character code back into input stream
+</blockquote><h4><a name = "tag_000_010_266">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+wint_t ungetwc(wint_t <i>wc</i>, FILE *<i>stream</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_267">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ungetwc()</i>
+function pushes the character corresponding to the wide-character code
+specified by
+<i>wc</i>
+back onto the input stream pointed to by
+<i>stream</i>.
+The pushed-back characters will be returned by subsequent reads
+on that stream in the reverse order of their pushing.
+A successful intervening call (with the stream pointed to by
+<i>stream</i>)
+to a file-positioning function (.Fn fseek ,
+<i><a href="fsetpos.htm">fsetpos()</a></i>
+or
+<i><a href="rewind.htm">rewind()</a></i>)
+discards any pushed-back characters for the stream.
+The external storage corresponding to the stream is unchanged.
+<p>
+One character of push-back is guaranteed.
+If
+<i>ungetwc()</i>
+is called too many times on the same stream without an intervening read or
+file-positioning operation on that stream, the operation may fail.
+<p>
+If the value of
+<i>wc</i>
+equals that of the macro WEOF, the operation fails and the input
+stream is unchanged.
+<p>
+A successful call to
+<i>ungetwc()</i>
+clears the end-of-file indicator for the stream.
+The value of the file-position indicator for the stream after
+reading or discarding all pushed-back characters will be the same
+as it was before the characters were pushed back.
+The file-position indicator is decremented (by one or more) by each successful
+call to
+<i>ungetwc()</i>;
+if its value was 0 before a call, its value is indeterminate after the call.
+</blockquote><h4><a name = "tag_000_010_268">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>ungetwc()</i>
+returns the wide-character code corresponding to the
+pushed-back character.
+Otherwise it returns WEOF.
+</blockquote><h4><a name = "tag_000_010_269">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>ungetwc()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EILSEQ]<dd>
+An invalid character sequence is detected, or a wide-character code does not
+correspond to a valid character.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_270">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_271">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_272">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_273">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fseek.htm">fseek()</a></i>,
+<i><a href="fsetpos.htm">fsetpos()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="rewind.htm">rewind()</a></i>,
+<i><a href="setbuf.htm">setbuf()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the MSE working draft.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

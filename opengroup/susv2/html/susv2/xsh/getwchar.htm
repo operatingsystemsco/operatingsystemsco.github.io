@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getwchar</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_815">&nbsp;</a>NAME</h4><blockquote>
+getwchar - get a wide character from a <i>stdin</i> stream
+</blockquote><h4><a name = "tag_000_005_816">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+wint_t getwchar(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_817">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getwchar()</i>
+<i>getwc(stdin)</i>.
+function is equivalent to
+</blockquote><h4><a name = "tag_000_005_818">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Refer to
+<i><a href="fgetwc.htm">fgetwc()</a></i>.
+</blockquote><h4><a name = "tag_000_005_819">&nbsp;</a>ERRORS</h4><blockquote>
+Refer to
+<i><a href="fgetwc.htm">fgetwc()</a></i>.
+</blockquote><h4><a name = "tag_000_005_820">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_821">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+If the
+value returned by
+<i>getwchar()</i>
+is stored into a variable of type
+<b>wchar_t</b>
+and then compared against the
+<b>wint_t</b>
+macro WEOF,
+the comparison need never succeed.
+</blockquote><h4><a name = "tag_000_005_822">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_823">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fgetwc.htm">fgetwc()</a></i>,
+<i><a href="getwc.htm">getwc()</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the MSE working draft.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

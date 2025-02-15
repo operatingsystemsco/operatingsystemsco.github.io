@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>logname</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1232">&nbsp;</a>NAME</h4><blockquote>
+logname - return the user's login name
+</blockquote><h4><a name = "tag_001_014_1233">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+logname
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1234">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>logname</i>
+utility will write the user's login name to standard output.
+The login name is
+the string that would be returned by the <b>XSH</b> specification
+<i><a href="../xsh/getlogin.htm">getlogin()</a></i>
+function.
+Under the conditions where the
+<i><a href="../xsh/getlogin.htm">getlogin()</a></i>
+function would fail, the
+<i>logname</i>
+utility will write a diagnostic message to standard error
+and exit with a non-zero exit status.
+</blockquote><h4><a name = "tag_001_014_1235">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1236">&nbsp;</a>OPERANDS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1237">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1238">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1239">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>logname</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1240">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1241">&nbsp;</a>STDOUT</h4><blockquote>
+The
+<i>logname</i>
+utility output will be a single line consisting of the user's login name:
+<p><code>
+<tt>"%s\n"</tt>, &lt;<i>login name</i>&gt;
+</code>
+</blockquote><h4><a name = "tag_001_014_1242">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1243">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1244">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1245">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1246">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1247">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>logname</i>
+utility
+explicitly ignores the
+<i>LOGNAME</i>
+environment variable because environment changes
+could produce erroneous results.
+</blockquote><h4><a name = "tag_001_014_1248">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1249">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1250">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="id.htm">id</a></i>,
+<i><a href="who.htm">who</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

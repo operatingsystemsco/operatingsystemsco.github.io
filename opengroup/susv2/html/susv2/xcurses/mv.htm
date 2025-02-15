@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>mv</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_084">&nbsp;</a>NAME</h4><blockquote>
+mv - pointer page for functions with <i>mv</i> prefix
+</blockquote><h4><a name = "tag_001_009_085">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Most cases in which a Curses function has the <i>mv</i> prefix
+indicate that the function takes
+<i>y</i>
+and
+<i>x</i>
+arguments and moves the cursor to that address as though
+<i><a href="move.htm">move()</a></i>
+were first called.  (The corresponding functions without the <i>mv</i> prefix
+operate at the cursor position.)
+The
+<i><a href="mvcur.htm">mvcur()</a></i>,
+<i><a href="mvderwin.htm">mvderwin()</a></i>
+and
+<i><a href="mvwin.htm">mvwin()</a></i>
+functions are exceptions to this rule, in that <i>mv</i> is not a prefix with
+the usual meaning and there are no corresponding functions without the
+<i>mv</i> prefix.  These functions have entries under their own names.
+<p>
+In the
+<i><a href="mvprintw.htm">mvprintw()</a></i>
+and
+<i><a href="mvscanw.htm">mvscanw()</a></i>
+functions, <i>mv</i> is a prefix with the usual meaning, but the functions have
+entries under their own names because the <i>mv</i> function is the first
+function in the family of functions in alphabetical order.
+<p>
+The <i>mv</i> prefix is combined with a <i>w</i> prefix to produce Curses
+functions beginning with <i>mvw</i>.
+<p>
+The <i>mv</i> and <i>mvw</i> functions are discussed together with the
+corresponding functions that do not have these prefixes.  They are found on
+the following entries:
+<p><table  align=center><tr valign=top><th colspan=2 align=center><b>Function</b>
+<tr valign=top><td align=left><i><a href="mvaddch.htm">mvaddch()</a></i>
+<td align=left><i><a href="mvwaddch.htm">mvwaddch()</a></i>
+<td align=left><i><a href="addch.htm">addch()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd55.htm">mvaddchnstr()</a></i>
+<td align=left><i><a href="mvwad79.htm">mvwaddchnstr()</a></i>
+<td align=left><i><a href="addchstr.htm">addchstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd56.htm">mvaddchstr()</a></i>
+<td align=left><i><a href="mvwad80.htm">mvwaddchstr()</a></i>
+<td align=left><i><a href="addchstr.htm">addchstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd57.htm">mvaddnstr()</a></i>
+<td align=left><i><a href="mvwad81.htm">mvwaddnstr()</a></i>
+<td align=left><i><a href="addnstr.htm">addnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvaddstr.htm">mvaddstr()</a></i>
+<td align=left><i><a href="mvwad83.htm">mvwaddstr()</a></i>
+<td align=left><i><a href="addnstr.htm">addnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd58.htm">mvaddnwstr()</a></i>
+<td align=left><i><a href="mvwad82.htm">mvwaddnwstr()</a></i>
+<td align=left><i><a href="addnwstr.htm">addnwstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd59.htm">mvaddwstr()</a></i>
+<td align=left><i><a href="mvwad84.htm">mvwaddwstr()</a></i>
+<td align=left><i><a href="addnwstr.htm">addnwstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd52.htm">mvadd_wch()</a></i>
+<td align=left><i><a href="mvwad76.htm">mvwadd_wch()</a></i>
+<td align=left><i><a href="addwc4.htm">add_wch()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd53.htm">mvadd_wchnstr()</a></i>
+<td align=left><i><a href="mvwad77.htm">mvwadd_wchnstr()</a></i>
+<td align=left><i><a href="addwc5.htm">add_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvadd54.htm">mvadd_wchstr()</a></i>
+<td align=left><i><a href="mvwad78.htm">mvwadd_wchstr()</a></i>
+<td align=left><i><a href="addwc5.htm">add_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvchgat.htm">mvchgat()</a></i>
+<td align=left><i><a href="mvwchgat.htm">mvwchgat()</a></i>
+<td align=left><i><a href="chgat.htm">chgat()</a></i>
+<tr valign=top><td align=left><i><a href="mvdelch.htm">mvdelch()</a></i>
+<td align=left><i><a href="mvwdelch.htm">mvwdelch()</a></i>
+<td align=left><i><a href="delch.htm">delch()</a></i>
+<tr valign=top><td align=left><i><a href="mvgetch.htm">mvgetch()</a></i>
+<td align=left><i><a href="mvwgetch.htm">mvwgetch()</a></i>
+<td align=left><i><a href="getch.htm">getch()</a></i>
+<tr valign=top><td align=left><i><a href="mvget63.htm">mvgetnstr()</a></i>
+<td align=left><i><a href="mvwge88.htm">mvwgetnstr()</a></i>
+<td align=left><i><a href="getnstr.htm">getnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvgetstr.htm">mvgetstr()</a></i>
+<td align=left><i><a href="mvwge89.htm">mvwgetstr()</a></i>
+<td align=left><i><a href="getnstr.htm">getnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvget62.htm">mvgetn_wstr()</a></i>
+<td align=left><i><a href="mvwge87.htm">mvwgetn_wstr()</a></i>
+<td align=left><i><a href="getnw32.htm">getn_wstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvget60.htm">mvget_wch()</a></i>
+<td align=left><i><a href="mvwge85.htm">mvwget_wch()</a></i>
+<td align=left><i><a href="getwc29.htm">get_wch()</a></i>
+<tr valign=top><td align=left><i><a href="mvget61.htm">mvget_wstr()</a></i>
+<td align=left><i><a href="mvwge86.htm">mvwget_wstr()</a></i>
+<td align=left><i><a href="getnw32.htm">getn_wstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvhline.htm">mvhline()</a></i>
+<td align=left><i><a href="mvwhline.htm">mvwhline()</a></i>
+<td align=left><i><a href="hline.htm">hline()</a></i>
+<tr valign=top><td align=left><i><a href="mvhli64.htm">mvhline_set()</a></i>
+<td align=left><i><a href="mvwhl90.htm">mvwhline_set()</a></i>
+<td align=left><i><a href="hline37.htm">hline_set()</a></i>
+<tr valign=top><td align=left><i><a href="mvinch.htm">mvinch()</a></i>
+<td align=left><i><a href="mvwinch.htm">mvwinch()</a></i>
+<td align=left><i><a href="inch.htm">inch()</a></i>
+<tr valign=top><td align=left><i><a href="mvinc68.htm">mvinchnstr()</a></i>
+<td align=left><i><a href="mvwin94.htm">mvwinchnstr()</a></i>
+<td align=left><i><a href="inchnstr.htm">inchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinc69.htm">mvinchstr()</a></i>
+<td align=left><i><a href="mvwin95.htm">mvwinchstr()</a></i>
+<td align=left><i><a href="inchnstr.htm">inchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinnstr.htm">mvinnstr()</a></i>
+<td align=left><i><a href="mvwin96.htm">mvwinnstr()</a></i>
+<td align=left><i><a href="innstr.htm">innstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinn70.htm">mvinnwstr()</a></i>
+<td align=left><i><a href="mvwin97.htm">mvwinnwstr()</a></i>
+<td align=left><i><a href="innwstr.htm">innwstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinsch.htm">mvinsch()</a></i>
+<td align=left><i><a href="mvwinsch.htm">mvwinsch()</a></i>
+<td align=left><i><a href="insch.htm">insch()</a></i>
+<tr valign=top><td align=left><i><a href="mvins74.htm">mvinsnstr()</a></i>
+<td align=left><i><a href="mvwin101.htm">mvwinsnstr()</a></i>
+<td align=left><i><a href="insnstr.htm">insnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinsstr.htm">mvinsstr()</a></i>
+<td align=left><i><a href="mvwin102.htm">mvwinsstr()</a></i>
+<td align=left><i><a href="insnstr.htm">insnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinstr.htm">mvinstr()</a></i>
+<td align=left><i><a href="mvwinstr.htm">mvwinstr()</a></i>
+<td align=left><i><a href="innstr.htm">innstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvins71.htm">mvins_nwstr()</a></i>
+<td align=left><i><a href="mvwin98.htm">mvwins_nwstr()</a></i>
+<td align=left><i><a href="insnw44.htm">ins_nwstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvins72.htm">mvins_wch()</a></i>
+<td align=left><i><a href="mvwin99.htm">mvwins_wch()</a></i>
+<td align=left><i><a href="inswc45.htm">ins_wch()</a></i>
+<tr valign=top><td align=left><i><a href="mvins73.htm">mvins_wstr()</a></i>
+<td align=left><i><a href="mvwin100.htm">mvwins_wstr()</a></i>
+<td align=left><i><a href="insnw44.htm">ins_nwstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinwstr.htm">mvinwstr()</a></i>
+<td align=left><i><a href="mvwin103.htm">mvwinwstr()</a></i>
+<td align=left><i><a href="innwstr.htm">innwstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinw65.htm">mvin_wch()</a></i>
+<td align=left><i><a href="mvwin91.htm">mvwin_wch()</a></i>
+<td align=left><i><a href="inwch39.htm">in_wch()</a></i>
+<tr valign=top><td align=left><i><a href="mvinw66.htm">mvin_wchnstr()</a></i>
+<td align=left><i><a href="mvwin92.htm">mvwin_wchnstr()</a></i>
+<td align=left><i><a href="inwch40.htm">in_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvinw67.htm">mvin_wchstr()</a></i>
+<td align=left><i><a href="mvwin93.htm">mvwin_wchstr()</a></i>
+<td align=left><i><a href="inwch40.htm">in_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="mvprintw.htm">mvprintw()</a></i>
+<td align=left><i><a href="mvwpr104.htm">mvwprintw()</a></i>
+<td align=left><i><a href="mvprintw.htm">mvprintw()</a></i>
+<tr valign=top><td align=left><i><a href="mvscanw.htm">mvscanw()</a></i>
+<td align=left><i><a href="mvwscanw.htm">mvwscanw()</a></i>
+<td align=left><i><a href="mvscanw.htm">mvscanw()</a></i>
+<tr valign=top><td align=left><i><a href="mvvline.htm">mvvline()</a></i>
+<td align=left><i><a href="mvwvline.htm">mvwvline()</a></i>
+<td align=left><i><a href="hline.htm">hline()</a></i>
+<tr valign=top><td align=left><i><a href="mvvli75.htm">mvvline_set()</a></i>
+<td align=left><i><a href="mvwvl105.htm">mvwvline_set()</a></i>
+<td align=left><i><a href="hline37.htm">hline_set()</a></i>
+</table>
+</blockquote><h4><a name = "tag_001_009_086">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="w.htm">w</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

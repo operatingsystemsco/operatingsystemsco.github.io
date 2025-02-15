@@ -1,0 +1,343 @@
+<!DOCTYPE HTML SYSTEM "html.dtd">
+<HTML>
+<HEAD>
+<TITLE>Corrigenda U007</TITLE>
+</HEAD>
+<BODY>
+<H2>X/Open Corrigenda: U007</H2>
+<H1> Document: Message Store API (XMS)</H1>
+X/Open CAE Specification, 6/93<BR>
+X/Open reference C305
+
+<P>
+<H3>Contents</H3>
+<DT>XMS-1.1, XMS-1.2.
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XMS-1.1</H3>
+
+<DT><H3>Title</H3>
+<DD>Case conventions and contraventions in &lt;xms.h&gt; header
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>Given that some existing implementations may have
+                 legitimately followed the case conventions in XMS spec
+                 section 2.2, whereas others may have legitimately
+                 followed precisely the mixed case naming given in the
+                 example &lt;xms.h&gt; header file (in chapter 9), then it is
+                 apparent that applications are not guaranteed to be portable.
+<P>
+                 Any change (either to the case conventions, or to align
+                 the names with the conventions) will cause some applications
+                 to experience portability problems at compilation time.
+                 Bearing in mind that a portability problem exists with
+                 the specification in it's current state, it has been
+                 decided to align the names with the stated case conventions
+                 (all upper case).
+<P>
+                 It is strongly recommended that applications using mixed
+                 case naming are changed to conform to the stated case
+                 conventions.
+.
+<P>
+<DD><H3>Change</H3><DL>
+<DL><DT>Align the names with the stated case conventions (all
+                 upper case), as specified in section 2.2.
+<P>
+</DL>
+Workaround - to ensure portability between existing XMS implementations:
+
+<P><DL><DT>
+
+                 Due to this inconsistency in the specification, an
+                 application using XMS may encounter implementations
+                 which provide an &lt;xms.h&gt; header file with the names
+                 all in upper case as per the convention, and also
+                 implementations which have used the mixed case as listed
+                 in the example XMS header file (in XMS CAE specification
+		 chapter 9).
+<P>
+                 If it is desired to guarantee their applications portability
+                 across different implementations of this version of the
+                 XMS specification it is recommended that the following
+                 defines are included in an application after inclusion
+                 of the &lt;xms.h&gt; header file.
+<P>
+</DL>
+#ifndef MS_Address<DL><DT>
+    #define MS_Address MS_ADDRESS
+    #define MS_Alert_Indication MS_ALERT_INDICATION<BR>
+    #define MS_Allowed_Content_Types MS_ALLOWED_CONTENT_TYPES<BR>
+    #define MS_Allowed_EITs MS_ALLOWED_EITS<BR>
+    #define MS_Auto_Action_Deregistrations MS_AUTO_ACTION_DEREGISTRATIONS<BR>
+    #define MS_Auto_Action_Registrations MS_AUTO_ACTION_REGISTRATIONS<BR>
+    #define MS_Auto_Action_Request_Problems MS_AUTO_ACTION_REQUEST_PROBLEMS<BR>
+    #define MS_Available_Attribute_Types MS_AVAILABLE_ATTRIBUTE_TYPES<BR>
+    #define MS_Available_Auto_Actions MS_AVAILABLE_AUTO_ACTIONS<BR>
+    #define MS_Change_Credentials MS_CHANGE_CREDENTIALS<BR>
+    #define MS_Child_Entries MS_CHILD_ENTRIES<BR>
+    #define MS_Content_Types_Supported MS_CONTENT_TYPES_SUPPORTED<BR>
+    #define MS_Default_Delivery_Controls MS_DEFAULT_DELIVERY_CONTROLS<BR>
+    #define MS_Deliverable_Content_Types MS_DELIVERABLE_CONTENT_TYPES<BR>
+    #define MS_Deliverable_EIT MS_DELIVERABLE_EIT<BR>
+    #define MS_Deliverable_Max_Content_Len MS_DELIVERABLE_MAX_CONTENT_LEN<BR>
+    #define MS_eitS MS_EITS<BR>
+    #define MS_Fetch_Attribute_Defaults MS_FETCH_ATTRIBUTE_DEFAULTS<BR>
+    #define MS_Fetch_Restriction-Problems MS_FETCH_RESTRICTION-PROBLEMS<BR>
+    #define MS_Fetch_Restrictions MS_FETCH_RESTRICTIONS<BR>
+    #define MS_Filter MS_FILTER<BR>
+    #define MS_IA5_String MS_IA5_STRING<BR>
+    #define MS_Initiator MS_INITIATOR<BR>
+    #define MS_Initiator_Credentials MS_INITIATOR_CREDENTIALS<BR>
+    #define MS_Labels_And_Redirections MS_LABELS_AND_REDIRECTIONS<BR>
+    #define MS_Limit MS_LIMIT<BR>
+    #define MS_List_Attribute_Defaults MS_LIST_ATTRIBUTE_DEFAULTS<BR>
+    #define MS_Max_Content_Length MS_MAX_CONTENT_LENGTH<BR>
+    #define MS_Configuration_Request MS_CONFIGURATION_REQUEST<BR>
+    #define MS_Name MS_NAME<BR>
+    #define MS_OCTET_String MS_OCTET_STRING<BR>
+    #define MS_Override MS_OVERRIDE<BR>
+    #define MS_Permissible_Content_Types MS_PERMISSIBLE_CONTENT_TYPES<BR>
+    #define MS_Permissible_EITS MS_PERMISSIBLE_EITS<BR>
+    #define MS_Permissible_Lowest_Priority MS_PERMISSIBLE_LOWEST_PRIORITY<BR>
+    #define MS_Permissible_Max_Content_Len MS_PERMISSIBLE_MAX_CONTENT_LEN<BR>
+    #define MS_Permissible_Operations MS_PERMISSIBLE_OPERATIONS<BR>
+    #define MS_Range MS_RANGE<BR>
+    #define MS_Responder_Credentials MS_RESPONDER_CREDENTIALS<BR>
+    #define MS_Restrict MS_RESTRICT<BR>
+    #define MS_Security_Context MS_SECURITY_CONTEXT<BR>
+    #define MS_User_Security_Labels MS_USER_SECURITY_LABELS<BR>
+    #define MS_E_action_type_not_subscribed MS_E_ACTION_TYPE_NOT_SUBSCRIBED<BR>
+    #define MS_E_asynchrony_not_supported MS_E_ASYNCHRONY_NOT_SUPPORTED<BR>
+    #define MS_E_attrib_type_not_subscribed MS_E_ATTRIB_TYPE_NOT_SUBSCRIBED<BR>
+    #define MS_E_authentication_error MS_E_AUTHENTICATION_ERROR<BR>
+    #define MS_E_bad_argument MS_E_BAD_ARGUMENT<BR>
+    #define MS_E_bad_class MS_E_BAD_CLASS<BR>
+    #define MS_E_bad_session MS_E_BAD_SESSION<BR>
+    #define MS_E_busy MS_E_BUSY<BR>
+    #define MS_E_child_entry_specified MS_E_CHILD_ENTRY_SPECIFIED<BR>
+    #define MS_E_communications_problem MS_E_COMMUNICATIONS_PROBLEM<BR>
+    #define MS_E_content_length_problem MS_E_CONTENT_LENGTH_PROBLEM<BR>
+    #define MS_E_content_type_problem MS_E_CONTENT_TYPE_PROBLEM<BR>
+    #define MS_E_defer_deliv_cancel_reject MS_E_DEFER_DELIV_CANCEL_REJECT<BR>
+    #define MS_E_delETE_rESTRICTION_PROBLEM MS_E_DELETE_RESTRICTION_PROBLEM<BR>
+    #define MS_E_eit_problem MS_E_EIT_PROBLEM<BR>
+    #define MS_E_elmt_serv_not_subscribed MS_E_ELMT_SERV_NOT_SUBSCRIBED<BR>
+    #define MS_E_feature_not_negotiated MS_E_FEATURE_NOT_NEGOTIATED<BR>
+    #define MS_E_feature_unavailable MS_E_FEATURE_UNAVAILABLE<BR>
+    #define MS_E_inappropriate_for_operatn MS_E_INAPPROPRIATE_FOR_OPERATN<BR>
+    #define MS_E_inappropriate_matching MS_E_INAPPROPRIATE_MATCHING<BR>
+    #define MS_E_inconsistent_request MS_E_INCONSISTENT_REQUEST<BR>
+    #define MS_E_invalid_attribute_value MS_E_INVALID_ATTRIBUTE_VALUE<BR>
+    #define MS_E_invalid_FEATURE MS_E_INVALID_FEATURE<BR>
+    #define MS_E_invalid_parameters MS_E_INVALID_PARAMETERS<BR>
+    #define MS_E_message_submiT_id_invalid MS_E_MESSAGE_SUBMIT_ID_INVALID<BR>
+    #define MS_E_miscellaneous MS_E_MISCELLANEOUS<BR>
+    #define MS_E_no_such_class MS_E_NO_SUCH_CLASS<BR>
+    #define MS_E_no_such_entry MS_E_NO_SUCH_ENTRY<BR>
+    #define MS_E_originator_invalid MS_E_ORIGINATOR_INVALID<BR>
+    #define MS_E_out_of_memory MS_E_OUT_OF_MEMORY<BR>
+    #define MS_E_recipient_improperly_specified MS_E_RECIPIENT_IMPROPERLY_SPECIFIED<BR>
+    #define MS_E_register_rejected MS_E_REGISTER_REJECTED<BR>
+    #define MS_E_remote_bind_error MS_E_REMOTE_BIND_ERROR<BR>
+    #define MS_E_reversed MS_E_REVERSED<BR>
+    #define MS_E_security MS_E_SECURITY<BR>
+    #define MS_E_submission_ctrl_violated MS_E_SUBMISSION_CTRL_VIOLATED<BR>
+    #define MS_E_too_many_operations MS_E_TOO_MANY_OPERATIONS<BR>
+    #define MS_E_too_many_sessions MS_E_TOO_MANY_SESSIONS<BR>
+    #define MS_E_unable_establish_associatn MS_E_UNABLE_ESTABLISH_ASSOCIATN<BR>
+    #define MS_E_unacceptable_securE_contxt MS_E_UNACCEPTABLE_SECURE_CONTXT<BR>
+    #define MS_E_unavailable MS_E_UNAVAILABLE<BR>
+    #define MS_E_unavailable_action_type MS_E_UNAVAILABLE_ACTION_TYPE<BR>
+    #define MS_E_unavailable_attribute_type MS_E_UNAVAILABLE_ATTRIBUTE_TYPE<BR>
+    #define MS_E_unsupported_critical_func MS_E_UNSUPPORTED_CRITICAL_FUNC<BR>
+    #define MS_E_unwilling_to_perfoRM MS_E_UNWILLING_TO_PERFORM<BR></DL>
+#else<DL><DT>
+    #define MS_ADDRESS MS_Address<BR>
+    #define MS_ALERT_INDICATION MS_Alert_Indication<BR>
+    #define MS_ALLOWED_CONTENT_TYPES MS_Allowed_Content_Types<BR>
+    #define MS_ALLOWED_EITS MS_Allowed_EITs<BR>
+    #define MS_AUTO_ACTION_DEREGISTRATIONS MS_Auto_Action_Deregistrations<BR>
+    #define MS_AUTO_ACTION_REGISTRATIONS MS_Auto_Action_Registrations<BR>
+    #define MS_AUTO_ACTION_REQUEST_PROBLEMS MS_Auto_Action_Request_Problems<BR>
+    #define MS_AVAILABLE_ATTRIBUTE_TYPES MS_Available_Attribute_Types<BR>
+    #define MS_AVAILABLE_AUTO_ACTIONS MS_Available_Auto_Actions<BR>
+    #define MS_CHANGE_CREDENTIALS MS_Change_Credentials<BR>
+    #define MS_CHILD_ENTRIES MS_Child_Entries<BR>
+    #define MS_CONTENT_TYPES_SUPPORTED MS_Content_Types_Supported<BR>
+    #define MS_DEFAULT_DELIVERY_CONTROLS MS_Default_Delivery_Controls<BR>
+    #define MS_DELIVERABLE_CONTENT_TYPES MS_Deliverable_Content_Types<BR>
+    #define MS_DELIVERABLE_EIT MS_Deliverable_EIT<BR>
+    #define MS_DELIVERABLE_MAX_CONTENT_LEN MS_Deliverable_Max_Content_Len<BR>
+    #define MS_EITS MS_eitS<BR>
+    #define MS_FETCH_ATTRIBUTE_DEFAULTS MS_Fetch_Attribute_Defaults<BR>
+    #define MS_FETCH_RESTRICTION-PROBLEMS MS_Fetch_Restriction-Problems<BR>
+    #define MS_FETCH_RESTRICTIONS MS_Fetch_Restrictions<BR>
+    #define MS_FILTER MS_Filter<BR>
+    #define MS_IA5_STRING MS_IA5_String<BR>
+    #define MS_INITIATOR MS_Initiator<BR>
+    #define MS_INITIATOR_CREDENTIALS MS_Initiator_Credentials<BR>
+    #define MS_LABELS_AND_REDIRECTIONS MS_Labels_And_Redirections<BR>
+    #define MS_LIMIT MS_Limit<BR>
+    #define MS_LIST_ATTRIBUTE_DEFAULTS MS_List_Attribute_Defaults<BR>
+    #define MS_MAX_CONTENT_LENGTH MS_Max_Content_Length<BR>
+    #define MS_CONFIGURATION_REQUEST MS_Configuration_Request<BR>
+    #define MS_NAME MS_Name<BR>
+    #define MS_OCTET_STRING MS_OCTET_String<BR>
+    #define MS_OVERRIDE MS_Override<BR>
+    #define MS_PERMISSIBLE_CONTENT_TYPES MS_Permissible_Content_Types<BR>
+    #define MS_PERMISSIBLE_EITS MS_Permissible_EITS<BR>
+    #define MS_PERMISSIBLE_LOWEST_PRIORITY MS_Permissible_Lowest_Priority<BR>
+    #define MS_PERMISSIBLE_MAX_CONTENT_LEN MS_Permissible_Max_Content_Len<BR>
+    #define MS_PERMISSIBLE_OPERATIONS MS_Permissible_Operations<BR>
+    #define MS_RANGE MS_Range<BR>
+    #define MS_RESPONDER_CREDENTIALS MS_Responder_Credentials<BR>
+    #define MS_RESTRICT MS_Restrict<BR>
+    #define MS_SECURITY_CONTEXT MS_Security_Context<BR>
+    #define MS_USER_SECURITY_LABELS MS_User_Security_Labels<BR>
+    #define MS_E_ACTION_TYPE_NOT_SUBSCRIBED MS_E_action_type_not_subscribed<BR>
+    #define MS_E_ASYNCHRONY_NOT_SUPPORTED MS_E_asynchrony_not_supported<BR>
+    #define MS_E_ATTRIB_TYPE_NOT_SUBSCRIBED MS_E_attrib_type_not_subscribed<BR>
+    #define MS_E_AUTHENTICATION_ERROR MS_E_authentication_error<BR>
+    #define MS_E_BAD_ARGUMENT MS_E_bad_argument<BR>
+    #define MS_E_BAD_CLASS MS_E_bad_class<BR>
+    #define MS_E_BAD_SESSION MS_E_bad_session<BR>
+    #define MS_E_BUSY MS_E_busy<BR>
+    #define MS_E_CHILD_ENTRY_SPECIFIED MS_E_child_entry_specified<BR>
+    #define MS_E_COMMUNICATIONS_PROBLEM MS_E_communications_problem<BR>
+    #define MS_E_CONTENT_LENGTH_PROBLEM MS_E_content_length_problem<BR>
+    #define MS_E_CONTENT_TYPE_PROBLEM MS_E_content_type_problem<BR>
+    #define MS_E_DEFER_DELIV_CANCEL_REJECT MS_E_defer_deliv_cancel_reject<BR>
+    #define MS_E_DELETE_RESTRICTION_PROBLEM MS_E_delETE_rESTRICTION_PROBLEM<BR>
+    #define MS_E_EIT_PROBLEM MS_E_eit_problem<BR>
+    #define MS_E_ELMT_SERV_NOT_SUBSCRIBED MS_E_elmt_serv_not_subscribed<BR>
+    #define MS_E_FEATURE_NOT_NEGOTIATED MS_E_feature_not_negotiated<BR>
+    #define MS_E_FEATURE_UNAVAILABLE MS_E_feature_unavailable<BR>
+    #define MS_E_INAPPROPRIATE_FOR_OPERATN MS_E_inappropriate_for_operatn<BR>
+    #define MS_E_INAPPROPRIATE_MATCHING MS_E_inappropriate_matching<BR>
+    #define MS_E_INCONSISTENT_REQUEST MS_E_inconsistent_request<BR>
+    #define MS_E_INVALID_ATTRIBUTE_VALUE MS_E_invalid_attribute_value<BR>
+    #define MS_E_INVALID_FEATURE MS_E_invalid_FEATURE<BR>
+    #define MS_E_INVALID_PARAMETERS MS_E_invalid_parameters<BR>
+    #define MS_E_MESSAGE_SUBMIT_ID_INVALID MS_E_message_submiT_id_invalid<BR>
+    #define MS_E_MISCELLANEOUS MS_E_miscellaneous<BR>
+    #define MS_E_NO_SUCH_CLASS MS_E_no_such_class<BR>
+    #define MS_E_NO_SUCH_ENTRY MS_E_no_such_entry<BR>
+    #define MS_E_ORIGINATOR_INVALID MS_E_originator_invalid<BR>
+    #define MS_E_OUT_OF_MEMORY MS_E_out_of_memory<BR>
+    #define MS_E_RECIPIENT_IMPROPERLY_SPECIFIED MS_E_recipient_improperly_specified<BR>
+    #define MS_E_REGISTER_REJECTED MS_E_register_rejected<BR>
+    #define MS_E_REMOTE_BIND_ERROR MS_E_remote_bind_error<BR>
+    #define MS_E_REVERSED MS_E_reversed<BR>
+    #define MS_E_SECURITY MS_E_security<BR>
+    #define MS_E_SUBMISSION_CTRL_VIOLATED MS_E_submission_ctrl_violated<BR>
+    #define MS_E_TOO_MANY_OPERATIONS MS_E_too_many_operations<BR>
+    #define MS_E_TOO_MANY_SESSIONS MS_E_too_many_sessions<BR>
+    #define MS_E_UNABLE_ESTABLISH_ASSOCIATN MS_E_unable_establish_associatn<BR>
+    #define MS_E_UNACCEPTABLE_SECURE_CONTXT MS_E_unacceptable_securE_contxt<BR>
+    #define MS_E_UNAVAILABLE MS_E_unavailable<BR>
+    #define MS_E_UNAVAILABLE_ACTION_TYPE MS_E_unavailable_action_type<BR>
+    #define MS_E_UNAVAILABLE_ATTRIBUTE_TYPE MS_E_unavailable_attribute_type<BR>
+    #define MS_E_UNSUPPORTED_CRITICAL_FUNC MS_E_unsupported_critical_func<BR>
+    #define MS_E_UNWILLING_TO_PERFORM MS_E_unwilling_to_perfoRM<BR></DL>
+#endif
+</DL>
+
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XMS-1.2</H3>
+
+<DT><H3>Title</H3>
+<DD>Align XMS with IEEE 1224 Standard
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The statement in XMS (last bullet on p. 10) that a
+                 constraint on attributes can restrict the length of
+                 strings &lt;in octets&gt; conflicts with the XOM Issue 2
+                 definition for Value Length. XOM Issue 2 (C315,
+                 section 4.2.18) states:<DL><DL><DT>
+                     A data value of this type is the number of bits
+                     in a bit string, octets in an octet string, or
+                     characters in a character string,</DL>
+<P>
+                 In the X/Open X.400 (C316) and XDS (C317) Issue 2
+                 CAE specifications, this constraint is expressed
+                 in terms of the number of elements in a string,
+                 rather than the number of octets.
+<P>
+                 In addition, the XOM Issue 2 API (C315) Appendix A:
+                 "Differences from IEEE Standard" section A.2 highlights
+                 this item and states:<DL><DT>
+                     X/Open believes that the definition in IEEE 1224-1993
+                     is inconsistent with other definitions in
+                     IEEE 1224-1993, and is wrong.</DL>
+<P>
+                 The IEEE 1224-1993 Standard incorrectly introduced
+                 the "number of octets" definition. This is the subject
+                 of an IEEE interpretations request, and a published
+                 IEEE interpretation (reference IRQ# IEEE1224-1993/1,
+                 copy in XoTGnet 4687) states that "number of elements"
+                 is right and "number of octets" is wrong.
+<P>
+                 This CR proposes to replace the statement in XMS with
+                 text derived from that which appears in the X/Open
+                 X.400 and XDS Issue 2 specifications on this item.
+<P>
+</DL>
+<DT><H3>Change</H3><DL>
+<DT>Replace the statement in XMS (last bullet in section
+                 1.6.5 on page 10):
+<P>
+<DL><DT>
+                   - restrict the length of strings (in octets), up to
+                     a limit known as the "value length constraint".
+<P>
+</DL>
+                 with
+<P>
+<DL><DT>
+                   - restrict the length of strings, up to a limit known
+                     as the "value length constraint".
+<P>
+                     Note: 
+<DL><DT>
+                           Any constraints on the length of a string
+                           are expressed in terms of number of bits in a
+                           bit string, octets in an octet string, or
+                           characters in a character string.  These
+                           constraints are specified in the appropriate
+                           class definitions.
+<P>
+                           The number of octets used to represent a
+                           string with multibyte characters (for example,
+                           T.61 Teletext) may exceed the number of
+                           characters expressed in the value length
+                           constraint.  Therefore the length field of
+                           such a string (which gives the number of
+                           octets by which it is represented) may exceed
+                           the value length constraint.
+</DL></DL>
+<P>
+<HR>
+<P>
+If you can't find the information you need, please contact
+X/Open at any of its <A HREF = "http://www.xopen.co.uk/contact.htm">offices.</A>
+<P>
+<HR>
+<P>
+<A HREF="http://www.xopen.co.uk/cprt.htm">Copyright X/Open Company Limited, &#169; 1995</A>
+<P>
+<HR>
+</BODY>
+</HTML>

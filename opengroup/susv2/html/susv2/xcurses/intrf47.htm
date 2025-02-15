@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>intrflush</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_001">&nbsp;</a>NAME</h4><blockquote>
+intrflush - enable or disable flush on interrupt
+</blockquote><h4><a name = "tag_001_009_002">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int intrflush(WINDOW *<i>win</i>, bool <i>bf</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_003">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>intrflush()</i>
+function specifies whether pressing an interrupt key
+(interrupt, suspend or quit) will flush the input buffer associated with
+the current screen.
+If the value of <i>bf</i> is TRUE, then flushing of the
+output buffer associated with the current screen will 
+occur when an interrupt key (interrupt, suspend, or 
+quit) is pressed.  If the value of bf is FALSE then no
+flushing of the buffer will occur when an interrupt
+key is pressed
+The default for the option is inherited
+from the display driver settings.  The <i>win</i> argument is ignored.
+</blockquote><h4><a name = "tag_001_009_004">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>intrflush()</i>
+returns OK.  Otherwise, it returns ERR.
+</blockquote><h4><a name = "tag_001_009_005">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_006">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The same effect is achieved outside Curses using the NOFLSH local mode flag
+specified in the <b>XBD</b> specification (<b>General Terminal Interface</b>).
+</blockquote><h4><a name = "tag_001_009_007">&nbsp;</a>SEE ALSO</h4><blockquote>
+<xref href=terminalinput><a href="intov.htm#tag_001_005">
+Input Processing
+</a></xref>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>,
+<b>XBD</b> specification, <a href="../xbd/termios.htm#tag_008_002"><b>Parameters that Can be Set</b>&nbsp;</a> .
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

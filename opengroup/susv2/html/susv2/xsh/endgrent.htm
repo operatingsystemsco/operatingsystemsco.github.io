@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>endgrent</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_205">&nbsp;</a>NAME</h4><blockquote>
+endgrent, getgrent, setgrent - group database entry functions
+</blockquote><h4><a name = "tag_000_003_206">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="grph76.htm">grp.h</a>&gt;
+
+void endgrent(void);
+struct group *getgrent(void);
+void setgrent(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_207">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i><a href="getgrent.htm">getgrent()</a></i>
+function returns a pointer to a structure containing the broken-out fields of
+an entry in the group database.  When first called,
+<i><a href="getgrent.htm">getgrent()</a></i>
+returns a pointer to a <b>group</b> structure containing the first entry in the
+group database.  Thereafter, it returns a pointer to a <b>group</b> structure
+containing the next group structure in the group database, so successive
+calls may be used to search the entire database.
+<p>
+The
+<i><a href="setgrent.htm">setgrent()</a></i>
+function effectively rewinds the group database to allow repeated searches.
+<p>
+The
+<i>endgrent()</i>
+function may be called to close the group database when processing is
+complete.
+<p>
+These interfaces need not be reentrant.
+</blockquote><h4><a name = "tag_000_003_208">&nbsp;</a>RETURN VALUE</h4><blockquote>
+When first called,
+<i><a href="getgrent.htm">getgrent()</a></i>
+will return a pointer to the first group structure in the group database.
+Upon subsequent calls it returns the next group structure in the group
+database.  The
+<i><a href="getgrent.htm">getgrent()</a></i>
+function returns a null pointer on end-of-file or an error and
+<i>errno</i>
+may be set to indicate the error.
+<p>
+The return value may point to a static area which is overwritten
+by a subsequent call to
+<i><a href="getgrgid.htm">getgrgid()</a></i>,
+<i><a href="getgrnam.htm">getgrnam()</a></i>
+or
+<i><a href="getgrent.htm">getgrent()</a></i>.
+</blockquote><h4><a name = "tag_000_003_209">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i><a href="getgrent.htm">getgrent()</a></i>
+function may fail if:
+<dl compact>
+
+<dt>[EINTR]<dd>
+A signal was caught during the operation.
+
+<dt>[EIO]<dd>
+An I/O error has occurred.
+
+<dt>[EMFILE]<dd>
+{OPEN_MAX} file descriptors are currently open in the calling process.
+
+<dt>[ENFILE]<dd>
+The maximum allowable number of files is currently open in the system.
+
+</dl>
+</blockquote><h4><a name = "tag_000_003_210">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_211">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+These functions are provided due to their historical usage.  Applications
+should avoid dependencies on fields in the group database, whether the
+database is a single file, or where in the filesystem namespace the database
+resides.  Applications should use
+<i><a href="getgrnam.htm">getgrnam()</a></i>
+and
+<i><a href="getgrgid.htm">getgrgid()</a></i>
+whenever possible both because it avoids these dependencies and for greater
+portability with systems that conform to earlier versions of this
+specification.
+</blockquote><h4><a name = "tag_000_003_212">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_213">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getgrgid.htm">getgrgid()</a></i>,
+<i><a href="getgrnam.htm">getgrnam()</a></i>,
+<i><a href="getlogin.htm">getlogin()</a></i>,
+<i><a href="getpwent.htm">getpwent()</a></i>,
+<i><a href="grph76.htm">&lt;grp.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getopt</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_617">&nbsp;</a>NAME</h4><blockquote>
+getopt, optarg, optind, opterr, optopt - command option parsing
+</blockquote><h4><a name = "tag_000_005_618">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int getopt(int <i>argc</i>, char * const <i>argv</i>[], const char *<i>optstring</i>);
+extern char *optarg;
+extern int optind, opterr, optopt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_619">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getopt()</i>
+function is a command-line parser
+that can be used by applications that follow
+Utility Syntax Guidelines 3, 4, 5, 6, 7, 9 and 10 in the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a>.
+The remaining guidelines are not addressed by
+<i>getopt()</i>
+and are the responsibility of the application.
+<p>
+The parameters
+<i>argc</i>
+and
+<i>argv</i>
+are the argument count and argument array as passed to
+<i>main()</i>
+(see
+<i>exec</i>).
+The argument
+<i>optstring</i>
+is a string of recognised option characters; if a character is followed by a
+colon, the option takes an argument.  All option characters allowed by Utility
+Syntax Guideline 3 are allowed in
+<i>optstring</i>.
+The implementation may accept other characters as an extension.
+<p>
+The variable
+<i>optind</i>
+is the index of the next element of the
+<i>argv</i>[]
+vector to be processed.
+It is initialised to 1 by the system, and
+<i>getopt()</i>
+updates it when it finishes with each element of
+<i>argv</i>[].
+When an element of
+<i>argv</i>[]
+contains multiple option characters,
+it is unspecified how
+<i>getopt()</i>
+determines which options have already been processed.
+<p>
+The
+<i>getopt()</i>
+function returns the next option character (if one is found) from
+<i>argv</i>
+that matches a character in
+<i>optstring</i>,
+if there is one that matches.
+If the option takes an argument,
+<i>getopt()</i>
+sets the variable
+<i>optarg</i>
+to point to the option-argument as follows:
+<ol>
+<p>
+<li>
+If the option was the last character in the string
+pointed to by an element of
+<i>argv</i>,
+then
+<i>optarg</i>
+contains the next element of
+<i>argv</i>,
+and
+<i>optind</i>
+is incremented by 2.
+If the resulting value of
+<i>optind</i>
+is not less than
+<i>argc</i>,
+this indicates a missing option-argument, and
+<i>getopt()</i>
+returns an error indication.
+<p>
+<li>
+Otherwise,
+<i>optarg</i>
+points to the string following the option character
+in that element of
+<i>argv</i>,
+and
+<i>optind</i>
+is incremented by 1.
+<p>
+</ol>
+<p>
+If, when
+<i>getopt()</i>
+is called:
+<pre>
+<code>
+ <i>argv</i>[optind]    is a null pointer
+*<i>argv</i>[optind]    is not the character -
+ <i>argv</i>[optind]    points to the string "-"
+</code>
+</pre>
+<i>getopt</i>()
+returns -1 without changing
+<i>optind</i>.
+If:
+<pre>
+<code>
+<i>argv</i>[optind]     points to the string "--"
+</code>
+</pre>
+<i>getopt</i>()
+returns -1 after incrementing
+<i>optind</i>.
+<p>
+If
+<i>getopt()</i>
+encounters an option character that is not contained in
+<i>optstring</i>,
+it returns the question-mark (?) character.
+If it detects a missing option-argument, it returns the colon character (:)
+if the first character of
+<i>optstring</i>
+was a colon, or a question-mark character (?) otherwise.
+In either case,
+<i>getopt()</i>
+will set the variable
+<i>optopt</i>
+to the option character that caused the error.
+If the application has not set the variable
+<i>opterr</i>
+to 0 and the first character of
+<i>optstring</i>
+is not a colon,
+<i>getopt()</i>
+also prints a diagnostic message to
+<i>stderr</i>
+in the format
+specified for the
+<i><a href="../xcu/getopts.htm">getopts</a></i>
+utility.
+<br>
+</blockquote><h4><a name = "tag_000_005_620">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>getopt()</i>
+function returns the next option character specified on the command line.
+<p>
+A colon (:) is returned if
+<i>getopt()</i>
+detects a missing argument and the first character of
+<i>optstring</i>
+was a colon (:).
+<p>
+A question mark (?) is returned if
+<i>getopt()</i>
+encounters an option character not in
+<i>optstring</i>
+or detects a missing argument and the first character of
+<i>optstring</i>
+was not a colon (:).
+<p>
+Otherwise
+<i>getopt()</i>
+returns -1 when all command line options are parsed.
+</blockquote><h4><a name = "tag_000_005_621">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_005_622">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following code fragment shows how one might process the arguments for a
+utility that can take the mutually exclusive options a and b and
+the options f and o, both of which require arguments:
+<pre>
+<code>
+#include &lt;unistd.h&gt;
+
+int
+main (int argc, char *argv[ ])
+{
+    int c;
+    int bflg, aflg, errflg;
+    char *ifile;
+    char *ofile;
+    extern char *optarg;
+    extern int optind, optopt;
+    . . .
+    while ((c = getopt(argc, argv, ":abf:o:")) != -1) {
+        switch (c) {
+        case 'a':
+            if (bflg)
+                errflg++;
+            else
+                aflg++;
+            break;
+        case 'b':
+            if (aflg)
+                errflg++;
+            else {
+                bflg++;
+                bproc();
+            }
+            break;
+        case 'f':
+            ifile = optarg;
+            break;
+        case 'o':
+            ofile = optarg;
+            break;
+            case ':':       /* -f or -o without operand */
+                    fprintf(stderr,
+                            "Option -%c requires an operand\n", optopt);
+                    errflg++;
+                    break;
+        case '?':
+                    fprintf(stderr,
+                            "Unrecognised option: -%c\n", optopt);
+            errflg++;
+        }
+    }
+    if (errflg) {
+        fprintf(stderr, "usage: . . . ");
+        exit(2);
+    }
+    for ( ; optind &lt; argc; optind++) {
+        if (access(argv[optind], R_OK)) {
+    . . .
+}
+</code>
+</pre>
+This code accepts any of the following as equivalent:
+<pre>
+<code>
+cmd -ao arg path path
+cmd -a -o arg path path
+cmd -o arg -a path path
+cmd -a -o arg -- path path
+cmd -a -oarg path path
+cmd -aoarg path path
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_623">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>getopt()</i>
+function is only required to support option characters included in Guideline 3.
+Many historical implementations of
+<i>getopt()</i>
+support other characters as options.
+This is an allowed extension, but applications that use extensions are
+not maximally portable.
+Note that support for multi-byte option characters is
+only possible when such characters can be represented as type
+<b>int</b>.
+<p>
+The
+<i>getopt()</i>
+interface need not be reentrant.
+</blockquote><h4><a name = "tag_000_005_624">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_625">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="../xcu/getopts.htm">getopts</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>,
+the <b>XCU</b> specification.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dirname</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_453">&nbsp;</a>NAME</h4><blockquote>
+dirname - return the directory portion of pathname
+</blockquote><h4><a name = "tag_001_014_454">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+dirname <i>string</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_455">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>string</i>
+operand will be treated as a pathname, as defined in
+<b>pathname</b>
+(see
+the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a> ).
+The string
+<i>string</i>
+will be converted to the name of the directory containing the filename
+corresponding to the last pathname component in
+<i>string</i>,
+performing actions equivalent to the following steps in order:
+<ol>
+<p>
+<li>
+If
+<i>string</i>
+is
+<b>//</b>,
+skip steps 2 to 5.
+<p>
+<li>
+If
+<i>string</i>
+consists entirely of slash characters,
+<i>string</i>
+will be set to a single slash character.
+In this case, skip steps 3 to 8.
+<p>
+<li>
+If there are any trailing slash characters in
+<i>string</i>,
+they will be removed.
+<p>
+<li>
+If there are no slash characters remaining in
+<i>string</i>,
+<i>string</i>
+will be set to a single period character.
+In this case, skip steps 5 to 8.
+<p>
+<li>
+If there are any trailing non-slash characters in
+<i>string</i>,
+they will be removed.
+<p>
+<li>
+If the remaining
+<i>string</i>
+is
+<b>//</b>,
+it is implementation-dependent whether steps 7 and 8 are
+skipped or processed.
+<p>
+<li>
+If there are any trailing slash characters in
+<i>string</i>,
+they will be removed.
+<p>
+<li>
+If the remaining
+<i>string</i>
+is empty,
+<i>string</i>
+will be set to a single slash character.
+<p>
+</ol>
+<p>
+The resulting string will be written to standard output.
+</blockquote><h4><a name = "tag_001_014_456">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_457">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>string</i><dd>A string.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_458">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_459">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_460">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>dirname</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_461">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_462">&nbsp;</a>STDOUT</h4><blockquote>
+The
+<i>dirname</i>
+utility will write a line to the standard output
+in the following format:
+<p><code>
+<pre>
+<tt>"%s\n"</tt>, &lt;<i>resulting string</i>&gt;
+</pre>
+</code>
+</blockquote><h4><a name = "tag_001_014_463">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_464">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_465">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_466">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_467">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_468">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The definition of
+<i>pathname</i>
+specifies implementation-dependent behaviour for pathnames
+starting with two slash characters.
+Therefore, applications must not arbitrarily add slashes
+to the beginning of a pathname unless they can ensure
+that there are more or less than two or are prepared
+to deal with the implementation-dependent consequences.
+<br>
+</blockquote><h4><a name = "tag_001_014_469">&nbsp;</a>EXAMPLES</h4><blockquote>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Command</b>
+<th align=center><b>Results</b>
+<tr valign=top><td align=left>dirname /
+<td align=left>/
+<tr valign=top><td align=left>dirname //
+<td align=left>/ or //
+<tr valign=top><td align=left>dirname /a/b/
+<td align=left>/a
+<tr valign=top><td align=left>dirname //a//b//
+<td align=left>//a
+<tr valign=top><td align=left>dirname
+<td align=left><i>unspecified</i>
+<tr valign=top><td align=left>dirname a
+<td align=left>. ($? = 0)
+<tr valign=top><td align=left>dirname ""
+<td align=left>. ($? = 0)
+<tr valign=top><td align=left>dirname /a
+<td align=left>/
+<tr valign=top><td align=left>dirname /a/b
+<td align=left>/a
+<tr valign=top><td align=left>dirname a/b
+<td align=left>a
+</table>
+</blockquote><h4><a name = "tag_001_014_470">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_471">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="basename.htm">basename</a></i>,
+<xref href=parms><a href="chap2.htm#tag_001_005">
+Parameters and Variables
+</a></xref>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

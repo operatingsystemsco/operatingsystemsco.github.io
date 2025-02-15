@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;netinet/in.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+netinet/in.h - Internet Protocol family
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;netinet/in.h&gt;
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+When header file
+<i>&lt;netinet/in.h&gt;</i>
+is included, the following types are defined
+through 
+<B>typedef</B>.
+<p>
+<dl compact>
+
+<dt><B>in_port_t</B><dd>An unsigned integral type of exactly 16 bits.
+
+<dt><B>in_addr_t</B><dd>An unsigned integral type of exactly 32 bits.
+
+</dl>
+<p>
+The
+<i><a href="netin31.htm">&lt;netinet/in.h&gt;</a></i>
+header defines the
+<B>in_addr</B>
+structure that includes at least the following member:
+<pre>
+<code>
+in_addr_t      s_addr
+</code>
+</pre>
+<p>
+The
+<i><a href="netin31.htm">&lt;netinet/in.h&gt;</a></i>
+header defines the
+<B>sockaddr_in</B>
+structure that includes at least the following member:
+<pre>
+<code>
+sa_family_t    sin_family
+in_port_t      sin_port
+struct in_addr sin_addr
+unsigned char  sin_zero[8]
+</code>
+</pre>
+The
+<B>sockaddr_in</B>
+structure is used to store addresses for the Internet
+protocol family.  Values of this type must be cast to
+<B>struct sockaddr</B>
+for use with the socket interfaces defined in this document.
+<p>
+The
+<i><a href="netin31.htm">&lt;netinet/in.h&gt;</a></i>
+header defines the type
+<B>sa_family_t</B>
+as described in
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+<p>
+The
+<i><a href="netin31.htm">&lt;netinet/in.h&gt;</a></i>
+header defines the following macros for use as values of the <I>level</I>
+argument of
+<i><a href="getso22.htm">getsockopt()</a></i>
+and
+<i><a href="setso36.htm">setsockopt()</a></i>:
+<dl compact>
+
+<dt>IPPROTO_IP<dd>Dummy for IP.
+
+<dt>IPPROTO_ICMP<dd>Control message protocol.
+
+<dt>IPPROTO_TCP<dd>TCP.
+
+<dt>IPPROTO_UDP<dd>User datagram protocol.
+
+</dl>
+<p>
+The
+<i><a href="netin31.htm">&lt;netinet/in.h&gt;</a></i>
+header defines the following macros for use as destination addresses for
+<i><a href="connect.htm">connect()</a></i>,
+<i><a href="sendmsg.htm">sendmsg()</a></i>
+and
+<i><a href="sendto.htm">sendto()</a></i>:
+<dl compact>
+
+<dt>INADDR_ANY<dd>
+Local host address.
+
+<dt>INADDR_BROADCAST<dd>
+Broadcast address.
+
+</dl>
+</code>
+<p>
+<i><a href="ntohl.htm">ntohl()</a></i>,
+<i><a href="ntohs.htm">ntohs()</a></i>,
+<i><a href="htonl.htm">htonl()</a></i>
+and 
+<i><a href="htons.htm">htons()</a></i>
+as defined in the description of
+<i><a href="arpai1.htm">&lt;arpa/inet.h&gt;</a></i>
+are available.
+Inclusion of the 
+<i><a href="netin31.htm">&lt;netinet/in.h&gt;</a></i>
+header may also make visible all symbols from 
+<i><a href="arpai1.htm">&lt;arpa/inet.h&gt;</a></i>.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="getso22.htm">getsockopt()</a></i>,
+<i><a href="setso36.htm">setsockopt()</a></i>.
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

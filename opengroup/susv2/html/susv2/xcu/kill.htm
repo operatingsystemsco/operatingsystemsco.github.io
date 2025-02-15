@@ -1,0 +1,432 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>kill</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1061">&nbsp;</a>NAME</h4><blockquote>
+kill - terminate or signal processes
+</blockquote><h4><a name = "tag_001_014_1062">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+kill -s <i>signal_name pid</i>...
+
+kill -l <b>[</b><i>exit_status</i><b>]</b>
+
+kill <b>[</b>-<i>signal_name</i><b>] </b><i>pid</i>...  (Obsolescent)
+
+kill <b>[</b>-<i>signal_number</i><b>]</b><i> pid</i>...  (Obsolescent)
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1063">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>kill</i>
+utility will send a signal
+to the process or processes specified by each
+<i>pid</i>
+operand.
+<p>
+For each
+<i>pid</i>
+operand, the
+<i>kill</i>
+utility will perform actions equivalent to the <b>XSH</b> specification
+<i><a href="../xsh/kill.htm">kill()</a></i>
+function called with the following arguments:
+<ol>
+<p>
+<li>
+The value of the
+<i>pid</i>
+operand will be used as the
+<i>pid</i>
+argument.
+<p>
+<li>
+The
+<i>sig</i>
+argument
+is the value specified by the
+<b>-s</b>
+option,
+<b>-</b><i>signal_number</i>
+option, or the
+<b>-</b><i>signal_name</i>
+option, or by SIGTERM, if none of these options is specified.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_1064">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>kill</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that in the obsolescent form, the
+<b>-</b><i>signal_number</i>
+and
+<b>-</b><i>signal_name</i>
+options are usually more than a single character.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-l</b>
+<dd>(The letter ell.)
+Write all values of
+<i>signal_name</i>
+supported by the implementation, if no operand is given.
+If an
+<i>exit_status</i>
+operand is given and it is a value of the
+"?"
+shell special parameter (see
+<xref href=specpar><a href="chap2.htm#tag_001_005_002">
+Special Parameters
+</a></xref>
+and
+<i><a href="wait.htm">wait</a></i>)
+corresponding to a process that was terminated by a signal, the
+<i>signal_name</i>
+corresponding to the signal that terminated
+the process will be written.
+If an
+<i>exit_status</i>
+operand is given and it is the unsigned decimal integer
+value of a signal number, the
+<i>signal_name</i>
+(the <b>XSH</b> specification-defined symbolic constant name without the
+<b>SIG</b>
+prefix) corresponding to that signal will be written.
+Otherwise, the results are unspecified.
+
+<dt><b>-s&nbsp;</b><i>signal_name</i>
+<dd>
+Specify the signal to send, using one of the symbolic
+names defined
+in the <b>XSH</b> specification
+<i><a href="../xsh/signa248.htm">&lt;signal.h&gt;</a></i>
+description.
+Values of
+<i>signal_name</i>
+will be recognised in a case-independent fashion, without the
+<b>SIG</b>
+prefix.
+In addition, the symbolic name
+0
+will be recognised,
+representing the signal value zero.
+The corresponding signal will be sent instead of SIGTERM.
+
+<dt><b>-</b><i>signal_name</i>
+<dd>
+Equivalent to
+<b>-s</b>&nbsp;<i>signal_name.</i>
+
+
+<dt><b>-</b><i>signal_number</i><dd>
+Specify a non-negative decimal integer,
+<i>signal_number,</i>
+representing the signal to be used instead
+of SIGTERM, as the
+<i>sig</i>
+argument in the effective call to
+<i><a href="../xsh/kill.htm">kill()</a></i>.
+The correspondence between integer values and the
+<i>sig</i>
+value used is shown in the following table.
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><i>signal_number</i>
+<th align=center><b><i>sig</i> Value</b>
+<tr valign=top><td align=left>0
+<td align=left><i>0</i>
+<tr valign=top><td align=left>1
+<td align=left><i>SIGHUP</i>
+<tr valign=top><td align=left>2
+<td align=left><i>SIGINT</i>
+<tr valign=top><td align=left>3
+<td align=left><i>SIGQUIT</i>
+<tr valign=top><td align=left>6
+<td align=left><i>SIGABRT</i>
+<tr valign=top><td align=left>9
+<td align=left><i>SIGKILL</i>
+<tr valign=top><td align=left>14
+<td align=left><i>SIGALRM</i>
+<tr valign=top><td align=left>15
+<td align=left><i>SIGTERM</i>
+</table>
+</pre>
+
+The effects of specifying any
+<i>signal_number</i>
+other than those listed in the table are undefined.
+
+</dl>
+<p>
+In the obsolescent versions,
+if the first argument is a negative integer,
+it will be interpreted as a
+<b>-</b><i>signal_number</i>
+option, not as a negative
+<i>pid</i>
+operand specifying a process group.
+</blockquote><h4><a name = "tag_001_014_1065">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>pid</i><dd>One of the following:
+<ol>
+
+<li>
+A decimal integer specifying a process or process group to be signalled.
+The process or processes selected by
+positive, negative and zero values of the
+<i>pid</i>
+operand will be as described for the <b>XSH</b> specification
+<i><a href="../xsh/kill.htm">kill()</a></i>
+function.
+If process number 0 is specified, all processes
+in the process group are signalled.
+For the effects of negative
+<i>pid</i>
+numbers, see the <b>XSH</b> specification under
+<i><a href="../xsh/kill.htm">kill()</a></i>.
+If the first
+<i>pid</i>
+operand is negative, it should be preceded by
+--
+to keep it from being interpreted as an option.
+
+<li>
+A job control job ID (see
+the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a> )
+that identifies a background process group to be signalled.
+The job control job ID notation
+is applicable only for invocations of
+<i>kill</i>
+in the current shell execution environment;
+see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>.
+<dl><dt><b>Note:</b>
+<dd>The job control job ID type of
+<i>pid</i>
+is available on systems supporting both the
+job control option
+and the User Portability Utilities Option,
+which applies to all XSI-conformant systems.
+</dl>
+<p>
+</ol>
+<p>
+<dt><i>exit_status</i><dd>
+A decimal integer specifying a signal number or the exit
+status of a process terminated by a signal.
+<p>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1066">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1067">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_1068">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>kill</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1069">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1070">&nbsp;</a>STDOUT</h4><blockquote>
+When the
+<b>-l</b>
+option is not specified, the standard output will not be used.
+<p>
+When the
+<b>-l</b>
+option is specified,
+the symbolic name of each signal will be written
+in the following format:
+<p><code>
+<pre>
+<tt>"%s%c"</tt>, &lt;<i>signal_name</i>&gt;,
+&lt;<i>separator</i>&gt;
+</pre>
+</code>
+where the
+&lt;<i>signal_name</i>&gt;
+is in upper-case, without the
+<b>SIG</b>
+prefix, and the
+&lt;<i>separator</i>&gt;
+will be either a
+newline character
+or a
+space character.
+For the last signal written,
+&lt;<i>separator</i>&gt;
+will be a
+newline character.
+<p>
+When both the
+<b>-l</b>
+option and
+<i>exit_status</i>
+operand are specified, the symbolic
+name of the corresponding signal will be written in the following format:
+<p><code>
+<tt>"%s\n"</tt>, &lt;<i>signal_name</i>&gt;
+</code>
+</blockquote><h4><a name = "tag_001_014_1071">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1072">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1073">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1074">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>At least one matching process was found for each
+<i>pid</i>
+operand,
+and the specified signal was successfully
+processed for at least one matching process.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1075">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+<br>
+</blockquote><h4><a name = "tag_001_014_1076">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Process numbers can be found by using
+<i><a href="ps.htm">ps</a></i>.
+<p>
+The job control job ID notation is not required to work as expected when
+<i>kill</i>
+is operating in its own utility execution environment.
+In either of the following examples:
+<pre>
+<code>
+nohup kill %1 &amp;
+system("kill %1");
+</code>
+</pre>
+the
+<i>kill</i>
+operates in a different environment and will not share
+the shell's understanding of job numbers.
+<br>
+</blockquote><h4><a name = "tag_001_014_1077">&nbsp;</a>EXAMPLES</h4><blockquote>
+Any of the commands:
+<pre>
+<code>
+kill -9 100 -165
+kill -s kill 100 -165
+kill -s KILL 100 -165
+</code>
+</pre>
+sends the SIGKILL signal to the process whose process ID is
+100
+and to all processes whose process group ID is
+165,
+assuming the sending process has permission to send that signal
+to the specified processes, and that they exist.
+<p>
+The <b>XSH</b> specification and this specification do not require specific signal numbers for any
+<i>signal_names</i>.
+Even the
+<b>-</b><i>signal_number</i>
+option provides symbolic (although numeric) names for signals.
+If a process is terminated by a signal, its
+exit status indicates the signal that killed it, but the exact values
+are not specified.
+The
+<i>kill</i>
+<b>-l</b>
+option, however, can be used to map
+decimal signal numbers and exit status values into the name of a signal.
+The following example reports the status of a terminated job:
+<pre>
+<code>
+job
+stat=$?
+if [ $stat -eq 0 ]
+then
+	echo job completed successfully.
+elif [ $stat -gt 128 ]
+then
+	echo job terminated by signal SIG$(kill -l $stat).
+else
+	echo job terminated with error code $stat.
+fi
+</code>
+</pre>
+<p>
+To avoid an ambiguity of
+an initial negative number argument specifying either
+a signal number or a process group,
+the ISO/IEC 9945-2:1993 standard mandates that it always be considered the former.
+Therefore, to send the default signal to a process group (say 123),
+an application should use a command similar to one of the following:
+<pre>
+<code>
+kill -TERM -123
+kill -- -123
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1078">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The obsolescent forms may be withdrawn in a future issue.
+Applications should use the
+<b>-s</b>
+option.
+</blockquote><h4><a name = "tag_001_014_1079">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ps.htm">ps</a></i>,
+<i><a href="wait.htm">wait</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/kill.htm">kill()</a></i>,
+<i><a href="../xsh/signa248.htm">&lt;signal.h&gt;</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

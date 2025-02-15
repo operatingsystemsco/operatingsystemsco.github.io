@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;time.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_010">&nbsp;</a>NAME</h4><blockquote>
+time.h - time types
+</blockquote><h4><a name = "tag_000_010_011">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;time.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_012">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;time.h&gt;</i>
+header declares the structure
+<b>tm</b>,
+which includes at least the following members:
+<pre>
+<code>
+int    tm_sec   seconds [0,61]
+int    tm_min   minutes [0,59]
+int    tm_hour  hour [0,23]
+int    tm_mday  day of month [1,31]
+int    tm_mon   month of year [0,11]
+int    tm_year  years since 1900
+int    tm_wday  day of week [0,6] (Sunday = 0)
+int    tm_yday  day of year [0,365]
+int    tm_isdst daylight savings flag
+</code>
+</pre>
+<p>
+The value of
+<b>tm_isdst</b>
+is positive if Daylight Saving Time is in effect, 0 if Daylight Saving Time is
+not in effect, and negative if the information is not available.
+<p>
+This header defines the following symbolic names:
+<dl compact>
+
+<dt>NULL<dd>
+Null pointer constant.
+
+<dt>CLK_TCK<dd>
+Number of clock ticks per second returned by the
+<i><a href="times.htm">times()</a></i>
+function (<b>LEGACY</b>).
+
+<dt>CLOCKS_PER_SEC<dd>
+A number used to convert the value returned by the
+<i>clock</i>()
+function into seconds.
+
+</dl>
+<p>
+The
+<i>&lt;time.h&gt;</i>
+header declares the structure
+<b>timespec</b>,
+which has at least the following members:
+<pre>
+<code>
+time_t  tv_sec    seconds
+long    tv_nsec   nanoseconds
+</code>
+</pre>
+<p>
+This header also declares the 
+<b>itimerspec</b>
+structure, which has at least the following members:
+<pre>
+<code>
+struct timespec  it_interval  timer period
+struct timespec  it_value     timer expiration
+</code>
+</pre>
+<p>
+The following manifest constants are defined:
+<dl compact>
+
+<dt>CLOCK_REALTIME<dd>
+The identifier of the systemwide realtime clock.
+
+<dt>TIMER_ABSTIME<dd>
+Flag indicating time is absolute with respect to the clock associated
+with a timer.
+
+</dl>
+<p>
+The
+<b>clock_t</b>,
+<b>clockid_t</b>,
+<b>size_t</b>,
+<b>time_t</b>
+and
+<b>timer_t</b>
+types are defined as described in
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<p>
+Although the value of CLOCKS_PER_SEC is required to be 1 million
+on all XSI-conformant systems, it may be variable on other systems
+and it should not be assumed
+that CLOCKS_PER_SEC is a compile-time constant.
+<p>
+The value of CLK_TCK is currently the same as the value of
+<i>sysconf</i>(_SC_CLK_TCK);
+however, new applications should call
+<i>sysconf</i>()
+because the CLK_TCK macro may be withdrawn in a future issue.
+<p>
+The
+<i>&lt;time.h&gt;</i>
+header provides a declaration for
+<i>getdate_err</i>.
+<p>
+The following are declared as functions and may also be defined
+as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+char      *<a href="asctime.htm">asctime</a>(const struct tm *);
+char      *<a href="ascti15.htm">asctime_r</a>(const struct tm *, char *);
+clock_t    <a href="clock.htm">clock</a>(void);
+int        <a href="clock22.htm">clock_getres</a>(clockid_t, struct timespec *);
+int        <a href="clock23.htm">clock_gettime</a>(clockid_t, struct timespec *);
+int        <a href="clock24.htm">clock_settime</a>(clockid_t, const struct timespec *);
+char      *<a href="ctime.htm">ctime</a>(const time_t *);
+char      *<a href="ctime27.htm">ctime_r</a>(const time_t *, char *);
+double     <a href="difftime.htm">difftime</a>(time_t, time_t);
+struct tm *<a href="getdate.htm">getdate</a>(const char *);
+struct tm *<a href="gmtime.htm">gmtime</a>(const time_t *);
+struct tm *<a href="gmtim75.htm">gmtime_r</a>(const time_t *, struct tm *);
+struct tm *<a href="local92.htm">localtime</a>(const time_t *);
+struct tm *<a href="local93.htm">localtime_r</a>(const time_t *, struct tm *);
+time_t     <a href="mktime.htm">mktime</a>(struct tm *);
+int        <a href="nanos108.htm">nanosleep</a>(const struct timespec *, struct timespec *);
+size_t     <a href="strftime.htm">strftime</a>(char *, size_t, const char *, const struct tm *);
+char      *<a href="strptime.htm">strptime</a>(const char *, const char *, struct tm *);
+time_t     <a href="time.htm">time</a>(time_t *);
+int        <a href="timer290.htm">timer_create</a>(clockid_t, struct sigevent *, timer_t *);
+int        <a href="timer291.htm">timer_delete</a>(timer_t);
+int        <a href="timer293.htm">timer_gettime</a>(timer_t, struct itimerspec *);
+int        <a href="timer292.htm">timer_getoverrun</a>(timer_t);
+int        <a href="timer294.htm">timer_settime</a>(timer_t, int, const struct itimerspec *,
+               struct itimerspec *);
+void       <a href="tzset.htm">tzset</a>(void);
+</code>
+</pre>
+<p>
+The following are declared as variables:
+<pre>
+<code>
+extern int       daylight;
+extern long int  timezone;
+extern char     *tzname[];
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_013">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The range [0,61] for
+<b>tm_sec</b>
+allows for the occasional leap second or double leap second.
+<p>
+<b>tm_year</b>
+is a signed value, therefore years before 1900 may be represented.
+<P>
+The functions
+<i><a href="clock22.htm">clock_getres()</a></i>,
+<i><a href="clock23.htm">clock_gettime()</a></i>,
+<i><a href="clock24.htm">clock_settime()</a></i>,
+<i><a href="nanos108.htm">nanosleep()</a></i>,
+<i><a href="timer290.htm">timer_create()</a></i>,
+<i><a href="timer291.htm">timer_delete()</a></i>,
+<i><a href="timer292.htm">timer_getoverrun()</a></i>,
+<i><a href="timer293.htm">timer_gettime()</a></i>,
+and
+<i><a href="timer294.htm">timer_settime()</a></i>
+are part of the <a href="feature.htm">Realtime Feature Group</a>.
+
+</blockquote><h4><a name = "tag_000_010_014">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_015">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="asctime.htm">asctime()</a></i>,
+<i><a href="asctime.htm">asctime_r()</a></i>,
+<i><a href="clock.htm">clock()</a></i>,
+<i><a href="clock24.htm">clock_settime()</a></i>,
+<i><a href="ctime.htm">ctime()</a></i>,
+<i><a href="ctime.htm">ctime_r()</a></i>,
+<i><a href="daylight.htm">daylight</a></i>,
+<i><a href="difftime.htm">difftime()</a></i>,
+<i><a href="getdate.htm">getdate()</a></i>,
+<i><a href="gmtime.htm">gmtime()</a></i>,
+<i><a href="gmtime.htm">gmtime_r()</a></i>,
+<i><a href="local92.htm">localtime()</a></i>,
+<i><a href="local92.htm">localtime_r()</a></i>,
+<i><a href="mktime.htm">mktime()</a></i>,
+<i><a href="nanos108.htm">nanosleep()</a></i>,
+<i><a href="strftime.htm">strftime()</a></i>,
+<i><a href="strptime.htm">strptime()</a></i>,
+<i><a href="sysconf.htm">sysconf()</a></i>,
+<i><a href="time.htm">time()</a></i>,
+<i><a href="timer290.htm">timer_create()</a></i>,
+<i><a href="timer291.htm">timer_delete()</a></i>,
+<i><a href="timer294.htm">timer_settime()</a></i>,
+<i><a href="timezone.htm">timezone</a></i>,
+<i><a href="tzname.htm">tzname()</a></i>,
+<i><a href="tzset.htm">tzset()</a></i>,
+<i><a href="utime.htm">utime()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

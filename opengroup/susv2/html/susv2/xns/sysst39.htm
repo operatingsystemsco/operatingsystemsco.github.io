@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;sys/stat.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+sys/stat.h - data returned by the <I>stat</I>() function.
+<dl><dt><b>Note:</b>
+<dd>The <B>XSH</B> specification for
+<i><a href="../xsh/sysst273.htm">&lt;sys/stat.h&gt;</a></i>
+contains the basic definition of this interface.  The following
+additional information pertains to Sockets.
+</dl>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The following additional symbolic name for the value of
+<B>st_mode</B>
+is defined:
+<p>
+File type:
+<P><table <tr valign=top><th align=left>S_IFMT
+<th align=left>type of file
+<tr valign=top><td align=left>S_IFSOCK
+<td align=left>socket
+</table>
+<p>
+The following macro will test whether a file is of the specified type.  The
+value
+<I>m</I>
+supplied to the macro is the value of
+<B>st_mode</B>
+from a
+<B>stat</B>
+structure.
+The macro evaluates to a non-zero value if the test is true,
+0 if the test is false.
+<dl compact>
+
+<dt>S_ISSOCK(<I>m</I>)<dd>test for a socket
+
+</dl>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

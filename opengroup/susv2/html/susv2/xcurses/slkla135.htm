@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>slk_attroff</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_974">&nbsp;</a>NAME</h4><blockquote>
+slk_attroff, slk_attr_off,
+slk_attron, slk_attr_on,
+slk_attrset, slk_attr_set,
+slk_clear, slk_color, slk_init, slk_label,
+slk_noutrefresh, slk_refresh, slk_restore, slk_set, slk_touch, slk_wset
+- soft label functions
+</blockquote><h4><a name = "tag_001_009_975">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int slk_attroff(const chtype <i>attrs</i>);
+
+int slk_attr_off(const attr_t <i>attrs</i>, void <i>*opts</i>);
+
+int slk_attron(const chtype <i>attrs</i>);
+
+int slk_attr_on(const attr_t <i>attrs</i>, void <i>*opts</i>);
+
+int slk_attrset(const chtype <i>attrs</i>);
+
+int slk_attr_set(const attr_t <i>attrs</i>, short <i>color_pair_number</i>, void <i>*opts</i>);
+
+int slk_clear(void);
+
+int slk_color(short <i>color_pair_number</i>);
+
+int slk_init(int <i>fmt</i>);
+
+char *slk_label(int <i>labnum</i>);
+
+int slk_noutrefresh(void);
+
+int slk_refresh(void);
+
+int slk_restore(void);
+
+int slk_set(int <i>labnum</i>, const char <i>*label</i>, int <i>justify</i>);
+
+int slk_touch(void);
+
+int slk_wset(int <i>labnum</i>, const wchar_t <i>*label</i>, int <i>justify</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_976">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The Curses interface manipulates the set of soft function-key labels that
+exist on many terminals.  For those terminals that do not have soft labels,
+Curses takes over the bottom line of
+<i>stdscr</i>,
+reducing the size of
+<i>stdscr</i>
+and the value of the
+<b>LINES</b>
+external variable.  There can be up to eight labels of up to eight display
+columns each.
+<p>
+To use soft labels,
+<i>slk_init()</i>
+must be called before
+<i><a href="initscr.htm">initscr()</a></i>,
+<i><a href="newterm.htm">newterm()</a></i>
+or
+<i><a href="ripof117.htm">ripoffline()</a></i>
+is called.  If
+<i><a href="initscr.htm">initscr()</a></i>
+eventually uses a line from
+<i>stdscr</i>
+to emulate the soft labels, then
+<i>fmt</i> determines how the labels are arranged on the screen.  Setting
+<i>fmt</i> to 0 indicates a 3-2-3 arrangement of the labels; 1 indicates a 4-4
+arrangement.  Other values for <i>fmt</i> are unspecified.
+<p>
+The
+<i>slk_init()</i>
+function has the effect of calling
+<i><a href="ripof117.htm">ripoffline()</a></i>
+to reserve one screen line to accommodate the requested format.
+<p>
+The
+<i>slk_set()</i>
+and
+<i>slk_wset()</i>
+functions specify the text of soft label number <i>labnum</i>, within the range
+from 1 to and including 8.  The <i>label</i> argument is the string to be put
+on the label.  With
+<i>slk_set()</i>,
+and
+<i>slk_wset()</i>,
+the width of the label is limited to eight column positions.  A null string or
+a null pointer specifies a blank label.  The <i>justify</i> argument can have
+the following values to indicate how to justify <i>label</i> within the
+space reserved for it:
+<dl compact>
+
+<dt>0<dd>Align the start of <i>label</i> with the start of the space
+
+<dt>1<dd>Center <i>label</i> within the space
+
+<dt>2<dd>Align the end of <i>label</i> with the end of the space
+
+</dl>
+<p>
+The
+<i>slk_refresh()</i>
+and
+<i>slk_noutrefresh()</i>
+functions correspond to the
+<i><a href="wrefresh.htm">wrefresh()</a></i>
+and
+<i><a href="wnout191.htm">wnoutrefresh()</a></i>
+functions.
+<p>
+The
+<i>slk_label()</i>
+function obtains soft label number <i>labnum</i>.
+<p>
+The
+<i>slk_clear()</i>
+function immediately clears the soft labels from the screen.
+<p>
+The
+<i>slk_restore()</i>
+function immediately restores the soft labels to the screen after a call to
+<i>slk_clear()</i>.
+<p>
+The
+<i>slk_touch()</i>
+function forces all the soft labels to be output the next time
+<i>slk_noutrefresh()</i>
+or
+<i>slk_refresh()</i>
+is called.
+<p>
+The
+<i>slk_attron()</i>,
+<i>slk_attrset()</i>
+and
+<i>slk_attroff()</i>
+functions correspond to
+<i><a href="attron.htm">attron()</a></i>,
+<i><a href="attrset.htm">attrset()</a></i>,
+and
+<i><a href="attroff.htm">attroff()</a></i>.
+They have an effect only if soft labels are simulated on the bottom line of
+the screen.
+<p>
+The
+<i>slk_attr_off()</i>,
+<i>slk_attr_on()</i>,
+<i>slk_attr_set()</i>,
+and
+<i>slk_color()</i>
+functions correspond to
+<i>slk_attroff()</i>,
+<i>slk_attron()</i>,
+<i>slk_attrset()</i>
+and
+<i><a href="color17.htm">color_set()</a></i>
+and thus support the attribute constants with the 
+WA_ prefix and colour.
+<p>
+The opts argument is reserved for definition in a future edition of this
+document. Currently, the application must provide a null pointer as opts.
+</blockquote><h4><a name = "tag_001_009_977">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>slk_label()</i>
+returns the requested label with leading and trailing blanks stripped.
+Otherwise, it returns a null pointer.
+<p>
+Upon successful completion, the other functions return OK.  Otherwise, they
+return ERR.
+</blockquote><h4><a name = "tag_001_009_978">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_979">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+When using multi-byte character sets, applications should check the width of
+the string by calling
+<i><a href="../xsh/mbstowcs.htm">mbstowcs()</a></i>
+and then
+<i><a href="../xsh/wcswidth.htm">wcswidth()</a></i>
+before calling
+<i>slk_set()</i>.
+When using wide characters, applications should check the width of the
+string by calling
+<i><a href="../xsh/wcswidth.htm">wcswidth()</a></i>
+before calling
+<i>slk_set()</i>.
+<p>
+Since the number of columns that a wide character string will occupy is
+codeset-specific, call
+<i><a href="../xsh/wcwidth.htm">wcwidth()</a></i>
+and
+<i><a href="../xsh/wcswidth.htm">wcswidth()</a></i>
+to check the number of column positions in the string before calling
+<i>slk_wset()</i>.
+<p>
+Most applications would use
+<i>slk_noutrefresh()</i>
+because a
+<i><a href="wrefresh.htm">wrefresh()</a></i>
+is likely to follow soon.
+</blockquote><h4><a name = "tag_001_009_980">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="attrg8.htm">attr_get()</a></i>,
+<i><a href="attroff.htm">attroff()</a></i>,
+<i><a href="delsc25.htm">delscreen()</a></i>,
+<i><a href="../xsh/mbstowcs.htm">mbstowcs()</a></i>
+(in the <b>XSH</b> specification),
+<i><a href="ripof117.htm">ripoffline()</a></i>,
+<i><a href="../xsh/wcswidth.htm">wcswidth()</a></i>
+(in the <b>XSH</b> specification),
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

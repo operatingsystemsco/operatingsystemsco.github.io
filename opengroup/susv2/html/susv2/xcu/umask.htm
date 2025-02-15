@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>umask</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2448">&nbsp;</a>NAME</h4><blockquote>
+umask - get or set the file mode creation mask
+</blockquote><h4><a name = "tag_001_014_2449">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+umask <b>[</b>-S<b>][</b><i>mask</i><b>]
+</b></code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2450">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>umask</i>
+utility will set the file mode creation mask of the
+current shell execution environment (see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>)
+to the value specified by the
+<i>mask</i>
+operand.
+This mask will affect the initial value of the file permission bits
+of subsequently created files.
+If
+<i>umask</i>
+is called in a subshell or separate utility execution environment,
+such as one of the following:
+<pre>
+<code>
+(umask 002)
+nohup umask ...
+find . -exec umask ... \;
+</code>
+</pre>
+it will not affect the file mode creation mask of the caller's environment.
+<p>
+If the
+<i>mask</i>
+operand is not specified, the
+<i>umask</i>
+utility will write to standard output the value of the invoking
+process's file mode creation mask.
+</blockquote><h4><a name = "tag_001_014_2451">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>umask</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following option is supported:
+<dl compact>
+
+<dt><b>-S</b>
+<dd>Produce symbolic output.
+
+</dl>
+<p>
+The default output style is unspecified, but will be recognised
+on a subsequent invocation of
+<i>umask</i>
+on the same system as a
+<i>mask</i>
+operand to restore the previous file mode creation mask.
+</blockquote><h4><a name = "tag_001_014_2452">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>mask</i><dd>A string specifying the new file mode creation mask.
+The string is treated in the same way as the
+<i>mode</i>
+operand described in the the EXTENDED DESCRIPTION section
+for
+<i><a href="chmod.htm">chmod</a></i>.
+
+For a
+<i>symbolic_mode</i>
+value,
+the new value of the file mode creation mask
+will be the logical complement of the file permission bits
+portion of the file mode specified by the
+<i>symbolic_mode</i>
+string.
+
+In a
+<i>symbolic_mode</i>
+value, the permissions
+<i>op</i>
+characters "+" and "-" will be interpreted relative to the
+current file mode creation mask; "+"
+will cause the bits for the indicated permissions to be cleared in the mask;
+"-" will cause the bits for the indicated permissions to be set
+in the mask.
+
+The interpretation of
+<i>mode</i>
+values that specify file mode bits other than the
+file permission bits is unspecified.
+
+In the obsolescent octal integer form of
+<i>mode</i>,
+the specified bits will be set in the file mode creation mask.
+
+The file mode creation mask will be set to the resulting numeric value.
+
+The default output of a prior invocation of
+<i>umask</i>
+on the same system with no
+operand will also be recognised as a
+<i>mask</i>
+operand.
+The use of an operand obtained in this way is
+not obsolescent, even if it is an octal number.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2453">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2454">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2455">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>umask</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2456">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2457">&nbsp;</a>STDOUT</h4><blockquote>
+When the
+<i>mask</i>
+operand is not specified, the
+<i>umask</i>
+utility will write a message to standard output
+that can later be used as a
+<i>umask</i>
+<i>mask</i>
+operand.
+<p>
+If
+<b>-S</b>
+is specified, the message will be in the following format:
+<p><code>
+<pre>
+<tt>"u=%s,g=%s,o=%s\n"</tt>, &lt;<i>owner permissions</i>&gt;,
+&lt;<i>group permissions</i>&gt;,
+&lt;<i>other permissions</i>&gt;
+</pre>
+</code>
+where the three values will be combinations of letters from the set
+{r,
+w,
+x};
+the presence of a letter will indicate that the corresponding bit is clear
+in the file mode creation mask.
+<p>
+If a
+<i>mask</i>
+operand is specified,
+there will be no output written to standard output.
+</blockquote><h4><a name = "tag_001_014_2458">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2459">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2460">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2461">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The file mode creation mask was successfully changed, or no
+<i>mask</i>
+operand was supplied.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2462">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2463">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Since
+<i>umask</i>
+affects the current shell execution environment,
+it is generally provided as a shell regular built-in.
+<p>
+In contrast to the negative permission logic provided by the
+file mode creation mask and the octal number form of the
+<i>mask</i>
+argument,
+the symbolic form of the
+<i>mask</i>
+argument specifies those permissions that are left alone.
+<p>
+The references to octal modes are supported
+because, although they are obsolescent in the ISO/IEC 9945-2:1993 standard,
+XSI-conformant systems have committed to maintaining them
+for portable applications until further notice.
+</blockquote><h4><a name = "tag_001_014_2464">&nbsp;</a>EXAMPLES</h4><blockquote>
+Either of the commands:
+<pre>
+<code>
+umask a=rx,ug+w
+
+umask 002
+</code>
+</pre>
+sets the mode mask so that subsequently created files have their
+S_IWOTH
+bit cleared.
+<p>
+After setting the mode mask with either of the above commands, the
+<i>umask</i>
+command can be used to write out the current value of the mode mask:
+<pre>
+<code>
+<b>$ </b>umask
+<b>0002
+</b></code>
+</pre>
+<p>
+(The output format is
+unspecified, but historical implementations use the obsolescent octal
+integer mode format.)
+<pre>
+<code>
+<b>$ </b>umask -S
+<b>u=rwx,g=rwx,o=rx
+</b></code>
+</pre>
+<p>
+Either of these outputs can be used as the mask operand
+to a subsequent invocation of the
+<i>umask</i>
+utility.
+<p>
+Assuming the mode mask is set as above, the command:
+<pre>
+<code>
+umask g-w
+</code>
+</pre>
+sets the mode mask so that subsequently created files have their
+S_IWGRP,
+and
+S_IWOTH
+bits cleared.
+<p>
+The command:
+<pre>
+<code>
+umask -- -w
+</code>
+</pre>
+<p>
+sets the mode mask so that subsequently created files have all their write
+bits cleared.
+Note that
+<i>mask</i>
+operands
+<b>-r</b>,
+<b>-w</b>,
+<b>-x</b>
+or anything beginning
+with a hyphen, must be preceded by
+--
+to keep it from being interpreted as an option.
+</blockquote><h4><a name = "tag_001_014_2465">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2466">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="chmod.htm">chmod</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/umask.htm">umask()</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

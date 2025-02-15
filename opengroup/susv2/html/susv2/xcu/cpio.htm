@@ -1,0 +1,412 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>cpio</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_206">&nbsp;</a>NAME</h4><blockquote>
+cpio - copy file archives in and out (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_207">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+cpio -o<b>[</b>aBcv<b>]</b>
+
+cpio -i<b>[</b>Bcdmrtuvf<b>] [</b><i>pattern</i> ...<b>]</b>
+
+cpio -p<b>[</b>adlmuv<b>] </b><i>directory</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_208">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>cpio</i>
+utility, depending on the options used:
+<ul>
+<p>
+<li>
+copies files to an archive file
+<p>
+<li>
+extracts files from an archive file
+<p>
+<li>
+copies files from one directory tree to another.
+<p>
+</ul>
+</blockquote><h4><a name = "tag_001_014_209">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>cpio</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except the option modifiers cannot be presented as separate arguments
+from the option letters.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-o</b>
+<dd>(Copy Out.)
+Read the standard input to obtain a list of pathnames
+and copy those files onto the standard output
+together with pathname and status information.
+Output is padded to a 512-byte boundary.
+
+<dt><b>-i</b>
+<dd>(Copy In.)
+Extract files from the standard input,
+which is assumed to be the product of a previous
+<i>cpio</i>
+<b>-o</b>.
+Only files with names that match
+<i>pattern</i>s
+are selected.
+The extracted files are conditionally created and copied
+into the current directory tree
+based upon the options described below.
+The permissions of the files will be those of the previous
+<i>cpio</i>
+<b>-o</b>.
+The owner and group of the files
+will be that of the current user
+unless the user has appropriate privileges, which causes
+<i>cpio</i>
+to retain the owner and group of the files of the previous
+<i>cpio</i>
+<b>-o</b>.
+If the archive being read does not match the modifier specified,
+<i>cpio</i>
+may consider this to be an error and exit or may recognise
+the archive and continue processing.
+Only a user with appropriate privileges can
+extract block special or character special files from an archive.
+
+<dt><b>-p</b>
+<dd>(Pass.)
+Read the standard input to obtain a list of pathnames
+of files that are conditionally created and copied
+into the destination
+<i>directory</i>
+tree based upon the option modifiers described below.
+
+</dl>
+<p>
+The following option modifiers can be appended in any
+sequence to the
+<b>-o</b>,
+<b>-i</b>
+or
+<b>-p</b>
+options:
+<p>
+<dl compact>
+
+<dt><b>a</b><dd>Reset access times of input files after they have been copied.
+(When option
+l
+(see below) is also specified,
+the access times of the linked files are not reset.)
+
+<dt><b>B</b><dd>Block
+input/output 5120 bytes to the record
+(does not apply to the
+<b>-p</b>
+option; meaningful only with data directed to or from
+character special files).
+
+<dt><b>d</b><dd>Create
+directories as needed.
+
+<dt><b>c</b><dd>Write or read header information in
+character form for portability.
+
+<dt><b>r</b><dd>Interactively rename files.
+For each archive member matching
+<i>pattern</i>
+operand, a prompt will be written to the file
+<b>/dev/tty</b>.
+The prompt will contain the name of the archive member, but the format is
+otherwise unspecified.
+A line will then be read from
+<b>/dev/tty</b>.
+If this line is blank, the archive member will be skipped.
+If this line consists of a single period, the archive
+member will be processed with no modification to its name.
+Otherwise, its name will be replaced with the contents of the line.
+The
+<i>cpio</i>
+utility will immediately exit with a non-zero exit status if end-of-fie
+is encountered when reading a response, or if
+<b>/dev/tty</b>
+cannot be opened for reading and writing.
+
+<dt><b>t</b><dd>Write a table of contents of the input.
+No files are created.
+
+
+<dt><b>u</b><dd>Copy unconditionally
+(normally, an older file will not replace a newer file with the same name).
+
+<dt><b>v</b><dd>Verbose:
+print the names of the affected files.
+With the
+<b>t</b>
+option, provides a detailed listing.
+
+<dt><b>l</b><dd>Whenever possible, link files rather than copying them.
+Usable only with the
+<b>-p</b>
+option.
+
+<dt><b>m</b><dd>Retain previous file modification time.
+This option is ineffective on directories that are being copied.
+
+<dt><b>f</b><dd>Copy in all files except those in
+<i>pattern</i>s.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_210">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>directory</i><dd>
+A pathname of an existing directory to be used as the target of
+<i>cpio</i>
+<b>-p</b>.
+
+<dt><i>pattern</i><dd>Expressions making use of a pattern-matching notation
+similar to that used by the shell for filename pattern matching,
+and similar to regular expressions.
+The following metacharacters are defined:
+<dl compact>
+
+<dt>*<dd>Matches any string, including the empty string.
+
+<dt>?<dd>Matches any single character.
+
+<dt>[...]<dd>Matches any one of the enclosed characters.
+A pair of characters separated by `-'
+matches any symbol between the pair (inclusive), as
+defined by the system default collating sequence.
+If the first character following the opening `[' is a `!',
+the results are unspecified.
+
+</dl>
+<p>
+In
+<i>pattern</i>,
+the special characters "?", "*" and "[" also match the "/" character.
+Multiple cases of
+<i>pattern</i>
+can be specified and if no
+<i>pattern</i>
+is specified, the default for
+<i>pattern</i>
+is "*" (that is, select all files).
+<p>
+</dl>
+</blockquote><h4><a name = "tag_001_014_211">&nbsp;</a>STDIN</h4><blockquote>
+When the
+<b>-o</b>
+or
+<b>-p</b>
+options are used,
+the standard input is a text file containing a list of pathnames,
+one per line, to be copied.
+<p>
+When
+the
+<b>-i</b>
+option is used,
+the standard input is an archive file formatted as specified by
+<i><a href="pax.htm">pax</a></i>
+with the
+<b>-x cpio</b>
+option.
+</blockquote><h4><a name = "tag_001_014_212">&nbsp;</a>INPUT FILES</h4><blockquote>
+The files identified by the pathnames in the standard input
+are of any type.
+<p>
+When the
+<b>-r</b>
+option is used, the file
+<b>/dev/tty</b>
+is used to write prompts and read responses.
+</blockquote><h4><a name = "tag_001_014_213">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables may affect the execution of
+<i>cpio</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+within bracketed filename patterns.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files) and
+the behaviour of character classes
+within bracketed filename patterns
+(for example,
+'[[:lower:]]*').
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LC_TIME</i><dd>
+Determine the format of date and time
+strings output when listing the contents of an archive with the
+<b>-v</b>
+option; for example:
+<pre>
+<code>
+cpio -icvt &lt; /dev/sctmtm0
+</code>
+</pre>
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TZ</i><dd>Determine the timezone used with date and time strings.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_214">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_215">&nbsp;</a>STDOUT</h4><blockquote>
+When the
+<b>-o</b>
+option is used,
+the standard output is an archive file formatted as specified by
+<i><a href="pax.htm">pax</a></i>
+with the
+<b>-x cpio</b>
+option.
+Otherwise, the standard output contains commentary
+in an unspecified format concerning the progress of the execution.
+</blockquote><h4><a name = "tag_001_014_216">&nbsp;</a>STDERR</h4><blockquote>
+When the
+<b>-o</b>
+option is not used,
+the standard error contains commentary
+in an unspecified format concerning the progress of the execution.
+Otherwise, the standard error is used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_217">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+Output files are created, as specified by the archive, when the
+<b>-i</b>
+or
+<b>-p</b>
+options are used.
+</blockquote><h4><a name = "tag_001_014_218">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_219">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_220">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+If a file or directory cannot be created or overwritten,
+<i>cpio</i>
+continues with the next file in the archive
+or file to be added to the archive.
+</blockquote><h4><a name = "tag_001_014_221">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Archives created by
+<i>cpio</i>
+are portable between XSI-conformant systems provided the same procedures are
+used.
+<p>
+The shell metacharacter notation is not fully compatible
+with that used by the shell and the
+<i><a href="pax.htm">pax</a></i>
+utility.
+Not all systems support the use of the negation character
+[! ...]
+in
+<i>cpio</i>
+patterns.
+Portable applications must avoid the use of this notation.
+<p>
+For portable communication of data between XSI-conformant systems, it is
+recommended that only characters defined in the
+ISO/IEC&nbsp;646:1991 standard International Reference Version
+(equivalent to ASCII) 7-bit range of
+characters be used and that only characters defined in the Portable
+Filename Character Set be used for naming files.
+This recommendation
+is given because XSI-conformant systems support diverse codesets and run in
+various geographical areas and there is no single, well-established
+codeset that incorporates all of the characters of the languages of
+the various geographical areas.
+<p>
+The
+<i>cpio</i>
+format only supports file sizes up to 8 gigabytes. 
+<p>
+Applications should migrate to the
+<i><a href="pax.htm">pax</a></i>
+utility.
+</blockquote><h4><a name = "tag_001_014_222">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+Copy the contents of a directory onto an archive:
+<pre>
+<code>
+ls | cpio -oc &gt;../cpio.out
+</code>
+</pre>
+<p>
+<li>
+Duplicate a directory hierarchy:
+<pre>
+<code>
+cd olddir
+find . -depth -print | cpio -pd ../newdir
+</code>
+</pre>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_223">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_224">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ar.htm">ar</a></i>,
+<i><a href="find.htm">find</a></i>,
+<i><a href="ls.htm">ls</a></i>,
+<i><a href="pax.htm">pax</a></i>,
+<i><a href="tar.htm">tar</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

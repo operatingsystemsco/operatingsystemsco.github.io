@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>doupdate</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_600">&nbsp;</a>NAME</h4><blockquote>
+doupdate, refresh, wnoutrefresh, wrefresh
+- refresh windows and lines
+</blockquote><h4><a name = "tag_002_001_601">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int doupdate(void);
+
+int refresh(void);
+
+int wnoutrefresh(WINDOW *<i>win</i>);
+
+int wrefresh(WINDOW *<i>win</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_602">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i><a href="refresh.htm">refresh()</a></i>
+and
+<i>wrefresh()</i>
+functions refresh the current or specified window.  The functions position the
+terminal's cursor at the cursor position of the window, except that if the
+<i><a href="leaveok.htm">leaveok()</a></i>
+mode has been enabled, they may leave the cursor at an arbitrary position.
+<p>
+The
+<i>wnoutrefresh()</i>
+function determines which parts of the terminal may need updating.  The
+<i>doupdate()</i>
+function sends to the terminal the commands to perform any required changes.
+</blockquote><h4><a name = "tag_002_001_603">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise they return ERR.
+</blockquote><h4><a name = "tag_002_001_604">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_605">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Refreshing an entire window is typically more efficient than refreshing
+several subwindows separately.  An efficient sequence is to call
+<i>wnoutrefresh()</i>
+on each subwindow that has changed, followed by a call to
+<i>doupdate()</i>,
+which updates the terminal.
+<p>
+The
+<i><a href="refresh.htm">refresh()</a></i>
+or
+<i>wrefresh()</i>
+function (or
+<i>wnoutrefresh()</i>
+followed by
+<i>doupdate()</i>)
+must be called to send output to the terminal, as other Curses
+functions merely manipulate data structures.
+</blockquote><h4><a name = "tag_002_001_606">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="clearok.htm">clearok()</a></i>,
+<i><a href="redra113.htm">redrawwin()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

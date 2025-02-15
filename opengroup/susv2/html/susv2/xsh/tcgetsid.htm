@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>tcgetsid</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_480">&nbsp;</a>NAME</h4><blockquote>
+tcgetsid - get process group ID for session leader for controlling terminal
+</blockquote><h4><a name = "tag_000_009_481">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="termi288.htm">termios.h</a>&gt;
+
+pid_t tcgetsid(int <i>fildes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_482">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>tcgetsid()</i>
+function obtains the process group ID of the session for which the terminal
+specified by <i>fildes</i> is the controlling terminal.
+</blockquote><h4><a name = "tag_000_009_483">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>tcgetsid()</i>
+returns the process group ID associated with the terminal.  Otherwise, a value
+of (<b>pid_t</b>)-1 is returned and <i>errno</i> is set to indicate the
+error.
+</blockquote><h4><a name = "tag_000_009_484">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>tcgetsid()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not a valid file descriptor.
+
+<dt>[ENOTTY]<dd>
+The calling process does not have a controlling terminal,
+or the file is not the controlling terminal.
+
+</dl>
+</blockquote><h4><a name = "tag_000_009_485">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_486">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_487">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_488">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="termi288.htm">&lt;termios.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

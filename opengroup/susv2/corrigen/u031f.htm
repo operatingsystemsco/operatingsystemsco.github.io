@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Corrigendum: U031</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<pre><font face="Arial" size="5"><strong>Corrigendum:    U031
+</strong></font><font
+face="Arial" size="2">
+<strong>Date:           12 February 1998
+
+Document:       C523 Networking Services (XNS), Issue 5
+
+Code:           1803 02/98 C523/U031
+
+Contents:       This corrigendum comprises two items:
+
+                  U031/XNS-001
+                  U031/XNS-002
+</font>
+</strong>----------------------------------------------------------------------------
+
+Change Number:  U031/XNS-001
+
+Title:          Incorrect specification of &quot;type&quot; for getnetbyaddr()
+
+Qualifier:      Major technical
+
+Rationale:      The description in the endnetent() reference
+                page (Page 190) of the &quot;net&quot; argument of getnetbyaddr() 
+                being of type &quot;in_addr_t&quot; is an erratum. It should 
+                be of type &quot;uint32_t&quot;, as in the getnetbyaddr() reference
+                page (Page 196) and on Page 212.
+
+                [Page numbers refer to The Open Group's printed
+                XNS, Issue 5 publication.]
+
+Change:         Change the endnetent() reference page from:
+                
+                  struct netent *getnetbyaddr(in_addr_t net, int type);
+
+                to:
+
+                  struct netent *getnetbyaddr(uint32_t net, int type);
+
+----------------------------------------------------------------------------
+
+Change Number:  U031/XNS-002
+
+Title:          Typographical error
+
+Qualifier:      Minor editorial
+
+Rationale:      In the list of thread-safe interfaces in Section 1.5, 
+                Thread Safety, the first item in the list is 
+                incompletely shown.
+
+Change:         Change the first item in the list of thread-safe
+                interfaces shown in Section 1.5, Thread Safety from:
+                
+                  byaddr()
+
+                to:
+
+                  gethostbyaddr()
+
+</pre>
+</body>
+</html>

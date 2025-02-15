@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>du</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_491">&nbsp;</a>NAME</h4><blockquote>
+du - estimate file space usage 
+</blockquote><h4><a name = "tag_001_014_492">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+du <b>[</b>-a| -s<b>][</b>-kx<b>][</b>-r<b>][</b><i>file</i> ...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_493">&nbsp;</a>DESCRIPTION</h4><blockquote>
+By default, the
+<i>du</i>
+utility writes to standard output
+the size of the file space allocated
+to, and the size of the file space allocated to each subdirectory
+of, the file hierarchy rooted in each of the specified files.
+The size
+of the file space allocated to a file of type directory is defined
+as the sum total of space allocated to all files in the file hierarchy
+rooted in the directory plus the space allocated to the directory itself.
+<p>
+When
+<i>du</i>
+cannot
+<i><a href="../xsh/stat.htm">stat()</a></i>
+files or
+<i><a href="../xsh/stat.htm">stat()</a></i>
+or read directories, it will report
+an error condition and the final exit status will be affected.
+Files with multiple links will be counted and written for only one entry.
+The directory entry that is selected in the report is unspecified.
+By default, file sizes are written in 512-byte units,
+rounded up to the next 512-byte unit.
+</blockquote><h4><a name = "tag_001_014_494">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>du</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-a</b>
+<dd>In addition to the default output, report the size of each file
+not of type directory in the file hierarchy rooted in the specified file.
+Regardless of the presence of the
+<b>-a</b>
+option, non-directories given as
+<i>file</i>
+operands will always be listed.
+
+<dt><b>-k</b>
+<dd>Write the files sizes in units of 1024 bytes,
+rather than the default 512-byte units.
+
+<dt><b>-r</b>
+<dd>Generate messages about
+directories that cannot be read,
+files that cannot be opened, and so on.
+This is the default case.
+
+<dt><b>-s</b>
+<dd>Instead of the default output, report only the total sum for
+each of the specified files.
+
+<dt><b>-x</b>
+<dd>When evaluating file sizes, evaluate only those
+files that have the same device as the file
+specified by the
+<i>file</i>
+operand.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_495">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>The pathname of a file whose size is to be written.
+If no
+<i>file</i>
+is specified,
+the current directory is used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_496">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_497">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_498">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>du</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_499">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_500">&nbsp;</a>STDOUT</h4><blockquote>
+The output from
+<i>du</i>
+consists of the amount of the space allocated
+to a file and the name of the file,
+in the following format:
+<p><code>
+<tt>"%d %s\n"</tt>, &lt;<i>size</i>&gt;,
+&lt;<i>pathname</i>&gt;
+</code>
+</blockquote><h4><a name = "tag_001_014_501">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_502">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_503">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_504">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_505">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_506">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_507">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_508">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_509">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ls.htm">ls</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

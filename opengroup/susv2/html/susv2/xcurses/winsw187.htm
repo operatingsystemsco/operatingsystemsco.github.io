@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>ins_wch</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_514">&nbsp;</a>NAME</h4><blockquote>
+ins_wch, mvins_wch, mvwins_wch, wins_wch
+- insert a complex character and rendition into a window
+</blockquote><h4><a name = "tag_002_001_515">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int ins_wch(const cchar_t *<i>wch</i>);
+
+int wins_wch(WINDOW *<i>win</i>, const cchar_t *<i>wch</i>);
+
+int mvins_wch(int <i>y</i>, int <i>x</i>, const cchar_t *<i>wch</i>);
+
+int mvwins_wch(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, const cchar_t *<i>wch</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_516">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions insert the complex character <i>wch</i> with its rendition
+in the current or specified window at the current or specified cursor
+position.
+<p>
+These functions do not perform wrapping.
+These functions do not advance the cursor position.
+These functions perform special-character processing,
+with the exception that if a newline is inserted into the last line of a
+window and scrolling is not enabled, the behavior is unspecified.
+</blockquote><h4><a name = "tag_002_001_517">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions
+return OK.  Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_518">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_519">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+For non-spacing characters,
+<i><a href="addwc4.htm">add_wch()</a></i>
+can be used to add the non-spacing characters to a spacing complex character
+already in the window.
+</blockquote><h4><a name = "tag_002_001_520">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="addwc4.htm">add_wch()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>file</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_719">&nbsp;</a>NAME</h4><blockquote>
+file - determine file type
+</blockquote><h4><a name = "tag_001_014_720">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+</pre>
+<i>file</i>
+<i>file ...</i>
+</code>
+</blockquote><h4><a name = "tag_001_014_721">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>file</i>
+utility
+performs a series of tests on each specified
+<i>file</i>
+in an attempt to classify it:
+<ol>
+<p>
+<li>
+If the file is not a regular file, its file type is identified.
+The file types directory, FIFO, block special and character special
+are identified as such.
+Other implementation-dependent file types may also be identified.
+<p>
+<li>
+If the file is a regular file, and:
+<ol type = a>
+<p>
+<li>
+The file is zero-length, it is identified as an empty file.
+<p>
+<li>
+The file is not zero-length,
+<i>file</i>
+will examine an initial segment of the file
+and make a guess at identifying its
+contents or whether it is an executable binary file.
+(The answer is not guaranteed to be correct.)
+<p>
+</ol>
+<p>
+</ol>
+<p>
+If
+<i>file</i>
+does not exist, cannot be read,
+or its file status could not be determined, the output will indicate
+that the file was processed,
+but that its type could not be determined.
+</blockquote><h4><a name = "tag_001_014_722">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_723">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to be tested.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_724">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_725">&nbsp;</a>INPUT FILES</h4><blockquote>
+The
+<i>file</i>
+can be any file type.
+</blockquote><h4><a name = "tag_001_014_726">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>file</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_727">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_728">&nbsp;</a>STDOUT</h4><blockquote>
+In the POSIX locale, the following format is used to identify
+each operand,
+<i>file</i>
+specified:
+<p><code>
+<tt>"%s: %s\n"</tt>, &lt;<i>file</i>&gt;,
+&lt;<i>type</i>&gt;
+</code>
+<p>
+The values for
+&lt;<i>type</i>&gt;
+are unspecified, except that in the POSIX locale,
+if
+<i>file</i>
+is identified as one of the types listed in the following table,
+&lt;<i>type</i>&gt;
+will contain (but is not limited to) the corresponding string.
+Each space shown in the strings is exactly one
+space
+character.
+<pre>
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>If <i>file</i> is a:</b>
+<th align=center><b>&lt;<i>type</i>&gt; Contains the String:</b>
+<tr valign=top><td align=left>directory
+<td align=left>directory
+<tr valign=top><td align=left>FIFO
+<td align=left>fifo
+<tr valign=top><td align=left>block special
+<td align=left>block special
+<tr valign=top><td align=left>character special
+<td align=left>character special
+<tr valign=top><td align=left>executable binary
+<td align=left>executable
+<tr valign=top><td align=left>empty regular file
+<td align=left>empty
+<tr valign=top><td align=left><i>ar</i> archive library (see <i>ar</i>)
+<td align=left>archive
+<tr valign=top><td align=left>extended <i>cpio</i> format (see <i>pax</i>)
+<td align=left>cpio archive
+<tr valign=top><td align=left>extended <i>tar</i> format (see <i>ustar</i> - see <i>pax</i>)
+<td align=left>tar archive
+<tr valign=top><td align=left>shell script
+<td align=left>commands text
+<tr valign=top><td align=left>C-language source
+<td align=left>c program text
+<tr valign=top><td align=left>FORTRAN source
+<td align=left>fortran program text
+</table>
+</pre>
+<h6 align=center><xref table="File Utility Output Strings"><a name="tagt_4">&nbsp;</a></xref>Table: File Utility Output Strings</h6>
+<p>
+If the file named by the
+<i>file</i>
+operand does not exist, cannot be read or the status of the file
+cannot be determined, the string
+<b>cannot open</b>
+will be included as part of the
+&lt;<i>type</i>&gt;
+field, but this is not considered an error
+that affects the exit status.
+</blockquote><h4><a name = "tag_001_014_729">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_730">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_731">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_732">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_733">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+<br>
+</blockquote><h4><a name = "tag_001_014_734">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>file</i>
+utility can only be required to guess at many of
+the file types because only exhaustive testing
+can determine some types with certitude.
+For example, binary data on some systems might
+match the initial segment of an executable or a
+<i><a href="tar.htm">tar</a></i>
+archive.
+<p>
+Note that the table indicates that
+the output contains the stated string.
+Systems may add text before or after the string.
+For executables, as an example, the machine
+architecture and various facts about how
+the file was link-edited may be included.
+</blockquote><h4><a name = "tag_001_014_735">&nbsp;</a>EXAMPLES</h4><blockquote>
+Determine if an argument is a binary executable file:
+<pre>
+<code>
+file "$1" | grep -Fq executable &amp;&amp;
+    printf "%s is executable.\n" "$1"
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_736">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_737">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ls.htm">ls</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,447 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mmap</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_694">&nbsp;</a>NAME</h4><blockquote>
+mmap - map pages of memory
+</blockquote><h4><a name = "tag_000_007_695">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysmm268.htm">sys/mman.h</a>&gt;
+
+void *mmap(void *<i>addr</i>, size_t <i>len</i>, int <i>prot</i>, int <i>flags</i>,
+    int <i>fildes</i>, off_t <i>off</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_696">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mmap()</i>
+function establishes a mapping between a process' address space and a file
+or shared memory object.
+The format of the call is as follows:
+<pre>
+<code>
+<i>pa</i>=<i>mmap</i>(<i>addr</i>, <i>len</i>, <i>prot</i>, <i>flags</i>, <i>fildes</i>, <i>off</i>);
+</code>
+</pre>
+<p>
+The
+<i>mmap()</i>
+function establishes a mapping between the address space of the process
+at an address
+<i>pa</i>
+for
+<i>len</i>
+bytes to the memory object represented by the file descriptor
+<i>fildes</i>
+at offset
+<i>off</i>
+for
+<i>len</i>
+bytes.
+The value of
+<i>pa</i>
+is an implementation-dependent function of the parameter
+<i>addr</i>
+and the values of
+<i>flags</i>,
+further described below.
+A successful
+<i>mmap()</i>
+call returns
+<i>pa</i>
+as its result.
+The address range starting at
+<i>pa</i>
+and continuing for
+<i>len</i>
+bytes will be legitimate for the possible (not necessarily current)
+address space of the process.
+The range of bytes starting at
+<i>off</i>
+and continuing for
+<i>len</i>
+bytes will be legitimate for the possible (not necessarily current)
+offsets in the file 
+or shared memory object
+represented by
+<i>fildes</i>.
+<p>
+The mapping established by
+<i>mmap()</i>
+replaces any previous mappings for
+those whole pages containing any part of the
+address space of the process starting at
+<i>pa</i>
+and continuing for
+<i>len</i>
+bytes.
+<p>
+If the size of the mapped file changes after the call to
+<i>mmap()</i>
+as a result of some other operation on the mapped file,
+the effect of references to portions of the mapped region that correspond to
+added or removed portions of the file is unspecified.
+<p>
+The
+<i>mmap()</i>
+function is supported for regular files
+and shared memory objects.
+Support for any other type of file is unspecified.
+<p>
+The parameter
+<i>prot</i>
+determines whether read, write, execute, or some combination of
+accesses are permitted to the data being mapped.
+The
+<i>prot</i>
+should be either PROT_NONE
+or the bitwise inclusive OR of one or more of the other flags in
+the following table,
+defined in the header
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>.
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Symbolic Constant</b>
+<th align=center><b>Description</b>
+<tr valign=top><td align=left>PROT_READ
+<td align=left>Data can be read.
+<tr valign=top><td align=left>PROT_WRITE
+<td align=left>Data can be written.
+<tr valign=top><td align=left>PROT_EXEC
+<td align=left>Data can be executed.
+<tr valign=top><td align=left>PROT_NONE
+<td align=left>Data cannot be accessed.
+</table>
+<p>
+If an implementation cannot support the combination of access types
+specified by
+<i>prot</i>,
+the call to
+<i>mmap()</i>
+fails.
+An implementation may permit accesses other than those specified by
+<i>prot</i>;
+however,
+the implementation will not permit a write to succeed where
+PROT_WRITE has not been set or permit any access where
+PROT_NONE alone has been set.
+The implementation will support at least the following values of
+<i>prot</i>:
+PROT_NONE, PROT_READ, PROT_WRITE, and the inclusive OR of
+PROT_READ and PROT_WRITE.
+The file descriptor
+<i>fildes</i>
+will have been opened with read permission,
+regardless of the protection options specified.
+If PROT_WRITE is specified, 
+the application must have opened the file descriptor
+<i>fildes</i>
+with write permission unless MAP_PRIVATE is specified in the
+<i>flags</i>
+parameter as described below.
+<p>
+The parameter
+<i>flags</i>
+provides other information about the handling of the mapped data.
+The value of
+<i>flags</i>
+is the bitwise inclusive OR of these options, defined in
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Symbolic Constant</b>
+<th align=center><b>Description</b>
+<tr valign=top><td align=left>MAP_SHARED
+<td align=left>Changes are shared.
+<tr valign=top><td align=left>MAP_PRIVATE
+<td align=left>Changes are private.
+<tr valign=top><td align=left>MAP_FIXED
+<td align=left>Interpret <i>addr</i> exactly.
+</table>
+<p>
+MAP_SHARED and MAP_PRIVATE describe the disposition
+of write references to the memory object.
+If MAP_SHARED is specified, 
+write references change the underlying object.
+If MAP_PRIVATE is specified, modifications to the mapped data by the
+calling process will be visible only to the calling process
+and will not change the underlying object.
+It is unspecified whether modifications
+to the underlying object done after the MAP_PRIVATE
+mapping is established are visible through the MAP_PRIVATE mapping.
+Either MAP_SHARED or MAP_PRIVATE can be specified, but not both.
+The mapping type is retained across
+<i><a href="fork.htm">fork()</a></i>.
+<p>
+When MAP_FIXED is set in the <i>flags</i> argument, the implementation is
+informed that the value of <i>pa</i> must be
+<i>addr</i>,
+exactly.
+If MAP_FIXED is set,
+<i>mmap()</i>
+may return MAP_FAILED and set errno to [EINVAL].  If a MAP_FIXED
+request is successful, the mapping established by
+<i>mmap()</i>
+replaces any previous mappings for the process' pages in the range
+[<i>pa, pa + len</i>).
+<p>
+When MAP_FIXED is not set, the implementation uses <i>addr</i> in an
+unspecified manner to arrive at
+<i>pa</i>.
+The <i>pa</i> so chosen will be an area of the address space that the
+implementation deems suitable for a mapping of <i>len</i> bytes to the
+file.  All implementations interpret an <i>addr</i> value of 0
+as granting the implementation complete freedom in selecting
+<i>pa</i>,
+subject to constraints described below.  A non-zero value of <i>addr</i> is
+taken to be a suggestion of a process address near which the mapping should be
+placed.  When the implementation selects a value for
+<i>pa</i>,
+it never places a mapping at address 0, nor does it replace any extant
+mapping.
+<p>
+The <i>off</i> argument is constrained to be aligned and sized according to the
+value returned by
+<i><a href="sysconf.htm">sysconf()</a></i>
+when passed _SC_PAGESIZE or _SC_PAGE_SIZE.  When MAP_FIXED is specified, the
+argument <i>addr</i> must also meet these constraints.  The implementation
+performs mapping operations over whole pages.  Thus, while the argument
+<i>len</i> need not meet a size or alignment constraint, the implementation
+will include, in any mapping operation, any partial page specified by the
+range [<i>pa, pa + len</i>).
+<p>
+The system always zero-fills any partial page at the end of an object.
+Further, the system never writes out any modified portions
+of the last page of an object that are beyond its end.
+References within the address range starting at
+<i>pa</i>
+and continuing for
+<i>len</i>
+bytes to whole pages following the end of an object
+result in delivery of a SIGBUS signal.
+<p>
+An implementation may deliver SIGBUS
+signals when a reference would cause an error in the mapped object,
+such as out-of-space condition.
+<p>
+The
+<i>mmap()</i>
+function adds an extra reference to the file associated with the file
+descriptor <i>fildes</i> which is not removed by a subsequent
+<i><a href="close.htm">close()</a></i>
+on that file descriptor.  This reference is removed when there are no more
+mappings to the file.
+<p>
+The
+<b>st_atime</b>
+field of the mapped file may be marked for update at any
+time between the
+<i>mmap()</i>
+call and the corresponding
+<i><a href="munmap.htm">munmap()</a></i>
+call.  The initial read or write reference to a mapped region will cause the
+file's
+<b>st_atime</b>
+field to be marked for update if it has not already been marked for update.
+<p>
+The
+<b>st_ctime</b>
+and
+<b>st_mtime</b>
+fields of a file that is mapped with MAP_SHARED and PROT_WRITE, will be marked
+for update at some point in the interval between a write reference to the
+mapped region and the next call to
+<i><a href="msync.htm">msync()</a></i>
+with MS_ASYNC or MS_SYNC for that portion of the file by any process.  If
+there is no such call, these fields may be marked for update at any time after
+a write reference if the underlying file is modified as a result.
+<p>
+There may be implementation-dependent limits on the number of memory regions
+that can be mapped (per process or per system).  If such a limit is imposed,
+whether the number of memory regions that can be mapped by a process is
+decreased by the use of
+<i><a href="shmat.htm">shmat()</a></i>
+is implementation-dependent.
+</blockquote><h4><a name = "tag_000_007_697">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the
+<i>mmap()</i>
+function returns the address at which the mapping was placed (pa);
+otherwise, it returns a value of MAP_FAILED and sets
+<i>errno</i>
+to indicate the error.
+The symbol MAP_FAILED
+is defined in the header
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>.
+No successful return from
+<i>mmap()</i>
+will return the value MAP_FAILED.
+<p>
+If
+<i>mmap()</i>
+fails for reasons other than [EBADF], [EINVAL] or [ENOTSUP],
+some of the mappings in the address range starting at
+<i>addr</i>
+and continuing for
+<i>len</i>
+bytes may have been unmapped.
+</blockquote><h4><a name = "tag_000_007_698">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>mmap()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+The <i>fildes</i> argument is not open for read, regardless of the protection
+specified, or <i>fildes</i> is not open for write and PROT_WRITE was specified
+for a MAP_SHARED type mapping.
+
+<dt>[EAGAIN]<dd>
+The mapping could not be locked in memory, if required by
+<i><a href="mlockall.htm">mlockall()</a></i>,
+due to a lack of resources.
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not a valid open file descriptor.
+
+<dt>[EINVAL]<dd>
+The <i>addr</i> argument (if MAP_FIXED was specified) or <i>off</i> is not
+a multiple of the page size as returned by
+<i><a href="sysconf.htm">sysconf()</a></i>,
+or are considered invalid by the implementation.
+
+<dt>[EINVAL]<dd>The value of <i>flags</i> is invalid (neither MAP_PRIVATE nor MAP_SHARED is
+set).
+
+<dt>[EMFILE]<dd>
+The number of mapped regions would exceed an
+implementation-dependent limit (per process or per system).
+
+<dt>[ENODEV]<dd>
+The <i>fildes</i> argument refers to a file whose type is not supported by
+<i>mmap()</i>.
+
+<dt>[ENOMEM]<dd>
+MAP_FIXED was specified, and the range [<i>addr, addr + len</i>) exceeds that
+allowed for the address space of a process; or if MAP_FIXED was not
+specified and there is insufficient room in the address space to effect the
+mapping.
+
+<dt>[ENOMEM]<dd>The mapping could not be locked in memory, if required by
+<i><a href="mlockall.htm">mlockall()</a></i>,
+because it would require more space than the system is able to supply.
+
+<dt>[ENOTSUP]<dd>
+The implementation does not support the combination of accesses
+requested in the
+<i>prot</i>
+argument.
+
+<dt>[ENXIO]<dd>
+Addresses in the range [<i>off, off + len</i>) are invalid for
+the object specified by <i>fildes</i>.
+
+<dt>[ENXIO]<dd>
+MAP_FIXED was specified in
+<i>flags</i>
+and the combination of
+<i>addr</i>,
+<i>len</i>
+and
+<i>off</i>
+is invalid for the object specified by
+<i>fildes</i>.
+
+<dt>[EOVERFLOW]<dd>
+The file is a regular file and the value of
+<i>off</i>
+plus
+<i>len</i>
+exceeds the offset maximum established in the open file description 
+associated with
+<i>fildes</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_699">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_700">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Use of
+<i>mmap()</i>
+may reduce the amount of memory available to other memory allocation
+functions.
+<p>
+Use of MAP_FIXED may result in unspecified behaviour in
+further use of
+<i><a href="brk.htm">brk()</a></i>,
+<i><a href="sbrk.htm">sbrk()</a></i>,
+<i><a href="malloc.htm">malloc()</a></i>
+and
+<i><a href="shmat.htm">shmat()</a></i>.
+The use of MAP_FIXED is discouraged, as it may prevent an implementation from
+making the most effective use of resources.
+<p>
+The application must ensure correct synchronisation when using
+<i>mmap()</i>
+in conjunction with any other file access method, such as
+<i><a href="read.htm">read()</a></i>
+and
+<i><a href="write.htm">write()</a></i>,
+standard input/output, and
+<i><a href="shmat.htm">shmat()</a></i>.
+<p>
+The
+<i>mmap()</i>
+function allows access to resources via address space
+manipulations, instead of
+read()/write().
+Once a file is mapped, all a process has to do to access it is use
+the data at the address to which the file was mapped.  So, using pseudo-code
+to illustrate the way in which an existing program might be changed to use
+<i>mmap()</i>,
+the following:
+<pre>
+<code>
+fildes = open(...)
+lseek(fildes, some_offset)
+read(fildes, buf, len)
+/* use data in buf */
+</code>
+</pre>
+becomes:
+<pre>
+<code>
+fildes = open(...)
+address = mmap(0, len, PROT_READ, MAP_PRIVATE, fildes, some_offset)
+/* use data at address */
+</code>
+</pre>
+<p>
+The [EINVAL] error above is marked EX because it is defined as an
+optional error in the POSIX Realtime Extension.
+</blockquote><h4><a name = "tag_000_007_701">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_702">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="brk.htm">brk()</a></i>,
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="fork.htm">fork()</a></i>,
+<i><a href="lockf.htm">lockf()</a></i>,
+<i><a href="msync.htm">msync()</a></i>,
+<i><a href="munmap.htm">munmap()</a></i>,
+<i><a href="mprotect.htm">mprotect()</a></i>,
+<i><a href="sbrk.htm">sbrk()</a></i>,
+<i><a href="shmat.htm">shmat()</a></i>,
+<i><a href="sysconf.htm">sysconf()</a></i>,
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

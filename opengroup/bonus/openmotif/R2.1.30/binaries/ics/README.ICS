@@ -1,0 +1,73 @@
+Addendum to the Open Motif Release Notes
+
+Using the Source RPM to Build Open Motif
+
+To build the Open Motif sources from the Source RPM, do the following:
+
+	% rpm -Uvh openmotif-2.1.30-2_ICS.src.rpm
+	% cd /usr/src/redhat/SPECS
+	% rpm -bb --buildroot=/tmp/motif openmotif-2.1.30.spec
+
+This will build the Open Motif binary RPM files using /tmp/motif as a temporary
+install directory so as not to overwrite any system files during the build
+process.
+
+Manual Source Code Installation and Build
+
+The source distributed here incorporates a number of patches and changes
+from that distributed directly by the Open Group.  These patches and changes
+are distributed as separate "patch" files and source distributions.  You will
+need to unpack the original Open Group source and then apply the changes.
+
+ 	% cd $MOTIFBUILDDIR
+ 	% gzcat openmotif-2.1.30-src.tgz | tar xvf -
+	% gzcat openmotif-2.1.30-icsextra.tgz
+ 	% patch < openmotif-2.1.30-icsbuild.patch
+ 	% patch < openmotif-2.1.30-mwm.patch
+	% chmod -R +w motif
+
+The following changes have been made:
+
+	* motif/config/cf directory:
+
+		- The host.def file is configured with the variables ICS
+		  used in its build of Open Motif on all our supported 
+		  platforms.  The file distributed by the Open Group is
+		  empty.
+		  
+	* motif/lib/Xm/Scale.c
+
+		- Rather than blindly redefine the RADIXCHAR macro when
+		  compiling on Linux, verify that RADIXCHAR is not defined
+		  before #define-ing it.  The file distributed by the
+		  Open Group is named Scale.c.opengroup.
+
+	* motif/lib/Xm/TextF.c
+
+		- The FreeBSD libc does not provide a number of wide
+		  character string functions necessary to compile the
+		  XmTextField widget.  We have added static implementations
+		  of the missing functions to TextF.c on FreeBSD.  The file
+		  distributed by the Open Group is named TextF.c.opengroup.
+
+	* motif/clients/mwm/WmIconBox.c
+
+		- A divide by zero problem in the MWM icon box was found
+		  and corrected.
+
+Build Instruction Changes
+
+In addition to the instructions in RELNOTES you will also need to execute
+the following commands before issuing "make World >& world.log" command.
+
+	% cd $MOTIFBUILDDIR/motif/config/cf
+	% mkdir OPENGROUP
+	% mv * OPENGROUP
+	% ln -s <X11_libs_directory>/X11/config/*
+	% rm Motif.tmpl Motif.rules host.def
+	% mv OPENGROUP/{Imakefile,Motif.tmpl,Motif.rules,host.def} .
+
+After making these links you should may then continue with
+
+	% cd $MOTIFBUILDDIR/motif
+	% make World >& world.log

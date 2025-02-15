@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>killpg</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_272">&nbsp;</a>NAME</h4><blockquote>
+killpg - send a signal to a process group
+</blockquote><h4><a name = "tag_000_007_273">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="signa248.htm">signal.h</a>&gt;
+
+int killpg(pid_t <i>pgrp</i>, int <i>sig</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_274">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>killpg()</i>
+function sends the signal specified by
+<i>sig</i>
+to the process group specified by
+<i>pgrp</i>.
+<p>
+If
+<i>pgrp</i>
+is greater than 1,
+<i> killpg ( pgrp, sig )</i>
+is equivalent to
+<i> kill ( -pgrp, sig )</i>
+If
+<i>pgrp</i>
+is less than or equal to 1, the behaviour of
+<i>killpg()</i>
+is undefined.
+</blockquote><h4><a name = "tag_000_007_275">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Refer to
+<i><a href="kill.htm">kill()</a></i>.
+</blockquote><h4><a name = "tag_000_007_276">&nbsp;</a>ERRORS</h4><blockquote>
+Refer to
+<i><a href="kill.htm">kill()</a></i>.
+</blockquote><h4><a name = "tag_000_007_277">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_278">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_279">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_280">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getpgid.htm">getpgid()</a></i>,
+<i><a href="getpid.htm">getpid()</a></i>,
+<i><a href="kill.htm">kill()</a></i>,
+<i><a href="raise.htm">raise()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

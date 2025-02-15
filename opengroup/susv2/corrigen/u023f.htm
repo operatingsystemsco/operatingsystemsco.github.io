@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>U023</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1><font size="4">Document: Transport Provider Interface (TPI)</font></h1>
+
+<h2><font size="2">Open Group CAE Specification, 02/97, C615</font></h2>
+
+<p><font size="3">16087 06/97 C615/U023</font></p>
+
+<p><font size="2">Contents: XO_TPI-1R1, XO_TPI-2/3, XO_TPI-4R2,
+XO_TPI-5/6.</font></p>
+
+<hr>
+
+<p><font size="2"><strong>Change number</strong>: XO_TPI-1R1</font></p>
+
+<p><font size="2"><strong>Title</strong>: Correction to manual
+page definition for TPI primitive T_OPTDATA_IND </font></p>
+
+<p><font size="2"><strong>Qualifier</strong>: Major Technical</font></p>
+
+<p><font size="2"><strong>Rationale</strong>: The man-page
+definition for T_OPTDATA_IND was incorrectly copied from its
+T_OPTDATA_REQ counterpart when applied to the TPI specification.</font></p>
+
+<p><font size="2">The change to add these two primitives was
+originally specified in CR Sun-003 (email XoTGnet 5427), which
+was accepted as recorded in email XoTGnet 5540. Although this CR
+was accepted before company review of the TPI Specification
+started, it was missed from being included in the TPI company
+review copy. This omission was noted in company review CR
+SUN:TPI-005,so was applied to the TPI sanity check copy. As we
+know, the T_OPTDATA_IND definition was incorrectly applied but
+was not picked up during the TPI sanity check.</font></p>
+
+<p><font size="2">Rather than list in this correction CR the
+changes to the published T_OPTDATA_IND definition, the following
+change presents the complete correct man-page definition.</font></p>
+
+<p><font size="2">Change: Replace the manual page definition for
+T_OPTDATA_IND on pages 48-49 with the following:</font></p>
+
+<p><font size="3">NAME<br>
+</font><font size="2">T_OPTDATA_IND - Data indication with
+options</font></p>
+
+<p><font size="3">SYNOPSIS<br>
+</font><font size="2">The message consists of one M_PROTO message
+block followed by zero or more message blocks, where each M_DATA
+message block contains zero or more bytes of data. The format of
+the M_PROTO message block is as follows:</font></p>
+
+<p><font size="2">struct T_optdata_ind {<br>
+t_scalar_t PRIM_type; /* always T_OPTDATA_IND */<br>
+t_scalar_t DATA_flag; /* flag bits associated with data */<br>
+t_scalar_t OPT_length; /* options length */<br>
+t_scalar_t OPT_offset; /* options offset */<br>
+};</font></p>
+
+<p><font size="3">DESCRIPTION<br>
+</font><font size="2">The primitive indicates to the transport
+user that the message contains a transport interface data unit.
+One or more transport interface data units form a transport
+service data unit (TSDU).</font></p>
+
+<p><font size="2">Note that the maximum transport service and
+data unit sizes allowed by a transport provider is indicated to
+the user by the T_INFO_ACK primitive.</font></p>
+
+<p><font size="2">This primitive has a mechanism that indicates
+the beginning and end of a transport service data unit. However
+not all transport providers support the concept of a transport
+service data unit.</font></p>
+
+<p><font size="2">This primitive also provides mechanisms to have
+options associated with the data being transferred.</font></p>
+
+<p><font size="3">PARAMETERS<br>
+</font><font size="2">The fields of this message have the
+following semantics:</font></p>
+
+<p><font size="2">PRIM_type<br>
+identifies the primitive type</font></p>
+
+<p><font size="2">DATA_flag<br>
+This field specifies bit fields specific general properties
+associated with the data being transferred. The following
+settings are currently defined:</font></p>
+
+<p><font size="2">T_ODF_MORE<br>
+When set, this bit indicates that the next T_OPTDATA_IND
+primitive is also part of this transport service data unit.</font></p>
+
+<p><font size="2">OPT_length<br>
+the length of the requested options asociated with the primitive</font></p>
+
+<p><font size="2">OPT_offset<br>
+the offset (from the beginning of the M_PROTO message block)
+where the options asociated with this primitive begin.</font></p>
+
+<p><font size="3">RULES<br>
+</font><font size="2">If a TSDU spans multiple T_OPTDATA_IND
+message blocks, then an ETSDU may be placed between two
+T_DATA_IND message blocks. Once an ETSDU is started, then the
+ETSDU must be completed before any T_OPTDATA_IND message blocks
+defining a TSDU are resumed.</font></p>
+
+<p><font size="3">MODES<br>
+</font><font size="2">Only connection mode.</font></p>
+
+<p><font size="3">ORIGINATOR<br>
+</font><font size="2">Transport provider.</font></p>
+
+<hr>
+
+<p><font size="2"><strong>Change number</strong>: XO_TPI-2</font></p>
+
+<p><font size="2"><strong>Title</strong>: Clarification of an
+unresolved cross-reference</font></p>
+
+<p><font size="2"><strong>Qualifier</strong>: Major Editorial</font></p>
+
+<p><font size="2"><strong>Rationale</strong>: In the manual page
+definition for T_CONN_RES, the description for parameter
+ACCEPTORid concludes with a typographical error whcich includes
+an unresolved cross reference. The cause is a format coding
+error. The printed cross reference &quot;acceptorid&quot; should
+point the reader to Appendix A.</font></p>
+
+<p><font size="2"><strong>Change</strong>: Correct the format
+coding for the &quot;acceptorid&quot; cross reference, to refer
+to &quot;Appendix A on page 61.&quot;</font></p>
+
+<hr>
+
+<p><font size="2"><strong>Change number</strong>: XO_TPI-3</font></p>
+
+<p><font size="2"><strong>Title</strong>: Correction for
+truncated List of Contents</font></p>
+
+<p><font size="2"><strong>Qualifier</strong>: Major Editorial</font></p>
+
+<p><font size="2"><strong>Rationale</strong>: The printed version
+of the TPI CAE Specification has a Contents list which stops at
+page 21. Since the electronic file for this contents list shows a
+complete (i.e. not truncated) list, the reasons why this error
+occurred in the printed version are unknown, though human error
+is almost certainly the cause.</font></p>
+
+<p><font size="2"><strong>Change</strong>: Replace the Contents
+pages iii and iv with the following:</font></p>
+
+<p><font size="2">Contents</font></p>
+
+<p><font size="2">Chapter 1 Introduction
+........................................ 1<br>
+1.1 STREAMS-based Transport Provider Interface ........ 1<br>
+1.2 How TPI Works ..................................... 2<br>
+1.3 Overview of Error Handling Capabilities ........... 3<br>
+1.3.1 Non-fatal Errors ................................ 3<br>
+1.3.2 Fatal Errors .................................... 3<br>
+1.4 Rules for Transport Service Interface Sequence of Primitives
+....... 4<br>
+1.5 Rules for Precedence of TPI Primitives on a Stream 5<br>
+1.6 Rules for Flushing Queues ......................... 5<br>
+Chapter 2 Transport Primitives ................................ 7<br>
+Chapter 3 Allowable Sequence of TPI Primitives ................ 9<br>
+3.1 State Table ....................................... 10<br>
+3.2 Variables ......................................... 11<br>
+3.3 Outgoing Events ................................... 11<br>
+3.4 Incoming Events ................................... 12<br>
+3.5 Transport Service State Tables .................... 13<br>
+Chapter 4 Transport Primitive Precedence ......................
+17<br>
+Chapter 5 TPI Message Formats .................................
+19<br>
+T_ADDR_ACK ........................................ 20<br>
+T_ADDR_REQ ........................................ 21<br>
+T_BIND_ACK ........................................ 22<br>
+T_BIND_REQ ........................................ 24<br>
+T_CONN_CON ........................................ 26<br>
+T_CONN_IND ........................................ 27<br>
+T_CONN_REQ ........................................ 28<br>
+T_CONN_RES ........................................ 30<br>
+T_DATA_IND ........................................ 33<br>
+T_DATA_REQ ........................................ 34<br>
+T_DISCON_IND ...................................... 36<br>
+T_DISCON_REQ ...................................... 37<br>
+T_ERROR_ACK ....................................... 39<br>
+T_EXDATA_IND ...................................... 40<br>
+T_EXDATA_REQ ...................................... 41<br>
+T_INFO_ACK ........................................ 42<br>
+T_INFO_REQ ........................................ 44<br>
+T_OK_ACK .......................................... 45<br>
+T_OPTMGMT_ACK ..................................... 46<br>
+T_OPTDATA_IND ..................................... 48<br>
+T_OPTDATA_REQ ..................................... 50<br>
+T_OPTMGMT_REQ ..................................... 52<br>
+T_ORDREL_IND ...................................... 54<br>
+T_ORDREL_REQ ...................................... 55<br>
+T_UDERROR_IND ..................................... 56<br>
+T_UNBIND_REQ ...................................... 57<br>
+T_UNITDATA_IND .................................... 58<br>
+T_UNITDATA_REQ .................................... 59<br>
+Appendix A Connection Acceptance ...............................
+61<br>
+A.1 Accepting Incoming Connections .................... 61<br>
+A.2 The Common Single Type Model Implementation ....... 62<br>
+A.3 Possible Multiple Type Model Implementation Methodologies
+............... 63</font></p>
+
+<p><font size="2">Glossary
+......................................................... 65</font></p>
+
+<p><font size="2">Index
+............................................................ 67</font></p>
+
+<p><font size="2">List of Figures<br>
+1-1 Example of a Stream from a User to a Transport Provider
+............... 2</font></p>
+
+<p><font size="2">List of Tables<br>
+2-1 Transport Service Primitives ...................... 7<br>
+3-1 Kernel Level Transport Interface States ........... 10<br>
+3-2 State Table Variables .... ........................ 11<br>
+3-4 Kernel Level Transport Interface Incoming Events
+...................... 12<br>
+3-5 Initialization State Table ........................ 13<br>
+3-6 Data Transfer State Table for Connection Oriented Service
+.................... 14<br>
+3-7 Data Transfer State Table for Connectionless Service
+.................... 15<br>
+4-1 Stream Write Queue Precedence Table ............... 17<br>
+4-2 Stream Read Queue Precedence Table ................ 18</font></p>
+
+<hr>
+
+<p><font size="2"><strong>Change number</strong>: XO_TPI-4</font></p>
+
+<p><font size="2"><strong>Title</strong>: Clarification of what
+O_T_BIND_REQ means</font></p>
+
+<p><font size="2"><strong>Qualifier</strong>: Minor Technical</font></p>
+
+<p><font size="2"><strong>Rationale</strong>: The manual page
+definition for T_BIND_REQ (on Page 24) refers to O_T_BIND_REQ as
+an alternative. The O_primitive name originates from earlier
+development work elsewhere to take care of compatibility issues.</font></p>
+
+<p><font size="2">However, O_primitives are not needed in this
+TPI specification, so all mention of the O_T_BIND_REQ primitive
+should be deleted.</font></p>
+
+<p><font size="2"><strong>Change</strong>: <br>
+1. In the manual page definition for T_BIND_ACK on page 22,
+change the description for RULES 3rd bullet point from</font></p>
+
+<p><font size="2">+ If the transport provider cannot bind the
+specified address, it may assign another address to the user if
+the primitive O_T_BIND_REQ was used. In this case, it is the
+transport user's responsibility to check the protocol address
+returned in the T_BIND_ACK primitive to see if it is the same as
+the one requested, and take appropriate action. If T_BIND_REQ was
+used, the provider should return an error.</font></p>
+
+<p><font size="2">to</font></p>
+
+<p><font size="2">+ If the transport provider cannot bind the
+specified address the provider will return [TADDRBUSY].</font></p>
+
+<p><font size="2">2. In the manual page definition for T_BIND_ACK
+on page 23, first bullet point, delete the second sentence
+(&quot;If a O_T_BIND_REQ primitive .... another protocol address
+to the user.)&quot;</font></p>
+
+<p><font size="2">3. In the manual page definition for T_BIND_REQ
+on page 25, description for [TADDRBUSY], delete the second and
+third sentences (&quot;In other words, the transport user ....
+for the behavior of O_T_BIND_REQ in this instance.&quot;).</font></p>
+
+<p><font size="2">4. Throughout the TPI specification (affects
+pages 22-25), replace all instances of
+&quot;T_BIND_REQ/O_T_BIND_REQ&quot; with &quot;T_BIND_REQ&quot;.</font></p>
+
+<hr>
+
+<p><font size="2"><strong>Change number</strong>: XO_TPI-5</font></p>
+
+<p><font size="2"><strong>Title</strong>: Various editorial
+corrections</font></p>
+
+<p><font size="2"><strong>Qualifier</strong>: Minor Editorial</font></p>
+
+<p><font size="2"><strong>Rationale</strong>: Several minor
+editorial errors were noted during the thorough review of the TPI
+CAE Specification stimulated by the report of the errors
+addressed by XO_TPI-1 and XO_TPI-2. This CR captures these
+errors.</font></p>
+
+<p><font size="2"><strong>Change</strong>: </font></p>
+
+<p><font size="2">1. Page xii, add ISO/IEC 8072 to Referenced
+Documents, as called in the final paragraph of section 1.2: </font></p>
+
+<p><font size="2">ISO/IEC 8072<br>
+ISO 8072:\|1986, Information Processing Systems - Open Systems
+Interconnection - Transport Service Definition.</font></p>
+
+<p><font size="2">2. Page 1, final paragraph, insert
+&quot;of&quot; to give ... extensive descriptions of STREAMS ...</font></p>
+
+<p><font size="2">3. Page 7, add the following entries to the
+start of table 2-1:</font></p>
+
+<p><font size="2">T_ADDR_REQ Get Protocol Address Request
+M_PCPROTO<br>
+T_ADDR_ACK Protocol Address Acknowledgement M_PCPROTO</font></p>
+
+<p><font size="2">4. Pages 46-47, move man-page definition for
+T_OPTMGMT_ACK to after that for T_OPTDATA_REQ, to maintain
+alphabetic ordering of TPI definitions. Amend the Contents list
+accordingly (see XO_TPI-3).</font></p>
+
+<p><font size="2">5. Page 31, move description for error
+TPROVMISMATCH to new line.</font></p>
+
+<p><font size="2">6. Page 53, place all the error returns for
+T_OPTMGMT_REQ in square brackets, to conform to TOG style.</font></p>
+
+<hr>
+
+<p><font size="2"><strong>Change number</strong>: XO_TPI-6</font></p>
+
+<p><font size="2"><strong>Title</strong>: Correct the State
+Tables in Chapter 3</font></p>
+
+<p><font size="2"><strong>Qualifier</strong>: Minor Technical</font></p>
+
+<p><font size="2"><strong>Rationale</strong>: The State tables
+are inconsistent with XTI. The mechanism of change is to remove
+all mention of the T_OPTMGMT_{REQ,ACK} messages from the tables.
+This puts that message in the same category as, for example,
+T_INFO_{REQ,ACK} which can occur any time and makes no state
+change.</font></p>
+
+<p><font size="2"><strong>Change</strong>: <br>
+1. On Page 10, Table 3-1, remove the line describing
+TS_WACK_OPTREQ (sta_4).</font></p>
+
+<p><font size="2">2. On page 13, Table 3-5:<br>
++ remove the line describing optmgmt_req <br>
++ remove the line describing optmgmt_ack<br>
++ remove the column headed TS_WACK_OPTREQ<br>
++ delete the note [5] and its description.</font></p>
+
+<p><font size="2">3. On page 14, Table 3-6: <br>
++ remove the line describing optmgmt_req <br>
++ delete the note [5] and its description.</font></p>
+</body>
+</html>

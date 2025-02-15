@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>cd</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_305">&nbsp;</a>NAME</h4><blockquote>
+cd - change the working directory
+</blockquote><h4><a name = "tag_000_000_306">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+cd <b>[</b><i>directory</i><b>]</b>
+
+cd - 
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_307">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>cd</i>
+utility will change the working directory of the
+current shell execution environment; see
+<xref href=shexenv><a href="chap2.htm#tag_001_012">
+Shell Execution Environment
+</a></xref>.
+&nbsp;If the current working directory is successfully changed, it will save an
+absolute pathname of the old working directory in the environment variable
+<i>OLDPWD</i>
+and it will save an absolute pathname of the new working
+directory in the environment variable
+<i>PWD .
+</i><p>
+When invoked with no operands, and the
+<i>HOME</i>
+environment variable is set to a non-empty value,
+the directory named in the
+<i>HOME</i>
+environment variable will become the new working directory.
+If
+<i>HOME</i>
+is empty or is undefined, the default behaviour is
+implementation-dependent.
+<p>
+</blockquote><h4><a name = "tag_000_000_308">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_309">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>directory</i><dd>
+An absolute or relative pathname of the directory that becomes the
+new working directory.
+The interpretation of a relative pathname by
+<i>cd</i>
+depends on the
+<i>CDPATH</i>
+environment variable.
+
+<dt>-<dd>When a hyphen is used as the operand,
+this is equivalent to the command: 
+<pre>
+<code>
+cd "$OLDPWD" &amp;&amp; pwd 
+</code>
+</pre>
+which changes to the previous working directory and then writes its name.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_310">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_000_000_311">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_312">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>cd</i>:
+<dl compact>
+
+<dt><i>CDPATH</i><dd>
+A colon-separated list of pathnames that refer to directories.
+If the
+<i>directory</i>
+operand
+does not begin with a slash
+(/)
+character,
+and the first component is not dot or dot-dot,
+<i>cd</i>
+will search for
+<i>directory</i>
+relative to each directory named in the
+<i>CDPATH</i>
+variable, in the order listed.
+The new working directory will be set to the first matching directory found.
+An empty string in place of a directory pathname represents the
+current directory.
+If
+<i>CDPATH</i>
+is not set,
+it will be treated as if it were an empty string.
+
+<dt><i>HOME</i><dd>The name of the home directory, used when no
+<i>directory</i>
+operand is specified.
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>OLDPWD</i><dd>
+A pathname of the previous working directory, used by
+<i>cd</i>
+<b>-</b>.
+
+<dt><i>PWD</i><dd>A pathname of the current working directory, set by
+<i>cd</i>
+after it has changed to that directory.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_313">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_314">&nbsp;</a>STDOUT</h4><blockquote>
+If a non-empty directory name from
+<i>CDPATH</i>
+is used,
+&nbsp;or if
+<i>cd</i>
+<b>-</b>
+is used,
+&nbsp;an absolute pathname of the new working directory will be written
+to the standard output
+as follows:
+<p><code>
+<tt>"%s\n"</tt>, &lt;<i>new directory</i>&gt;
+</code>
+<p>
+Otherwise,
+there will be no output.
+</blockquote><h4><a name = "tag_000_000_315">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_000_000_316">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_317">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_318">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The directory was successfully changed.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_319">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+The working directory remains unchanged.
+</blockquote><h4><a name = "tag_000_000_320">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Since
+<i>cd</i>
+affects the current shell execution environment,
+it is always provided as a shell regular built-in.
+If it is called in a subshell or separate utility execution environment,
+such as one of the following:
+<pre>
+<code>
+(cd /tmp)
+nohup cd
+find . -exec cd {} \;
+</code>
+</pre>
+it will not affect the working directory of the caller's environment.
+<p>
+The user must have execute (search) permission in
+<i>directory</i>
+in order to change to it.
+</blockquote><h4><a name = "tag_000_000_321">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_322">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_323">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pwd.htm">pwd</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/chdir.htm">chdir()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

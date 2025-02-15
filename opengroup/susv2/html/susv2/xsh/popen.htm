@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>popen</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_997">&nbsp;</a>NAME</h4><blockquote>
+popen - initiate pipe streams to or from a process
+</blockquote><h4><a name = "tag_000_007_998">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+FILE *popen(const char *<i>command</i>, const char *<i>mode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_999">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>popen()</i>
+function executes the command specified by the string
+<i>command</i>.
+It creates a pipe between the calling program and the executed command, and
+returns a pointer to a stream that can be used to either read from or write to
+the pipe.
+<p>
+If the implementation supports the referenced <b>XCU</b> specification, the environment of the
+executed command will be as if a child process were created within the
+<i>popen()</i>
+call using
+<i><a href="fork.htm">fork()</a></i>,
+and the child invoked the
+<i><a href="../xcu/sh.htm">sh</a></i>
+utility using the call:
+<pre>
+<code>
+execl(<i>shell path</i>, "sh", "-c", <i>command</i>, (char *)0);
+</code>
+</pre>
+<p>
+where
+<i>shell path</i>
+is an unspecified pathname for the
+<i><a href="../xcu/sh.htm">sh</a></i>
+utility.
+<p>
+The
+<i>popen()</i>
+function ensures that any streams from previous
+<i>popen()</i>
+calls that remain open in the parent process are closed in the new child
+process.
+<p>
+The
+<i>mode</i>
+argument to
+<i>popen()</i>
+is a string that specifies I/O mode:
+<ol>
+<p>
+<li>
+If
+<i>mode</i>
+is <b>r</b>, when the child process is started its file descriptor
+STDOUT_FILENO
+will be the writable end of the pipe, and the file descriptor
+<i>fileno</i>(<i>stream</i>) in the calling process, where
+<i>stream</i>
+is the stream pointer returned by
+<i>popen()</i>,
+will be the readable end of the pipe.
+<p>
+<li>
+If
+<i>mode</i>
+is <b>w</b>, when the child process is started its file descriptor
+STDIN_FILENO
+will be the readable end of the pipe, and the file descriptor
+<i>fileno</i>(<i>stream</i>) in the calling process, where
+<i>stream</i>
+is the stream pointer returned by
+<i>popen()</i>,
+will be the writable end of the pipe.
+<p>
+<li>
+If
+<i>mode</i>
+is any other value, the result is undefined.
+<p>
+</ol>
+<p>
+After
+<i>popen()</i>,
+both the parent and the child process will be
+capable of executing independently before either terminates.
+<p>
+Pipe streams are byte oriented.
+</blockquote><h4><a name = "tag_000_007_1000">&nbsp;</a>RETURN VALUE</h4><blockquote>
+On successful completion,
+<i>popen()</i>
+returns a pointer to an open stream that can be used to read or write to the
+pipe.  Otherwise, it returns a null pointer and may set
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1001">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>popen()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EMFILE]<dd>
+{FOPEN_MAX} or {STREAM_MAX} streams are currently open in the
+calling process.
+
+<dt>[EINVAL]<dd>
+The
+<i>mode</i>
+argument is invalid.
+
+</dl>
+<p>
+The
+<i>popen()</i>
+function may also set
+<i>errno</i>
+values as described by
+<i><a href="fork.htm">fork()</a></i>
+or
+<i><a href="pipe.htm">pipe()</a></i>.
+<br>
+</blockquote><h4><a name = "tag_000_007_1002">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1003">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Because open files are shared, a mode <b>r</b>
+command can be used as an input filter and a mode <b>w</b>
+command as an output filter.
+<p>
+Buffered reading before opening an input filter
+may leave the standard input of that filter mispositioned.
+Similar problems with an output filter may be prevented
+by careful buffer flushing, for example, with
+<i><a href="fflush.htm">fflush()</a></i>.
+<p>
+A stream opened by
+<i>popen()</i>
+should be closed by
+<i><a href="pclose.htm">pclose()</a></i>.
+<p>
+The behaviour of
+<i>popen()</i>
+is specified for values of
+<i>mode</i>
+of <b>r</b> and <b>w</b>.
+Other modes such as <b>rb</b> and <b>wb</b>
+might be supported by specific implementations,
+but these would not be portable features.
+Note that historical implementations of
+<i>popen()</i>
+only check to see if the first character of
+<i>mode</i>
+is r.  Thus, a
+<i>mode</i>
+of <b>robert&nbsp;the&nbsp;robot</b> would be treated as
+<i>mode</i>
+<b>r</b>, and a
+<i>mode</i>
+of <b>anything&nbsp;else</b> would be treated as
+<i>mode</i>
+<b>w</b>.
+<p>
+If the application calls
+<i><a href="waitpid.htm">waitpid()</a></i>
+or
+<i><a href="waitid.htm">waitid()</a></i>
+with a
+<i>pid</i>
+argument greater than 0, and it still has a stream that was called with
+<i>popen()</i>
+open, it must ensure that
+<i>pid</i>
+does not refer to the process started by
+<i>popen()</i>.
+<p>
+To determine whether or not the <b>XCU</b> specification environment is present, use the
+function call:
+<pre>
+<code>
+sysconf(_SC_2_VERSION)
+</code>
+</pre>
+<p>
+(See
+<i><a href="sysconf.htm">sysconf()</a></i>).
+</blockquote><h4><a name = "tag_000_007_1004">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1005">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="../xcu/sh.htm">sh</a></i>,
+<i><a href="pclose.htm">pclose()</a></i>,
+<i><a href="pipe.htm">pipe()</a></i>,
+<i><a href="sysconf.htm">sysconf()</a></i>,
+<i><a href="system.htm">system()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

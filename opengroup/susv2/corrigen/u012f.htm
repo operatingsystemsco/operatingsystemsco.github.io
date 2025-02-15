@@ -1,0 +1,480 @@
+<!DOCTYPE HTML SYSTEM "html.dtd">
+<HTML>
+<HEAD>
+<TITLE>Corrigenda U012</TITLE>
+</HEAD>
+<BODY>
+<H2>X/Open Corrigenda: U012</H2>
+<H1> Document: <BR>Remote Operations Service Element (XAP-ROSE) API</H1>
+X/Open CAE Specification, 12/95<BR>
+X/Open reference C408
+
+<P>
+<H3>Contents</H3>
+<DT>XAPROSE-1, -1, -3, -4, -5.
+</DL>
+<P>
+<HR>
+<P>
+<DL>
+<DT><H3>Change number : XAPROSE-1 </H3>
+
+<DT><H3>Title</H3>
+<DD> Interface not able to receive AP_RO_BIND_IND
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Major Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>It is stated on page 15 in the first bullet item
+                    that the user sets the AP_PCDRL to accept or reject
+                    the proposed presentation contexts and transfer
+                    syntaxes, and then sets the AP_RO_PCI_LIST to contain
+                    the list of PCIs that identify presentation contexts
+                    using the ROSE protocol. Then the user is to call
+                    ap_ro_init() to enable the ROSE protocol machine.
+<P>
+                    This is incorrect, since we are working with an
+                    AP_PCDRL and we have already received an AP_ASSOC_IND
+                    and the ROSE protocol machine has not yet been enabled
+                    to convert it into a AP_RO_BIND_IND. Instead, the call
+                    to ap_ro_init() must be made before receiving any
+                    primitives, so that the correct conversion to the
+                    ROSE primitives can occur.
+<P>
+                    The following three changes correct the description for
+                    the three scenarios when ap_ro_init() can be called.
+<P>
+<DT><H3>Change</H3>
+<DD>        (1)  Replace the 6th paragraph on page 14 with:
+<P>
+<DL><DT><DD>            "A call to ap_ro_init() causes the list of ROSE
+                        abstract syntaxes identified by the PCI entries
+                        in the environment attribute AP_RO_PCI_LIST to
+                        be validated if the AP_RO_PCI_LIST is not null."
+</DL>
+<P>
+<DD>                (2)  Replace the 8th paragraph on page 14 with:
+<P>
+<DL><DT><DD>            "There are three different scenarios when
+                        ap_ro_init() can be called based on the
+                        AP_ROLE_ALLOWED environment variable,
+                        and each operates as follows:"
+</DL>
+<P>
+<DD>                (6)  replace the first paragraph of the bullet item on
+                    page 15 with:
+<P>
+<DL><DT><DD>            "For a responder, before inward connection
+                        establishment, the user calls ap_ro_init()
+                        with a NULL AP_RO_PCI_LIST to enable the ROSE
+                        protocol machine. In this case, only an
+                        AP_RO_BIND_IND is valid to be received and
+                        no checking is performed in the ROSE protocol
+                        machine to try to validate the presentation
+                        contexts or transfer syntaxes. All other
+                        primitives will be passed up to the user
+                        untouched by the ROSE protocol machine. The
+                        application will accept or reject the
+                        presentation contexts and transfer syntaxes
+                        in the AP_PCDRL. Once the AP_PCDRL is set,
+                        the AP_RO_PCI_LIST is set, then ap_ro_init()
+                        is called a second time and the following checks
+                        are performed:"
+<P>
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : XAPROSE-2 </H3>
+
+<DT><H3>Title</H3>
+<DD> AP_RO_BIND/AP_RO_UNBIND primitives do not allow for
+                    direct-reference or indirect-reference encoding
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The AP_RO_BIND primitives need the ability to use
+                    direct-reference or indirect-reference encoding
+                    instead of just passing the PCI. This is defined
+                    in ISO/IEC 8824, Section 34.4, 34.5, and 34.6.
+                    The effect of 34.5 and 34.6 is to make the presence
+                    of at least one of the "direct-reference" and the
+                    "indirect-reference" mandatory. Note also that both
+                    references are present when presentation layer
+                    negotiation is in use but incomplete.
+<P>
+<DT><H3>Change</H3>
+<DD>(1)  On page 65, after the line:
+<P>
+<PRE>
+         "#define AP_RO_NO_RESULT       3"
+</PRE>
+<P>
+         add the following:
+<P>
+<PRE>
+         "#define AP_RO_DIRECT_REF      4
+          #define AP_RO_INDIRECT_REF    5
+          #define AP_RO_DIR_AND_INDIR   6"
+</PRE>
+<P>
+<DD>     (2)  On pages 32, 34, 36 and 38, in the cdata members list, after
+         the line:
+
+<PRE>
+         "                           /* values                          */"
+</PRE>
+<P>
+         add the following:
+<P>
+<PRE>
+         "long   type;               /* must be set to AP_RO_DIRECT_REF */
+                                     /* or AP_RO_ INDIRECT_REF          */
+                                     /* or AP_RO_ DIR_AND_INDIR         */
+          union {
+              unsigned long  local;  /* not valid for this primitive    */
+              ap_objid_t     global; /* valid if type==AP_RO_DIRECT_REF */
+          } value;
+</PRE>
+
+<DD>      (3)  On page 33, insert the following before the 'ubuf' section:
+<P>
+<DL><DT><DD>
+          "The <I>cdata->type</I> argument signals the type of encoding that is to
+           be used to encode the AP_RO_BIND_REQ.  If the <I>cdata->type</I> is set to
+           AP_RO_DIRECT_REF the <I>cdata->value.global</I> will contain the object
+           identifier that will be used for the encoding.  If <I>cdata->type</I> is
+           set to AP_RO_INDIRECT_REF then the <I>cdata->pci</I> value will be used
+           for the indirect-reference encoding.  If <I>cdata->type</I> is set to
+           AP_RO_DIR_AND_INDIR then the <I>cdata->value.global</I> will contain the
+           transfer syntax that will be used for the encoding and the
+           <I>cdata->pci</I> will be used for the indirect-reference.
+<P>
+           The <I>global</I> element of the <I>cdata->value</I> element is an <B>ap_objid_t</B>
+           structure containing the contents octets of the BER encoding of
+           the OBJECT IDENTIFIER.  See the referenced <B>XAP</B> specification and
+           ISO 8825-1, Basic Encoding Rules(BER) for details of how to use
+           this structure."
+<P></DL>
+<DD>      (4)  On page 37, insert the following before the 'ubuf' section:
+<DL><DT><DD>
+<P>
+          "The <I>cdata->type</I> argument signals the type of encoding that is to
+           be used to encode the AP_RO_BIND_RSP.  If the <I>cdata->type</I> is set to
+           AP_RO_DIRECT_REF the <I>cdata->value.global</I> will contain the object
+           identifier that will be used for the encoding.  If <I>cdata->type</I>
+           set to AP_RO_INDIRECT_REF then the <I>cdata->pci</I> value will be used
+           for the indirect-reference encoding.  If <I>cdata->type</I> is set to
+<P>
+           AP_RO_DIR_AND_INDIR then the <I>cdata->value.global</I> will contain the
+           transfer syntax that will be used for the encoding and the
+           <I>cdata->pci</I> will be used for the indirect-reference.
+<P>
+           The <I>global</I> element of </I>the cdata->value</I> element is an <B>ap_objid_t</B>
+           structure containing the contents octets of the BER encoding of
+           the OBJECT IDENTIFIER.  See the referenced <B>XAP</B> specification and
+           ISO 8825-1, Basic Encoding Rules(BER) for details of how to use
+           this structure."
+<P>
+</DL>
+<DD>     (5)  On page 34, insert the following before the 'ubuf' section:
+<P>
+<DL><DT><DD>
+          "The <I>cdata->type</I> argument signals the type of encoding that h
+           been used to encode the AP_RO_BIND_IND.  If the <I>cdata->type</I> is set
+           to AP_RO_DIRECT_REF the <I>cdata->value.global</I> will contain the object
+           identifier that was used for the encoding.  If <I>cdata->type</I> is
+           set to AP_RO_INDIRECT_REF then the <I>cdata->pci</I> value was used
+           for the indirect-reference encoding.  If <I>cdata->type</I> is set to
+           AP_RO_DIR_AND_INDIR then the <I>cdata->value.global</I> contains the
+           transfer syntax that was used for the encoding and the
+           <I>cdata->pci</I> is the indirect-reference.
+<P>
+           The <I>global</I> element of the <I>cdata->value</I> element is an <B>ap_objid_t</B>
+           structure containing the contents octets of the BER encoding of
+           the OBJECT IDENTIFIER.  See the referenced <B>XAP</B> specification and
+           ISO 8825-1, Basic Encoding Rules(BER) for details of how to use
+           this structure."
+<P>
+</DL>
+<DD>      (6)  On page 39, insert the following before the 'ubuf' section:
+<P>
+<DL><DT><DD>"The <I>cdata->type</I> argument signals the type of encoding that has
+           been used to encode the AP_RO_BIND_CNF.  If the <I>cdata->type</I> is set
+           to AP_RO_DIRECT_REF the <I>cdata->value.global</I> will contain the object
+           identifier that was used for the encoding.  If <I>cdata->type</I> is
+           set to AP_RO_INDIRECT_REF then the <I>cdata->pci</I> value was used
+           for the indirect-reference encoding.  If </I>cdata->type</I> is set to
+           AP_RO_DIR_AND_INDIR then the <I>cdata->value.global</I> contains the
+           transfer syntax that was used for the encoding and the
+           <I>cdata->pci</I> is the indirect-reference.
+
+           The <I>global</I> element of the <I>cdata->value</I> element is an <B>ap_objid_t</B>
+           structure containing the contents octets of the BER encoding of
+           the OBJECT IDENTIFIER.  See the referenced <B>XAP</B> specification and
+           ISO 8825-1, Basic Encoding Rules(BER) for details of how to use
+           this structure."
+<P>
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : XAPROSE-3</H3>
+
+<DT><H3>Title</H3>
+<DD> Assorted typo's, missing possible error conditions
+                    and omissions from the &lt;xap_rose.h&gt; header file.
+
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>There are numerous typo's and missing possible error
+                    conditions which should be corrected and also omissions
+                    from the &lt;xap_rose.h&gt; header file which need to be added.
+<P>
+<DT><H3>Change</H3>
+<DD>   (1)  On page 27 and page 29, in the RETURN VALUE paragraph,
+           change ";ocation" to "location"
+<P>
+<DD>   (2)  For all of the ROSE primitives used with ap_snd() man pages
+           starting on page 32, the following line should be added to
+           all of their ERRORS sections:
+<P>
+           [AP_RO_BAD_PCI]     The PCI is not in the AP_RO_PCI_LIST.
+<P>
+<DD>   (3) On pages 33, 37 and 58, in the ERRORS section, AP_BADTOKEN
+           is not a valid error for these primitives and should be
+           deleted from these sections.
+<P>
+<DD>   (4) On pages 34, 38, 59 and 63, in the DESCRIPTION section, under
+           the 'cdata' heading, the "udata_length" is not a valid structure
+           member for these primitives and should be deleted from
+           these sections.
+<P>
+<DD>   (5) On page 39, in the 4th paragraph, change the line:
+           "RO-BIND indication service." to "RO-BIND confirmation service."
+<P>
+<DD>   (6) On page 67, 2nd line from the bottom, change "class" to "op_class"
+           to match the rest of the specification.
+<P>
+<DD>   (7) On page 66, in the &lt;xap_rose.h&gt; header file, delete the section
+           which reads:
+<P>
+<PRE>
+           "/*
+             *  The following are provider primitives..."
+</PRE>
+<P>
+           [These values are implementation-dependent and should not
+            be defined here.]
+<P>
+<DD>   (8) On pages 33, 37, 57 and 62 in the 'ubuf' DESCRIPTION, change
+           this to match the 'ubuf' DESCRIPTION of AP_RO INVOKE_REQ.  So
+           the 'ubuf' DESCRIPTION should be replaced with the following:
+<P>
+<DL><DT><DD>
+           "This function argument is used to pass a data value that
+            represents the <I>argument</I> parameter of the remote operation
+            bind.  The data is in encoded form: <I>cdata->pci</I> identifies
+            the presentation context used to encode it.  This
+            presentation context identifies both the abstract syntax
+            (which defines the type of value encoded), and the transfer
+            syntax (which defines how it is encoded).  Use of the
+            <I>ubuf</I> argument is described in the ap_snd() manual page in
+            referenced <B>XAP</B> specification."
+<P>
+</DL>
+
+<DD>   (9)  On pages 35, 39, 59 and 64 in the 'ubuf' DESCRIPTION, change
+           this to match the 'ubuf' DESCRIPTION of AP_RO INVOKE_IND.  So
+           the 'ubuf' DESCRIPTION should be replaced with the following:
+<P>
+<DL><DT><DD>
+           "This function argument is used to pass a data value that
+            represents the <I>argument</I> parameter of the remote operation
+            bind.  The data is in encoded form: <I>cdata->pci</I> identifies
+            the presentation context used to encode it.  This
+            presentation context identifies both the abstract syntax
+            (which defines the type of value encoded), and the transfer
+            syntax (which defines how it is encoded).  Use of the
+            <I>ubuf</I> argument is described in the ap_rcv() manual page in
+            the referenced <B>XAP</B> specification."
+<P>
+</DL>
+      10.  The reject code type GENERAL is not in &lt;xap_rose.h&gt; and needs
+           to be added. So, on page 65, in the &lt;xap_rose.h&gt; header file,
+           before the line:
+<P>
+<DL><DT><DD>
+           "#define AP_RO_INVOKE_TYPE     1"
+<P>
+           insert the following line:
+<P>
+           "#define AP_RO_GENERAL_TYPE    0"
+<P>
+</DL>
+      11.  The rsn values for the reject code types are not in &lt;xap_rose.h&gt;
+           as they are referenced to be. So, on page 65, in the
+           &lt;xap_rose.h&gt; header file, before the section that reads:
+<P>
+<DL><DT><DD>
+<PRE>
+                  "/*
+                    *  Primitive types
+                    */"
+</PRE>
+<P>
+           insert the following:
+<P>
+<PRE>
+                  "/*
+                    * Possible General problem types
+                    */
+                    #define AP_RO_GEN_UNREC_PDU          (0)
+                    #define AP_RO_GEN_MISTYPED_PDU       (1)
+                    #define AP_RO_GEN_BAD_STRUCT_PDU     (2)
+<P>
+                    /*
+                    * Possible Invoke Problem types
+                    */
+                    #define AP_RO_IN_DUP_INVOCATION            (0)
+                    #define AP_RO_IN_UNREC_OPERATION           (1)
+                    #define AP_RO_IN_MISTYPED_ARG              (2)
+                    #define AP_RO_IN_RESOURCE_LIMIT            (3)
+                    #define AP_RO_IN_RELEASE_IN_PROG           (4)
+                    #define AP_RO_IN_UNREC_LINKED_ID           (5)
+                    #define AP_RO_IN_LINKED_RESP_UNEXPECTED    (6)
+                    #define AP_RO_IN_UNEXPECTED_LINKED_OPER    (7)
+<P>
+                   /*
+                    * Possible Result problem types
+                    */
+                    #define AP_RO_RES_UNREC_INVOCATION         (0)
+                    #define AP_RO_RES_RESULT_RESP_UNEXPECTED   (1)
+                    #define AP_RO_RES_MISTYPED_RESULT          (2)
+<P>
+                   /*
+                    * Possible Error problem types
+                    */
+                    #define AP_RO_ER_UNREC_INVOCATION       (0)
+                    #define AP_RO_ER_ERROR_RESP_UNEXPECTED  (1)
+                    #define AP_RO_ER_UNREC_ERROR            (2)
+                    #define AP_RO_ER_UNEXPECTED_ERROR       (3)
+                    #define AP_RO_ER_MISTYPED_PARAM
+<P>
+</PRE>
+</DL>
+      12.  On pages 33, 37, 58 and 62 in the ERROR section, add the
+           following error:
+<P>
+<DL><DT><DD>
+           "[AP_BADPRIM]  For XAP-ROSE primitives, this error code may
+                          be returned if the identified instance is not
+                          an XAP-ROSE instance - that is, the service
+                          provider selected in the call to ap_open()
+                          does not support a ROSE service provider, or
+                          the AP_ROSE_MODE flag has not been set in the
+                          AP_MODE_SEL environment attribute."
+
+<P>
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : XAPROSE-4</H3>
+
+<DT><H3>Title</H3>
+<DD> AP_RO_UNBIND_RSP is not aligned with AP_A_RELEASE_RSP
+
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>The AP_RO_UNBIND_RSP maps directly to an
+                    AP_A_RELEASE_RSP and should be aligned with it.
+<P>
+<DT><H3>Change</H3>
+<DD>On page 61, in the DESCRIPTION section, under cdata, replace
+           the lines starting with:
+<DL><DT><DD>
+           "The cdata->res argument..."
+<P>
+           through
+<P>
+           "not finished with the association"
+<P>
+           with:
+<P>
+           "The <I>cdata->res</I> and <I>cdata->rsn</I> arguments should be set the
+            same as they are for an AP_A_RELEASE_RSP.  Reference this
+            primitive in the <B>XAP</B> CAE specification for the correct settings."
+
+<P>
+</DL></DL>
+<P>
+<HR>
+
+<P>
+<DL>
+<DT><H3>Change number : XAPROSE-5</H3>
+
+<DT><H3>Title</H3>
+<DD> Missing a possible returned error value for bad values
+                    in the type field.
+
+
+<P>
+<DT><H3>Qualifier</H3>
+<DD>Minor Technical
+<P>
+<DT><H3>Rationale</H3>
+<DD>There needs to be a return error value if a bad value
+                    is placed in the cdata->type element.
+
+<P>
+<DT><H3>Change</H3>
+<DD>(1)  On page 66, in the xap_rose.h header file, after the line:
+<DL><DT><DD>
+<P>
+                  "#define AP_RO_T_SYTX_NSUP..."
+<P>
+</DL>
+           insert the following line:
+<P>
+<DL><DT><DD>
+                  "#define AP_RO_BADCD_TYPE   ((AP_ROSE_ID&lt;&lt;16) | 0x1A)"
+</DL>
+<P>
+     (2)  In the ERROR sections on pages 33, 37, 41, 45, 50 and 54, add
+           the following line:
+<P>
+<DL><DT><DD>
+                  "[AP_RO_BADCD_TYPE]  The value of type is not valid."
+
+<P>
+</DL></DL>
+<P>
+<HR>
+<P>
+If you can't find the information you need, please contact
+X/Open at any of its <A HREF = "http://www.xopen.co.uk/contact.htm">offices.</A>
+<P>
+<HR>
+<P>
+<A HREF="http://www.xopen.co.uk/cprt.htm">Copyright X/Open Company Limited, &#169; 1995</A>
+<P>
+<HR>
+</BODY>
+</HTML>

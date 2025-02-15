@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>link</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_353">&nbsp;</a>NAME</h4><blockquote>
+link - link to a file
+</blockquote><h4><a name = "tag_000_007_354">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int link(const char *<i>path1</i>, const char *<i>path2</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_355">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>link()</i>
+function creates a new link (directory entry) for the existing file,
+<i>path1</i>.
+<p>
+The
+<i>path1</i>
+argument points to a pathname naming an existing file.
+The
+<i>path2</i>
+argument points to a pathname naming the new directory entry to be created.
+The
+<i>link()</i>
+function will atomically create a new link for the existing file
+and the link count of the file is incremented by one.
+<p>
+If
+<i>path1</i>
+names
+a directory,
+<i>link()</i>
+will fail unless the process has appropriate privileges and the
+implementation supports using
+<i>link()</i>
+on directories.
+<p>
+Upon successful completion,
+<i>link()</i>
+will mark for update the
+<i>st_ctime</i>
+field of the file.
+Also, the
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the directory that contains the new entry
+are marked for update.
+<p>
+If
+<i>link()</i>
+fails, no link is created and the link count of the file will remain
+unchanged.
+<p>
+The implementation may require that the calling process has
+permission to access the existing file.
+</blockquote><h4><a name = "tag_000_007_356">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, 0 is returned.
+Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_357">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>link()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+A component of either path prefix denies search permission,
+or the requested link requires writing in a directory with a mode
+that denies write permission, or the calling process does not
+have permission to access the existing file and this is required
+by the implementation.
+
+<dt>[EEXIST]<dd>
+The link named by
+<i>path2</i>
+exists.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path1</i> or
+<i>path2</i>.
+
+<dt>[EMLINK]<dd>
+The number of links to the file named by
+<i>path1</i>
+would exceed {LINK_MAX}.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of
+<i>path1</i>
+or
+<i>path2</i>
+exceeds {PATH_MAX} or a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of either path prefix does not exist;
+the file named by
+<i>path1</i>
+does not exist; or
+<i>path1</i>
+or
+<i>path2</i>
+points to an empty string.
+
+<dt>[ENOSPC]<dd>
+The directory to contain the link cannot be extended.
+
+<dt>[ENOTDIR]<dd>
+A component of either
+path prefix
+is not a directory.
+
+<dt>[EPERM]<dd>
+The file named by
+<i>path1</i>
+is a directory and either the calling process
+does not have appropriate privileges or the implementation prohibits using
+<i>link()</i>
+on directories.
+
+<dt>[EROFS]<dd>
+The requested link requires writing in a directory on a read-only file system.
+
+
+<dt>[EXDEV]<dd>
+The link named by
+<i>path2</i>
+and the file named by
+<i>path1</i>
+are on different file systems and the implementation does not support
+links between file systems,
+
+or <i>path1</i> refers to a named STREAM.
+
+</dl>
+<p>
+The
+<i>link()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_358">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_359">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Some implementations do allow links between file systems.
+</blockquote><h4><a name = "tag_000_007_360">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_361">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="symlink.htm">symlink()</a></i>,
+<i><a href="unlink.htm">unlink()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

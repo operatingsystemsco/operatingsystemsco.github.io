@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pathchk</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1669">&nbsp;</a>NAME</h4><blockquote>
+pathchk - check pathnames
+</blockquote><h4><a name = "tag_001_014_1670">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+pathchk <b>[</b>-p<b>] </b><i>pathname</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1671">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pathchk</i>
+utility will check that one or more pathnames are valid
+(that is, they could be used to access or create a file without causing syntax
+errors) and portable (that is, no filename truncation will result).
+More extensive portability checks are provided by the
+<b>-p</b>
+option.
+<p>
+By default, the
+<i>pathchk</i>
+utility will check each component of each
+<i>pathname</i>
+operand based on the underlying file system.
+A diagnostic will be written for each
+<i>pathname</i>
+operand that:
+<ul>
+<p>
+<li>
+is longer than
+{PATH_MAX}
+bytes (see
+<b>Pathname Variable Values</b>
+in the <b>XSH</b> specification
+<i><a href="../xsh/limit88.htm">&lt;limits.h&gt;</a></i>
+description)
+<p>
+<li>
+contains any component longer than
+{NAME_MAX}
+bytes in its containing directory
+<p>
+<li>
+contains any component in a directory that is not searchable
+<p>
+<li>
+contains any character in any component that is not valid in its
+containing directory.
+<p>
+</ul>
+<p>
+The format of the diagnostic message is not specified, but will indicate
+the error detected and the corresponding
+<i>pathname</i>
+operand.
+<p>
+It will not be considered an error if one or more components of a
+<i>pathname</i>
+operand do not exist as long as a file matching the pathname specified
+by the missing components could be created that does not violate any
+of the checks specified above.
+</blockquote><h4><a name = "tag_001_014_1672">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>pathchk</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following option is supported:
+<dl compact>
+
+<dt><b>-p</b>
+<dd>Instead of performing checks based on the underlying file system,
+write a diagnostic for each
+<i>pathname</i>
+operand that:
+<ul>
+
+<li>
+is longer than
+{_POSIX_PATH_MAX}
+bytes (see
+<b>Minimum Values</b>
+in the <b>XSH</b> specification
+<i><a href="../xsh/limit88.htm">&lt;limits.h&gt;</a></i>
+description)
+
+<li>
+contains any component longer than
+{_POSIX_NAME_MAX}
+bytes
+
+<li>
+contains any character in any component that is not
+in the portable filename character set.
+
+</ul>
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1673">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>pathname</i><dd>
+A pathname to be checked.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1674">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1675">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_1676">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>pathchk</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1677">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1678">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1679">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1680">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1681">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1682">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>All
+<i>pathname</i>
+operands passed all of the checks.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1683">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1684">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i><a href="test.htm">test</a></i>
+utility
+can be used to determine if a given pathname
+names an existing file; it will not, however, give any indication of
+whether or not any component of the pathname was truncated in a directory
+where the
+{_POSIX_NO_TRUNC}
+feature is not in effect.
+The
+<i>pathchk</i>
+utility does not check for file
+existence; it performs checks to determine if a pathname does exist or
+could be created with no pathname component truncation.
+<p>
+The
+<i>noclobber</i>
+option in the shell (see the
+<i>set</i>
+special built-in)
+can be used to atomically create a file.
+As with all file creation semantics in
+the <b>XSH</b> specification, it guarantees atomic creation, but still depends on applications
+to agree on conventions and cooperate on the use of files after
+they have been created.
+<br>
+</blockquote><h4><a name = "tag_001_014_1685">&nbsp;</a>EXAMPLES</h4><blockquote>
+To verify that all pathnames in an imported data interchange archive are
+legitimate and unambiguous on the current system:
+<pre>
+<code>
+pax -f archive | sed -e '/ == .*/s///' | xargs pathchk
+if [ $? -eq 0 ]
+then
+    pax -r -f archive
+else
+    echo Investigate problems before importing files.
+    exit 1
+fi
+</code>
+</pre>
+<p>
+To verify that all files in the current directory hierarchy could be
+moved to any system conforming to the <b>XSH</b> specification that also supports the
+<i><a href="pax.htm">pax</a></i>
+utility:
+<pre>
+<code>
+find . -print | xargs pathchk -p
+if [ $? -eq 0 ]
+then
+    pax -w -f archive .
+else
+    echo Portable archive cannot be created.
+    exit 1
+fi
+</code>
+</pre>
+<p>
+To verify that a user-supplied pathname names a readable file and that
+the application can create a file extending the given path without truncation
+and without overwriting any existing file:
+<pre>
+<code>
+case $- in
+    *C*)    reset="";;
+    *)      reset="set +C"
+            set -C;;
+esac
+test -r "$path" &amp;&amp; pathchk "$path.out" &amp;&amp;
+    rm "$path.out" &gt; "$path.out"
+if [ $? -ne 0 ]; then
+    printf "%s: %s not found or %s.out fails \
+creation checks.\n" $0 "$path" "$path"
+    $reset    # reset the noclobber option in case a trap
+              # on EXIT depends on it
+    exit 1
+fi
+$reset
+PROCESSING &lt; "$path" &gt; "$path.out"
+</code>
+</pre>
+<p>
+The following assumptions are made in this example:
+<ol>
+<p>
+<li>
+<b>PROCESSING</b>
+represents the code that will be used by the
+application to use
+<b>$path</b>
+once it is verified that
+<b>$path.out</b>
+will work as intended.
+<p>
+<li>
+The state of the
+<i>noclobber</i>
+option is unknown when this code
+is invoked and should be set on exit to the state it was in
+when this code was invoked.
+(The
+<b>reset</b>
+variable is used in this example to restore the initial state.)
+<br>
+<p>
+<li>
+Note the usage of:
+<pre>
+<code>
+rm "$path.out" &gt; "$path.out"
+</code>
+</pre>
+<ol type = a>
+<p>
+<li>
+The
+<i>pathchk</i>
+command has already verified, at this point, that
+<b>$path.out</b>
+will not be truncated.
+<p>
+<li>
+With the
+<i>noclobber</i>
+option set, the shell will verify that
+<b>$path.out</b>
+does not already exist before invoking
+<i><a href="rm.htm">rm</a></i>.
+<p>
+<li>
+If the shell succeeded in creating
+<b>$path.out</b>,
+<i><a href="rm.htm">rm</a></i>
+will remove it so that the application can create the file again in the
+<b>PROCESSING</b>
+step.
+<p>
+<li>
+If the
+<b>PROCESSING</b>
+step wants the file to exist already when it is invoked, the:
+<pre>
+<code>
+rm "$path.out" &gt; "$path.out"
+</code>
+</pre>
+should be replaced with:
+<pre>
+<code>
+&gt; "$path.out"
+</code>
+</pre>
+which will verify that the file did not already exist, but leave
+<b>$path.out</b>
+in place for use by
+<b>PROCESSING</b>.
+<p>
+</ol>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_1686">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1687">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="test.htm">test</a></i>,
+<xref href=redir><a href="chap2.htm#tag_001_007">
+Redirection
+</a></xref>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

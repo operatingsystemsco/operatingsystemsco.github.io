@@ -1,0 +1,2537 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mailx</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1346">&nbsp;</a>NAME</h4><blockquote>
+mailx - process messages
+</blockquote><h4><a name = "tag_001_014_1347">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<b>Send Mode:</b>
+<p>
+<pre><code>
+
+mailx <b>[</b>-s <i>subject</i><b>]</b><i> address</i>...
+</code>
+</pre>
+<p>
+<b>Receive Mode:</b>
+<p>
+<pre><code>
+
+mailx -e
+
+mailx <b>[</b>-HiNn<b>][</b>-F<b>][</b>-u <i>user</i><b>]</b>
+
+mailx -f<b>[</b>-HiNn<b>][</b>-F<b>][</b><i>file</i><b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1348">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mailx</i>
+utility provides a message sending and receiving facility.
+It has two major modes, selected by the options used:
+Send Mode and Receive Mode.
+<h5><a name = "tag_001_014_1348_001">&nbsp;</a>Send Mode</h5>
+Send Mode can be used by applications or users
+to send messages from the text in standard input.
+<h5><a name = "tag_001_014_1348_002">&nbsp;</a>Receive Mode</h5>
+Receive Mode is more oriented to interactive users.
+Mail can be read and sent in this interactive mode.
+<p>
+When reading mail,
+<i>mailx</i>
+provides commands to facilitate saving, deleting and responding to
+messages.
+When sending mail,
+<i>mailx</i>
+allows editing, reviewing and other modification of the message
+as it is entered.
+<p>
+Incoming mail is stored in
+one or more unspecified locations for each user,
+collectively called the system
+<i>mailbox</i>
+for that user.
+When
+<i>mailx</i>
+is invoked in Receive Mode,
+the system mailbox is the default place to find them.
+As messages are read,
+they will be marked to be moved to a secondary file for storage,
+unless specific action is taken.
+This secondary file is called the
+<b>mbox</b>
+and is normally located in the
+<i>HOME</i>
+directory of the user
+(see
+<i>MBOX</i>
+in the ENVIRONMENT VARIABLES section for a description of this file).
+Messages remain in this file until explicitly removed.
+When the
+<b>-f</b>
+option is used to read mail messages from secondary files,
+messages will be retained in those files unless specifically removed.
+All three of these locations  system mailbox,
+<b>mbox</b>
+and secondary file  are referred
+to in this section as simply &quot;mailboxes&quot;,
+unless more specific identification is required.
+</blockquote><h4><a name = "tag_001_014_1349">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>mailx</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-e</b>
+<dd>Test for the presence of mail
+in the system mailbox.
+The
+<i>mailx</i>
+utility will write nothing
+and exit with a successful return code if there is
+mail to read.
+
+<dt><b>-f</b>
+<dd>Read messages from the file named by the
+<i>file</i>
+operand instead of the system mailbox.
+(See also
+<b>folder</b>.)
+If no
+<i>file</i>
+operand is specified,
+read messages from the
+<b>mbox</b>
+instead of the system mailbox.
+
+<dt><b>-F</b>
+<dd>Record the message in a file named after the first recipient.
+The name is the login-name portion of the address
+found first on the
+To:
+line in the mail header.
+Overrides the
+<b>record</b>
+variable, if set (see
+<xref href=mxintv><a href="#tag_001_014_1358_002">
+Internal Variables in mailx
+</a></xref>.)
+
+<dt><b>-H</b>
+<dd>Write a header summary only.
+
+<dt><b>-i</b>
+<dd>Ignore interrupts.
+(See also
+<b>ignore</b>).
+
+<dt><b>-n</b>
+<dd>Do not initialise from the system default
+start-up file.
+See the EXTENDED DESCRIPTION section.
+
+<dt><b>-N</b>
+<dd>Do not write an initial header summary.
+
+<dt><b>-s&nbsp;</b><i>subject</i>
+<dd>
+Set the Subject header field to
+<i>subject</i>.
+All characters in the
+<i>subject</i>
+string will appear in the delivered message.
+The results are unspecified if
+<i>subject</i>
+is longer than
+{LINE_MAX}
+- 10 bytes or contains a
+newline character.
+
+<dt><b>-u&nbsp;</b><i>user</i>
+<dd>
+Read the system mailbox of the login name
+<i>user</i>.
+This will only be
+successful if
+the invoking user has the appropriate
+privileges to read the
+system mailbox of that user.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1350">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>address</i><dd>Addressee of message.
+When
+<b>-n</b>
+is specified and no user start-up files are accessed (see
+the EXTENDED DESCRIPTION section),
+this must be an address to pass to the mail delivery system.
+Any system or user start-up files may enable aliases (see
+<b>alias</b>
+under
+<xref href=mxcmds><a href="#tag_001_014_1358_003">
+Commands in mailx
+</a></xref>)
+that may modify the form of
+<i>address</i>
+before it is passed to the mail delivery system.
+
+<dt><i>file</i><dd>A pathname of a file to be read instead of the system mailbox when
+<b>-f</b>
+is specified.
+The meaning of the
+<i>file</i>
+option-argument is affected by the contents of the
+<b>folder</b>
+internal variable; see
+<xref href=mxintv><a href="#tag_001_014_1358_002">
+Internal Variables in mailx
+</a></xref>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1351">&nbsp;</a>STDIN</h4><blockquote>
+When
+<i>mailx</i>
+is invoked in Send Mode (the first synopsis line), standard
+input must be the message to be delivered to the specified addresses.
+In both Send and Receive Modes,
+standard-input lines beginning
+with the escape character (usually tilde
+(^))
+affect processing as described in
+<xref href=mxcmdesc><a href="#tag_001_014_1358_049">
+Command Escapes in mailx
+</a></xref>.
+</blockquote><h4><a name = "tag_001_014_1352">&nbsp;</a>INPUT FILES</h4><blockquote>
+When
+<i>mailx</i>
+is used as described by this specification,
+the
+<i>file</i>
+option-argument (see the
+<b>-f</b>
+option) and the
+<b>mbox</b>
+must be text files containing mail messages,
+formatted as described in the OUTPUT FILES section.
+The nature of the system mailbox is unspecified;
+it need not be a file.
+</blockquote><h4><a name = "tag_001_014_1353">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>mailx</i>:
+<dl compact>
+
+<dt><i>DEAD</i><dd>Determine the
+pathname of the file in which to save partial messages
+in case of interrupts or delivery errors.
+The default is
+<b>dead.letter</b>
+in the directory named by the
+<i>HOME</i>
+variable.
+
+<dt><i>EDITOR</i><dd>
+Determine the
+name of a utility to invoke when the
+<b>edit</b>
+(see
+<xref href=mxcmds><a href="#tag_001_014_1358_003">
+Commands in mailx
+</a></xref>)
+or
+~e
+(see
+<xref href=mxcmdesc><a href="#tag_001_014_1358_049">
+Command Escapes in mailx
+</a></xref>)
+command is used.
+The default editor is 
+<i><a href="ed.htm">ed</a></i>.
+
+<dt><i>HOME</i><dd>Determine
+the pathname of the user's home directory.
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files)
+and the handling of case-insensitive address and header-field comparisons.
+
+<dt><i>LC_TIME</i><dd>
+Determine the
+format and contents of the date and time strings written by
+<i>mailx</i>.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>LISTER</i><dd>Determine a string
+representing the command for writing the
+contents of the
+<b>folder</b>
+directory to standard output when the
+<b>folders</b>
+command is given (see
+<b>folders</b>
+in
+<xref href=mxcmds><a href="#tag_001_014_1358_003">
+Commands in mailx
+</a></xref>).
+Any string acceptable as a
+<i>command_string</i>
+operand to the
+<i><a href="sh.htm">sh</a></i>
+<b>-c</b>
+command is valid.
+If this variable is null or not set,
+the output command will be
+<i><a href="ls.htm">ls</a></i>.
+The default value is unset.
+
+<dt><i>MAILRC</i><dd>
+Determine the pathname of the start-up file.
+The default is
+<b>.mailrc</b>
+in the
+<i>HOME</i>
+directory.
+
+<dt><i>MBOX</i><dd>Determine
+a pathname of the file to save messages
+from the system mailbox that have been read.
+The
+<b>exit</b>
+command overrides this function,
+as will saving the message explicitly in another file.
+The default is
+in the directory named by the
+<i>HOME</i>
+variable.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>PAGER</i><dd>Determine a string
+representing an output filtering or pagination command for writing
+the output to the terminal.
+Any string acceptable as a
+<i>command_string</i>
+operand to the
+<i><a href="sh.htm">sh</a></i>
+<b>-c</b>
+command is valid.
+When standard output is a terminal device,
+the message output will be piped
+through the command if the
+<i>mailx</i>
+internal variable
+<b>crt</b>
+is set to a value less the number
+of lines in the message;
+see
+<xref href=mxintv><a href="#tag_001_014_1358_002">
+Internal Variables in mailx
+</a></xref>.
+If the
+<i>PAGER</i>
+variable is null or not set,
+the paginator will be
+either
+<i><a href="more.htm">more</a></i>
+or another paginator utility documented in the system documentation.
+
+<dt><i>SHELL</i><dd>Determine the name of a preferred command interpreter.
+The default is
+<i><a href="sh.htm">sh</a></i>.
+
+<dt><i>TERM</i><dd>Determine the name of the terminal type,
+to indicate in an unspecified manner,
+if the internal variable
+<b>screen</b>
+is not specified,
+the number of lines in a screenful of headers.
+If
+<i>TERM</i>
+is not set or is set to null,
+an unspecified default
+terminal type will be used and the value of
+a screenful is unspecified.
+
+
+<dt><i>VISUAL</i><dd>
+Determine a
+pathname of a utility to invoke when the
+<b>visual</b>
+command (see
+<xref href=mxcmds><a href="#tag_001_014_1358_003">
+Commands in mailx
+</a></xref>)
+or
+~v
+command-escape (see
+<xref href=mxcmdesc><a href="#tag_001_014_1358_049">
+Command Escapes in mailx
+</a></xref>)
+is used.
+If this variable is null or not set,
+the full-screen editor will be
+<i><a href="vi.htm">vi</a></i>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1354">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+When
+<i>mailx</i>
+is in Send Mode and standard input is not a terminal,
+it takes the standard action for all signals.
+<p>
+In Receive Mode, or in Send Mode when
+standard input is a terminal, if a SIGINT signal is received:
+<ol>
+<p>
+<li>
+If in command mode, the current command, if there is one, will be
+aborted, and a command-mode
+prompt will be written.
+<p>
+<li>
+If in input mode:
+<ol type = a>
+<p>
+<li>
+If
+<b>ignore</b>
+is set,
+<i>mailx</i>
+will write
+@\n,
+discard the current input line, and continue processing,
+bypassing the message-abort mechanism described in item 2b.
+<p>
+<li>
+If the interrupt was received while sending mail, either
+when in Receive Mode or in Send Mode, a message will be written,
+and another subsequent interrupt,
+with no other intervening characters typed,
+will be required to abort the mail message.
+If in Receive Mode and another
+interrupt is received, a command-mode prompt will be written.
+If in Send Mode and another interrupt is received,
+<i>mailx</i>
+will terminate with a non-zero status.
+<p>
+In both cases listed in item b, if the message is not empty:
+<ol type = i>
+<p>
+<li>
+If
+<b>save</b>
+is enabled and the file named by
+<i>DEAD</i>
+can be created, the message will be written to the file named by
+<i>DEAD .
+</i>If the file exists, the message will be written to
+replace the contents of the file.
+<p>
+<li>
+If
+<b>save</b>
+is not enabled, or the file named by
+<i>DEAD</i>
+cannot be created, the message will not be saved.
+<p>
+</ol>
+<p>
+</ol>
+<p>
+</ol>
+<p>
+The
+<i>mailx</i>
+utility takes the standard action for all other signals.
+</blockquote><h4><a name = "tag_001_014_1355">&nbsp;</a>STDOUT</h4><blockquote>
+In command and input modes, all output, including prompts and
+messages, is written to standard output.
+</blockquote><h4><a name = "tag_001_014_1356">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1357">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+Various
+<i>mailx</i>
+commands and command escapes can create or add to files,
+including the
+<b>mbox</b>,
+the dead-letter file
+and secondary mailboxes.
+When
+<i>mailx</i>
+is used as described in this specification,
+these files will be text files, formatted as follows:
+<p>
+<dl compact><dt> <dd>
+<i>line beginning with </i>From&lt;space&gt;
+<br>
+<b>[</b>one or more <i>header-lines</i>; see <xref href=mxcmds><a href="#tag_001_014_1358_003"> Commands in mailx </a></xref><b>]
+<br>
+</b><i>empty line
+<br>
+</i><b>[</b>zero or more <i>body lines
+<br>
+empty line</i><b>]
+<br>
+[</b><i>line beginning with </i>From&lt;space&gt;...<b>]</b>
+</dl>
+</p>
+where each message begins with the
+<b>From</b> &lt;space&gt;
+line shown, preceded by the beginning of the file or an empty line.
+(The
+<b>From</b> &lt;space&gt;
+line is considered to be part of the message header,
+but not one of the header-lines referred to in
+<xref href=mxcmds><a href="#tag_001_014_1358_003">
+Commands in mailx
+</a></xref>;
+thus, it is not affected by the
+<b>discard</b>,
+<b>ignore</b>
+or
+<b>retain</b>
+commands.)
+The formats of the remainder of the
+<b>From</b> &lt;space&gt;
+line and any additional header lines are unspecified,
+except that none will be empty.
+The format of a message body line is also unspecified,
+except that no line following an empty line can start with
+<b>From</b> &lt;space&gt;;
+<i>mailx</i>
+will modify any such user-entered message body lines
+(following an empty line and beginning with
+<b>From</b> &lt;space&gt;)
+by adding one or more characters to precede the
+F;
+it may add these characters to
+<b>From</b> &lt;space&gt;
+lines that are not preceded by an empty line.
+<p>
+When a message from the system mailbox or entered by the
+user is not a text file, it is implementation-dependent how
+such a message is stored in files written by
+<i>mailx</i>.
+</blockquote><h4><a name = "tag_001_014_1358">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The
+<i>mailx</i>
+utility cannot guarantee support for all character encodings
+in all circumstances.
+For example,
+inter-system mail may be restricted to 7-bit data by the underlying
+network, 8-bit data need not be portable to non-internationalised
+systems, and so on.
+Under these circumstances, it is recommended that
+only characters defined in the
+ISO/IEC&nbsp;646:1991 standard International Reference Version
+(equivalent to ASCII) 7-bit range of
+characters be used.
+<p>
+When
+<i>mailx</i>
+is invoked using one of the Receive Mode synopsis forms,
+it will write
+the page of header-summary lines (see below) containing the first new
+message (if
+<b>-N</b>
+is not specified),
+or the first unread message if there are no new messages, or
+the first message if there are no new or unread messages,
+followed by a prompt indicating
+<i>mailx</i>
+can accept regular commands
+(see
+<xref href=mxcmds><a href="#tag_001_014_1358_003">
+Commands in mailx
+</a></xref>);
+this is termed
+<i>command mode</i>.
+When
+<i>mailx</i>
+is invoked using the Send Mode synopsis
+and standard input is a terminal,
+if no subject is specified on the command line and the
+<b>asksub</b>
+variable is set,
+a prompt for the subject will be written.
+At this point
+<i>mailx</i>
+is in
+<i>input mode</i>.
+This input mode is also entered when using one of the Receive Mode
+synopsis forms and a reply or new message is composed using the
+<b>reply</b>,
+<b>Reply</b>,
+<b>followup</b>,
+<b>Followup</b>
+or
+<b>mail</b>
+commands.
+When the message is typed and the end of message is encountered, the
+message will be passed to the mail delivery software.
+Commands can be entered by beginning a line with the
+escape character (by default, tilde
+(^))
+followed by a single command letter and optional arguments.
+See
+<xref href=mxcmdesc><a href="#tag_001_014_1358_049">
+Command Escapes in mailx
+</a></xref>
+for a summary of these commands.
+<dl><dt><b>Note:</b>
+<dd>For notational convenience, this section uses
+the default escape character, tilde, in all
+references and examples.
+</dl>
+<p>
+At any time,
+the behaviour of
+<i>mailx</i>
+is governed by a set of environmental
+and internal variables.
+These are flags and valued parameters that
+can be set and cleared via the
+<i>mailx</i>
+<b>set</b>
+and
+<b>unset</b>
+commands.
+<p>
+Regular commands are of the form:
+<p><code>
+<b>[</b><i>command</i><b>]</b>
+<b>[</b><i>msglist</i><b>]</b>
+<b>[</b><i>argument&nbsp;...</i><b>]</b>
+</code>
+<p>
+If no
+<i>command</i>
+is specified in command mode,
+<b>print</b>
+is assumed.
+In input mode,
+commands are recognised by the escape character,
+and lines not treated as commands are taken as input for the message.
+<p>
+In command mode,
+each message will be assigned a sequential number,
+starting with 1.
+<p>
+All messages have a state that affects how they
+are displayed in the header summary and how
+they are retained or deleted upon termination of
+<i>mailx</i>.
+There is at any time the notion of a
+<i>current</i>
+message, marked by a
+"&gt;"
+at the beginning of a line in the header summary.
+All messages are in one of the following states:
+<dl compact>
+
+<dt><i>new</i><dd>The message is present in the system mailbox and has
+not been viewed by the user or moved to any other state.
+Messages in state
+<i>new</i>
+when
+<i>mailx</i>
+quits will be retained in the system mailbox.
+
+<dt><i>unread</i><dd>The message has been present in the system mailbox for more
+than one invocation of
+<i>mailx</i>
+and has not been viewed by the user or moved to any other state.
+Messages in state
+<i>unread</i>
+when
+<i>mailx</i>
+quits will be retained in the system mailbox.
+
+
+<dt><i>read</i><dd>The message has been processed by one of the following commands:
+<b>~f</b>,
+<b>~m</b>,
+<b>~F</b>,
+<b>~M</b>,
+<b>copy</b>,
+<b>mbox</b>,
+<b>next</b>,
+<b>pipe</b>,
+<b>print</b>,
+<b>Print</b>,
+<b>top</b>,
+<b>type</b>,
+<b>Type</b>,
+<b>undelete</b>.
+The
+<b>delete</b>,
+<b>dp</b>
+and
+<b>dt</b>
+commands may also cause the next message to be marked as
+<i>read</i>,
+depending on the value of the
+<b>autoprint</b>
+variable.
+Messages that are in the system mailbox and in state
+<i>read</i>
+when
+<i>mailx</i>
+quits will be saved in the
+<b>mbox</b>
+unless the internal variable
+<b>hold</b>
+was set.
+Messages that are in the
+<b>mbox</b>
+or in a secondary mailbox and in state
+<i>read</i>
+when
+<i>mailx</i>
+quits will be retained in their current location.
+
+<dt><i>deleted</i><dd>The message has been processed by one of the following commands:
+<b>delete</b>,
+<b>dp</b>,
+<b>dt</b>.
+A message processed by
+<b>save</b>
+will be in state
+<i>deleted</i>
+unless the internal variable
+<b>keepsave</b>
+was set.
+Messages in state
+<i>deleted</i>
+when
+<i>mailx</i>
+quits will be deleted.
+
+<dt><i>preserved</i><dd>
+The message has been processed by a
+<b>preserve</b>
+command.
+When
+<i>mailx</i>
+quits, the message will be retained in its current location.
+
+</dl>
+<p>
+The header-summary line for each message will indicate
+the state of the message.
+<p>
+Many commands take an optional list of messages
+(<i>msglist</i>)
+on which to operate, which defaults to the current message.
+A
+<i>msglist</i>
+is a list of message specifications separated by
+blank characters,
+which can include:
+<dl compact>
+
+<dt><i>n</i><dd>Message number
+<i>n</i>.
+
+<dt><b>+</b><dd>The next undeleted message, or the next deleted message for the
+<b>undelete</b>
+command.
+
+<dt><b>-</b><dd>The next previous undeleted message,
+or the next previous deleted message for the
+<b>undelete</b>
+command.
+
+<dt><b>.</b><dd>The current message.
+
+<dt><b>^</b><dd>The first undeleted message,
+or the first deleted message for the
+<b>undelete</b>
+command.
+
+<dt><b>$</b><dd>The last message.
+
+<dt><b>*</b><dd>All messages.
+
+<dt><i>n</i><b>-</b><i>m</i><dd>An inclusive range of message numbers.
+
+<dt><i>address</i><dd>All messages from
+<i>address</i>;
+any address as shown in a header summary will be matchable in this form.
+
+<dt><b>/</b><i>string</i><dd>All messages with
+<i>string</i>
+in the subject line (case ignored).
+
+<dt><b>:</b><i>c</i><dd>All messages of type
+<i>c</i>,
+where
+<i>c</i>
+must be one of:
+<dl compact>
+
+<dt><b>d</b><dd>deleted messages
+
+<dt><b>n</b><dd>new messages
+
+<dt><b>o</b><dd>old messages (any not in state
+<i>read</i>
+or
+<i>new</i>)
+
+<dt><b>r</b><dd>read messages
+
+<dt><b>u</b><dd>unread messages
+
+</dl>
+<p>
+</dl>
+<p>
+Other commands take an optional message
+(<i>message</i>)
+on which to operate,
+which defaults to the current message.
+All of the forms allowed for
+<i>msglist</i>
+are also allowed for
+<i>message</i>,
+but if more than one
+message is specified, only the first will be operated on.
+<p>
+Other arguments are usually arbitrary strings whose usage
+depends on the command involved.
+<h5><a name = "tag_001_014_1358_001">&nbsp;</a>Start-up in mailx</h5>
+At start-up time,
+<i>mailx</i>
+will take the following steps in sequence:
+<ol>
+<p>
+<li>
+Establish all variables at their stated default values.
+<p>
+<li>
+Process command-line options,
+overriding corresponding default values.
+<p>
+<li>
+Import any of the
+<i>DEAD ,
+</i><i>EDITOR ,
+</i><i>MBOX ,
+</i><i>LISTER ,
+</i><i>PAGER ,
+</i><i>SHELL</i>
+or
+<i>VISUAL</i>
+variables that are present in the environment,
+overriding the corresponding default values.
+<p>
+<li>
+Read
+<i>mailx</i>
+commands from an unspecified system start-up file, unless the
+<b>-n</b>
+option is given,
+to initialise any internal
+<i>mailx</i>
+variables and aliases.
+<p>
+<li>
+Process the start-up file of
+<i>mailx</i>
+commands named in the user
+<i>MAILRC</i>
+variable.
+<p>
+</ol>
+<p>
+Most regular
+<i>mailx</i>
+commands are valid inside start-up files,
+the most common use being to set up initial display options and alias lists.
+The following commands are invalid in the start-up file:
+<b>!</b>,
+<b>edit</b>,
+<b>hold</b>,
+<b>mail</b>,
+<b>preserve</b>,
+<b>reply</b>,
+<b>Reply</b>,
+<b>shell</b>,
+<b>visual</b>,
+<b>Copy</b>,
+<b>followup</b>
+and
+<b>Followup</b>.
+Any errors in the start-up file will either cause
+<i>mailx</i>
+to terminate with a diagnostic message and
+a non-zero status or to continue after writing a diagnostic message,
+ignoring the remainder of the lines in the start-up file.
+<p>
+A blank line in a start-up file is ignored.
+<h5><a name = "tag_001_014_1358_002">&nbsp;</a>Internal Variables in mailx</h5>
+<xref type="5" name="mxintv"></xref>
+The following variables are internal
+<i>mailx</i>
+variables.
+Each internal variable
+can be set via the
+<i>mailx</i>
+<b>set</b>
+command at any time.
+The
+<b>unset</b>
+and
+<b>set&nbsp;no</b><i>name</i>
+commands can be used to erase variables.
+<p>
+In the following list, variables shown as:
+<pre>
+<code>
+variable
+</code>
+</pre>
+represent Boolean values.
+Variables shown as:
+<pre>
+<code>
+variable=<i>value</i>
+</code>
+</pre>
+will be assigned string or numeric values.
+For string values, the rules in
+<xref href=mxcmds><a href="#tag_001_014_1358_003">
+Commands in mailx
+</a></xref>
+concerning filenames and quoting also apply.
+<p>
+The defaults specified here may be changed by the implementation-dependent
+system start-up file unless the user specifies the
+<b>-n</b>
+option.
+<dl compact>
+
+<dt><b>allnet</b><dd>All network names whose login name components match are treated as
+identical.
+This causes the
+<i>msglist</i>
+message specifications to behave similarly.
+The default is
+<b>noallnet</b>.
+See also the
+<b>alternates</b>
+command and the
+<b>metoo</b>
+variable.
+
+<dt><b>append</b><dd>Append messages to the end of the
+<b>mbox</b>
+file upon termination instead of placing them
+at the beginning.
+The default is
+<b>noappend</b>.
+This variable will not affect the
+<b>save</b>
+command when saving to the
+<b>mbox</b>.
+
+
+<dt><b>ask</b><dd>
+<dt><b>asksub</b><dd>Prompt for a subject line
+on outgoing mail if one is not specified on the command line
+with the
+<b>-s</b>
+option.
+The
+<b>ask</b>
+and
+<b>asksub</b>
+forms are synonyms;
+the system will refer to
+<b>asksub</b>
+and
+<b>noasksub</b>
+in its messages, but will accept
+<b>ask</b>
+and
+<b>noask</b>
+as user input to mean
+<b>asksub</b>
+and
+<b>noasksub</b>.
+It is not possible to set both
+<b>ask</b>
+and
+<b>noasksub</b>,
+or
+<b>noask</b>
+and
+<b>asksub</b>.
+The default is
+<b>asksub</b>,
+but no prompting will be done if standard input
+is not a terminal.
+
+<dt><b>askbcc</b><dd>Prompt for the blind copy list.
+The default is
+<b>noaskbcc</b>.
+
+<dt><b>askcc</b><dd>Prompt for the copy list.
+The default is
+<b>noaskcc</b>.
+
+<dt><b>autoprint</b><dd>
+Enable automatic writing of messages after
+<b>delete</b>
+and
+<b>undelete</b>
+commands.
+The default is
+<b>noautoprint</b>.
+
+<dt><b>bang</b><dd>Enable the special-case treatment of exclamation-marks
+(!)
+in escape command lines;
+see the
+<b>escape</b>
+command and
+<xref href=mxcmdesc><a href="#tag_001_014_1358_049">
+Command Escapes in mailx
+</a></xref>.
+The default is
+<b>nobang</b>,
+disabling the expansion of
+"!"
+in the
+<i>command</i>
+argument to the
+~!
+command and the
+~&lt;!<i>command</i>
+escape.
+
+<dt><b>cmd</b>=<i>command</i><dd>
+Set the default command to be invoked by the
+<b>pipe</b>
+command.
+The default is
+<b>nocmd</b>.
+
+<dt><b>crt</b>=<i>number</i><dd>
+Pipe messages having more than
+<i>number</i>
+lines through the command specified by the value of the
+<i>PAGER</i>
+variable.
+The default is
+<b>nocrt</b>.
+If it is set to null, the value used is implementation-dependent.
+
+<dt><b>debug</b><dd>Enable verbose diagnostics for debugging.
+Messages are not delivered.
+The default is
+<b>nodebug</b>.
+
+<dt><b>dot</b><dd>When
+<b>dot</b>
+is set,
+a period on a line by itself during
+message input from a terminal also signifies end-of-file
+(in addition to normal end-of-file).
+The default is
+<b>nodot</b>.
+If
+<b>ignoreeof</b>
+is set (see below), a setting of
+<b>nodot</b>
+will be ignored and the period
+is the only method to terminate input mode.
+
+<dt><b>escape</b>=<i>c</i><dd>
+Set the command escape character to be the character
+<i>c</i>.
+By default, the command escape character is tilde.
+If
+<b>escape</b>
+is unset, tilde will be used;
+if it is set to null, command escaping will be disabled.
+
+<dt><b>flipr</b><dd>Reverse the meanings of the
+<b>R</b>
+and
+<b>r</b>
+commands.
+The default is
+<b>noflipr</b>.
+
+<dt><b>folder</b>=<i>directory</i><dd>
+The default directory for saving mail files.
+User-specified filenames beginning with a plus sign
+(+)
+will be expanded by preceding the filename with
+this directory name to obtain the real pathname.
+If
+<i>directory</i>
+does not start with a slash
+(/),
+the contents of
+<i>HOME</i>
+will be prefixed to it.
+The default is
+<b>nofolder</b>.
+If
+<b>folder</b>
+is unset or set to null, user-specified filenames
+beginning with
+"+"
+refer to files in the current
+directory that begin with the literal
+"+"
+character.
+See also
+<b>outfolder</b>
+below.
+The
+<b>folder</b>
+value need not affect the processing of the files named in
+<i>MBOX</i>
+and
+<i>DEAD .
+</i>
+<dt><b>header</b><dd>Enable writing of the header summary when entering
+<i>mailx</i>
+in Receive Mode.
+The default is
+<b>header</b>.
+
+<dt><b>hold</b><dd>Preserve all messages that are read in the
+system mailbox instead of putting them in the
+<b>mbox</b>
+save file.
+The default is
+<b>nohold</b>.
+
+<dt><b>ignore</b><dd>Ignore interrupts while entering messages.
+The default is
+<b>noignore</b>.
+
+<dt><b>ignoreeof</b><dd>
+Ignore normal end-of-file during message input.
+Input can be terminated only by entering a period
+(.)
+on a line by itself
+or by the
+<b>~.</b>
+command escape.
+The default is
+<b>noignoreeof</b>.
+See also
+<b>dot</b>
+above.
+
+<dt><b>indentprefix</b>=<i>string</i><dd>
+A string that will be prefixed to each line
+that is inserted into the message by the
+<b>~m</b>
+command escape.
+This variable defaults to one
+tab
+character.
+
+<dt><b>keep</b><dd>When a system mailbox, secondary mailbox or
+<b>mbox</b>
+is empty,
+truncate it to zero length instead of removing it.
+The default is
+<b>nokeep</b>.
+
+<dt><b>keepsave</b><dd>
+Keep messages that have been saved in other files in the
+system mailbox instead of deleting them.
+The default is
+<b>nokeepsave</b>.
+
+<dt><b>metoo</b><dd>Suppress the deletion of
+the login name of the user from the recipient list
+when replying to a message or sending to a group.
+The default is
+<b>nometoo</b>.
+
+<dt><b>onehop</b><dd>When responding to a message that was originally sent to several
+recipients,
+the other recipient addresses are normally forced to be relative to the
+originating author's machine for the response.
+This flag disables alteration of the recipients' addresses,
+improving efficiency in a network where all machines can send directly
+to all other machines (that is, one hop away).
+The default is
+<b>noonehop</b>.
+
+<dt><b>outfolder</b><dd>
+Cause the files used to record outgoing messages to be located
+in the directory specified by the
+<b>folder</b>
+variable unless the
+pathname is absolute.
+The default is
+<b>nooutfolder</b>.
+See the
+<b>record</b>
+variable.
+
+<dt><b>page</b><dd>Insert a
+form-feed
+after each message sent through the pipe created by the
+<b>pipe</b>
+command.
+The default is
+<b>nopage</b>.
+
+<dt><b>prompt</b>=<i>string</i><dd>
+Set the command-mode prompt to
+<i>string</i>.
+If
+<i>string</i>
+is null or if
+<b>noprompt</b>
+is set, no prompting will occur.
+The default is to prompt with the string
+? .
+
+<dt><b>quiet</b><dd>Refrain from writing the opening message and version when entering
+<i>mailx</i>.
+The default is
+<b>noquiet</b>.
+
+<dt><b>record</b>=<i>file</i><dd>
+Record all outgoing mail in the file with the pathname
+<i>file</i>.
+The default is
+<b>norecord</b>.
+See also
+<b>outfolder</b>
+above.
+
+<dt><b>save</b><dd>Enable saving of messages in
+the dead-letter file on interrupt or delivery error.
+See the variable
+<i>DEAD</i>
+for the location of the dead-letter file.
+The default is
+<b>save</b>.
+
+<dt><b>screen</b>=<i>number</i><dd>
+Set the number of lines in a screenful of headers for the
+<b>headers</b>
+and
+z
+commands.
+If
+<b>screen</b>
+is not specified,
+a value based on the terminal type
+identified by the
+<i>TERM</i>
+environment variable,
+the window size, the baud rate, or some
+combination of these will be used.
+
+<dt><b>sendmail</b>=<i>shell-command</i><dd>
+Alternative command for delivering messages.
+The default is implementation-dependent. (<b>LEGACY</b>)
+
+<dt><b>sendwait</b><dd>
+Wait for the background mailer to finish before returning.
+The default is
+<b>nosendwait</b>.
+
+<dt><b>showto</b><dd>When the sender of the message was the user who is invoking
+<i>mailx</i>,
+write the information from the
+To:
+line instead of the
+From:
+line in the header summary.
+The default is
+<b>noshowto</b>.
+
+<dt><b>sign</b>=<i>string</i><dd>
+Set the variable inserted into the text of a message when the
+<b>~a</b>
+command escape is given.
+The default is
+<b>nosign</b>.
+The character sequences
+\t
+and
+\n
+are recognised in the variable as
+tab and newline characters, respectively.
+(See also
+<b>~i</b>
+in
+<xref href=mxcmdesc><a href="#tag_001_014_1358_049">
+Command Escapes in mailx
+</a></xref>.)
+
+
+<dt><b>Sign</b>=<i>string</i><dd>
+Set the variable inserted into the text of a message when the
+~A
+command escape is given.
+The default is
+noSign.
+The character sequences
+\t
+and
+\n
+will be recognised in the variable as
+tab
+and
+newline characters,
+respectively.
+
+<dt><b>toplines</b>=<i>number</i><dd>
+Set the number of lines of the message to write with the
+<b>top</b>
+command.
+The default is 5.
+
+</dl>
+<h5><a name = "tag_001_014_1358_003">&nbsp;</a>Commands in mailx</h5>
+<xref type="5" name="mxcmds"></xref>
+The following
+<i>mailx</i>
+commands are provided.
+In the following list, header refers to lines from the
+message header, as shown in the OUTPUT FILES section.
+Header-line refers to lines
+within the header
+that begin with one or more non-white-space characters, immediately
+followed by a colon and white space
+and continuing until the next line beginning
+with a non-white-space character or
+an empty line.
+Header-field refers to the portion of a header line prior to the
+first colon in that line.
+<p>
+For each of the
+commands listed below, the command can be entered as the
+abbreviation (those characters in the Synopsis command word preceding the
+<b>[),</b>
+
+the full command (all characters shown for the command word, omitting the
+<b>[</b>
+and
+<b>]),</b>
+
+or any
+truncation of the full command down to the abbreviation.
+For example, the
+<b>exit</b>
+command (shown as
+<b>ex[it]</b>
+in the Synopsis)
+can be entered as
+<b>ex</b>,
+<b>exi</b>
+or
+<b>exit</b>.
+<p>
+The arguments to commands can be quoted, using the following methods:
+<ul>
+<p>
+<li>
+An argument can be enclosed between paired double-quotes
+(&nbsp;)
+or single-quotes
+('&nbsp;');
+any white space, shell word expansion or backslash
+characters within the quotes will be treated literally
+as part of the argument.
+A double-quote will be treated literally within single-quotes
+and <i>vice versa</i>.
+These special properties of the quote marks
+occur only when they are paired at the beginning and end of the argument.
+<p>
+<li>
+A backslash outside of the enclosing quotes
+is discarded and the following character treated literally
+as part of the argument.
+<p>
+<li>
+An unquoted backslash at the end of a command line is discarded
+and the next line continues the command.
+<p>
+</ul>
+<p>
+Filenames, where expected,
+are subjected to the process of shell word expansions (see
+<xref href=wordexp><a href="chap2.htm#tag_001_006">
+Word Expansions
+</a></xref>);
+if more than a single pathname results
+and the command is expecting one file, the effects are unspecified.
+If the filename begins with an unquoted plus sign,
+it will not be expanded, but treated as the
+named file (less the leading plus) in the
+<b>folder</b>
+directory.
+(See the
+<b>folder</b>
+variable.)
+<h5><a name = "tag_001_014_1358_004">&nbsp;</a>Declare Aliases</h5>
+<i>Synopsis</i>:   
+a<b>[</b>lias<b>] [</b><i>alias </i><b>[</b><i>address</i>...<b>]]</b>
+<br>
+<i>Synopsis</i>:   
+g<b>[</b>roup<b>] [</b><i>alias </i><b>[</b><i>address</i>...<b>]]</b>
+<p>
+Add the given addresses to the alias specified by
+<i>alias</i>.
+The names will be substituted when
+<i>alias</i>
+is used as a recipient
+address specified by the user
+in an outgoing message (that is,
+other recipients addressed indirectly through the
+<b>reply</b>
+command will not be
+substituted in this manner).
+Mail address alias substitution applies
+only when the alias string is used as a full address;
+for example, when
+<b>hlj</b>
+is an alias,
+hlj@posix.com
+does not trigger the alias substitution.
+If no arguments are given, write a listing of
+the current aliases to standard output.
+If only an
+<i>alias</i>
+argument is given, write a listing of the
+specified alias to standard output.
+These listings need not reflect the same order
+of addresses that were entered.
+<h5><a name = "tag_001_014_1358_005">&nbsp;</a>Declare Alternatives</h5>
+<i>Synopsis</i>:   
+alt<b>[</b>ernates<b>]</b> <i>name</i>...
+<p>
+Declare a list of alternative names for the user's login.
+When responding to a message,
+these names will be removed from the list of recipients for the response.
+The comparison of names will be in a case-insensitive manner.
+With no arguments,
+<b>alternates</b>
+will write the current list of alternative names.
+<h5><a name = "tag_001_014_1358_006">&nbsp;</a>Change Current Directory</h5>
+<i>Synopsis</i>:   
+cd <b>[</b><i>directory</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+ch<b>[</b>dir<b>]</b> <b>[</b><i>directory</i><b>]</b>
+<p>
+Change directory.
+If
+<i>directory</i>
+is not specified,
+the contents of
+<i>HOME</i>
+will be used.
+<h5><a name = "tag_001_014_1358_007">&nbsp;</a>Copy Messages</h5>
+<i>Synopsis</i>:   
+c<b>[</b>opy<b>]</b> <b>[</b><i>file</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+c<b>[</b>opy<b>]</b> <b>[</b><i>msglist</i><b>] </b><i>file</i>
+<br>
+<i>Synopsis</i>:   
+C<b>[</b>opy<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Copy messages to the file named by the pathname
+<i>file</i>
+without marking the messages as saved.
+Otherwise, it is equivalent to the
+<b>save</b>
+command.
+<p>
+In the capitalised form,
+save the specified messages in a file whose name is derived from the
+author of the
+message to be saved, without marking the messages as saved.
+Otherwise, it is equivalent to the
+<b>Save</b>
+command.
+<h5><a name = "tag_001_014_1358_008">&nbsp;</a>Delete Messages</h5>
+<i>Synopsis</i>:   
+d<b>[</b>elete<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Mark messages for deletion from the mailbox.
+The deletions will not occur until
+<i>mailx</i>
+quits (see the
+<b>quit</b>
+command)
+or changes mailboxes (see the
+<b>folder</b>
+command).
+If
+<b>autoprint</b>
+is set,
+the next message after the last one deleted
+will be written;
+if there is no subsequent message, the previous message, if it exists,
+will be written.
+In the case of no subsequent or previous message,
+or when
+<b>noautoprint</b>
+is set, the
+<i>mailx</i>
+prompt will be written.
+<h5><a name = "tag_001_014_1358_009">&nbsp;</a>Discard Header Fields</h5>
+<i>Synopsis</i>:   
+di<b>[</b>scard<b>] [</b><i>header-field</i>...<b>]</b>
+<br>
+<i>Synopsis</i>:   
+ig<b>[</b>nore<b>] [</b><i>header-field</i>...<b>]</b>
+<p>
+Suppress the specified header fields when writing messages.
+Specified
+<i>header-fields</i>
+will be added to the list of suppressed header fields.
+Examples of header fields to ignore are
+<b>status</b>
+and
+<b>cc</b>.
+The fields will be included when the message is saved.
+The
+<b>Print</b>
+and
+<b>Type</b>
+commands override this command.
+The comparison of header fields is in a case-insensitive manner.
+If no arguments are specified, write a list of the currently suppressed
+header fields to standard output; the listing need not reflect the same
+order of header fields that were entered.
+<p>
+If both
+<b>retain</b>
+and
+<b>discard</b>
+commands are given,
+<b>discard</b>
+commands are ignored.
+<h5><a name = "tag_001_014_1358_010">&nbsp;</a>Delete Messages and Display</h5>
+<i>Synopsis</i>:   
+dp <b>[</b><i>msglist</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+dt <b>[</b><i>msglist</i><b>]</b>
+<p>
+Delete the specified messages from the mailbox
+and write the next message
+after the last one deleted.
+If there is no subsequent message,
+the
+<i>mailx</i>
+prompt will be written.
+<h5><a name = "tag_001_014_1358_011">&nbsp;</a>Echo a String</h5>
+<i>Synopsis</i>:   
+ec<b>[</b>ho<b>] </b><i>string ...</i>
+<p>
+Echo the given strings, equivalent to the shell
+<i><a href="echo.htm">echo</a></i>
+utility.
+<h5><a name = "tag_001_014_1358_012">&nbsp;</a>Edit Messages</h5>
+<i>Synopsis</i>:   
+e<b>[</b>dit<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Edit the given messages.
+The messages will be placed in a temporary file and the
+utility named by the
+<i>EDITOR</i>
+variable
+will be invoked to edit the file.
+<p>
+The
+<b>edit</b>
+command merely edits the specified messages in a temporary file.
+It does not modify the contents of those messages in the mailbox.
+<h5><a name = "tag_001_014_1358_013">&nbsp;</a>Exit</h5>
+<i>Synopsis</i>:   
+ex<b>[</b>it<b>]</b>
+<br>
+<i>Synopsis</i>:   
+x<b>[</b>it<b>]</b>
+<p>
+Exit from
+<i>mailx</i>
+without changing the mailbox.
+No messages will be saved in the
+<b>mbox</b>
+(see also
+<b>quit</b>).
+<h5><a name = "tag_001_014_1358_014">&nbsp;</a>Change Folder</h5>
+<i>Synopsis</i>:   
+fi<b>[</b>le<b>]</b> <b>[</b><i>file</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+fold<b>[</b>er<b>]</b> <b>[</b><i>file</i><b>]</b>
+<p>
+Quit (see the
+<b>quit</b>
+command)
+from the current file of messages and read in the file
+named by the pathname
+<i>file</i>.
+If no argument is given,
+the name and status of the current mailbox
+will be written.
+<p>
+Several unquoted special characters are recognised when used as
+<i>file</i>
+names, with the following substitutions:
+<dl compact>
+
+<dt><b>%</b><dd>The system mailbox for the invoking user.
+
+<dt><b>%</b><i>user</i><dd>The system mailbox for
+<i>user</i>.
+
+<dt><b>#</b><dd>The previous file.
+
+<dt><b>&amp;</b><dd>The current
+<b>mbox</b>.
+
+<dt><b>+</b><i>file</i><dd>The named file in the
+<b>folder</b>
+directory.
+(See the
+<b>folder</b>
+variable.)
+
+</dl>
+<p>
+The default file is the current mailbox.
+<h5><a name = "tag_001_014_1358_015">&nbsp;</a>Display List of Folders</h5>
+<i>Synopsis</i>:   
+folders
+<p>
+Write the names of the files in the
+directory set by the
+<b>folder</b>
+variable.
+<h5><a name = "tag_001_014_1358_016">&nbsp;</a>Follow up Specified Messages</h5>
+<i>Synopsis</i>:   
+fo<b>[</b>llowup<b>]</b> <b>[</b><i>message</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+F<b>[</b>ollowup<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+In the lower-case form,
+respond to a message,
+recording the response in a file whose name is derived from the
+author of the message.
+Overrides the
+<b>record</b>
+variable, if set.
+See also the
+<b>save</b>
+and
+<b>copy</b>
+commands and
+<b>outfolder</b>.
+<p>
+In the capitalised form,
+respond to the first message in the
+<i>msglist</i>,
+sending the message to the author of each message in the
+<i>msglist</i>.
+The subject line is taken from the first message
+and the response is recorded in a file whose name is derived
+from the author of the first message.
+See also the
+Save
+and
+Copy
+commands and
+<b>outfolder</b>.
+<h5><a name = "tag_001_014_1358_017">&nbsp;</a>Display Header Summary for Specified Messages</h5>
+<i>Synopsis</i>:   
+f<b>[</b>rom<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Write the header summary for the specified messages.
+<h5><a name = "tag_001_014_1358_018">&nbsp;</a>Display Header Summary</h5>
+<i>Synopsis</i>:   
+h<b>[</b>eaders<b>]</b> <b>[</b><i>message</i><b>]</b>
+<p>
+Write the page of headers that includes the message specified.
+The
+<b>screen</b>
+variable sets the number of headers per page.
+See also the
+<b>z</b>
+command.
+<h5><a name = "tag_001_014_1358_019">&nbsp;</a>Help</h5>
+<i>Synopsis</i>:   
+hel<b>[</b>p<b>]</b>
+<br>
+<i>Synopsis</i>:   
+?
+<p>
+Write a summary of commands.
+<h5><a name = "tag_001_014_1358_020">&nbsp;</a>Hold Messages</h5>
+<i>Synopsis</i>:   
+ho<b>[</b>ld<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+pre<b>[</b>serve<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Mark the messages in
+<i>msglist</i>
+to be retained in the mailbox when
+<i>mailx</i>
+terminates.
+This overrides any commands that might
+previously have marked the messages to be deleted.
+During the
+current invocation of
+<i>mailx</i>,
+only the
+<b>delete</b>,
+<b>dp</b>
+or
+<b>dt</b>
+commands will remove the
+<i>preserve</i>
+marking of a message.
+<h5><a name = "tag_001_014_1358_021">&nbsp;</a>Execute Commands Conditionally</h5>
+<i>Synopsis</i>:	i<b>[</b>f<b>]</b> s|r
+<pre>
+	<i>mail-command</i>s
+	el<b>[</b>se<b>]</b>
+	<i>mail-command</i>s
+	en<b>[</b>dif<b>]</b>
+</pre>
+<p>
+Execute commands conditionally, where
+<b>if</b>s
+will execute the following
+<i>mail-command</i>s, up to an
+<b>else</b>
+or
+<b>endif</b>,
+if the program is in
+Send Mode, and
+<b>if</b>r
+will cause the
+<i>mail-command</i>s to be executed only in
+Receive Mode.
+<h5><a name = "tag_001_014_1358_022">&nbsp;</a>List Available Commands</h5>
+<i>Synopsis</i>:   
+l<b>[</b>ist<b>]</b>
+<p>
+Write a list of all commands available.
+No explanation is given.
+<h5><a name = "tag_001_014_1358_023">&nbsp;</a>Mail a Message</h5>
+<i>Synopsis</i>:   
+m<b>[</b>ail<b>]</b> <i>address</i>...
+<p>
+Mail a message to the specified addresses or aliases.
+<h5><a name = "tag_001_014_1358_024">&nbsp;</a>Direct Messages to mbox</h5>
+<i>Synopsis</i>:   
+mb<b>[</b>ox<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Arrange for the given messages to end up in the
+<b>mbox</b>
+save file when
+<i>mailx</i>
+terminates normally.
+See
+<i>MBOX .
+</i>See also the
+<b>exit</b>
+and
+<b>quit</b>
+commands.
+<h5><a name = "tag_001_014_1358_025">&nbsp;</a>Process Next Specified Message</h5>
+<i>Synopsis</i>:   
+n<b>[</b>ext<b>]</b> <b>[</b><i>message</i><b>]</b>
+<p>
+Go to the next message matching
+<i>message</i>.
+<h5><a name = "tag_001_014_1358_026">&nbsp;</a>Pipe Message</h5>
+<i>Synopsis</i>:   
+pi<b>[</b>pe<b>] [[</b><i>msglist</i><b>] </b><i>command</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+| <b>[[</b><i>msglist</i><b>] </b><i>command</i><b>]</b>
+<p>
+Pipe the messages through the given
+<i>command</i>
+by invoking the command interpreter specified by
+<i>SHELL</i>
+with two arguments:
+<b>-c</b>
+and
+<i>command</i>.
+(See also
+<i><a href="sh.htm">sh</a></i>
+<b>-c</b>.)
+The command must be given as a single argument.
+Quoting, described previously, can be used to accomplish this.
+If no arguments are given,
+the current message will be piped through the command specified by the
+value of the
+<b>cmd</b>
+variable.
+If the
+<b>page</b>
+variable is set,
+a
+form-feed
+character will be inserted after each message.
+<h5><a name = "tag_001_014_1358_027">&nbsp;</a>Display Message with Headers</h5>
+<i>Synopsis</i>:   
+P<b>[</b>rint<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+T<b>[</b>ype<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Write the specified messages,
+including all header lines,
+to standard output.
+Override suppression of lines by the
+<b>discard</b>,
+<b>ignore</b>
+and
+<b>retain</b>
+commands.
+If
+<b>crt</b>
+is set,
+the messages longer than the number of lines specified by the
+<b>crt</b>
+variable will be paged through the command specified by the
+<i>PAGER</i>
+environment variable.
+<h5><a name = "tag_001_014_1358_028">&nbsp;</a>Display Message</h5>
+<i>Synopsis</i>:   
+p<b>[</b>rint<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+t<b>[</b>ype<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Write the specified messages
+to standard output.
+If
+<b>crt</b>
+is set,
+the messages longer than the number of lines specified by the
+<b>crt</b>
+variable will be paged through the command specified by the
+<i>PAGER</i>
+environment variable.
+<h5><a name = "tag_001_014_1358_029">&nbsp;</a>Quit</h5>
+<i>Synopsis</i>:   q<b>[</b>uit<b>]</b>
+<br>
+<i>Synopsis</i>:   <i>end-of-file</i>
+<p>
+Terminate
+<i>mailx</i>,
+storing messages that were read in
+<b>mbox</b>
+(if the current mailbox is the system mailbox and unless
+<b>hold</b>
+is set), deleting messages that have been explicitly saved (unless
+<b>keepsave</b>
+is set), discarding messages that have been deleted and
+saving all remaining messages in the mailbox.
+<h5><a name = "tag_001_014_1358_030">&nbsp;</a>Reply to a Message List</h5>
+<i>Synopsis</i>:   
+R<b>[</b>eply<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+R<b>[</b>espond<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Mail a reply message to the sender of each message in the
+<i>msglist</i>.
+The subject line will be formed by concatenating
+<b>Re:</b> &lt;space&gt;
+(unless it already begins with that string)
+and the subject from the first message.
+If
+<b>record</b>
+is set to a filename,
+the response will be saved at the end of that file.
+<p>
+See also the
+<b>flipr</b>
+variable.
+<h5><a name = "tag_001_014_1358_031">&nbsp;</a>Reply to a Message</h5>
+<i>Synopsis</i>:   
+r<b>[</b>eply<b>]</b> <b>[</b><i>message</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+r<b>[</b>espond<b>]</b> <b>[</b><i>message</i><b>]</b>
+<p>
+Mail a reply message to all recipients
+included in the header of the message.
+The subject line will be formed by concatenating
+<b>Re:</b> &lt;space&gt;
+(unless it already begins with that string)
+and the subject from the message.
+If
+<b>record</b>
+is set to a filename,
+the response will be saved at the end of that file.
+<p>
+See also the
+<b>flipr</b>
+variable.
+<h5><a name = "tag_001_014_1358_032">&nbsp;</a>Retain Header Fields</h5>
+<i>Synopsis</i>:   
+ret<b>[</b>ain<b>]</b> <b>[</b><i>header-field</i>...<b>]</b>
+<p>
+Retain the specified header fields when writing messages.
+This command will override all
+<b>discard</b>
+and
+<b>ignore</b>
+commands.
+The comparison of header fields is in a case-insensitive manner.
+If no arguments are specified, write a list of the currently retained
+header fields to standard output; the listing need not reflect the same
+order of header fields that were entered.
+<h5><a name = "tag_001_014_1358_033">&nbsp;</a>Save Messages</h5>
+<i>Synopsis</i>:   
+s<b>[</b>ave<b>]</b> <b>[</b><i>file</i><b>]</b>
+<br>
+<i>Synopsis</i>:   
+s<b>[</b>ave<b>]</b> <b>[</b><i>msglist</i><b>] </b><i>file</i>
+<br>
+<i>Synopsis</i>:   
+S<b>[</b>ave<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Save the specified messages in the file named by the pathname
+<i>file</i>,
+or the
+<b>mbox</b>
+if the
+<i>file</i>
+argument is omitted.
+The file will be created if it does not exist;
+otherwise, the messages will be appended to the file.
+The message will be deleted from the mailbox when
+<i>mailx</i>
+terminates unless
+<b>keepsave</b>
+is set.
+<p>
+In the capitalised form,
+save the specified messages in a file whose name is derived from
+the author of the first message.
+The name of the file is taken to be the author's name with all
+network addressing stripped off.
+See also the
+Copy,
+<b>followup</b>
+and
+Followup
+commands and
+<b>outfolder</b>
+variable.
+<h5><a name = "tag_001_014_1358_034">&nbsp;</a>Set Variables</h5>
+<i>Synopsis</i>:   
+se<b>[</b>t<b>] [</b><i>name</i><b>[</b>=<b>[</b><i>string</i><b>]] </b>...<b>] [</b><i>name</i>=<i>number </i>...<b>] [</b>no<i>name </i>...<b>]</b>
+<p>
+Define one or more variables called
+<i>name</i>.
+The variable can be given a null, string or numeric value.
+Quoting and backslash escapes can occur anywhere in
+<i>string</i>,
+as described previously, as if the
+<i>string</i>
+portion of the argument were the entire argument.
+The forms
+<i>name</i>
+and
+<i>name=</i>
+are equivalent to
+<i>name=""</i>
+for variables that take string values.
+The
+<b>set</b>
+command without arguments
+will write a list of all defined variables and their values.
+The
+no<i>name</i>
+form is equivalent to
+<b>unset</b>
+<i>name</i>.
+<h5><a name = "tag_001_014_1358_035">&nbsp;</a>Invoke a Shell</h5>
+<i>Synopsis</i>:   
+sh<b>[</b>ell<b>]</b>
+<p>
+Invoke an interactive command interpreter
+(see also
+<i>SHELL ).
+</i><h5><a name = "tag_001_014_1358_036">&nbsp;</a>Display Message Size</h5>
+<i>Synopsis</i>:   
+si<b>[</b>ze<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Write the size in bytes of each of the specified messages.
+<h5><a name = "tag_001_014_1358_037">&nbsp;</a>Read mailx Commands From a File</h5>
+<i>Synopsis</i>:   
+so<b>[</b>urce<b>]</b> <i>file</i>
+<p>
+Read and execute commands from the file named by the pathname
+<i>file</i>
+and return to command mode.
+<h5><a name = "tag_001_014_1358_038">&nbsp;</a>Display Beginning of Messages</h5>
+<i>Synopsis</i>:   
+to<b>[</b>p<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Write the top few lines of each of the specified messages.
+If the
+<b>toplines</b>
+variable is set,
+it is taken as the number of lines to write.
+The default is 5.
+<h5><a name = "tag_001_014_1358_039">&nbsp;</a>Touch Messages</h5>
+<i>Synopsis</i>:   
+tou<b>[</b>ch<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Touch the specified messages.
+If any message in
+<i>msglist</i>
+is not specifically deleted nor saved in a file,
+it will be placed in the
+<b>mbox</b>
+upon normal termination.
+See
+<b>exit</b>
+and
+<b>quit</b>.
+<h5><a name = "tag_001_014_1358_040">&nbsp;</a>Delete Aliases</h5>
+<i>Synopsis</i>:   
+una<b>[</b>lias<b>]</b> <b>[</b><i>alias</i><b>]</b>...
+<p>
+Delete the specified alias names.
+If a specified alias does not exist, the results are unspecified.
+<h5><a name = "tag_001_014_1358_041">&nbsp;</a>Undelete Messages</h5>
+<i>Synopsis</i>:   
+u<b>[</b>ndelete<b>]</b> <b>[</b><i>msglist</i><b>]</b>
+<p>
+Remove the deleted markings from the specified messages.
+If
+<b>autoprint</b>
+is set, the last message of those restored
+will be written.
+If
+<i>msglist</i>
+is not specified, it defaults to the first deleted message
+following the current message that has not been undeleted if there is
+one, or the last deleted message preceding the current message that
+has not been undeleted otherwise.
+<h5><a name = "tag_001_014_1358_042">&nbsp;</a>Unset Variables</h5>
+<i>Synopsis</i>:   
+uns<b>[</b>et<b>]</b><i> name</i>...
+<p>
+Cause the specified variables to be erased.
+<h5><a name = "tag_001_014_1358_043">&nbsp;</a>Edit Message with Full-screen Editor</h5>
+<i>Synopsis</i>:   
+v<b>[</b>isual<b>] [</b><i>msglist</i><b>]</b>
+<p>
+Edit the given messages with a screen editor.
+The messages are placed in a temporary file, and the
+utility named by the
+<i>VISUAL</i>
+variable
+will be invoked to edit the file.
+The default editor is
+<i><a href="vi.htm">vi</a></i>.
+<p>
+The
+<b>visual</b>
+command merely edits the specified messages in a temporary file.
+It does not modify the contents of those messages in the mailbox.
+<h5><a name = "tag_001_014_1358_044">&nbsp;</a>Write Messages to a File</h5>
+<i>Synopsis</i>:   
+w<b>[</b>rite<b>]</b> <b>[</b><i>msglist</i><b>] </b><i>file</i>
+<p>
+<br>
+Write the given messages to the file specified by the pathname
+<i>file</i>,
+minus the message header.
+Otherwise, it is equivalent to the
+<b>save</b>
+command.
+<h5><a name = "tag_001_014_1358_045">&nbsp;</a>Scroll Header Display</h5>
+<i>Synopsis</i>:   
+z<b>[</b>+|-<b>]</b>
+<p>
+Scroll the header display forward (if "+"
+is specified or if no option is
+specified) or backward (if "-" is specified) one screenful.
+The number of headers written is set by the
+<b>screen</b>
+variable.
+<h5><a name = "tag_001_014_1358_046">&nbsp;</a>Invoke Shell Command</h5>
+<i>Synopsis</i>:   
+!<i>command</i>
+<p>
+Invoke the command interpreter specified by
+<i>SHELL</i>
+with two arguments:
+<b>-c</b>
+and
+<i>command</i>.
+(See also
+<i><a href="sh.htm">sh</a></i>
+<b>-c</b>.)
+If the
+<b>bang</b>
+variable is set, each unescaped occurrence of
+"!"
+in command
+is replaced with the command executed by the previous
+"!"
+command or
+~!
+command escape.
+<h5><a name = "tag_001_014_1358_047">&nbsp;</a>Null Command</h5>
+<i>Synopsis</i>:   
+# <i>comment</i>
+<p>
+This null command (comment) will be ignored by
+<i>mailx</i>.
+<h5><a name = "tag_001_014_1358_048">&nbsp;</a>Display Current Message Number</h5>
+<i>Synopsis</i>:   
+=
+<p>
+Write the current message number.
+<h5><a name = "tag_001_014_1358_049">&nbsp;</a>Command Escapes in mailx</h5>
+<xref type="5" name="mxcmdesc"></xref>
+The following commands can be entered only from
+input mode,
+by beginning a line with the escape character
+(by default, tilde
+(~)).
+See the
+<b>escape</b>
+variable description
+for changing this special character.
+The format for the commands is:
+<pre>
+<dl compact><dt> <dd>
+&lt;ESC&gt;&lt;<i>command-char</i>&gt;&lt;<i>separator</i>&gt;<b>[</b>&lt;<i>arguments</i>&gt;<b>]</b>
+</dl>
+</pre>
+where the
+&lt;<i>separator</i>&gt;
+can be zero or more
+blank characters.
+<p>
+In the following descriptions, the argument
+<i>command</i>
+(but not
+<i>mailx-command)</i>
+must be a shell command string.
+Any string acceptable
+to the command interpreter specified by the
+<i>SHELL</i>
+variable
+when it is invoked as
+<b>-c</b>
+<i>command_string</i>
+is valid.
+The command can be presented as multiple arguments (that is,
+quoting is not required).
+<p>
+Command escapes that are listed with
+<i>msglist</i>
+or
+<i>mailx-command</i>
+arguments are invalid in Send Mode
+and produce unspecified results.
+<dl compact>
+
+<dt><b>~!</b> <i>command</i><dd>
+Invoke the command interpreter specified by
+<i>SHELL</i>
+with two arguments:
+<b>-c</b>
+and
+<i>command</i>;
+and then return to input mode.
+If the
+<b>bang</b>
+variable is set, each unescaped occurrence of
+"!"
+in
+<i>command</i>
+is replaced with the command executed by the previous
+"!"
+command or
+~!
+command escape.
+
+<dt><b>~.</b><dd>Simulate end-of-file (terminate message input).
+
+
+<dt><b>~:</b> <i>mailx-command</i><dd>
+<dt><b>~_ </b><i>mailx-command</i><dd>
+Perform the command-level request.
+
+<dt><b>~?</b><dd>Write a summary of command escapes.
+
+<dt><b>~A</b><dd>This is equivalent to
+i<b>Sign</b>.
+
+<dt><b>~a</b><dd>This is equivalent to
+i<b>sign</b>.
+
+<dt><b>~b</b> <i>name...</i><dd>
+Add the
+<i>name</i>s to the blind carbon copy (Bcc) list.
+
+<dt><b>~c</b> <i>name...</i><dd>
+Add the
+<i>name</i>s to the carbon copy (Cc) list.
+
+<dt><b>~d</b><dd>Read in the dead-letter file.
+See
+<i>DEAD</i>
+for a description of this file.
+
+<dt><b>~e</b><dd>Invoke the editor,
+as specified by the
+<i>EDITOR</i>
+environment variable,
+on the partial message.
+
+<dt><b>~f</b> <b>[</b><i>msglist</i><b>]</b><dd>
+Forward the specified messages.
+The specified messages will be inserted into the current
+message without alteration.
+This command escape will also insert message headers
+into the message with field selection affected by the
+<b>discard</b>,
+<b>ignore</b>
+and
+<b>retain</b>
+commands.
+
+<dt><b>~F</b> <b>[</b><i>msglist</i><b>]</b><dd>
+This will be the equivalent of the
+<b>~f</b>
+command escape, except that all headers
+will be included in the message,
+regardless of previous
+<b>discard</b>,
+<b>ignore</b>
+and
+<b>retain</b>
+commands.
+
+<dt><b>~h</b><dd>If standard input is a terminal,
+prompt for a Subject line and the To, Cc and Bcc lists.
+Other implementation-dependent
+headers may also be presented for editing.
+If the field is written with an initial value,
+it can be edited as if it had just been typed.
+
+<dt><b>~i</b> <i>string</i><dd>Insert the value of the named variable, followed by a
+newline character,
+into the text of the message.
+If the string is unset or null, the message will not be changed.
+
+<dt><b>~m</b> <b>[</b><i>msglist</i><b>]</b><dd>
+Insert the specified messages into the message,
+prefixing non-empty lines with the string in the
+<b>indentprefix</b>
+variable.
+This command escape will also insert message headers
+into the message, with field selection affected by the
+<b>discard</b>,
+<b>ignore</b>
+and
+<b>retain</b>
+commands.
+
+<dt><b>~M</b> <b>[</b><i>msglist</i><b>]</b><dd>
+This will be the equivalent of the
+<b>~m</b>
+command escape, except that all headers
+will be included in the message,
+regardless of previous
+<b>discard</b>,
+<b>ignore</b>
+and
+<b>retain</b>
+commands.
+
+
+<dt><b>~p</b><dd>Write the message being entered.
+If the message is longer than
+<b>crt</b>
+lines (see
+<xref href=mxintv><a href="#tag_001_014_1358_002">
+Internal Variables in mailx
+</a></xref>),
+the output will be paginated as described for the
+<i>PAGER</i>
+variable.
+
+<dt><b>~q</b><dd>Quit (see the
+<b>quit</b>
+command) from input mode by simulating an interrupt.
+If the body of the message is not empty,
+the partial message will be saved in
+the dead-letter file.
+See
+<i>DEAD</i>
+for a description of this file.
+
+
+<dt><b>~r</b> <i>file</i><dd>
+<dt><b>~&lt; </b><i>file</i><dd>
+<dt><b>~&lt; !</b><i>command</i><dd>
+Read in the file specified by the pathname
+<i>file</i>.
+If the argument begins with an exclamation-mark
+(!),
+the rest of the string is taken as an arbitrary system command;
+the command interpreter specified by
+<i>SHELL</i>
+will be invoked with two arguments:
+<b>-c</b>
+and
+<i>command</i>.
+The standard output of
+<i>command</i>
+will be inserted into the message.
+
+<dt><b>~s</b>&nbsp;<i>string</i><dd>Set the subject line to
+<i>string</i>.
+
+<dt><b>~t</b> <i>name...</i><dd>
+Add the given
+<i>name</i>s to the To list.
+
+<dt><b>~v</b><dd>Invoke the full-screen editor,
+as specified by the
+<i>VISUAL</i>
+environment variable,
+on the partial message.
+
+<dt><b>~w</b> <i>file</i><dd>Write the partial message,
+without the header,
+onto the file named by the pathname
+<i>file</i>.
+The file will be created or the message will be appended
+to it if the file exists.
+
+<dt><b>~x</b><dd>Exit as with
+<b>~q</b>,
+except the message will not be saved in
+the dead-letter file.
+
+
+<dt><b>~| </b><i>command</i><dd>
+Pipe the body of the message through the given
+<i>command</i>
+by invoking the command interpreter specified by
+<i>SHELL</i>
+with two arguments:
+<b>-c</b>
+and
+<i>command</i>.
+If the
+<i>command</i>
+returns a successful exit status,
+the standard output of the command will replace the message.
+Otherwise the message will remain unchanged.
+If the
+<i>command</i>
+fails, an error message giving the exit status will be written.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1359">&nbsp;</a>EXIT STATUS</h4><blockquote>
+When the
+<b>-e</b>
+option is specified, the
+following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Mail was found.
+
+<dt>&gt;0<dd>Mail was not found or an error occurred.
+
+</dl>
+<p>
+Otherwise,
+the following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion;
+note that this status implies that all messages were
+<i>sent ,</i>
+but it gives no assurances that any of them were actually
+<i>delivered.</i>
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1360">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+When in input mode (Receive Mode) or Send Mode:
+<ul>
+<p>
+<li>
+If an error is encountered processing a command escape (see
+<xref href=mxcmdesc><a href="#tag_001_014_1358_049">
+Command Escapes in mailx
+</a></xref>),
+a diagnostic message will be written to standard error,
+and the message being composed may be modified,
+but this condition will not prevent the
+message from being sent.
+<p>
+<li>
+Other errors will prevent the sending of the message.
+<p>
+</ul>
+<p>
+When in command mode:
+<ul>
+<p>
+<li>
+Default.
+<p>
+</ul>
+<br>
+</blockquote><h4><a name = "tag_001_014_1361">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Delivery of messages to remote systems requires the
+existence of communication paths to such systems.
+These need not exist.
+<p>
+Input lines are limited to
+{LINE_MAX}
+bytes, but mailers between systems
+may impose more severe line-length restrictions.
+This specification does not place any restrictions on the length of
+messages handled by
+<i>mailx</i>,
+and for delivery of local messages
+the only limitations should be the normal problems of available
+disk space for the target mail file.
+When sending messages to
+external machines, applications are advised to limit messages to
+less than 50 kilobytes because many
+mail gateways impose message-length restrictions.
+<p>
+The format of the system mailbox is intentionally unspecified.
+Not all systems will implement system mailboxes as flat files,
+particularly with the advent of multimedia mail messages.
+Some system mailboxes may be multiple files,
+others records in a database.
+The internal format of the messages themselves are specified
+with the historical format from Version&nbsp;7, but only
+after they have been saved in some file other than the
+system mailbox.
+This was done so that many historical applications
+expecting text-file mailboxes will not be broken.
+<p>
+Some new formats for messages can be expected in the future,
+probably including binary data, bit maps and various
+multimedia objects.
+As described here,
+<i>mailx</i>
+is not prohibited from handling such messages,
+but it must store them as text files in secondary mailboxes
+(unless some extension, such as a variable
+or command-line option, is used to change the stored format).
+Its method of doing so is implementation-dependent and might include
+translating the data into text-file-compatible or readable form or
+omitting certain portions of the message from the stored output.
+<p>
+The
+<b>discard</b>
+and
+<b>ignore</b>
+commands are not inverses of the
+<b>retain</b>
+command.
+The
+<b>retain</b>
+command discards all header-fields except those explicitly retained.
+The
+<b>discard</b>
+command keeps all header-fields except those
+explicitly discarded.
+If headers exist on the retained header list,
+<b>discard</b>
+and
+<b>ignore</b>
+commands are ignored.
+</blockquote><h4><a name = "tag_001_014_1362">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1363">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_1364">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ed.htm">ed</a></i>,
+<i><a href="ls.htm">ls</a></i>,
+<i><a href="mail.htm">mail</a></i>,
+<i><a href="more.htm">more</a></i>,
+<i><a href="vi.htm">vi</a></i>.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

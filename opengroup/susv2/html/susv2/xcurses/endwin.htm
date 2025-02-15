@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>endwin</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_351">&nbsp;</a>NAME</h4><blockquote>
+endwin - suspend Curses session
+</blockquote><h4><a name = "tag_000_000_352">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int endwin(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_353">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>endwin()</i>
+function restores the terminal after Curses
+activity by at least restoring the saved shell terminal mode, flushing
+any output to the terminal and moving the cursor to the first column of the
+last line of the screen.  Refreshing a window resumes program mode.  The
+application must call
+<i>endwin()</i>
+for each terminal being used before exiting.  If
+<i><a href="newterm.htm">newterm()</a></i>
+is called more than once for the same terminal, the first screen created
+must be the last one for which
+<i>endwin()</i>
+is called.
+</blockquote><h4><a name = "tag_000_000_354">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>endwin()</i>
+returns OK.  Otherwise, it returns ERR.
+</blockquote><h4><a name = "tag_000_000_355">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_356">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>endwin()</i>
+function does not free storage associated with a screen, so
+<i><a href="delsc25.htm">delscreen()</a></i>
+should be called after
+<i>endwin()</i>
+if a particular screen is no longer needed.
+<p>
+To leave Curses mode temporarily, portable applications should call
+<i>endwin()</i>.
+Subsequently, to return to Curses mode, they should call
+<i><a href="doupdate.htm">doupdate()</a></i>,
+<i><a href="refresh.htm">refresh()</a></i>
+or
+<i><a href="wrefresh.htm">wrefresh()</a></i>.
+</blockquote><h4><a name = "tag_000_000_357">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="delsc25.htm">delscreen()</a></i>,
+<i><a href="doupdate.htm">doupdate()</a></i>,
+<i><a href="initscr.htm">initscr()</a></i>,
+<i><a href="isendwin.htm">isendwin()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>wc</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2847">&nbsp;</a>NAME</h4><blockquote>
+wc - word, line and byte or character count
+</blockquote><h4><a name = "tag_001_014_2848">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+wc <b>[</b>-c|-m<b>][</b>-lw<b>][</b><i>file</i>...<b>]
+</b></code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2849">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>wc</i>
+utility reads one or more input files
+and, by default, writes the number of
+newline characters,
+words and bytes contained in each input file to the standard output.
+<p>
+The utility also writes a total count for all named files,
+if more than one input file is specified.
+<p>
+The
+<i>wc</i>
+utility considers a
+<i>word</i>
+to be a non-zero-length string of characters delimited by white space.
+</blockquote><h4><a name = "tag_001_014_2850">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>wc</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-c</b>
+<dd>Write to the standard output the number of bytes in each input file.
+
+<dt><b>-l</b>
+<dd>Write to the standard output the number of
+newline characters
+in each input file.
+
+<dt><b>-m</b>
+<dd>Write to the standard output the number of characters in each input file.
+
+<dt><b>-w</b>
+<dd>Write to the standard output the number of words in each input file.
+
+</dl>
+<p>
+When any option is specified,
+<i>wc</i>
+will report only the information requested by the specified options.
+</blockquote><h4><a name = "tag_001_014_2851">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of an input file.
+If no
+<i>file</i>
+operands are specified,
+the standard input will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2852">&nbsp;</a>STDIN</h4><blockquote>
+The standard input will be used only if no
+<i>file</i>
+operands are specified.
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_2853">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files may be of any type.
+</blockquote><h4><a name = "tag_001_014_2854">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>wc</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files)
+and which characters are defined as white space characters.
+
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2855">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2856">&nbsp;</a>STDOUT</h4><blockquote>
+By default, the standard output contains an entry for
+each input file of the form:
+<p><code>
+<tt>"%d %d %d %s\n"</tt>, &lt;<i>newlines</i>&gt;,
+&lt;<i>words</i>&gt;,
+&lt;<i>bytes</i>&gt;,
+&lt;<i>file</i>&gt;
+</code>
+<p>
+If the
+<b>-m</b>
+option is specified, the number of characters replace the
+&lt;<i>bytes</i>&gt;
+field in this format.
+<p>
+If any options are specified and the
+<b>-l</b>
+option is not specified, the
+number of
+newline characters
+will not be written.
+<p>
+If any options are specified and the
+<b>-w</b>
+option is not specified, the
+number of words will not be written.
+<p>
+If any options are specified and neither
+<b>-c</b>
+nor
+<b>-m</b>
+is specified, the
+number of bytes or characters will not be written.
+<p>
+If no input
+<i>file</i>
+operands are specified, no name will be written and no
+blank characters
+preceding the pathname will be written.
+<p>
+If more than one input
+<i>file</i>
+operand is specified, an additional line
+will be written, of the same format as the other lines, except that
+the word
+<b>total</b>
+(in the POSIX locale)
+will be written instead of a pathname
+and the total of each column will be written as appropriate.
+Such an additional line, if any, will be written at the end of the output.
+</blockquote><h4><a name = "tag_001_014_2857">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2858">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2859">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2860">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2861">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2862">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<b>-m</b>
+option is not a switch,
+but an option at the same level as
+<b>-c</b>.
+Thus, to produce the full default output with character counts
+instead of bytes, the command required is:
+<pre>
+<code>
+wc -mlw
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2863">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2864">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2865">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="cksum.htm">cksum</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

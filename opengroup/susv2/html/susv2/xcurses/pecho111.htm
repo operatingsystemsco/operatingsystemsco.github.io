@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>pechochar</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_726">&nbsp;</a>NAME</h4><blockquote>
+pechochar, pecho_wchar - write a character and rendition and immediately
+refresh the pad
+</blockquote><h4><a name = "tag_001_009_727">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int pechochar(WINDOW *<i>pad</i>, chtype <i>ch</i>);
+
+int pecho_wchar(WINDOW *<i>pad</i>, const cchar_t *<i>wch</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_728">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pechochar()</i>
+and
+<i>pecho_wchar()</i>
+functions output one character to a pad and immediately refresh the pad.
+They are equivalent to a call to
+<i><a href="waddch.htm">waddch()</a></i>
+or
+<i><a href="waddw158.htm">wadd_wch()</a></i>,
+respectively, followed by a call to
+<i><a href="prefresh.htm">prefresh()</a></i>.
+The last location of the pad on the screen is reused for the arguments to
+<i><a href="prefresh.htm">prefresh()</a></i>.
+</blockquote><h4><a name = "tag_001_009_729">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions
+return OK.  Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_001_009_730">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_731">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>pechochar()</i>
+function is only guaranteed to operate reliably on character sets in
+which each character fits into a single byte, whose attributes can be
+expressed using only constants with the A_ prefix.
+</blockquote><h4><a name = "tag_001_009_732">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="echochar.htm">echochar()</a></i>,
+<i><a href="newpad.htm">newpad()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

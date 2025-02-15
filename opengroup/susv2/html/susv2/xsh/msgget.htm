@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>msgget</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_808">&nbsp;</a>NAME</h4><blockquote>
+msgget - get the message queue identifier
+</blockquote><h4><a name = "tag_000_007_809">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysms269.htm">sys/msg.h</a>&gt;
+
+int msgget(key_t <i>key</i>, int <i>msgflg</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_810">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>msgget()</i>
+function returns the message queue identifier associated with the argument
+<i>key</i>.
+<p>
+A message queue identifier, associated message queue and data structure,
+see
+<i><a href="sysms269.htm">&lt;sys/msg.h&gt;</a></i>,
+are created for the argument
+<i>key</i>
+if one of the following is true:
+<ul>
+<p>
+<li>
+The argument
+<i>key</i>
+is equal to IPC_PRIVATE.
+<p>
+<li>
+The argument
+<i>key</i>
+does not already have a message queue identifier
+associated with it, and (<i>msgflg</i> &amp; IPC_CREAT) is non-zero.
+<p>
+</ul>
+<p>
+Upon creation, the data structure associated with
+the new message queue identifier is initialised as follows:
+<ul>
+<p>
+<li>
+<b>msg_perm.cuid</b>,
+<b>msg_perm.uid</b>,
+<b>msg_perm.cgid</b>
+and
+<b>msg_perm.gid</b>
+are set equal to the effective user ID
+and effective group ID, respectively, of the calling process.
+<p>
+<li>
+The low-order 9 bits of
+<b>msg_perm.mode</b>
+are set equal to the low-order 9 bits of
+<i>msgflg</i>.
+<p>
+<li>
+<b>msg_qnum</b>,
+<b>msg_lspid</b>,
+<b>msg_lrpid</b>,
+<b>msg_stime</b>
+and
+<b>msg_rtime</b>
+are set equal to 0.
+<p>
+<li>
+<b>msg_ctime</b>
+is set equal to the current time.
+<p>
+<li>
+<b>msg_qbytes</b>
+is set equal to the system limit.
+<p>
+</ul>
+</blockquote><h4><a name = "tag_000_007_811">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>msgget()</i>
+returns a non-negative integer,
+namely a message queue identifier.  Otherwise, it returns -1 and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_812">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>msgget()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+A message queue identifier exists for the argument
+<i>key</i>,
+but operation permission
+as specified by the low-order 9 bits of
+<i>msgflg</i>
+would not be granted, see
+<a href="ipc.htm">IPC</a>.
+
+<dt>[EEXIST]<dd>
+A message queue identifier exists for the argument
+<i>key</i>
+but ((<i>msgflg</i> &amp; IPC_CREAT) &amp;&amp; (<i>msgflg</i> &amp; IPC_EXCL)) is non-zero.
+
+<dt>[ENOENT]<dd>
+A message queue identifier does not exist for the argument
+<i>key</i>
+and (<i>msgflg</i> &amp; IPC_CREAT) is 0.
+
+<dt>[ENOSPC]<dd>
+A message queue identifier is to be created but the
+system-imposed limit on the maximum number of allowed
+message queue identifiers system-wide would be exceeded.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_813">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_814">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The POSIX Realtime Extension defines alternative interfaces for interprocess communication.
+Application developers who need to use IPC should design their
+applications so that modules using the IPC routines described in
+<a href="ipc.htm">IPC</a>
+can be easily modified to use the alternative interfaces.
+</blockquote><h4><a name = "tag_000_007_815">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_816">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mqclo98.htm">mq_close()</a></i>,
+<i><a href="mqget99.htm">mq_getattr()</a></i>,
+<i><a href="mqnot100.htm">mq_notify()</a></i>,
+<i><a href="mqope101.htm">mq_open()</a></i>,
+<i><a href="mqrec102.htm">mq_receive()</a></i>,
+<i><a href="mqsen103.htm">mq_send()</a></i>,
+<i><a href="mqset104.htm">mq_setattr()</a></i>,
+<i><a href="mqunl105.htm">mq_unlink()</a></i>,
+<i><a href="msgctl.htm">msgctl()</a></i>,
+<i><a href="msgrcv.htm">msgrcv()</a></i>,
+<i><a href="msgsnd.htm">msgsnd()</a></i>,
+<i><a href="sysms269.htm">&lt;sys/msg.h&gt;</a></i>,
+<a href="ipc.htm">IPC</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 2 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

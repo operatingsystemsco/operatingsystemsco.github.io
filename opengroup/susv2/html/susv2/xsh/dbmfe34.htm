@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dbm_clearerr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_076">&nbsp;</a>NAME</h4><blockquote>
+dbm_clearerr, dbm_close, dbm_delete, dbm_error, dbm_fetch,
+dbm_firstkey, dbm_nextkey, dbm_open, dbm_store - database functions
+</blockquote><h4><a name = "tag_000_003_077">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="ndbmh109.htm">ndbm.h</a>&gt;
+
+int dbm_clearerr(DBM *<i>db</i>);
+void dbm_close(DBM *<i>db</i>);
+int dbm_delete(DBM *<i>db</i>, datum <i>key</i>);
+int dbm_error(DBM *<i>db</i>);
+datum dbm_fetch(DBM *<i>db</i>, datum <i>key</i>);
+datum dbm_firstkey(DBM *<i>db</i>);
+datum dbm_nextkey(DBM *<i>db</i>);
+DBM *dbm_open(const char *<i>file</i>, int <i>open_flags</i>, mode_t <i>file_mode</i>);
+int dbm_store(DBM *<i>db</i>, datum <i>key</i>, datum <i>content</i>, int <i>store_mode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_078">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions create, access and modify a database.
+<p>
+A
+<b>datum</b>
+consists of at least two members,
+<b>dptr</b>
+and
+<b>dsize</b>.
+The
+<b>dptr</b>
+member points to an object that is
+<b>dsize</b>
+bytes in length.  Arbitrary binary data, as well as character strings, may be
+stored in the object pointed to by
+<b>dptr</b>.
+<p>
+The database is stored in two files.
+One file is a directory containing a bit map of keys and has
+<b>.dir</b>
+as its suffix.  The second file contains all data and has
+<b>.pag</b>
+as its suffix.
+<p>
+The
+<i>dbm_open()</i>
+function opens a database.  The
+<i>file</i>
+argument to the function is the pathname of the database.  The function
+opens two files named
+and
+The 
+<i>open_flags</i>
+argument has the same meaning as the 
+<i>flags</i>
+argument of
+<i><a href="open.htm">open()</a></i>
+except that a database opened for write-only access opens the
+files for read and write access and the behaviour of the O_APPEND flag
+is unspecified.
+The
+<i>file_mode</i>
+argument has the same meaning as the third argument of
+<i><a href="open.htm">open()</a></i>.
+<p>
+The
+<i>dbm_close()</i>
+function closes a database.  The argument
+<i>db</i>
+must be a pointer to a
+<b>dbm</b>
+structure that has been returned from a call to
+<i>dbm_open()</i>.
+<p>
+The
+<i>dbm_fetch()</i>
+function reads a record from a database.  The argument
+<i>db</i>
+is a pointer to a database structure that has been returned from a call to
+<i>dbm_open()</i>.
+The argument
+<i>key</i>
+is a
+<b>datum</b>
+that has been initialised by the application program to the value
+of the key that matches the key of the record the program is fetching.
+<p>
+The
+<i>dbm_store()</i>
+function writes a record to a database.  The argument
+<i>db</i>
+is a pointer to a database structure that has been returned from a call to
+<i>dbm_open()</i>.
+The argument
+<i>key</i>
+is a
+<b>datum</b>
+that has been initialised by the application program
+to the value of the key that identifies (for subsequent reading, writing or
+deleting) the record the program is writing.
+The argument
+<i>content</i>
+is a
+<b>datum</b>
+that has been initialised by the application program to
+the value of the record the program is writing.  The argument
+<i>store_mode</i>
+controls whether
+<i>dbm_store()</i>
+replaces any pre-existing record that has the same key that is specified by
+the
+<i>key</i>
+argument.  The application program must set
+<i>store_mode</i>
+to either DBM_INSERT or DBM_REPLACE.  If the database contains a record that
+matches the
+<i>key</i>
+argument and
+<i>store_mode</i>
+is DBM_REPLACE, the existing record is replaced with the new record.  If the
+database contains a record that matches the
+<i>key</i>
+argument and
+<i>store_mode</i>
+is DBM_INSERT, the existing record is not replaced with the new record.  If
+the database does not contain a record that matches the
+<i>key</i>
+argument and
+<i>store_mode</i>
+is either DBM_INSERT or DBM_REPLACE, the new record is inserted in the
+database.
+<p>
+The sum of the sizes of a key/content pair must not exceed the
+internal block size. Moreover, all key/content pairs that hash
+together must fit on a single block. The 
+<i>dbm_store()</i>
+function returns an error in the event that a disk block fills 
+with inseparable data.
+<p>
+The
+<i>dbm_delete()</i>
+function deletes a record and its key from the database.  The argument
+<i>db</i>
+is a pointer to a database structure that has been returned from a call to
+<i>dbm_open()</i>.
+The argument
+<i>key</i>
+is a
+<b>datum</b>
+that has been initialised by the application program to the value
+of the key that identifies the record the program is deleting.
+<p>
+The
+<i>dbm_firstkey()</i>
+function returns the first key in the database.  The argument
+<i>db</i>
+is a pointer to a database structure that has been returned from a call to
+<i>dbm_open()</i>.
+<p>
+The
+<i>dbm_nextkey()</i>
+function returns the next key in the database.  The argument
+<i>db</i>
+is a pointer to a database structure that has been returned from a call to
+<i>dbm_open()</i>.
+The
+<i>dbm_firstkey()</i>
+function must be called before calling
+<i>dbm_nextkey()</i>.
+Subsequent calls to
+<i>dbm_nextkey()</i>
+return the next key until all of the keys in the database have been returned.
+<p>
+The
+<i>dbm_error()</i>
+function returns the error condition of the database.  The argument
+<i>db</i>
+is a pointer to a database structure that has been returned from a call to
+<i>dbm_open()</i>.
+<p>
+The
+<i>dbm_clearerr()</i>
+function clears the error condition of the database.  The argument
+<i>db</i>
+is a pointer to a database structure that has been returned from a call to
+<i>dbm_open()</i>.
+<p>
+These database functions support key/content pairs of at least 1023 bytes.
+<p>
+The
+<b>dptr</b>
+pointers returned by these functions may point into static storage
+that may be changed by subsequent calls.
+<p>
+These interfaces need not be reentrant.
+</blockquote><h4><a name = "tag_000_003_079">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>dbm_store()</i>
+and
+<i>dbm_delete()</i>
+functions return 0 when they succeed and a negative value when they fail.
+<p>
+The
+<i>dbm_store()</i>
+function returns 1 if it is called with a
+<i>flags</i>
+value of DBM_INSERT and the function finds an existing record with the same
+key.
+<p>
+The
+<i>dbm_error()</i>
+function returns 0 if the error condition is not set and returns a non-zero
+value if the error condition is set.
+<p>
+The return value of
+<i>dbm_clearerr()</i>
+is unspecified .
+<p>
+The
+<i>dbm_firstkey()</i>
+and
+<i>dbm_nextkey()</i>
+functions return a key
+<b>datum</b>.
+When the end of the database is reached, the
+<b>dptr</b>
+member of the key is a null pointer.  If an error is detected, the
+<b>dptr</b>
+member of the key is a null pointer and the error condition of the database is
+set.
+<p>
+The
+<i>dbm_fetch()</i>
+function returns a content
+<b>datum</b>.
+If no record in the database matches the
+key or if an error condition has been detected in the database, the
+<b>dptr</b>
+member of the content is a null pointer.
+<p>
+The
+<i>dbm_open()</i>
+function returns a pointer to a database structure.  If an error is detected
+during the operation,
+<i>dbm_open()</i>
+returns a (<b>DBM *</b>)0.
+</blockquote><h4><a name = "tag_000_003_080">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_003_081">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_000_003_082">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The following code can be used to traverse the database:
+<pre>
+<code>
+for(key = dbm_firstkey(db); key.dptr != NULL; key = dbm_nextkey(db))
+</code>
+</pre>
+<p>
+The
+<i>dbm_</i>
+functions provided in this library should not be confused in any way with
+those of a general-purpose database management system.  These functions do not
+provide for multiple search keys per entry, they do not protect against
+multi-user access (in other words they do not lock records or files), and they
+do not provide the many other useful database functions that are found in more
+robust database management systems.  Creating and updating databases by use of
+these functions is relatively slow because of data copies that occur upon hash
+collisions.  These functions are useful for applications requiring fast lookup
+of relatively static information that is to be indexed by a single key.
+<p>
+The
+<i>dbm_delete()</i>
+function need not physically reclaim file space, although it does make it
+available for reuse by the database.
+<p>
+After calling
+<i>dbm_store()</i>
+or
+<i>dbm_delete()</i>
+during a pass through the keys by
+<i>dbm_firstkey()</i>
+and
+<i>dbm_nextkey()</i>,
+the application should reset the database by calling
+<i>dbm_firstkey()</i>
+before again calling
+<i>dbm_nextkey()</i>.
+The contents of these files are unspecified and may not be portable.
+</blockquote><h4><a name = "tag_000_003_083">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_084">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="open.htm">open()</a></i>,
+<i><a href="ndbmh109.htm">&lt;ndbm.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

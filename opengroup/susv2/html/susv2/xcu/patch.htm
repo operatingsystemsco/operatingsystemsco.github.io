@@ -1,0 +1,564 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>patch</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1650">&nbsp;</a>NAME</h4><blockquote>
+patch - apply changes to files
+</blockquote><h4><a name = "tag_001_014_1651">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+patch <b>[</b>-blNR<b>][ </b>-c| -e| -n<b>][</b>-d <i>dir</i><b>][</b>-D <i>define</i><b>][</b>-i <i>patchfile</i><b>]
+[</b>-o <i>outfile</i><b>][</b>-p <i>num</i><b>][</b>-r <i>rejectfile</i><b>][</b><i>file</i><b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1652">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>patch</i>
+utility reads a source (patch)
+file containing any of the three forms of
+difference (diff) listings produced by the
+<i><a href="diff.htm">diff</a></i>
+utility (normal, context or in the style of
+<i><a href="ed.htm">ed</a></i>)
+and apply those differences to a file.
+By default,
+<i>patch</i>
+reads from the standard input.
+<p>
+The
+<i>patch</i>
+utility attempts to determine the type of the
+<i><a href="diff.htm">diff</a></i>
+listing, unless overruled by a
+<b>-c</b>,
+<b>-e</b>
+or
+<b>-n</b>
+option.
+<p>
+If the patch
+file contains more than one patch,
+<i>patch</i>
+will attempt to apply each of them as if they came from separate
+patch files.
+(In this case the name of the patch file must be determinable for each
+<i><a href="diff.htm">diff</a></i>
+listing.)
+</blockquote><h4><a name = "tag_001_014_1653">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>patch</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-b</b>
+<dd>Save a copy of the original contents of each modified file,
+before the differences are applied, in a file of the same
+name with the suffix
+<b>.orig</b>
+appended to it.
+If the file already exists, it will be overwritten;
+if multiple patches are applied to the same file, the
+<b>.orig</b>
+file will be written
+only for the first patch.
+When the
+<b>-o</b>&nbsp;<i>outfile</i>
+option is also specified,
+<i>file</i><b>.orig</b>
+will not be created but, if
+<i>outfile</i>
+already exists,
+<i>outfile</i><b>.orig</b>
+will be created.
+
+<dt><b>-c</b>
+<dd>Interpret the patch file as a context difference
+(the output of the utility
+<i><a href="diff.htm">diff</a></i>
+when the
+<b>-c</b>
+or
+<b>-C</b>
+options are specified).
+
+<dt><b>-d&nbsp;</b><i>dir</i>
+<dd>Change the current directory to
+<i>dir</i>
+before processing as described in the EXTENDED DESCRIPTION section.
+
+<dt><b>-D&nbsp;</b><i>define</i>
+<dd>
+Mark changes with the C preprocessor construct:
+<pre>
+<code>
+#ifdef <i>define</i>
+...
+#endif
+</code>
+</pre>
+
+The option-argument
+<i>define</i>
+will be used as the differentiating symbol.
+
+<dt><b>-e</b>
+<dd>Interpret the patch file as an
+<i><a href="ed.htm">ed</a></i>
+script,
+rather than a
+<i><a href="diff.htm">diff</a></i>
+script.
+
+<dt><b>-i&nbsp;</b><i>patchfile</i>
+<dd>
+Read the patch information from the file named by the pathname
+<i>patchfile</i>,
+rather than the standard input.
+
+<dt><b>-l</b>
+<dd>(The letter ell.)
+Cause any sequence of blank characters
+in the difference script to match any sequence of
+blank characters
+in the input file.
+Other characters will be matched exactly.
+
+<dt><b>-n</b>
+<dd>Interpret the script as a normal difference.
+
+<dt><b>-N</b>
+<dd>Ignore patches where the differences have already been applied to the file;
+by default, already-applied patches are rejected.
+
+<dt><b>-o&nbsp;</b><i>outfile</i>
+<dd>
+Instead of modifying the files (specified by the
+<i>file</i>
+operand or the difference listings) directly, write a copy
+of the file referenced by each patch, with the appropriate
+differences applied, to
+<i>outfile</i>.
+Multiple patches
+for a single file will be applied to the intermediate
+versions of the file created by any previous patches,
+and will result in multiple,
+concatenated versions of the file being written to
+<i>outfile</i>.
+
+<dt><b>-p&nbsp;</b><i>num</i>
+<dd>
+For all pathnames in the patch file that indicate the
+names of files to be patched, delete
+<i>num</i>
+pathname components from the beginning of each pathname.
+If the pathname in the patch file is absolute,
+any leading slashes are considered the first
+component (that is,
+<b>-p 1</b>
+removes the leading slashes).
+Specifying
+<b>-p 0</b>
+causes the full pathname to be used.
+If
+<b>-p</b>
+is not specified, only the basename (the final
+pathname component) is used.
+
+<dt><b>-R</b>
+<dd>Reverse the sense of the patch script; that is,
+assume that the difference
+script was created from the new version to the old version.
+The
+<b>-R</b>
+option cannot be used with
+<i><a href="ed.htm">ed</a></i>
+scripts.
+The
+<i>patch</i>
+utility attempts to reverse each portion of
+the script before applying it.
+Rejected differences will be saved in swapped format.
+If this option is not specified, and until
+a portion of the patch file is successfully applied,
+<i>patch</i>
+attempts to apply each portion in its reversed sense as well
+as in its normal sense.
+If the attempt is successful, the user
+will be prompted to determine if the
+<b>-R</b>
+option should be set.
+
+<dt><b>-r&nbsp;</b><i>rejectfile</i>
+<dd>
+Override the default reject filename.
+In the default case, the
+reject file will have the same
+name as the output file, with the suffix
+<b>.rej</b>
+appended to it.
+See
+<xref href=patchapp><a href="#tag_001_014_1662_003">
+Patch Application
+</a></xref>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1654">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to patch.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1655">&nbsp;</a>STDIN</h4><blockquote>
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_1656">&nbsp;</a>INPUT FILES</h4><blockquote>
+Input files must be text files.
+</blockquote><h4><a name = "tag_001_014_1657">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>patch</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>LC_TIME</i><dd>
+Determine the locale for recognising
+the format of file timestamps written by the
+<i><a href="diff.htm">diff</a></i>
+utility in a context-difference input file.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1658">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1659">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1660">&nbsp;</a>STDERR</h4><blockquote>
+Used for diagnostic and informational messages.
+</blockquote><h4><a name = "tag_001_014_1661">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output of the
+<i>patch</i>
+utility,
+the save files
+(<b>.orig</b>
+suffixes) and the reject files
+(<b>.rej</b>
+suffixes) will be text files.
+</blockquote><h4><a name = "tag_001_014_1662">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+A patchfile may contain patching instructions for more than one file;
+filenames are determined as specified in
+<xref href=patchfd><a href="#tag_001_014_1662_002">
+Filename Determination
+</a></xref>.
+When the
+<b>-b</b>
+option is specified,
+for each patched file, the original will be saved in a
+file of the same name with the suffix
+<b>.orig</b>
+appended to it.
+<p>
+For each patched file, a reject file may also be created as noted in
+<xref href=patchapp><a href="#tag_001_014_1662_003">
+Patch Application
+</a></xref>.
+In the absence of a
+<b>-r</b>
+option, the name of
+this file will be formed by appending the suffix
+<b>.rej</b>
+to the original filename.
+<h5><a name = "tag_001_014_1662_001">&nbsp;</a>Patchfile Format</h5>
+The patch file must contain zero or more lines of header information
+followed by one or more patches.
+Each patch must contain zero or more
+lines of filename identification in the format produced by
+<i><a href="diff.htm">diff</a></i>
+<b>-c</b>,
+and one or more sets of
+<i><a href="diff.htm">diff</a></i>
+output, which are customarily
+called hunks.
+<p>
+The
+<i>patch</i>
+utility recognises the following expression in the
+header information:
+<dl compact>
+
+<dt><b>Index:&nbsp;</b><i>pathname</i><dd>
+The file to be patched is named
+<i>pathname</i>.
+
+</dl>
+<p>
+If all lines (including headers) within a patch begin with the
+same leading sequence of
+blank characters,
+the
+<i>patch</i>
+utility will remove this sequence before proceeding.
+Within each patch, if the type of difference is context, the
+<i>patch</i>
+utility recognises the following expressions:
+<dl compact>
+
+<dt><b>***&nbsp;</b><i>filename&nbsp;timestamp</i><dd>
+The patches arose from
+<i>filename.</i>
+
+<dt><b>---&nbsp;</b><i>filename&nbsp;timestamp</i><dd>
+The patches should be applied to
+<i>filename.</i>
+
+</dl>
+<p>
+Each hunk within a patch must be the
+<i><a href="diff.htm">diff</a></i>
+output to change a line
+range within the original file.
+The line numbers for successive
+hunks within a patch must occur in ascending order.
+<h5><a name = "tag_001_014_1662_002">&nbsp;</a>Filename Determination</h5>
+<xref type="5" name="patchfd"></xref>
+If no
+<i>file</i>
+operand is specified,
+<i>patch</i>
+performs the following steps to obtain a pathname:
+<ol>
+<p>
+<li>
+If the patch contains the strings
+***
+and
+---,
+the
+<i>patch</i>
+utility strips components from the beginning of each
+pathname (depending on the presence or value of the
+<b>-p</b>
+option), then tests for the
+existence of both files in the current directory (or
+directory specified with the
+<b>-d</b>
+option).
+If both files exist,
+<i>patch</i>
+assumes that no pathname can be obtained from this step.
+<p>
+<li>
+If the header information contains a line with the string
+<b>Index:</b>,
+<i>patch</i>
+utility strips components from the
+beginning of the pathname (depending on
+<b>-p</b>),
+then tests for the existence of this file in the current directory
+(or directory specified with the
+<b>-d</b>
+option).
+<p>
+<li>
+If an
+<b>SCCS</b>
+directory exists in the current directory,
+<i>patch</i>
+will attempt to perform a
+<i><a href="get.htm">get</a></i>
+<b>-e</b>
+SCCS/s.<i>filename</i>
+command to retrieve an editable version of the file.
+<p>
+<li>
+If no pathname can be obtained by applying the previous steps,
+or if the pathnames obtained do not exist,
+<i>patch</i>
+will write a prompt to standard output and
+request a filename interactively from standard input.
+<p>
+</ol>
+<h5><a name = "tag_001_014_1662_003">&nbsp;</a>Patch Application</h5>
+<xref type="5" name="patchapp"></xref>
+If the
+<b>-c</b>,
+<b>-e</b>
+or
+<b>-n</b>
+option is present, the
+<i>patch</i>
+utility will
+interpret information within each hunk as a context difference, an
+<i><a href="ed.htm">ed</a></i>
+difference or a normal difference, respectively.
+In the absence of any of
+these options, the
+<i>patch</i>
+utility determines the type of difference
+based on the format of information within the hunk.
+<p>
+For each hunk, the
+<i>patch</i>
+utility begins to search for the
+place to apply the patch at the line number at the beginning of
+the hunk, plus or minus any offset used in applying the previous hunk.
+If lines matching the hunk context are
+not found,
+<i>patch</i>
+scans both forwards and backwards at least
+1000 bytes for a set of lines that match the hunk context.
+<p>
+If no such place is found and it is a context difference, then another
+scan will take place, ignoring the first and last line of context.
+If that fails, the first two and last two lines of context will be ignored
+and another scan will be made.
+Implementations may search more extensively for installation locations.
+<p>
+If no location can be found, the
+<i>patch</i>
+utility will append the
+hunk to the reject file.
+The rejected hunk will be written in
+context-difference format regardless of the format of the patch file.
+If the input was a normal or
+<i><a href="ed.htm">ed</a></i>-style
+difference, the reject file may contain differences
+with zero lines of context.
+The line numbers on the hunks in the
+reject file may be different from the line numbers in the patch
+file since they will reflect the approximate locations for the
+failed hunks in the new file rather than the old one.
+<p>
+If the type of patch is an
+<i><a href="ed.htm">ed</a></i>
+diff,
+the implementation may accomplish the patching by invoking the
+<i><a href="ed.htm">ed</a></i>
+utility.
+</blockquote><h4><a name = "tag_001_014_1663">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>1<dd>One or more lines were written to a reject file.
+
+<dt>&gt;1<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1664">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Patches that cannot be correctly placed in the file
+will be written to a reject file.
+<br>
+</blockquote><h4><a name = "tag_001_014_1665">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<b>-R</b>
+option will not work with
+<i><a href="ed.htm">ed</a></i>
+scripts because there is too little information to reconstruct
+the reverse operation.
+<p>
+The
+<b>-p</b>
+option makes it possible to customise a patchfile to local
+user directory structures without manually editing the patchfile.
+For example, if the filename in the patch file was:
+<pre>
+<code>
+/curds/whey/src/blurfl/blurfl.c
+</code>
+</pre>
+<p>
+Setting
+<b>-p 0</b>
+gives the entire pathname unmodified;
+<b>-p 1</b>
+gives:
+<pre>
+<code>
+curds/whey/src/blurfl/blurfl.c
+</code>
+</pre>
+<p>
+without the leading slash,
+<b>-p 4</b>
+gives:
+<pre>
+<code>
+blurfl/blurfl.c
+</code>
+</pre>
+<p>
+and not specifying
+<b>-p</b>
+at all gives:
+<pre>
+<code>
+blurfl.c .
+</code>
+</pre>
+<p>
+When using
+<b>-b</b>
+in some file system implementations, the saving of a
+<b>.orig</b>
+file may produce unwanted results.
+In the case of 12, 13 or 14-character filenames,
+on file systems supporting 14-character maximum filenames, the
+<b>.orig</b>
+file will overwrite the new file.
+</blockquote><h4><a name = "tag_001_014_1666">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1667">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_1668">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ed.htm">ed</a></i>,
+<i><a href="diff.htm">diff</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

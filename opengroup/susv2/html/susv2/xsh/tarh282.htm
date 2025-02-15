@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;tar.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_429">&nbsp;</a>NAME</h4><blockquote>
+tar.h - extended tar definitions
+</blockquote><h4><a name = "tag_000_009_430">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;tar.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_431">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Header block definitions are:
+<p>
+General definitions:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Name</b>
+<th align=center><b>Description</b>
+<th align=center><b>Value</b>
+<tr valign=top><td align=left>TMAGIC
+<td align=left>"ustar"
+<td align=left>ustar plus null byte.
+<tr valign=top><td align=left>TMAGLEN
+<td align=left>6
+<td align=left>Length of the above.
+<tr valign=top><td align=left>TVERSION
+<td align=left>"00"
+<td align=left>00 without a null byte.
+<tr valign=top><td align=left>TVERSLEN
+<td align=left>2
+<td align=left>Length of the above.
+</table>
+<p>
+<i>Typeflag</i> field definitions:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Name</b>
+<th align=center><b>Description</b>
+<th align=center><b>Value</b>
+<tr valign=top><td align=left>REGTYPE
+<td align=left>'0'
+<td align=left>Regular file.
+<tr valign=top><td align=left>AREGTYPE
+<td align=left>'\0'
+<td align=left>Regular file.
+<tr valign=top><td align=left>LNKTYPE
+<td align=left>'1'
+<td align=left>Link.
+<tr valign=top><td align=left>SYMTYPE
+<td align=left>'2'
+<td align=left>Symbolic link.
+<tr valign=top><td align=left>CHRTYPE
+<td align=left>'3'
+<td align=left>Character special.
+<tr valign=top><td align=left>BLKTYPE
+<td align=left>'4'
+<td align=left>Block special.
+<tr valign=top><td align=left>DIRTYPE
+<td align=left>'5'
+<td align=left>Directory.
+<tr valign=top><td align=left>FIFOTYPE
+<td align=left>'6'
+<td align=left>FIFO special.
+<tr valign=top><td align=left>CONTTYPE
+<td align=left>'7'
+<td align=left>Reserved.
+</table>
+<p>
+<i>Mode</i> field bit definitions (octal):
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Name</b>
+<th align=center><b>Description</b>
+<th align=center><b>Value</b>
+<tr valign=top><td align=left>TSUID
+<td align=left>04000
+<td align=left>Set UID on execution.
+<tr valign=top><td align=left>TSGID
+<td align=left>02000
+<td align=left>Set GID on execution.
+<tr valign=top><td align=left>TSVTX
+<td align=left>01000
+<td align=left>On directories, restricted deletion flag.
+<tr valign=top><td align=left>TUREAD
+<td align=left>00400
+<td align=left>Read by owner.
+<tr valign=top><td align=left>TUWRITE
+<td align=left>00200
+<td align=left>Write by owner special.
+<tr valign=top><td align=left>TUEXEC
+<td align=left>00100
+<td align=left>Execute/search by owner.
+<tr valign=top><td align=left>TGREAD
+<td align=left>00040
+<td align=left>Read by group.
+<tr valign=top><td align=left>TGWRITE
+<td align=left>00020
+<td align=left>Write by group.
+<tr valign=top><td align=left>TGEXEC
+<td align=left>00010
+<td align=left>Execute/search by group.
+<tr valign=top><td align=left>TOREAD
+<td align=left>00004
+<td align=left>Read by other.
+<tr valign=top><td align=left>TOWRITE
+<td align=left>00002
+<td align=left>Write by other.
+<tr valign=top><td align=left>TOEXEC
+<td align=left>00001
+<td align=left>Execute/search by other.
+</table>
+</blockquote><h4><a name = "tag_000_009_432">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_433">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_434">&nbsp;</a>SEE ALSO</h4><blockquote>
+The <b>XCU</b> specification,
+<i><a href="../xcu/tar.htm">tar</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

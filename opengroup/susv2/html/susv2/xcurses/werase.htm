@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>clear</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_386">&nbsp;</a>NAME</h4><blockquote>
+clear, erase, wclear, werase - clear a window
+</blockquote><h4><a name = "tag_002_001_387">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int clear(void);
+
+int erase(void);
+
+int wclear(WINDOW *<i>win</i>);
+
+int werase(WINDOW *<i>win</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_388">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>clear()</i>,
+<i><a href="erase.htm">erase()</a></i>,
+<i>wclear()</i>
+and
+<i>werase()</i>
+functions clear every position in the current or specified window.
+<p>
+The
+<i>clear()</i>
+and
+<i>wclear()</i>
+functions also achieve the same effect as calling
+<i><a href="clearok.htm">clearok()</a></i>,
+so that the window is cleared completely on the next call to
+<i><a href="wrefresh.htm">wrefresh()</a></i>
+for the window and is redrawn in its entirety.
+</blockquote><h4><a name = "tag_002_001_389">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_390">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_391">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="clearok.htm">clearok()</a></i>,
+<i><a href="doupdate.htm">doupdate()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

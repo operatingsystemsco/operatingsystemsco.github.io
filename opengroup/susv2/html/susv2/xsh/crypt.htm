@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>crypt</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_002_047">&nbsp;</a>NAME</h4><blockquote>
+crypt - string encoding function
+(<b>CRYPT</b>)
+</blockquote><h4><a name = "tag_000_002_048">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+char *crypt (const char *<i>key</i>, const char *<i>salt</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_002_049">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>crypt()</i>
+function is a string encoding function.  The algorithm is
+implementation-dependent.
+<p>
+The
+<i>key</i>
+argument points to
+a string to be encoded.
+The
+<i>salt</i>
+argument is a string chosen from the
+set:
+<pre>
+<code>
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+0 1 2 3 4 5 6 7 8 9 . /
+</code>
+</pre>
+The first two characters of this
+string may be used to perturb the encoding algorithm.
+<p>
+The return value of
+<i>crypt()</i>
+points to static data that is overwritten by each call.
+<p>
+This need not be a reentrant function.
+</blockquote><h4><a name = "tag_000_002_050">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>crypt()</i>
+returns a pointer to the encoded string.
+The first two characters of the returned value are those of the
+<i>salt</i>
+argument.
+<p>
+Otherwise it returns a null pointer and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_002_051">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>crypt()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ENOSYS]<dd>
+The functionality is not supported on this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_002_052">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_053">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The values returned by this
+function need not be portable among XSI-conformant systems.
+</blockquote><h4><a name = "tag_000_002_054">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_055">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="encrypt.htm">encrypt()</a></i>,
+<i><a href="setkey.htm">setkey()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

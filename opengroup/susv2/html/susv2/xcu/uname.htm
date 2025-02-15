@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>uname</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2486">&nbsp;</a>NAME</h4><blockquote>
+uname - return system name
+</blockquote><h4><a name = "tag_001_014_2487">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+uname <b>[</b>snrvma<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2488">&nbsp;</a>DESCRIPTION</h4><blockquote>
+By default, the
+<i>uname</i>
+utility will write the operating system name to standard output.
+When options are specified, symbols
+representing one or more system characteristics will be
+written to the standard output.
+The format and contents of the symbols are implementation-dependent.
+On systems conforming to the <b>XSH</b> specification, the symbols
+written will be those supported by the <b>XSH</b> specification
+<i><a href="../xsh/uname.htm">uname()</a></i>
+function.
+</blockquote><h4><a name = "tag_001_014_2489">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>uname</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-a</b>
+<dd>Behave as though all of the options
+<b>-mnrsv</b>
+were specified.
+
+<dt><b>-m</b>
+<dd>Write the name of the hardware type on which the
+system is running to standard output.
+
+<dt><b>-n</b>
+<dd>Write the name of this node within
+an implementation-dependent communications network.
+
+<dt><b>-r</b>
+<dd>Write the current
+release level of the operating system implementation.
+
+<dt><b>-s</b>
+<dd>Write the name of the
+implementation of the operating system.
+
+<dt><b>-v</b>
+<dd>Write the current version
+level of this release of the operating system implementation.
+
+</dl>
+<p>
+If no options are specified, the
+<i>uname</i>
+utility will write the operating system name, as if the
+<b>-s</b>
+option had been specified.
+</blockquote><h4><a name = "tag_001_014_2490">&nbsp;</a>OPERANDS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2491">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_2492">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2493">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>uname</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2494">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2495">&nbsp;</a>STDOUT</h4><blockquote>
+By default, the output will be a single line of the following form:
+<p><code>
+<tt>"%s\n"</tt>, &lt;<i>sysname</i>&gt;
+</code>
+<p>
+If the
+<b>-a</b>
+option is specified,
+the output will be a single line of the following form:
+<p><code>
+<pre>
+<tt>"%s %s %s %s %s\n"</tt>, &lt;<i>sysname</i>&gt;,
+&lt;<i>nodename</i>&gt;,
+&lt;<i>release</i>&gt;,
+&lt;<i>version</i>&gt;,
+&lt;<i>machine</i>&gt;
+</pre>
+</code>
+<p>
+Additional implementation-dependent symbols may be written;
+all such symbols will be written at
+the end of the line of output before the
+newline character.
+<p>
+If options are specified to select
+different combinations of the symbols,
+only those symbols will be written,
+in the order shown above for the
+<b>-a</b>
+option.
+If a symbol is not selected for writing, its corresponding trailing
+blank characters
+also will not be written.
+</blockquote><h4><a name = "tag_001_014_2496">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2497">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2498">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2499">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The requested information was successfully written.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2500">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2501">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Note that any of the symbols could include embedded
+space characters,
+which may affect parsing algorithms
+if multiple options are selected for output.
+<p>
+The node name is typically a name that the system uses
+to identify itself for intersystem communication addressing.
+</blockquote><h4><a name = "tag_001_014_2502">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following command:
+<pre>
+<code>
+uname -sr
+</code>
+</pre>
+writes the operating system name and release level, separated by one
+or more
+blank characters.
+</blockquote><h4><a name = "tag_001_014_2503">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2504">&nbsp;</a>SEE ALSO</h4><blockquote>
+The <b>XSH</b> specification description of
+<i><a href="../xsh/uname.htm">uname()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

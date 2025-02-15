@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>innstr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_560">&nbsp;</a>NAME</h4><blockquote>
+innstr, instr, mvinnstr, mvinstr, mvwinnstr, mvwinstr, winnstr, winstr
+- input a multi-byte character string from a window
+</blockquote><h4><a name = "tag_002_001_561">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int innstr(char *<i>str</i>, int <i>n</i>);
+
+int instr(char *<i>str</i>);
+
+int mvinnstr(int <i>y</i>, int <i>x</i>, char *<i>str</i>, int <i>n</i>);
+
+int mvinstr(int <i>y</i>, int <i>x</i>, char *<i>str</i>);
+
+int mvwinnstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, char *<i>str</i>, int <i>n</i>);
+
+int mvwinstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, char *<i>str</i>);
+
+int winnstr(WINDOW *<i>win</i>, char *<i>str</i>, int <i>n</i>);
+
+int winstr(WINDOW *<i>win</i>, char *<i>str</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_562">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions place a string of characters from the current or specified
+window into the array pointed to by <i>str</i>, starting at the current or
+specified position and ending at the end of the line.
+<p>
+The
+<i>innstr()</i>,
+<i>mvinnstr()</i>,
+<i>mvwinnstr()</i>
+and
+<i>winnstr()</i>
+functions store at most <i>n</i> bytes in the string pointed to by <i>str</i>.
+<p>
+The
+<i>innstr()</i>,
+<i>mvinnstr()</i>,
+<i>mvwinnstr()</i>
+and
+<i>winnstr()</i>
+functions will only store the entire multi-byte sequence associated
+with a character. If the array is large enough to contain at least one
+character the array is filled with complete characters. If the array
+is not large enough to contain any complete characters, the function fails.
+</blockquote><h4><a name = "tag_002_001_563">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i><a href="instr.htm">instr()</a></i>,
+<i>mvinstr()</i>,
+<i>mvwinstr()</i>
+and
+<i>winstr()</i>
+return OK.
+<p>
+Upon successful completion,
+<i>innstr()</i>,
+<i>mvinnstr()</i>,
+<i>mvwinnstr()</i>
+and
+<i>winnstr()</i>
+return the number of characters actually read into the string.
+<p>
+Otherwise, all these functions return ERR.
+</blockquote><h4><a name = "tag_002_001_564">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_565">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Since multi-byte characters may be processed, there might not be a one-to-one
+correspondence between the number of column positions on the screen and
+the number of bytes returned.
+<p>
+These functions do not return rendition information.
+<p>
+Reading a line that overflows the array pointed to by <i>str</i> with
+<i><a href="instr.htm">instr()</a></i>,
+<i>mvinstr()</i>,
+<i>mvwinstr()</i>
+or
+<i>winstr()</i>
+causes undefined results.  The use of
+<i>innstr()</i>,
+<i>mvinnstr()</i>,
+<i>mvwinnstr()</i>
+or
+<i>winnstr()</i>,
+respectively, is recommended.
+</blockquote><h4><a name = "tag_002_001_566">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

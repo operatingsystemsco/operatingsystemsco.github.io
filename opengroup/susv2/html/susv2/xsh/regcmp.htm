@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>regcmp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_006">&nbsp;</a>NAME</h4><blockquote>
+regcmp, regex - compile and execute a regular expression
+(<b>LEGACY</b>)
+</blockquote><h4><a name = "tag_000_008_007">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="libge87.htm">libgen.h</a>&gt;
+
+char *regcmp (const char *<i>string1</i> , ... /*, (char *)0 */);
+char *regex (const char *<i>re</i>, const char *<i>subject</i> , ... );
+extern char *__loc1;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_008">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>regcmp()</i>
+function compiles a regular expression consisting of the concatenated
+arguments and returns a pointer to the compiled form.
+The end of arguments is indicated by a null pointer.
+The
+<i><a href="malloc.htm">malloc()</a></i>
+function is used to create space for the compiled form.  It is the process'
+responsibility to free unneeded space so allocated.  A null pointer returned
+from
+<i>regcmp()</i>
+indicates an invalid argument.
+<p>
+The
+<i><a href="regex.htm">regex()</a></i>
+function executes a compiled pattern against the
+<i>subject</i>
+string.  Additional arguments of type
+<b>char *</b>
+must be passed to receive matched subexpressions back.  If an insufficient
+number of arguments is passed to accept all the values that the regular
+expression returns, the behaviour is undefined.  A global character pointer
+<b>__loc1</b>
+points to the first matched character in the
+<i>subject</i>
+string.  Both
+<i>regcmp()</i>
+and
+<i><a href="regex.htm">regex()</a></i>
+were largely borrowed from the editor,
+and are defined in
+<i><a href="recom201.htm">re_comp()</a></i>,
+but the syntax and semantics have been changed slightly.
+The following are the valid symbols and their associated meanings:
+<dl compact>
+
+<dt>[]*.^<dd>These symbols retain their meaning as defined in
+<i><a href="recom201.htm">re_comp()</a></i>.
+
+<dt>$<dd>Matches the end of the string; \n matches a new-line.
+
+<dt>-<dd>Used within brackets, the hyphen signifies an ASCII character range.
+For example, [a-z] is equivalent to [abcd ... xyz] .  The -
+can represent itself only if used as the first or last character.
+For example, the character class expression []-]
+matches the characters ] and -.
+
+<dt>+<dd>A regular expression followed by +
+means one or more times.  For example, [0-9]+
+is equivalent to [0-9][0-9]* .
+
+<dt>{<i>m</i>} {<i>m</i>,} {<i>m</i>,<i>u</i>}<dd><br>
+Integer values enclosed in { } indicate the number of times the preceding
+regular expression can be applied.  The value
+<i>m</i>
+is the minimum number and
+<i>u</i>
+is a number, less than 256, which is the maximum.  If the value of either
+<i>m</i>
+or
+<i>u</i>
+is 256 or greater, the behaviour is undefined.  The syntax <b>{</b>m<b>}</b>
+indicates the exact number of times the regular expression can be applied.
+The syntax <b>{</b>m<b>,}</b> is analogous to <b>{</b>m<b>,</b>infinity<b>}</b>.
+The plus (+) and asterisk (*) operations are equivalent to
+<b>{1,}</b>
+and
+<b>{0,}</b>
+respectively.
+
+<dt>( ... )$<i>n</i><dd>The value of the enclosed regular expression is returned.
+The value is stored in the
+<i> (n+1)</i>th
+argument following the
+<i>subject</i>
+argument.  A maximum of ten enclosed regular expressions are allowed.  The
+<i><a href="regex.htm">regex()</a></i>
+function makes its assignments unconditionally.
+
+<dt>( ... )<dd>Parentheses are used for grouping.  An operator, such as
+<b>*</b>,
+<b>+</b>,
+or
+<b>{ }</b>
+can work on a single character or a regular expression enclosed in
+parentheses.  For example, (a*(cb+)*)$0 .
+
+</dl>
+<p>
+Since all of the above defined symbols are special characters,
+they must be escaped to be used as themselves.
+<p>
+The behaviour of
+<i>regcmp()</i>
+and
+<i><a href="regex.htm">regex()</a></i>
+in locales other than the POSIX locale is unspecified.
+<p>
+These interfaces need not be reentrant.
+</blockquote><h4><a name = "tag_000_008_009">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>regcmp()</i>
+returns a pointer to the compiled regular expression.  Otherwise, a
+null pointer is returned and
+<i>errno</i>
+may be set to indicate the error.
+<p>
+Upon successful completion,
+<i><a href="regex.htm">regex()</a></i>
+returns a pointer to the next unmatched character in the subject string.
+Otherwise, a null pointer is returned.
+<p>
+The
+<i><a href="regex.htm">regex()</a></i>
+function returns a null pointer on failure, or a pointer to the next unmatched
+character on success.
+</blockquote><h4><a name = "tag_000_008_010">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>regcmp()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENOMEM]<dd>
+Insufficient storage space was available.
+
+</dl>
+<p>
+No errors are defined for
+<i><a href="regex.htm">regex()</a></i>.
+</blockquote><h4><a name = "tag_000_008_011">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_012">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+For portability to implementations conforming to earlier versions of this
+specification,
+<i><a href="regcomp.htm">regcomp()</a></i>
+is preferred over this function.
+<p>
+User programs that use
+<i>regcmp()</i>
+may run out of memory if
+<i>regcmp()</i>
+is called iteratively without freeing compiled regular expression strings
+that are no longer required.
+</blockquote><h4><a name = "tag_000_008_013">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_014">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="malloc.htm">malloc()</a></i>,
+<i><a href="regcomp.htm">regcomp()</a></i>,
+<i><a href="libge87.htm">&lt;libgen.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

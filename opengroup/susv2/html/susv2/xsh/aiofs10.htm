@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>aio_fsync</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_122">&nbsp;</a>NAME</h4><blockquote>
+aio_fsync - asynchronous file synchronisation
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_001_123">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="aioh7.htm">aio.h</a>&gt;
+
+int aio_fsync(int <i>op</i>, struct aiocb *<i>aiocbp</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_124">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>aio_fsync()</i>
+function asynchronously forces all I/O operations associated with the file
+indicated by the file descriptor
+<i>aio_fildes</i>
+member of the
+<b>aiocb</b>
+structure referenced by the
+<i>aiocbp</i>
+argument and queued at the time of the call to
+<i>aio_fsync()</i>
+to the synchronised I/O completion state.
+The function call returns
+when the synchronisation request has been initiated
+or queued to the file or device
+(even when the data cannot be synchronised immediately).
+<p>
+If
+<i>op</i>
+is O_DSYNC,
+all currently queued I/O operations are completed as if by a call to
+<i><a href="fdata44.htm">fdatasync()</a></i>;
+that is, as defined for
+synchronised I/O data integrity completion.
+If
+<i>op</i>
+is O_SYNC,
+all currently queued I/O operations are completed as if by a call to
+<i><a href="fsync.htm">fsync()</a></i>;
+that is, as defined for
+synchronised I/O file integrity completion.
+If the
+<i>aio_fsync()</i>
+function fails, or if the operation queued by
+<i>aio_fsync()</i>
+fails, then, as for
+<i><a href="fsync.htm">fsync()</a></i>
+and
+<i><a href="fdata44.htm">fdatasync()</a></i>,
+outstanding I/O operations are not guaranteed to have been completed.
+<p>
+If
+<i>aio_fsync()</i>
+succeeds, then it is only the I/O that was queued at the time of the call
+to
+<i>aio_fsync()</i>
+that is guaranteed to be forced to the relevant completion state.
+The completion of subsequent I/O on the file descriptor is not guaranteed
+to be completed in a synchronised fashion.
+<p>
+The
+<i>aiocbp</i>
+argument refers to an asynchronous I/O control block.
+The
+<i>aiocbp</i>
+value may be used as an argument to
+<i><a href="aioer9.htm">aio_error()</a></i>
+and
+<i><a href="aiore12.htm">aio_return()</a></i>
+in order to determine the
+error status and return status, respectively, of the asynchronous operation
+while it is proceeding.
+When the request is queued,
+the error status for the operation is
+EINPROGRESS.
+When all data has been
+successfully transferred,
+the error status will be reset
+to reflect the success or failure of the operation.
+If the operation does not complete successfully,
+the error status for the operation will be set to indicate the error.
+The
+<i>aio_sigevent</i>
+member determines the asynchronous notification to occur as specified in
+<xref href=siggendel><a href="sigac238.htm#tag_000_008_581_001">
+Signal Generation and Delivery
+</a></xref>
+when all operations have achieved
+synchronised I/O completion.
+All other members of the structure referenced by
+<i>aiocbp</i>
+are ignored.
+If the control block referenced by
+<i>aiocbp</i>
+becomes an illegal address prior to asynchronous I/O completion,
+then the behaviour is undefined.
+<p>
+If the
+<i>aio_fsync()</i>
+function fails or the
+<i>aiocbp</i>
+indicates an error condition, data is not guaranteed to have been
+successfully transferred.
+<p>
+If
+<i>aiocbp</i>
+is NULL,
+then no status is returned in
+<i>aiocbp</i>,
+and no signal is generated upon completion of the operation.
+</blockquote><h4><a name = "tag_000_001_125">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>aio_fsync()</i>
+function returns the value 0 to the
+calling process if the I/O operation is successfully queued;
+otherwise, the function returns the value -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_001_126">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>aio_fsync()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAGAIN]<dd>
+The requested asynchronous operation was not queued due to
+temporary resource limitations.
+
+<dt>[EBADF]<dd>
+The
+<i>aio_fildes</i>
+member of the
+<b>aiocb</b>
+structure referenced by the
+<i>aiocbp</i>
+argument is not a valid file descriptor open for writing.
+
+<dt>[EINVAL]<dd>
+This implementation does not support synchronised I/O for this file.
+
+<dt>[EINVAL]<dd>A value of
+<i>op</i>
+other than O_DSYNC or O_SYNC was specified.
+
+<dt>[ENOSYS]<dd>
+The
+<i>aio_fsync()</i>
+function is not supported by this implementation.
+
+</dl>
+<p>
+In the event that any of the queued I/O operations fail,
+<i>aio_fsync()</i>
+returns the error condition defined for
+<i><a href="read.htm">read()</a></i>
+and
+<i><a href="write.htm">write()</a></i>.
+The error will be returned in the error status for the asynchronous
+<i><a href="fsync.htm">fsync()</a></i>
+operation, which can be retrieved using
+<i><a href="aioer9.htm">aio_error()</a></i>.
+</blockquote><h4><a name = "tag_000_001_127">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_128">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_129">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_130">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="fdata44.htm">fdatasync()</a></i>,
+<i><a href="fsync.htm">fsync()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="write.htm">write()</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_mutexattr_init</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1522">&nbsp;</a>NAME</h4><blockquote>
+pthread_mutexattr_init, pthread_mutexattr_destroy
+- initialise and destroy mutex attributes object
+</blockquote><h4><a name = "tag_000_007_1523">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_mutexattr_init(pthread_mutexattr_t *<i>attr</i>);
+int pthread_mutexattr_destroy(pthread_mutexattr_t *<i>attr</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1524">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The function
+<i>pthread_mutexattr_init()</i>
+initialises a mutex attributes object
+<i>attr</i>
+with the default value for all of the attributes
+defined by the implementation.
+<p>
+The effect of initialising an already initialised mutex 
+attributes object is undefined.
+<p>
+After a mutex attributes object has been used
+to initialise one or more mutexes,
+any function affecting the attributes object (including destruction)
+does not affect any previously initialised mutexes.
+<p>
+The
+<i>pthread_mutexattr_destroy()</i>
+function destroys a mutex attributes object;
+the object becomes, in effect, uninitialised.
+An implementation may cause
+<i>pthread_mutexattr_destroy()</i>
+to set the object referenced by
+<i>attr</i>
+to an invalid value.
+A destroyed mutex attributes object
+can be re-initialised using
+<i>pthread_mutexattr_init()</i>;
+the results of otherwise referencing the object after it has been 
+destroyed are undefined.
+</blockquote><h4><a name = "tag_000_007_1525">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>pthread_mutexattr_init()</i>
+and
+<i>pthread_mutexattr_destroy()</i>
+return zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1526">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_mutexattr_init()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENOMEM]<dd>
+Insufficient memory exists to initialise the mutex attributes object.
+
+</dl>
+<p>
+The
+<i>pthread_mutexattr_destroy()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value specified by
+<i>attr</i>
+is invalid.
+
+</dl>
+<p>
+These functions will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1527">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1528">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1529">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1530">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre147.htm">pthread_create()</a></i>,
+<i><a href="pthre160.htm">pthread_mutex_init()</a></i>,
+<i>pthread_mutexattr_init()</i>,
+<i><a href="pthre139.htm">pthread_cond_init()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

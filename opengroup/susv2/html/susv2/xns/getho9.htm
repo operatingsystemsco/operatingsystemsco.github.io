@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>endhostent</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+endhostent, gethostbyaddr, gethostbyname, gethostent, sethostent - network host database functions
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="netdb30.htm">netdb.h</a>&gt;
+
+extern int h_errno;
+
+void endhostent(void);
+
+struct hostent *gethostbyaddr(const void *<I>addr</I>, size_t <I>len</I>, int <I>type</I>);
+
+struct hostent *gethostbyname(const char *<I>name</I>);
+
+struct hostent *gethostent(void);
+
+void sethostent(int <I>stayopen</I>);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The
+<i>gethostent()</i>,
+<i><a href="getho7.htm">gethostbyaddr()</a></i>,
+and
+<i>gethostbyname()</i>
+functions each return a pointer to a <B>hostent</B> structure, the members of
+which contain the fields of an entry in the network host database.
+<p>
+The
+<i>gethostent()</i>
+function reads the next entry of the database, opening a connection to the
+database if necessary.
+<p>
+The
+<i><a href="getho7.htm">gethostbyaddr()</a></i>
+function searches the database and finds an entry
+which matches the address family specified by the
+<I>type</I>
+argument and which matches the
+address pointed to by the
+<I>addr</I>
+argument, 
+opening a connection to the database if necessary.  The
+<I>addr</I> argument is a pointer to the binary-format (that is, not
+null-terminated) address in network byte order, whose length is specified by
+the <I>len</I> argument.  The datatype of the address depends on the address
+family.  For an address of type AF_INET, this is an <B>in_addr</B>
+structure, defined in
+<i><a href="netin31.htm">&lt;netinet/in.h&gt;</a></i>.
+<p>
+The
+<i>gethostbyname()</i>
+function searches the database and finds an entry
+which matches the host name specified by the
+<I>name</I>
+argument, opening a connection to the database if necessary.
+If 
+<I>name</I>
+is an alias for a valid host name, 
+the function returns information about the host name 
+to which the alias
+refers, and 
+<I>name</I>
+is included in the list of aliases returned.
+<p>
+The
+<i><a href="setho32.htm">sethostent()</a></i>
+function opens a connection to the network host database, and sets the
+position of the next entry to the first entry.  If the <I>stayopen</I> argument
+is non-zero, the connection to the host database will not be closed after each
+call to
+<i>gethostent()</i>
+(either directly, or indirectly through one of the other
+<i>gethost*()</i>
+functions).
+<p>
+The
+<i>endhostent()</i>
+function closes the connection to the database.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+On successful completion,
+<i><a href="getho7.htm">gethostbyaddr()</a></i>,
+<i>gethostbyname()</i>
+and
+<i>gethostent()</i>
+return a pointer to a <B>hostent</B> structure if the requested entry was
+found, and a null pointer if the end of the database was reached or the
+requested entry was not found.  Otherwise, a null pointer is returned.
+<p>
+On unsuccessful completion,
+<i><a href="getho7.htm">gethostbyaddr()</a></i>
+and
+<i>gethostbyname()</i>
+functions set <I>h_errno</I> to indicate the error.
+</blockquote><h4>ERRORS</h4><blockquote>
+No errors are defined for
+<i>endhostent()</i>,
+<i>gethostent()</i>
+and
+<i><a href="setho32.htm">sethostent()</a></i>.
+<p>
+The
+<i><a href="getho7.htm">gethostbyaddr()</a></i>
+and
+<i>gethostbyname()</i>
+functions will fail in the following cases, setting
+<I>h_errno</I>
+to the value shown in the list below.  Any changes to
+<I>errno</I>
+are unspecified.
+<dl compact>
+
+<dt>[HOST_NOT_FOUND]<dd><br>
+No such host is known.
+
+<dt>[NO_DATA]<dd>The server recognised the request and the name but no address is available.
+Another type of request to the name server for the domain might return an
+answer.
+
+<dt>[NO_RECOVERY]<dd>An unexpected server failure occurred which can not be recovered.
+
+<dt>[TRY_AGAIN]<dd>A temporary and possibly transient
+error occurred, such as a failure of a server to respond.
+
+</dl>
+</blockquote><h4>APPLICATION USAGE</h4><blockquote>
+The
+<i>gethostent()</i>,
+<i><a href="getho7.htm">gethostbyaddr()</a></i>,
+and
+<i>gethostbyname()</i>
+functions may return pointers to static data, which may be overwritten by
+subsequent calls to any of these functions.
+<p>
+These functions are generally used with the Internet address family.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="endse5.htm">endservent()</a></i>,
+<i><a href="htonl.htm">htonl()</a></i>,
+<i><a href="ineta24.htm">inet_addr()</a></i>,
+<i><a href="netdb30.htm">&lt;netdb.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

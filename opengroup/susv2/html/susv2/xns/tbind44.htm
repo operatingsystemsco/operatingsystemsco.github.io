@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_bind</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_bind - bind an address to a transport endpoint
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_bind(
+    int fd,
+    const struct t_bind *req,
+    struct t_bind *ret)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>req-&gt
+<td align=center>addr.maxlen
+<td align=center>=
+<tr valign=top><td align=left>req-&gt
+<td align=center>addr.len
+<td align=center>x0
+<tr valign=top><td align=left>req-&gt
+<td align=center>addr.buf
+<td align=center>x (x)
+<tr valign=top><td align=left>req-&gt
+<td align=center>qlen
+<td align=center>x0
+<tr valign=top><td align=left>ret-&gt
+<td align=center>addr.maxlen
+<td align=center>x
+<tr valign=top><td align=left>ret-&gt
+<td align=center>addr.len
+<td align=center>/
+<tr valign=top><td align=left>ret-&gt
+<td align=center>addr.buf
+<td align=center>?
+<tr valign=top><td align=left>ret-&gt
+<td align=center>qlen
+<td align=center>/
+</table>
+</pre>
+<p>
+<I>ret-&gt;addr.buf</I> (the pointer itself, not the buffer
+it points to) is also unchanged.
+<p>
+This function associates a protocol address
+with the transport endpoint specified by
+<I>fd</I>
+and activates that transport endpoint.
+In connection mode, the transport provider may begin enqueuing incoming
+connect indications, or servicing a connection
+request on the transport endpoint.
+In connectionless-mode, the transport user may send or receive
+data units through the transport endpoint.
+<p>
+The
+<I>req</I>
+and
+<I>ret</I>
+arguments point to a
+<B>t_bind</B>
+structure containing the following members:
+<pre>
+<code>
+struct netbuf addr;
+unsigned qlen;
+</code>
+</pre>
+<p>
+The
+<I>addr</I>
+field of the
+<B>t_bind</B>
+structure specifies a protocol address, and the
+<I>qlen</I>
+field is used to indicate the maximum number of outstanding
+connection indications.
+<p>
+The parameter
+<I>req</I>
+is used to request that an address, represented by the
+<B>netbuf</B>
+structure, be bound to the given transport endpoint.
+The parameter
+<I>len</I>
+specifies the number of bytes in the address, and
+<I>buf</I>
+points to the address buffer.
+The parameter
+<I>maxlen</I>
+has no meaning for the
+<I>req</I>
+argument.
+On return,
+<I>ret</I>
+contains an encoding for the address that the
+transport provider actually bound to the transport endpoint; if
+an address was specified in 
+<I>req</I>,
+this will be an encoding of the same address.
+In
+<I>ret</I>,
+the user specifies
+<I>maxlen,</I>
+which is the maximum size of the address buffer, and
+<I>buf</I>
+which points to the buffer where the address is to be placed.
+On return,
+<I>len</I>
+specifies the number of bytes in the bound address,
+and
+<I>buf</I>
+points to the bound address.
+If
+<I>maxlen</I>
+equals zero, no address
+is returned. If 
+<I>maxlen</I>
+is greater than zero and less than
+the length of the address, 
+<i>t_bind()</i>
+fails with
+<I>t_errno</I>
+set to [TBUFOVFLW].
+<p>
+If the requested address is not available,
+<i>t_bind()</i>
+will return -1 with
+<I>t_errno</I>
+set as appropriate.
+If no address is specified in
+<I>req</I>
+(the
+<I>len</I>
+field of
+<I>addr</I>
+in
+<I>req</I>
+is zero or
+<I>req</I>
+is NULL),
+the transport provider will assign an appropriate address to be bound,
+and will return that address in the
+<I>addr</I>
+field of
+<I>ret</I>.
+If the transport provider could not allocate an address,
+<i>t_bind()</i>
+will fail with
+<I>t_errno</I>
+set to [TNOADDR].
+<p>
+The parameter
+<I>req</I>
+may be a null pointer if the user does not wish to specify an
+address to be bound.
+Here, the value of
+<I>qlen</I>
+is assumed to be zero, and the transport provider will assign an
+address to the transport endpoint.
+Similarly,
+<I>ret</I>
+may be a null pointer if the user does not care what address was
+bound by the provider and is not interested in the negotiated
+value of
+<I>qlen</I>.
+It is valid to set
+<I>req</I>
+and
+<I>ret</I>
+to
+the null pointer
+for the same call, in which case the provider chooses the address
+to bind to the transport endpoint and does not return that
+information to the user.
+<p>
+The
+<I>qlen</I>
+field has meaning only when initialising a connection-mode service.
+It specifies the number of outstanding connection indications that the transport
+provider should support for the given transport endpoint.
+An outstanding connection indication is one that has been passed to the transport
+user by the transport provider but which has not been accepted or rejected.
+A value of
+<I>qlen</I>
+greater than zero
+is only meaningful when issued by a passive transport user that expects
+other users to call it.
+The value of
+<I>qlen</I>
+will be negotiated by the transport provider and may be changed
+if the transport provider cannot support the specified number of
+outstanding connection indications.
+However, this value of
+<I>qlen</I>
+will never be negotiated from a requested value greater than zero to zero.
+This is a requirement on transport providers; see <B>CAVEATS</B> below.
+On return, the
+<I>qlen</I>
+field in
+<I>ret</I>
+will contain the negotiated value.
+<p>
+If
+<I>fd</I>
+refers to a connection-mode service,
+this function allows
+more than one transport endpoint to be bound to the
+same protocol address (however, the transport provider
+must also support this capability), but it is not possible to bind more than
+one protocol address to the same transport endpoint.
+If a user binds more than one transport endpoint to the same protocol
+address, only one endpoint can be used to listen for
+connection indications associated with that protocol address.
+In other words, only one
+<i>t_bind()</i>
+for a given protocol address may specify a value of
+<I>qlen</I>
+greater than zero.
+In this way, the transport provider can identify which transport endpoint
+should be notified of an incoming connection indication.
+If a user attempts to bind a protocol address to a second transport
+endpoint with a value of
+<I>qlen</I>
+greater than zero,
+<i>t_bind()</i>
+will return -1 and set
+<I>t_errno</I>
+to [TADDRBUSY].
+When a user accepts a connection on the transport endpoint that is being
+used as the listening endpoint, the bound protocol address
+will be found to be busy for the duration of the connection,
+until a
+<i><a href="tunbi76.htm">t_unbind()</a></i>
+or
+<i><a href="tclos45.htm">t_close()</a></i>
+call has been issued.
+No other transport endpoints may be bound for listening on that same protocol
+address while that initial listening endpoint is active (in the data
+transfer phase or in the T_IDLE
+state).
+This will prevent more than one transport endpoint bound to the same
+protocol address from accepting connection indications.
+<p>
+If 
+<I>fd</I>
+refers to connectionless mode service, this function
+allows for more than one transport endpoint to be associated
+with a protocol address, where the underlying transport provider
+supports this capability (often in conjunction with value of a
+protocol-specific option). If a user attempts to bind a second
+transport endpoint to an already bound protocol address when such
+capability is not supported for a transport provider,
+<i>t_bind()</i>
+will return -1 and set
+<I>t_errno</I>
+to [TADDRBUSY].
+</blockquote><h4>VALID STATES</h4><blockquote>
+T_UNBND
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure,
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TACCES]<dd>The user does not have permission to use the specified address.
+
+<dt>[TADDRBUSY]<dd>The requested address is in use.
+
+<dt>[TBADADDR]<dd>The specified protocol address was in an incorrect format or
+contained illegal information.
+
+<dt>[TBADF]<dd>The specified file descriptor does not refer to a transport endpoint.
+
+<dt>[TBUFOVFLW]<dd>The number of bytes allowed for an incoming argument
+<I>(maxlen)</I>
+is greater than 0 but not
+sufficient to store the value of that argument.
+The provider's state will change to T_IDLE
+and the information to be returned in
+<I>ret</I>
+will be discarded.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by 
+<I>fd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TNOADDR]<dd>The transport provider could not allocate an address.
+
+<dt>[TPROTO]<dd>This error indicates that a communication problem has been detected between
+XTI and the transport provider for which there is no other suitable XTI
+error
+<I>(t_errno)</I>.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, a value of 0 is returned.  Otherwise,
+a value of -1 is returned and
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="tacce42.htm">t_accept()</a></i>,
+<i><a href="tallo43.htm">t_alloc()</a></i>,
+<i><a href="tclos45.htm">t_close()</a></i>,
+<i><a href="tconn46.htm">t_connect()</a></i>,
+<i><a href="tunbi76.htm">t_unbind()</a></i>.
+</blockquote><h4>CAVEATS</h4><blockquote>
+The requirement that the value of
+<I>qlen</I>
+never be negotiated from a requested value greater than zero to zero implies
+that transport providers, rather than the XTI implementation itself,
+accept this restriction.
+<p>
+An implementation need not allow an application
+explicitly to bind more than one communications endpoint
+to a single protocol address, while permitting more than
+one connection to be accepted to the same protocol
+address. That means that although an attempt to bind a
+communications endpoint to some address with 
+<I>qlen=0</I>
+might be rejected with [TADDRBUSY], the user may nevertheless
+use this (unbound) endpoint as a responding endpoint in a
+call to 
+<i><a href="tacce42.htm">t_accept()</a></i>.
+To become independent of such
+implementation differences, the user should supply unbound
+responding endpoints to 
+<i><a href="tacce42.htm">t_accept()</a></i>.
+<p>
+The local address bound to an endpoint may change as result of a
+<i><a href="tacce42.htm">t_accept()</a></i>
+or 
+<i><a href="tconn46.htm">t_connect()</a></i>
+call. Such changes are not necessarily
+reversed when the connection is released.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

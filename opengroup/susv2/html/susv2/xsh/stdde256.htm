@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;stddef.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_856">&nbsp;</a>NAME</h4><blockquote>
+stddef.h - standard type definitions
+</blockquote><h4><a name = "tag_000_008_857">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;stddef.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_858">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;stddef.h&gt;</i>
+header defines the following:
+<dl compact>
+
+<dt>NULL<dd>
+Null pointer constant.
+
+<dt>offsetof(<i>type</i>, <i>member-designator</i>)<dd><br>
+Integral constant expression of type <b>size_t</b>, the
+value of which is the offset in bytes to the structure member
+(<i>member-designator</i>),
+from the beginning of its structure (<i>type</i>).
+
+</dl>
+<p>
+The
+<i>&lt;stddef.h&gt;</i>
+header defines through <b>typedef</b>:
+<dl compact>
+
+<dt><b>ptrdiff_t</b><dd><index term="data type, ptrdiff_t"></index>
+Signed integral type of the result of subtracting two
+pointers.
+
+<dt><b>wchar_t</b><dd><index term="data type, wchar_t"></index>
+Integral type whose range of values can represent distinct wide-character
+codes for all members of the largest character set specified
+among the locales supported by the compilation environment:
+the null character has the code value 0 and each member of
+the Portable Character Set has a code value
+equal to its value when used as the lone character in an integer
+character constant.
+
+<dt><b>size_t</b><dd><index term="data type, size_t"></index>
+Unsigned integral type of the result of the
+<i>sizeof</i>
+operator.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_859">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_860">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_861">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

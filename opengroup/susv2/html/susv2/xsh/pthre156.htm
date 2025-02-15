@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_key_delete</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1396">&nbsp;</a>NAME</h4><blockquote>
+pthread_key_delete - thread-specific data key deletion
+</blockquote><h4><a name = "tag_000_007_1397">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_key_delete(pthread_key_t <i>key</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1398">&nbsp;</a>DESCRIPTION</h4><blockquote>
+This function deletes a thread-specific data
+key previously returned by
+<i><a href="pthre155.htm">pthread_key_create()</a></i>.
+The thread-specific data values associated with
+<i>key</i>
+need not be NULL at the time
+<i>pthread_key_delete()</i>
+is called.
+It is the responsibility of the application
+to free any application storage
+or perform any cleanup actions for data structures
+related to the deleted key or associated thread-specific data
+in any threads;
+this cleanup can be done either before or after
+<i>pthread_key_delete()</i>
+is called.
+Any attempt to use
+<i>key</i>
+following the call to
+<i>pthread_key_delete()</i>
+results in undefined behaviour.
+<p>
+The
+<i>pthread_key_delete()</i>
+function is callable from within destructor functions.
+No destructor functions will be invoked by
+<i>pthread_key_delete()</i>.
+Any destructor function that may have been associated with
+<i>key</i>
+will no longer be called upon thread exit.
+</blockquote><h4><a name = "tag_000_007_1399">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>pthread_key_delete()</i>
+function returns zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1400">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_key_delete()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>key</i>
+value is invalid.
+
+</dl>
+<p>
+The
+<i>pthread_key_delete()</i>
+function will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1401">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1402">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1403">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1404">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre155.htm">pthread_key_create()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

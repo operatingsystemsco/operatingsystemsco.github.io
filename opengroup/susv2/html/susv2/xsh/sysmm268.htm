@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;sys/mman.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_318">&nbsp;</a>NAME</h4><blockquote>
+sys/mman.h - memory management declarations
+</blockquote><h4><a name = "tag_000_009_319">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;sys/mman.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_320">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The following protection options are defined:
+<dl compact>
+
+<dt>PROT_READ<dd>
+Page can be read.
+
+<dt>PROT_WRITE<dd>
+Page can be written.
+
+<dt>PROT_EXEC<dd>
+Page can be executed.
+
+<dt>PROT_NONE<dd>
+Page can not be accessed.
+
+</dl>
+<p>
+The following <i>flag</i> options are defined:
+<dl compact>
+
+<dt>MAP_SHARED<dd>
+Share changes.
+
+<dt>MAP_PRIVATE<dd>
+Changes are private.
+
+<dt>MAP_FIXED<dd>
+Interpret addr exactly.
+
+</dl>
+<p>
+The following flags are defined for
+<i><a href="msync.htm">msync()</a></i>:
+<dl compact>
+
+<dt>MS_ASYNC<dd>
+Perform asynchronous writes.
+
+<dt>MS_SYNC<dd>
+Perform synchronous writes.
+
+<dt>MS_INVALIDATE<dd>
+Invalidate mappings.
+
+</dl>
+<p>
+The following symbolic constants are defined for the
+<i><a href="mlockall.htm">mlockall()</a></i>
+function:
+<dl compact>
+
+<dt>MCL_CURRENT<dd>
+Lock currently mapped pages.
+
+<dt>MCL_FUTURE<dd>
+Lock pages that become mapped.
+
+</dl>
+<p>
+The symbolic constant MAP_FAILED is defined to indicate a 
+failure from the
+<i><a href="mmap.htm">mmap()</a></i>
+function.
+<p>
+The
+<b>size_t</b>
+and
+<b>off_t</b>
+types are defined as described in
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<p>
+The following are declared in &lt;<b>sys/mman.h</b>&gt; as functions and may also be
+defined as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int    <a href="mlock.htm">mlock</a>(const void *, size_t);
+int    <a href="mlockall.htm">mlockall</a>(int);
+void  *<a href="mmap.htm">mmap</a>(void *, size_t, int, int, int, off_t);
+int    <a href="mprotect.htm">mprotect</a>(void *, size_t, int);
+int    <a href="msync.htm">msync</a>(void *, size_t, int);
+int    <a href="munlock.htm">munlock</a>(const void *, size_t);
+int    <a href="munlo107.htm">munlockall</a>(void);
+int    <a href="munmap.htm">munmap</a>(void *, size_t);
+int    <a href="shmop236.htm">shm_open</a>(const char *, int, mode_t);
+int    <a href="shmun237.htm">shm_unlink</a>(const char *);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_321">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The functions
+<i><a href="mlock.htm">mlock()</a></i>,
+<i><a href="mlockall.htm">mlockall()</a></i>,
+<i><a href="shmop236.htm">shm_open()</a></i>,
+and
+<i><a href="shmun237.htm">shm_unlink()</a></i>
+are part of the <a href="feature.htm">Realtime Feature Group</a>.
+</blockquote><h4><a name = "tag_000_009_322">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_323">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mlock.htm">mlock()</a></i>,
+<i><a href="mlockall.htm">mlockall()</a></i>,
+<i><a href="mmap.htm">mmap()</a></i>,
+<i><a href="mprotect.htm">mprotect()</a></i>,
+<i><a href="msync.htm">msync()</a></i>,
+<i><a href="munmap.htm">munmap()</a></i>,
+<i><a href="shmop236.htm">shm_open()</a></i>,
+<i><a href="shmun237.htm">shm_unlink()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

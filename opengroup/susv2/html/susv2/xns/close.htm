@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>close</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+close - close a file descriptor
+<dl><dt><b>Note:</b>
+<dd>The <B>XSH</B> specification for
+<i><a href="../xsh/close.htm">close()</a></i>
+ contains the basic definition of this interface.  The following
+additional information pertains to Sockets.
+</dl>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+If
+<I>fildes</I>
+refers to a socket,
+<i>close()</i>
+causes the socket to be destroyed.  If the socket is connection-mode, and
+the SO_LINGER option is set for the socket with non-zero linger time, 
+and the socket has untransmitted data, then
+<i>close()</i>
+will block for up to the current linger interval until all data is
+transmitted.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

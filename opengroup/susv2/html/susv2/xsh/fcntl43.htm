@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;fcntl.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_004_146">&nbsp;</a>NAME</h4><blockquote>
+fcntl.h - file control options
+</blockquote><h4><a name = "tag_000_004_147">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;fcntl.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_004_148">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;fcntl.h&gt;</i>
+header defines the following requests and arguments for use by the functions
+<i><a href="fcntl.htm">fcntl()</a></i>
+and
+<i><a href="open.htm">open()</a></i>.
+<p>
+Values for
+<i>cmd</i>
+used by
+<i><a href="fcntl.htm">fcntl()</a></i>
+(the following values are unique):
+<dl compact>
+
+<dt>F_DUPFD<dd>
+Duplicate file descriptor.
+
+<dt>F_GETFD<dd>
+Get file descriptor flags.
+
+<dt>F_SETFD<dd>
+Set file descriptor flags.
+
+<dt>F_GETFL<dd>
+Get file status flags and file access modes.
+
+<dt>F_SETFL<dd>
+Set file status flags.
+
+<dt>F_GETLK<dd>
+Get record locking information.
+
+<dt>F_SETLK<dd>
+Set record locking information.
+
+<dt>F_SETLKW<dd>
+Set record locking information; wait if blocked.
+
+</dl>
+<p>
+File descriptor flags used for
+<i>fcntl</i>():
+<dl compact>
+
+<dt>FD_CLOEXEC<dd>
+Close the file descriptor upon execution of an
+<i>exec</i>
+family function.
+
+</dl>
+<p>
+Values for
+<i>l_type</i>
+used for record locking with
+<i>fcntl</i>()
+(the following values are unique):
+<dl compact>
+
+<dt>F_RDLCK<dd>
+Shared or read lock.
+
+<dt>F_UNLCK<dd>
+Unlock.
+
+<dt>F_WRLCK<dd>
+Exclusive or write lock.
+
+</dl>
+<p>
+The values used for
+<i>l_whence</i>,
+SEEK_SET, SEEK_CUR and SEEK_END
+are defined as described in
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+<p>
+The following four sets of values for
+<i>oflag</i>
+used by
+<i>open</i>()
+are bitwise distinct:
+<dl compact>
+
+<dt>O_CREAT<dd>
+Create file if it does not exist.
+
+<dt>O_EXCL<dd>
+Exclusive use flag.
+
+<dt>O_NOCTTY<dd>
+Do not assign controlling terminal.
+
+<dt>O_TRUNC<dd>
+Truncate flag.
+
+</dl>
+<p>
+File status flags used for
+<i>open</i>()
+and
+<i>fcntl</i>():
+<dl compact>
+
+<dt>O_APPEND<dd>
+Set append mode.
+
+<dt>O_DSYNC<dd>
+Write according to synchronised I/O data integrity completion.
+
+<dt>O_NONBLOCK<dd>
+Non-blocking mode.
+
+<dt>O_RSYNC<dd>
+Synchronised read I/O operations.
+
+<dt>O_SYNC<dd>
+Write according to synchronised I/O file integrity completion.
+
+</dl>
+<p>
+Mask for use with file access modes:
+<dl compact>
+
+<dt>O_ACCMODE<dd>
+Mask for file access modes.
+
+</dl>
+<p>
+File access modes used for
+<i>open</i>()
+and
+<i>fcntl</i>():
+<dl compact>
+
+<dt>O_RDONLY<dd>
+Open for reading only.
+
+<dt>O_RDWR<dd>
+Open for reading and writing.
+
+<dt>O_WRONLY<dd>
+Open for writing only.
+
+</dl>
+<p>
+The symbolic names for file modes for use as values of
+<b>mode_t</b>
+are defined as described in
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+<p>
+The structure <b>flock</b> describes a file lock.
+It includes the following members:
+<pre>
+<code>
+short l_type   type of lock; F_RDLCK, F_WRLCK, F_UNLCK
+short l_whence flag for starting offset
+off_t l_start  relative offset in bytes
+off_t l_len    size; if 0 then until EOF
+pid_t l_pid    process ID of the process holding the lock; returned with F_GETLK
+</code>
+</pre>
+<p>
+The
+<b>off_t</b>
+and
+<b>pid_t</b>
+types are defined as described in
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<p>
+The following are declared as functions and may also be defined
+as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int  <a href="creat.htm">creat</a>(const char *, mode_t);
+int  <a href="fcntl.htm">fcntl</a>(int, int, ...);
+int  <a href="open.htm">open</a>(const char *, int, ...);
+</code>
+</pre>
+<p>
+Inclusion of the
+<i>&lt;fcntl.h&gt;</i>
+header may also make visible all symbols from
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>
+and
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4><a name = "tag_000_004_149">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_150">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_151">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="creat.htm">creat()</a></i>,
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

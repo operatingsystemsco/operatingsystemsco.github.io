@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sigsetjmp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_723">&nbsp;</a>NAME</h4><blockquote>
+sigsetjmp - set jump point for a non-local goto
+</blockquote><h4><a name = "tag_000_008_724">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="setjm230.htm">setjmp.h</a>&gt;
+
+int sigsetjmp(sigjmp_buf <i>env</i>, int <i>savemask</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_725">&nbsp;</a>DESCRIPTION</h4><blockquote>
+A call to
+<i>sigsetjmp()</i>
+saves the calling environment in its
+<i>env</i>
+argument for later use by
+<i><a href="siglo247.htm">siglongjmp()</a></i>.
+It is unspecified whether
+<i>sigsetjmp()</i>
+is a macro or a function.
+If a macro definition is suppressed in order to access an actual
+function, or a program defines an external identifier with the
+name
+<i>sigsetjmp</i>
+the behaviour is undefined.
+<p>
+If the value of the
+<i>savemask</i>
+argument is not 0,
+<i>sigsetjmp()</i>
+will also save the current signal mask of the 
+calling thread
+as part of the calling environment.
+<p>
+All accessible objects have values as of the time
+<i><a href="siglo247.htm">siglongjmp()</a></i>
+was called, except that the values of objects of automatic
+storage duration which are local to the function containing the
+invocation of the corresponding
+<i>sigsetjmp()</i>
+which do not have volatile-qualified type and which are
+changed between the
+<i>sigsetjmp()</i>
+invocation and
+<i><a href="siglo247.htm">siglongjmp()</a></i>
+call are indeterminate.
+<p>
+An invocation of
+<i>sigsetjmp()</i>
+must appear in one of the following contexts only:
+<ul>
+<p>
+<li>
+the entire controlling expression of a selection or iteration
+statement
+<p>
+<li>
+one operand of a relational or equality operator with the other
+operand an integral constant expression, with the resulting
+expression being the entire controlling expression of a selection
+or iteration statement
+<p>
+<li>
+the operand of a unary (!)
+operator with the resulting expression
+being the entire controlling expression of a selection or
+iteration
+<p>
+<li>
+the entire expression of an expression statement (possibly cast
+to
+<b>void</b>).
+<p>
+</ul>
+</blockquote><h4><a name = "tag_000_008_726">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the return is from a successful direct invocation,
+<i>sigsetjmp()</i>
+returns 0.  If the return is from a call to
+<i><a href="siglo247.htm">siglongjmp()</a></i>,
+<i>sigsetjmp()</i>
+returns a non-zero value.
+</blockquote><h4><a name = "tag_000_008_727">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_008_728">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_729">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The distinction between
+<i>setjmp</i>()/<i>longjmp</i>()
+and
+<i>sigsetjmp</i>()/<i>siglongjmp</i>()
+is only significant for programs which use
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sigpr250.htm">sigprocmask()</a></i>
+or
+<i><a href="sigsu252.htm">sigsuspend()</a></i>.
+</blockquote><h4><a name = "tag_000_008_730">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_731">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="siglo247.htm">siglongjmp()</a></i>,
+<i><a href="signal.htm">signal()</a></i>,
+<i><a href="sigpr250.htm">sigprocmask()</a></i>,
+<i><a href="sigsu252.htm">sigsuspend()</a></i>,
+<i><a href="setjm230.htm">&lt;setjmp.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

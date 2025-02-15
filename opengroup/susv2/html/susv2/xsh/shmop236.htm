@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>shm_open</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_525">&nbsp;</a>NAME</h4><blockquote>
+shm_open - open a shared memory object
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_008_526">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysmm268.htm">sys/mman.h</a>&gt;
+
+int shm_open(const char *<i>name</i>, int <i>oflag</i>, mode_t <i>mode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_527">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>shm_open()</i>
+function establishes a connection between a shared memory object and
+a file descriptor.
+It creates an open file description that refers to the shared memory object and
+a file descriptor that refers to that open file description.
+The file descriptor is used by other functions to refer to that
+shared memory object.
+The
+<i>name</i>
+argument points to a string naming a shared memory object.
+It is unspecified whether the name appears in the file system
+and is visible to other functions that take pathnames as arguments.
+The
+<i>name</i>
+argument conforms to the construction rules for a pathname.
+If
+<i>name</i>
+begins with the slash character, then processes calling
+<i>shm_open()</i>
+with the same value of
+<i>name</i>
+refer to the same shared memory object,
+as long as that name has not been removed.
+If
+<i>name</i>
+does not begin with the slash character, the effect is 
+implementation-dependent.
+The interpretation of slash
+characters other than the leading slash character in
+<i>name</i>
+is implementation-dependent.
+<p>
+If successful,
+<i>shm_open()</i>
+returns a file descriptor for the shared memory object
+that is the lowest numbered file descriptor
+not currently open for that process.
+The open file description is new,
+and therefore the file descriptor does not share it with any other processes.
+It is unspecified whether the file offset is set.
+The FD_CLOEXEC
+file descriptor flag associated with the new file descriptor is set.
+<p>
+The file status flags and file
+access modes of the open file description are according to
+the value of
+<i>oflag</i>.
+The
+<i>oflag</i>
+argument is the bitwise inclusive OR of the following flags
+defined in the header
+<i><a href="fcntl43.htm">&lt;fcntl.h&gt;</a></i>.
+Applications specify exactly one of the first two values
+(access modes) below in the value of
+<i>oflag</i>:
+<dl compact>
+
+<dt>O_RDONLY<dd>
+Open for read access only.
+
+<dt>O_RDWR<dd>
+Open for read or write access.
+
+</dl>
+<p>
+Any combination of the remaining flags may be specified in the value of
+<i>oflag</i>:
+<dl compact>
+
+<dt>O_CREAT<dd>
+If the shared memory object exists, this flag has no effect,
+except as noted under O_EXCL below.
+Otherwise the shared memory object is created;
+the user ID of the shared memory object
+will be set to the effective user ID
+of the process;
+the group ID of the shared memory object
+will be set to a system default group ID
+or to the effective group ID of the process.
+The permission bits of the shared memory object
+will be set to the value of the
+<i>mode</i>
+argument except those set in the file mode creation mask of the process.
+When bits in
+<i>mode</i>
+other than the file permission bits are set, the effect is unspecified.
+The
+<i>mode</i>
+argument does not affect whether the shared memory object is opened for
+reading, for writing, or for both.
+The shared memory object has a size of zero.
+
+<dt>O_EXCL<dd>
+If O_EXCL and O_CREAT are set,
+<i>shm_open()</i>
+fails if the shared memory object exists.
+The check for the existence of the shared memory object
+and the creation of the object
+if it does not exist is atomic
+with respect to other processes executing
+<i>shm_open()</i>
+naming the same shared memory object with O_EXCL and O_CREAT set.
+If O_EXCL is set and O_CREAT is not set, the result is undefined.
+
+<dt>O_TRUNC<dd>
+If the shared memory object exists,
+and it is successfully opened O_RDWR,
+the object will be truncated to zero length
+and the mode and owner will be unchanged by this function call.
+The result of using O_TRUNC with O_RDONLY is undefined.
+
+</dl>
+<p>
+When a shared memory object is created, the state of the shared memory object,
+including all data associated with the shared memory object, persists
+until the shared memory object is unlinked and all other references are gone.
+It is unspecified whether the name and shared memory object state remain valid
+after a system reboot.
+</blockquote><h4><a name = "tag_000_008_528">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the
+<i>shm_open()</i>
+function returns a non-negative integer representing the lowest
+numbered unused file descriptor.
+Otherwise, it returns -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_008_529">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>shm_open()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd><index term="[EACCES]"></index>
+The shared memory object
+exists and the permissions specified by
+<i>oflag</i>
+are denied, or the shared memory object
+does not exist and permission to create
+the shared memory object
+is denied, or O_TRUNC
+is specified and write permission is denied.
+
+<dt>[EEXIST]<dd><index term="[EEXIST]"></index>
+O_CREAT and O_EXCL are set and
+the named shared memory object
+already exists.
+
+<dt>[EINTR]<dd>
+The
+<i>shm_open()</i>
+operation was interrupted by a signal.
+
+<dt>[EINVAL]<dd>
+The
+<i>shm_open()</i>
+operation is not supported for the given name.
+
+<dt>[EMFILE]<dd>
+Too many
+file descriptors are currently in use by this process.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>name</i>
+string exceeds {PATH_MAX},
+or a pathname component is longer than {NAME_MAX}
+while _POSIX_NO_TRUNC is in effect.
+
+<dt>[ENFILE]<dd>
+Too many shared memory objects
+are currently open in the system.
+
+<dt>[ENOENT]<dd>
+O_CREAT is not set and the named
+shared memory object does not exist.
+
+<dt>[ENOSPC]<dd>
+There is insufficient space for the creation of the new
+shared memory object.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>shm_open()</i>
+is not supported by this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_530">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_531">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_532">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_533">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="close.htm">close()</a></i>,
+<i><a href="dup.htm">dup()</a></i>,
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="mmap.htm">mmap()</a></i>,
+<i><a href="shmat.htm">shmat()</a></i>,
+<i><a href="shmctl.htm">shmctl()</a></i>,
+<i><a href="shmdt.htm">shmdt()</a></i>,
+<i><a href="shmun237.htm">shm_unlink()</a></i>,
+<i><a href="umask.htm">umask()</a></i>,
+<i><a href="fcntl43.htm">&lt;fcntl.h&gt;</a></i>,
+<i><a href="sysmm268.htm">&lt;sys/mman.h&gt;</a></i>.
+<br>
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

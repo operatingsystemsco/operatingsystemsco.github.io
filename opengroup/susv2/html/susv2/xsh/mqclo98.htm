@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mq_close</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_726">&nbsp;</a>NAME</h4><blockquote>
+mq_close - close a message queue
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_007_727">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mqueu106.htm">mqueue.h</a>&gt;
+
+int mq_close(mqd_t <i>mqdes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_728">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mq_close()</i>
+function removes the association between the message queue descriptor,
+<i>mqdes</i>,
+and its message queue.
+The results of using this message queue descriptor after successful
+return from this
+<i>mq_close()</i>,
+and until the return of this message queue descriptor from a subsequent
+<i><a href="mqope101.htm">mq_open()</a></i>,
+are undefined.
+<p>
+If the process has successfully attached a notification request
+to the message queue via this
+<i>mqdes</i>,
+this attachment will be removed,
+and the message queue is available
+for another process to attach for notification.
+</blockquote><h4><a name = "tag_000_007_729">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the
+<i>mq_close()</i>
+function returns a value of zero;
+otherwise, the function returns a value of -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_007_730">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>mq_close()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>mqdes</i>
+argument is not a valid message queue descriptor.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>mq_close()</i>
+is not supported by this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_731">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_732">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_733">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mqope101.htm">mq_open()</a></i>,
+<i><a href="mqunl105.htm">mq_unlink()</a></i>,
+<i><a href="mqueu106.htm">&lt;mqueue.h&gt;</a></i>,
+<i><a href="msgctl.htm">msgctl()</a></i>,
+<i><a href="msgget.htm">msgget()</a></i>,
+<i><a href="msgrcv.htm">msgrcv()</a></i>,
+<i><a href="msgsnd.htm">msgsnd()</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

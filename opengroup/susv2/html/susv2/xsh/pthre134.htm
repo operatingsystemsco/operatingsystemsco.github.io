@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_cancel</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1198">&nbsp;</a>NAME</h4><blockquote>
+pthread_cancel - cancel execution of a thread
+</blockquote><h4><a name = "tag_000_007_1199">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_cancel(pthread_t <i>thread</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1200">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pthread_cancel()</i>
+function requests that
+<i>thread</i>
+be canceled.
+The target threads cancelability state and type
+determines when the cancellation takes effect.
+When the cancellation is acted on, the
+cancellation cleanup handlers for
+<i>thread</i>
+are called.
+When the last cancellation cleanup handler returns,
+the thread-specific data destructor functions are called for
+<i>thread</i>.
+When the last destructor function returns,
+<i>thread</i>
+is terminated.
+<p>
+The cancellation processing in the target thread runs asynchronously
+with respect to the calling thread returning from
+<i>pthread_cancel()</i>.
+</blockquote><h4><a name = "tag_000_007_1201">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>pthread_cancel()</i>
+function returns zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1202">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_cancel()</i>
+function may fail if:
+<dl compact>
+<dt>[ESRCH]<dd>
+No thread could be found corresponding to that specified
+by the given thread ID.
+</dl>
+<p>
+The
+<i>pthread_cancel()</i>
+function will not return an error code of [EINTR].
+</blockquote><h4><a name = "tag_000_007_1203">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1204">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1205">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1206">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre150.htm">pthread_exit()</a></i>,
+<i><a href="pthre154.htm">pthread_join()</a></i>,
+<i><a href="pthre188.htm">pthread_setcancelstate()</a></i>,
+<i><a href="pthre142.htm">pthread_cond_wait()</a></i>,
+<i><a href="pthre141.htm">pthread_cond_timedwait()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

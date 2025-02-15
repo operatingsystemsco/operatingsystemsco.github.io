@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;wordexp.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_785">&nbsp;</a>NAME</h4><blockquote>
+wordexp.h - word-expansion types
+</blockquote><h4><a name = "tag_000_010_786">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;wordexp.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_787">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;wordexp.h&gt;</i>
+header defines the structures and symbolic constants used by the
+<i><a href="wordexp.htm">wordexp()</a></i>
+and
+<i><a href="wordexp.htm">wordfree()</a></i>
+functions.
+<p>
+The structure type
+<b>wordexp_t</b>
+contains at least the following members:
+<pre>
+<code>
+size_t   we_wordc  count of words matched by <i>words</i>
+char   **we_wordv  pointer to list of expanded words 
+size_t   we_offs   slots to reserve at the beginning of <i>we_wordv</i>
+</code>
+</pre>
+<p>
+The
+<i>flags</i>
+argument
+to the
+<i><a href="wordexp.htm">wordexp()</a></i>
+function is the bitwise inclusive OR of the following
+flags:
+<dl compact>
+
+<dt>WRDE_APPEND<dd>
+Append words to those previously generated.
+
+<dt>WRDE_DOOFFS<dd>
+Number of null
+pointers to prepend to
+<i>we_wordv</i>.
+
+<dt>WRDE_NOCMD<dd>
+Fail if command substitution is requested.
+
+<dt>WRDE_REUSE<dd>
+The
+<i>pwordexp</i>
+argument was passed to a previous successful call to
+<i><a href="wordexp.htm">wordexp()</a></i>,
+and has not been passed to
+<i><a href="wordexp.htm">wordfree()</a></i>.
+The result will be the same as if the application had
+called
+<i><a href="wordexp.htm">wordfree()</a></i>
+and then called
+<i><a href="wordexp.htm">wordexp()</a></i>
+without WRDE_REUSE.
+
+<dt>WRDE_SHOWERR<dd>
+Do not redirect
+<i>stderr</i>
+to
+
+<dt>WRDE_UNDEF<dd>
+Report error on an attempt to expand an undefined shell variable.
+
+</dl>
+<p>
+The following constants are defined as error return values:
+<dl compact>
+
+<dt>WRDE_BADCHAR<dd>
+One of the unquoted characters:
+<pre>
+<code>
+&lt;newline&gt;   |   &amp;   ;   &lt;   &gt;   (   )   {   }
+</code>
+</pre>
+appears in
+<i>words</i>
+in an inappropriate context.
+
+<dt>WRDE_BADVAL<dd>
+Reference to undefined shell variable when WRDE_UNDEF is set in
+<i>flags</i>.
+
+<dt>WRDE_CMDSUB<dd>
+Command substitution requested when WRDE_NOCMD was set in flags.
+
+<dt>WRDE_NOSPACE<dd>
+Attempt to allocate memory failed.
+
+<dt>WRDE_NOSYS<dd>
+The implementation does not support the function.
+
+<dt>WRDE_SYNTAX<dd>
+Shell syntax error, such as unbalanced
+parentheses or unterminated string.
+
+</dl>
+<p>
+The following are declared as functions and may also be declared as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int  <a href="wordexp.htm">wordexp</a>(const char *, wordexp_t *, int);
+void <a href="wordfree.htm">wordfree</a>(wordexp_t *);
+</code>
+</pre>
+<p>
+The implementation may define additional macros or
+constants using names beginning with WRDE_.
+</blockquote><h4><a name = "tag_000_010_788">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_789">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_790">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="wordexp.htm">wordexp()</a></i>,
+the <b>XCU</b> specification.
+<br>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

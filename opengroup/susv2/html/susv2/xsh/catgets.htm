@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>catgets</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_359">&nbsp;</a>NAME</h4><blockquote>
+catgets - read a program message
+</blockquote><h4><a name = "tag_000_001_360">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="nltyp112.htm">nl_types.h</a>&gt;
+
+char *catgets(nl_catd <i>catd</i>, int s<i>et_id</i>, int <i>msg_id</i>, const char *<i>s</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_361">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>catgets()</i>
+function attempts to read message
+<i>msg_id</i>,
+in set
+<i>set_id</i>,
+from the message catalogue identified by
+<i>catd</i>.
+The
+<i>catd</i>
+argument is a message catalogue descriptor returned from an earlier call to
+<i><a href="catopen.htm">catopen()</a></i>.
+The
+<i>s</i>
+argument points to a default message string which will be returned by
+<i>catgets()</i>
+if it cannot retrieve the identified message.
+<p>
+This interface need not be reentrant.
+</blockquote><h4><a name = "tag_000_001_362">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the identified message is retrieved successfully,
+<i>catgets()</i>
+returns a pointer to an internal buffer area containing the null-terminated
+message string.  If the call is unsuccessful for any reason,
+<i>s</i>
+is returned
+and <i>errno</i> may be set to indicate the error.
+</blockquote><h4><a name = "tag_000_001_363">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>catgets()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>catd</i>
+argument is not a valid message catalogue descriptor open for reading.
+
+<dt>[EINTR]<dd>
+The read operation was terminated due to the receipt
+of a signal, and no data was transferred.
+
+<dt>[EINVAL]<dd>
+The message catalog identified by <i>catd</i> is corrupted.
+
+<dt>[ENOMSG]<dd>
+The message identified by <i>set_id</i> and <i>msg_id</i>
+is not in the message catalog.
+
+</dl>
+</blockquote><h4><a name = "tag_000_001_364">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_365">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_366">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_367">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="catclose.htm">catclose()</a></i>,
+<i><a href="catopen.htm">catopen()</a></i>,
+<i><a href="nltyp112.htm">&lt;nl_types.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

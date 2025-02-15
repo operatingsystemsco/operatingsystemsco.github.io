@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>bcopy</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_287">&nbsp;</a>NAME</h4><blockquote>
+bcopy - memory operations
+</blockquote><h4><a name = "tag_000_001_288">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="strin261.htm">strings.h</a>&gt;
+
+void bcopy(const void *<i>s1</i>, void *<i>s2</i>, size_t <i>n</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_289">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>bcopy()</i>
+function copies
+<i>n</i>
+bytes from the area pointed to by
+<i>s1</i>
+to the area pointed to by
+<i>s2</i>.
+<p>
+The bytes are copied correctly even if the area pointed to by
+<i>s1</i>
+overlaps the area pointed to by
+<i>s2</i>.
+</blockquote><h4><a name = "tag_000_001_290">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>bcopy()</i>
+function returns no value.
+</blockquote><h4><a name = "tag_000_001_291">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_001_292">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_293">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+For portability to implementations conforming to earlier versions of this
+specification,
+<i><a href="memmove.htm">memmove()</a></i>
+is preferred over this function.
+<p>
+The following are approximately equivalent (note the order of the arguments):
+<pre>
+<code>
+bcopy(s1,s2,n) ~= memmove(s2,s1,n)
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_294">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_295">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="memmove.htm">memmove()</a></i>,
+<i><a href="strin261.htm">&lt;strings.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

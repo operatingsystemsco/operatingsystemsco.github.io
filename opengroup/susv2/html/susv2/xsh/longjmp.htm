@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>longjmp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_448">&nbsp;</a>NAME</h4><blockquote>
+longjmp - non-local goto
+</blockquote><h4><a name = "tag_000_007_449">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="setjm230.htm">setjmp.h</a>&gt;
+
+void longjmp(jmp_buf <i>env</i>, int <i>val</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_450">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>longjmp()</i>
+function restores the environment saved by the most recent invocation of
+<i><a href="setjmp.htm">setjmp()</a></i>
+in the same thread, with the corresponding
+<i>jmp_buf</i>
+argument.  If there is no such invocation, or if the function containing the
+invocation of
+<i><a href="setjmp.htm">setjmp()</a></i>
+has terminated execution in the interim, the behaviour is undefined.
+ It is unspecified whether
+<i>longjmp()</i>
+restores the signal mask, leaves the signal mask unchanged or restores it to
+its value at the time
+<i><a href="setjmp.htm">setjmp()</a></i>
+was called.
+<p>
+All accessible objects have values as of the time
+<i><a href="setjmp.htm">setjmp()</a></i>
+was called, except that the values of objects of automatic
+storage duration are indeterminate if they meet all the following conditions:
+<ul>
+<p>
+<li>
+They are local to the function containing the corresponding
+<i><a href="setjmp.htm">setjmp()</a></i>
+invocation.
+<p>
+<li>
+They do not have volatile-qualified type.
+<p>
+<li>
+They are changed between the
+<i><a href="setjmp.htm">setjmp()</a></i>
+invocation and
+<i>longjmp()</i>
+call.
+<p>
+</ul>
+<p>
+As it bypasses the usual function call and return mechanisms,
+<i>longjmp()</i>
+will execute correctly in contexts of interrupts, signals and any of their
+associated functions.  However, if
+<i>longjmp()</i>
+is invoked from a nested signal handler (that is, from a
+function invoked as a result of a signal raised during the
+handling of another signal), the behaviour is undefined.
+<p>
+The effect of a call to
+<i>longjmp()</i>
+where initialisation of the
+<b>jmp_buf</b>
+structure was not performed in the calling thread is undefined.
+</blockquote><h4><a name = "tag_000_007_451">&nbsp;</a>RETURN VALUE</h4><blockquote>
+After
+<i>longjmp()</i>
+is completed, program execution continues as if the corresponding
+invocation of
+<i><a href="setjmp.htm">setjmp()</a></i>
+had just returned the value specified by
+<i>val</i>.
+The
+<i>longjmp()</i>
+function cannot cause
+<i><a href="setjmp.htm">setjmp()</a></i>
+to return 0; if
+<i>val</i>
+is 0,
+<i><a href="setjmp.htm">setjmp()</a></i>
+returns 1.
+</blockquote><h4><a name = "tag_000_007_452">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_007_453">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_454">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Applications whose behaviour depends on the value of the signal mask
+should not use
+<i>longjmp()</i>
+and
+<i><a href="setjmp.htm">setjmp()</a></i>,
+since their effect on the signal mask is unspecified, but should instead use
+the
+<i><a href="siglo247.htm">siglongjmp()</a></i>
+and
+<i><a href="sigse251.htm">sigsetjmp()</a></i>
+functions (which can save and restore the signal mask under application
+control).
+</blockquote><h4><a name = "tag_000_007_455">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_456">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="setjmp.htm">setjmp()</a></i>,
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="siglo247.htm">siglongjmp()</a></i>,
+<i><a href="sigse251.htm">sigsetjmp()</a></i>,
+<i><a href="setjm230.htm">&lt;setjmp.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

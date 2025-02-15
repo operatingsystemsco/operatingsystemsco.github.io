@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dlclose</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_118">&nbsp;</a>NAME</h4><blockquote>
+dlclose - close a dlopen() object
+</blockquote><h4><a name = "tag_000_003_119">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="dlfcn40.htm">dlfcn.h</a>&gt;
+
+int dlclose(void <i>*handle</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_120">&nbsp;</a>DESCRIPTION</h4><blockquote>
+<i>dlclose()</i>
+is used to inform the system that the object referenced by a
+<i>handle</i>
+returned from a previous
+<i><a href="dlopen.htm">dlopen()</a></i>
+invocation is no longer needed by the application. 
+<p>
+The use of
+<i>dlclose()</i>
+reflects a statement of intent on the part of the process, but does not 
+create any requirement upon the implementation, such as removal of the code or 
+symbols referenced by
+<i>handle</i>.
+Once an object has been closed using
+<i>dlclose()</i>
+an application should assume that
+its symbols are no longer available to
+<i><a href="dlsym.htm">dlsym()</a></i>.
+All objects loaded automatically as a result of invoking
+<i><a href="dlopen.htm">dlopen()</a></i>
+on the referenced object are also closed.
+<p>
+Although a
+<i>dlclose()</i>
+operation is not required to remove structures from an address space, neither
+is an implementation prohibited from doing so. The only restriction on such a
+removal is that no object will be removed to which references have been
+relocated, until or unless all such references are removed. For instance,
+an object that had been loaded with a
+<i><a href="dlopen.htm">dlopen()</a></i>
+operation specifying the RTLD_GLOBAL
+flag might provide a target for dynamic relocations performed in the
+processing of other objects - in such environments, an application may assume
+that no relocation, once made, will be undone or remade unless the object
+requiring the relocation has itself been removed.
+</blockquote><h4><a name = "tag_000_003_121">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the referenced object was successfully closed,
+<i>dlclose()</i>
+returns 0. If the object could not be closed, or if
+<i>handle</i>
+does not refer to an open object, 
+<i>dlclose()</i>
+returns a non-zero value. More detailed diagnostic information will be
+available through
+<i><a href="dlerror.htm">dlerror()</a></i>.
+</blockquote><h4><a name = "tag_000_003_122">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_003_123">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_124">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+A portable application will employ a
+<i>handle</i>
+returned from a 
+<i><a href="dlopen.htm">dlopen()</a></i>
+invocation only within a given scope bracketed by the
+<i><a href="dlopen.htm">dlopen()</a></i>
+and
+<i>dlclose()</i>
+operations. Implementations are free to use reference counting or other
+techniques such that multiple calls to 
+<i><a href="dlopen.htm">dlopen()</a></i>
+referencing the same object may return the same object for
+<i>handle</i>.
+Implementations are also free to re-use a
+<i>handle</i>.
+For these reasons, the value of a
+<i>handle</i>
+must be treated as an opaque object by the application, used only in calls
+to 
+<i><a href="dlsym.htm">dlsym()</a></i>
+and
+<i>dlclose()</i>.
+</blockquote><h4><a name = "tag_000_003_125">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_126">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="dlerror.htm">dlerror()</a></i>,
+<i><a href="dlopen.htm">dlopen()</a></i>,
+<i><a href="dlsym.htm">dlsym()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sched_get_priority_max</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_180">&nbsp;</a>NAME</h4><blockquote>
+sched_get_priority_max, sched_get_priority_min - get priority limits
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_008_181">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sched208.htm">sched.h</a>&gt;
+
+int sched_get_priority_max(int <i>policy</i>);
+int sched_get_priority_min(int <i>policy</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_182">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sched_get_priority_max()</i>
+and
+<i>sched_get_priority_min()</i>
+functions return the appropriate maximum or minimum, respectfully, for the
+scheduling policy specified by
+<i>policy</i>.
+<p>
+The value of
+<i>policy</i>
+is one of the scheduling policy values defined in
+<i><a href="sched208.htm">&lt;sched.h&gt;</a></i>.
+</blockquote><h4><a name = "tag_000_008_183">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>sched_get_priority_max()</i>
+and
+<i>sched_get_priority_min()</i>
+functions return the appropriate maximum or minimum values, respectively.
+If unsuccessful, they return a value of -1 and set
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_008_184">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>sched_get_priority_max()</i>
+and
+<i>sched_get_priority_min()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of the <i>policy</i> parameter does not represent a defined
+scheduling policy.
+
+<dt>[ENOSYS]<dd>
+The
+<i>sched_get_priority_max()</i>,
+<i>sched_get_priority_min()</i>
+and
+<i><a href="sched213.htm">sched_rr_get_interval()</a></i>
+functions are not supported by this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_185">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_186">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_187">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_188">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sched211.htm">sched_getparam()</a></i>,
+<i><a href="sched214.htm">sched_setparam()</a></i>,
+<i><a href="sched212.htm">sched_getscheduler()</a></i>,
+<i><a href="sched213.htm">sched_rr_get_interval()</a></i>,
+<i><a href="sched215.htm">sched_setscheduler()</a></i>,
+<i><a href="sched208.htm">&lt;sched.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

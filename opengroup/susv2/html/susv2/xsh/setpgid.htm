@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>setpgid</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_447">&nbsp;</a>NAME</h4><blockquote>
+setpgid - set process group ID for job control
+</blockquote><h4><a name = "tag_000_008_448">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systy278.htm">sys/types.h</a>&gt;
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int setpgid(pid_t <i>pid</i>, pid_t <i>pgid</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_449">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>setpgid()</i>
+function is used either to join an existing process group or
+create a new process group within the session of the calling
+process.
+The process group ID of a session leader will not change.
+Upon successful completion, the process group ID of the process
+with a process ID that matches
+<i>pid</i>
+will be set to
+<i>pgid</i>.
+As a special case, if
+<i>pid</i>
+is 0, the process ID of the calling process will be used.  Also, if
+<i>pgid</i>
+is 0, the process group ID of the indicated process will be used.
+</blockquote><h4><a name = "tag_000_008_450">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>setpgid()</i>
+returns 0.  Otherwise -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_008_451">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>setpgid()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+The value of the
+<i>pid</i>
+argument matches the process ID of a child process of the calling
+process and the child process has successfully executed
+one of the
+<i>exec</i>
+functions.
+
+<dt>[EINVAL]<dd>
+The value of the
+<i>pgid</i>
+argument is less than 0, or is not a value
+supported by the implementation.
+
+<dt>[EPERM]<dd>
+The process indicated by the
+<i>pid</i>
+argument is a session leader.
+
+The value of the
+<i>pid</i>
+argument matches the process ID of a child process of the calling
+process and the child process is not in the same session as the
+calling process.
+
+The value of the
+<i>pgid</i>
+argument is valid but does not match the process ID of the
+process indicated by the
+<i>pid</i>
+argument and there is no process with a process group ID that
+matches the value of the
+<i>pgid</i>
+argument in the same session as the calling process.
+
+<dt>[ESRCH]<dd>
+The value of the
+<i>pid</i>
+argument does not match the process ID of the calling
+process or of a child process of the calling process.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_452">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_453">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_454">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_455">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="getpgrp.htm">getpgrp()</a></i>,
+<i><a href="setsid.htm">setsid()</a></i>,
+<i><a href="tcset287.htm">tcsetpgrp()</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

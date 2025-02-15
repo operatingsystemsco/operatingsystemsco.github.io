@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;sys/wait.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_405">&nbsp;</a>NAME</h4><blockquote>
+sys/wait.h - declarations for waiting
+</blockquote><h4><a name = "tag_000_009_406">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;sys/wait.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_407">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;sys/wait.h&gt;</i>
+header defines the following symbolic constants for use with
+<i><a href="waitpid.htm">waitpid()</a></i>:
+<dl compact>
+
+<dt>WNOHANG<dd>
+Do not hang if no status is available, return immediately.
+
+<dt>WUNTRACED<dd>
+Report status of stopped child process.
+
+</dl>
+<p>
+and the following macros for analysis of process status values:
+<dl compact>
+
+<dt>WEXITSTATUS()<dd><index term="WEXITSTATUS()"></index>
+Return exit status.
+
+<dt>WIFCONTINUED()<dd><index term="WIFCONTINUED()"></index>
+True if child has been continued
+
+<dt>WIFEXITED()<dd><index term="WIFEXITED()"></index>
+True if child exited normally.
+
+<dt>WIFSIGNALED()<dd><index term="WIFSIGNALED()"></index>
+True if child exited due to uncaught signal.
+
+<dt>WIFSTOPPED()<dd><index term="WIFSTOPPED()"></index>
+True if child is currently stopped.
+
+<dt>WSTOPSIG()<dd><index term="WSTOPSIG()"></index>
+Return signal number that caused process to stop.
+
+<dt>WTERMSIG()<dd><index term="WTERMSIG()"></index>
+Return signal number that caused process to terminate.
+
+</dl>
+<p>
+The following symbolic constants are defined as possible values
+for the <i>options</i> argument to
+<i><a href="waitid.htm">waitid()</a></i>:
+<dl compact>
+
+<dt>WEXITED<dd>
+Wait for processes that have exited.
+
+<dt>WSTOPPED<dd>
+Status will be returned for any child that has stopped upon receipt of a
+signal.
+
+<dt>WCONTINUED<dd>
+Status will be returned for any child that was stopped and has been continued.
+
+<dt>WNOHANG<dd>
+Return immediately if there are no children to wait for.
+
+<dt>WNOWAIT<dd>
+Keep the process whose status is returned in <i>infop</i> in a waitable state.
+
+</dl>
+<p>
+The type <b>idtype_t</b> is defined as an enumeration type whose
+possible values include at least the following:
+<pre>
+P_ALL
+P_PID
+P_PGID
+</pre>
+<p>
+The <b>id_t</b> type is defined as described in
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<p>
+The <b>siginfo_t</b> type is defined as described in
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+<p>
+The <b>rusage</b> structure is defined as described in
+<i><a href="sysre270.htm">&lt;sys/resource.h&gt;</a></i>.
+<p>
+The <b>pid_t</b> type is defined as described in
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+<p>
+Inclusion of the
+<i>&lt;sys/wait.h&gt;</i>
+header may also make visible all symbols from
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>
+and
+<i><a href="sysre270.htm">&lt;sys/resource.h&gt;</a></i>.
+<p>
+The following are declared as functions and may also be defined
+as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+pid_t  <a href="wait.htm">wait</a>(int *);
+pid_t  <a href="wait3.htm">wait3</a>(int *, int, struct rusage *);
+int    <a href="waitid.htm">waitid</a>(idtype_t, id_t, siginfo_t *, int);
+pid_t  <a href="waitpid.htm">waitpid</a>(pid_t, int *, int);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_408">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_409">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_410">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="wait.htm">wait()</a></i>,
+<i><a href="waitid.htm">waitid()</a></i>.
+<i><a href="sysre270.htm">&lt;sys/resource.h&gt;</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

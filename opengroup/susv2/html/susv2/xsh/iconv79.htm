@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>iconv_open</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_941">&nbsp;</a>NAME</h4><blockquote>
+iconv_open - codeset conversion allocation function
+</blockquote><h4><a name = "tag_000_005_942">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="iconv77.htm">iconv.h</a>&gt;
+
+iconv_t iconv_open(const char *<i>tocode</i>, const char *<i>fromcode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_943">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>iconv_open()</i>
+function returns a conversion descriptor
+that describes a conversion
+from the
+codeset specified by the string pointed to by the
+<i>fromcode</i>
+argument to the codeset specified by the string pointed to by the
+<i>tocode</i>
+argument.
+For state-dependent encodings, the conversion descriptor will be in
+a codeset-dependent initial shift state, ready
+for immediate use with
+<i><a href="iconv.htm">iconv()</a></i>.
+<p>
+Settings of
+<i>fromcode</i>
+and
+<i>tocode</i>
+and their permitted combinations are implementation-dependent.
+<p>
+A conversion descriptor remains valid in a process until that process closes
+it.
+<p>
+If a file descriptor is used to implement conversion descriptors, the
+FD_CLOEXEC flag will be set; see
+<i><a href="fcntl43.htm">&lt;fcntl.h&gt;</a></i>.
+</blockquote><h4><a name = "tag_000_005_944">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>iconv_open()</i>
+returns a conversion descriptor for use on subsequent calls to
+<i><a href="iconv.htm">iconv()</a></i>.
+Otherwise
+<i>iconv_open()</i>
+returns (<b>iconv_t</b>)-1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_005_945">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>iconv_open()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EMFILE]<dd>
+{OPEN_MAX} files descriptors are currently open in the calling process.
+
+<dt>[ENFILE]<dd>
+Too many files are currently open in the system.
+
+<dt>[ENOMEM]<dd>
+Insufficient storage space is available.
+
+<dt>[EINVAL]<dd>
+The conversion specified by
+<i>fromcode</i>
+and
+<i>tocode</i>
+is not supported by the implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_946">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_947">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Some implementations of
+<i>iconv_open()</i>
+use
+<i><a href="malloc.htm">malloc()</a></i>
+to allocate space for internal buffer areas.
+The
+<i>iconv_open()</i>
+function may fail if there is insufficient storage space
+to accommodate these buffers.
+<p>
+Portable applications must assume that conversion descriptors are not
+valid after a call to one of the
+<i>exec</i>
+functions.
+</blockquote><h4><a name = "tag_000_005_948">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_949">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="iconv.htm">iconv()</a></i>,
+<i><a href="iconv78.htm">iconv_close()</a></i>,
+<i><a href="iconv77.htm">&lt;iconv.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the HP-UX manual.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

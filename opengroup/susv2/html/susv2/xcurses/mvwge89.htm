@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>getnstr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_433">&nbsp;</a>NAME</h4><blockquote>
+getnstr, getstr, mvgetnstr, mvgetstr, mvwgetnstr, mvwgetstr, wgetstr, wgetnstr
+- get a multi-byte character string from the terminal
+</blockquote><h4><a name = "tag_002_001_434">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int getnstr(char *<i>str</i>, int <i>n</i>);
+
+int getstr(char *<i>str</i>);
+
+int mvgetnstr(int <i>y</i>, int <i>x</i>, char *<i>str</i>, int <i>n</i>);
+
+int mvgetstr(int <i>y</i>, int <i>x</i>, char *<i>str</i>);
+
+int mvwgetnstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, char *<i>str</i>, int <i>n</i>);
+
+int mvwgetstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, char *<i>str</i>);
+
+int wgetnstr(WINDOW *<i>win</i>, char *<i>str</i>, int <i>n</i>);
+
+int wgetstr(WINDOW *<i>win</i>, char *<i>str</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_435">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The effect of
+<i><a href="getstr.htm">getstr()</a></i>
+is as though a series of calls to
+<i><a href="getch.htm">getch()</a></i>
+were made, until a newline, carriage return or
+end-of-file is received.
+The resulting value is placed in the area pointed to by <i>str</i>.
+The string is then terminated with a null byte.
+&nbsp;The
+<i>getnstr()</i>,
+<i>mvgetnstr()</i>,
+<i>mvwgetnstr()</i>
+and
+<i>wgetnstr()</i>
+functions read at most <i>n</i> bytes, thus preventing a possible overflow of
+the input buffer.
+&nbsp;The user's erase and kill characters are interpreted, as
+well as any special keys (such as function keys, home key, clear key, and so
+on).
+<p>
+The
+<i>mvgetstr()</i>
+function is identical to
+<i><a href="getstr.htm">getstr()</a></i>
+except that it is as though it is a call to
+<i><a href="move.htm">move()</a></i>
+and then a series of calls to
+<i><a href="getch.htm">getch()</a></i>.
+The
+<i>mvwgetstr()</i>
+function is identical to
+<i><a href="getstr.htm">getstr()</a></i>
+except it is as though a call to
+<i><a href="wmove.htm">wmove()</a></i>
+is made and then a series of calls to
+<i><a href="wgetch.htm">wgetch()</a></i>.
+&nbsp;The
+<i>mvgetnstr()</i>
+function is identical to
+<i>getnstr()</i>
+except that it is as though it is a call to
+<i><a href="move.htm">move()</a></i>
+and then a series of calls to
+<i><a href="getch.htm">getch()</a></i>.
+The
+<i>mvwgetnstr()</i>
+function is identical to
+<i>getnstr()</i>
+except it is as though a call to
+<i><a href="wmove.htm">wmove()</a></i>
+is made and then a series of calls to
+<i><a href="wgetch.htm">wgetch()</a></i>.
+<p>
+The
+<i>getnstr()</i>,
+<i>wgetnstr()</i>,
+<i>mvgetnstr()</i>
+and
+<i>mvwgetnstr()</i>
+functions will only return the entire multi-byte sequence associated with a
+character.  If the array is large enough to contain at least one character,
+the functions fill the array with complete characters. If the array is not
+large enough to contain any complete characters, the function fails.
+</blockquote><h4><a name = "tag_002_001_436">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_437">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_438">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Reading a line that overflows the array pointed to by <i>str</i> with
+<i><a href="getstr.htm">getstr()</a></i>,
+<i>mvgetstr()</i>,
+<i>mvwgetstr()</i>
+or
+<i>wgetstr()</i>
+causes undefined results.  The use of
+<i>getnstr()</i>,
+<i>mvgetnstr()</i>,
+<i>mvwgetnstr()</i>
+or
+<i>wgetnstr()</i>,
+respectively, is recommended.
+</blockquote><h4><a name = "tag_002_001_439">&nbsp;</a>SEE ALSO</h4><blockquote>
+<xref href=terminalinput><a href="intov.htm#tag_001_005">
+Input Processing
+</a></xref>,
+<i><a href="beep.htm">beep()</a></i>,
+<i><a href="getch.htm">getch()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

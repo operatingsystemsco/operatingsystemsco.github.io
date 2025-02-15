@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ilogb</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_950">&nbsp;</a>NAME</h4><blockquote>
+ilogb - return an unbiased exponent
+</blockquote><h4><a name = "tag_000_005_951">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+int ilogb (double <i>x</i>)
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_952">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ilogb()</i>
+function returns the exponent part of <i>x</i>.  Formally, the return value is
+the integral part of
+log<small><sub>r</sub></small>|<i>x</i>|
+as a signed integral value, for non-zero <i>x</i>, where <i>r</i> is the radix
+of the machine's floating point arithmetic.
+<p>
+The call <i>ilogb</i>(<i>x</i>) is equivalent to
+(<b>int</b>)<i>logb</i>(<i>x</i>).
+</blockquote><h4><a name = "tag_000_005_953">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>ilogb()</i>
+returns the exponent part of
+<i>x.</i>
+<p>
+If <i>x</i> is 0, then
+<i>ilogb()</i>
+returns -INT_MIN.
+If <i>x</i> is NaN or &plusmn;Inf, then
+<i>ilogb()</i>
+returns INT_MAX.
+</blockquote><h4><a name = "tag_000_005_954">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_005_955">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_956">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_957">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_958">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="logb.htm">logb()</a></i>,
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

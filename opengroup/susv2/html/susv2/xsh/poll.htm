@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>poll</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_988">&nbsp;</a>NAME</h4><blockquote>
+poll - input/output multiplexing
+</blockquote><h4><a name = "tag_000_007_989">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pollh113.htm">poll.h</a>&gt;
+
+int poll(struct pollfd <i>fds</i>[], nfds_t <i>nfds</i>, int <i>timeout</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_990">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>poll()</i>
+function provides applications with a mechanism for multiplexing input/output
+over a set of file descriptors.  For each member of the array pointed to by
+<i>fds</i>,
+<i>poll()</i>
+examines the given file descriptor for the
+event(s) specified in <i>events</i>.
+The number of
+<b>pollfd</b>
+structures in the
+<i>fds</i>
+array is specified by <i>nfds</i>.  The
+<i>poll()</i>
+function identifies those file descriptors on which an application can read or
+write data, or on which certain events have occurred.
+<p>
+The <i>fds</i> argument specifies the file descriptors to be examined and the
+events of interest for each file descriptor.  It is a pointer to an array with
+one member for each open file descriptor of interest.  The array's members are
+<b>pollfd</b> structures within which <b>fd</b> specifies an open file
+descriptor and <b>events</b> and <b>revents</b> are bitmasks constructed by
+OR-ing a combination of the following event flags:
+<dl compact>
+
+<dt>POLLIN<dd>
+Data other than high-priority data may be read without blocking.  For STREAMS,
+this flag is set in <b>revents</b> even if the message is of zero length.
+
+<dt>POLLRDNORM<dd>
+Normal data (priority band equals 0) may be read without blocking.  For
+STREAMS, this flag is set in <b>revents</b> even if the message is of zero
+length.
+
+<dt>POLLRDBAND<dd>
+Data from a non-zero priority band may be read without blocking.  For STREAMS,
+this flag is set in <b>revents</b> even if the message is of zero length.
+
+<dt>POLLPRI<dd>
+High-priority data may be received without blocking.  For STREAMS, this flag
+is set in <b>revents</b> even if the message is of zero length.
+
+<dt>POLLOUT<dd>
+Normal data (priority band equals 0) may be written without blocking.
+
+<dt>POLLWRNORM<dd>
+Same as POLLOUT.
+
+<dt>POLLWRBAND<dd>
+Priority data (priority band &gt; 0) may be written.  This event only
+examines bands that have been written to at least once.
+
+<dt>POLLERR<dd>
+An error has occurred on the device or stream.
+This flag is only valid in the
+<b>revents</b> bitmask; it is ignored in the <b>events</b> member.
+
+<dt>POLLHUP<dd>
+The device has been disconnected.  This event and POLLOUT are mutually
+exclusive; a stream can never be writable if a hangup has occurred.  However,
+this event and POLLIN, POLLRDNORM, POLLRDBAND or POLLPRI are not mutually
+exclusive.
+This flag is only valid in the <b>revents</b> bitmask; it is
+ignored in the <b>events</b> member.
+
+<dt>POLLNVAL<dd>
+The specified <b>fd</b> value is invalid.
+This flag is only valid in the
+<b>revents</b> member; it is ignored in the <b>events</b> member.
+
+</dl>
+<p>
+If the value of <b>fd</b> is less than 0, <b>events</b> is ignored and
+<b>revents</b> is set to 0 in that entry on return from
+<i>poll()</i>.
+<p>
+In each <b>pollfd</b> structure,
+<i>poll()</i>
+clears the <b>revents</b> member except that where the application
+requested a report on a condition by setting one of the bits of
+<b>events</b> listed above,
+<i>poll()</i>
+sets the corresponding bit in <b>revents</b> if the requested condition is true.
+In addition,
+<i>poll()</i>
+sets the POLLHUP, POLLERR and POLLNVAL flag in <b>revents</b> if the
+condition is true, even if the application did not set the
+corresponding bit in <b>events</b>.
+<p>
+If none of the defined events have occurred on any selected file descriptor,
+<i>poll()</i>
+waits at least <i>timeout</i> milliseconds for an event to occur on any of the
+selected file descriptors.  If the value of <i>timeout</i> is 0,
+<i>poll()</i>
+returns immediately.  If the value of <i>timeout</i> is -1,
+<i>poll()</i>
+blocks until a requested event occurs or until the call is interrupted.
+<p>
+Implementations may place limitations on the granularity of timeout
+intervals.  If the requested timeout interval requires a finer granularity
+than the implementation supports, the actual timeout interval will be rounded
+up to the next supported value.
+<p>
+The
+<i>poll()</i>
+function is not affected by the O_NONBLOCK flag.
+<p>
+The
+<i>poll()</i>
+function supports regular files, terminal and pseudo-terminal devices,
+STREAMS-based files, FIFOs and pipes.  The behaviour of
+<i>poll()</i>
+on elements of
+<i>fds</i>
+that refer to other types of file is unspecified.
+<p>
+Regular files always poll TRUE for reading and writing.
+</blockquote><h4><a name = "tag_000_007_991">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>poll()</i>
+returns a non-negative value.  A positive value indicates the total number of
+file descriptors that have been selected (that is, file descriptors for which
+the <b>revents</b> member is non-zero).  A value of 0 indicates that the call
+timed out and no file descriptors have been selected.  Upon failure,
+<i>poll()</i>
+returns -1 and sets <i>errno</i> to indicate the error.
+</blockquote><h4><a name = "tag_000_007_992">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>poll()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAGAIN]<dd>
+The allocation of internal data structures failed but a subsequent request
+may succeed.
+
+<dt>[EINTR]<dd>
+A signal was caught during
+<i>poll()</i>.
+
+<dt>[EINVAL]<dd>
+The <i>nfds</i> argument is greater than {OPEN_MAX},
+or one of the <b>fd</b> members refers to a STREAM or multiplexer that is
+linked (directly or indirectly) downstream from a multiplexer.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_993">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_994">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_995">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_996">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getmsg.htm">getmsg()</a></i>,
+<i><a href="putmsg.htm">putmsg()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="select.htm">select()</a></i>,
+<i><a href="write.htm">write()</a></i>,
+<i><a href="pollh113.htm">&lt;poll.h&gt;</a></i>,
+<i><a href="strop263.htm">&lt;stropts.h&gt;</a></i>,
+<a href="streams.htm">STREAMS overview</a>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

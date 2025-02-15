@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>access</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_068">&nbsp;</a>NAME</h4><blockquote>
+access - determine accessibility of a file
+</blockquote><h4><a name = "tag_000_001_069">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int access(const char *<i>path</i>, int <i>amode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_070">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>access()</i>
+function checks the file named by the pathname pointed to by the
+<i>path</i>
+argument for accessibility according to the bit pattern contained in
+<i>amode</i>,
+using the real user ID
+in place of the effective user
+ID and the real group ID
+in place of the effective group ID.
+<p>
+The value of
+<i>amode</i>
+is either the bitwise inclusive OR
+of the access permissions to be checked
+(R_OK, W_OK, X_OK)
+or the existence test, F_OK.
+<p>
+If any access permissions are to be checked, each will be checked
+individually, as described in
+the <b>XBD</b> specification, <b>Chapter 2</b>, <b>Definitions</b>.
+If the process has appropriate privileges,
+an implementation may indicate success for X_OK even if none of the
+execute file permission bits are set.
+</blockquote><h4><a name = "tag_000_001_071">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the requested access is permitted,
+<i>access()</i>
+succeeds and returns 0.  Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_001_072">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>access()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Permission bits of the file mode do not permit the requested access,
+or search permission is denied on a component of the
+path prefix.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>path</i>
+argument exceeds {PATH_MAX}
+or a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file
+or <i>path</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+<dt>[EROFS]<dd>
+Write access is requested for a file on a read-only file system.
+
+</dl>
+<p>
+The
+<i>access()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of the
+<i>amode</i>
+argument is invalid.
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[ETXTBSY]<dd>
+Write access is requested for a pure procedure (shared text)
+file that is being executed.
+
+</dl>
+</blockquote><h4><a name = "tag_000_001_073">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_074">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Additional values of
+<i>amode</i>
+other than the set defined in the description may be valid, for example, if
+a system has extended access controls.
+</blockquote><h4><a name = "tag_000_001_075">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_076">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="chmod.htm">chmod()</a></i>,
+<i><a href="stat.htm">stat()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+<br>
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

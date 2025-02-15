@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>unlink</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_280">&nbsp;</a>NAME</h4><blockquote>
+unlink - remove a directory entry
+</blockquote><h4><a name = "tag_000_010_281">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int unlink(const char *<i>path</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_282">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>unlink()</i>
+function removes a link to a file.
+If
+<i>path</i>
+names a symbolic link,
+<i>unlink()</i>
+removes the symbolic link named by
+<i>path</i>
+and does not affect any file or directory named by the contents of the
+symbolic link.  Otherwise,
+<i>unlink()</i>
+removes the link named by the pathname pointed to by
+<i>path</i>
+and decrements the link count of the file referenced by the link.
+<p>
+When the file's link count becomes 0 and no process has the
+file open, the space occupied by the file will be freed and the
+file will no longer be accessible.
+If one or more processes have the file open when the last link is
+removed, the link will be removed before
+<i>unlink()</i>
+returns, but
+the removal of the file contents will be postponed until all
+references to the file are closed.
+<p>
+The
+<i>path</i>
+argument must not name a directory unless the process has
+appropriate privileges and the implementation supports using
+<i>unlink()</i>
+on directories.
+<p>
+Upon successful completion,
+<i>unlink()</i>
+will mark for update the
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the parent directory.  Also, if the file's link count is not 0, the
+<i>st_ctime</i>
+field of the file will be marked for update.
+</blockquote><h4><a name = "tag_000_010_283">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, 0 is returned.  Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+If -1 is returned, the named file will not be changed.
+</blockquote><h4><a name = "tag_000_010_284">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>unlink()</i>
+function will fail and not unlink the file if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for a component of the
+path prefix, or
+write permission is denied on the directory containing the directory entry
+to be removed.
+
+<dt>[EBUSY]<dd>
+The file named by the
+<i>path</i>
+argument cannot be unlinked because it is being used by the system
+or another process and the implementation considers this an error.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>path</i>
+argument exceeds {PATH_MAX} or a pathname component is longer than
+{NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing file
+or <i>path</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+<dt>[EPERM]<dd>
+The file named by
+<i>path</i>
+is a directory, and either the calling process does not have
+appropriate privileges, or the implementation prohibits using
+<i>unlink()</i>
+on directories.
+
+<dt>[EPERM] or [EACCES]<dd>
+
+The S_ISVTX flag is set on the directory containing the file referred to by
+the <i>path</i> argument and the caller is not the file owner, nor is the
+caller the directory owner, nor does the caller have appropriate privileges.
+
+<dt>[EROFS]<dd>
+The directory entry to be unlinked is part of a read-only file system.
+
+</dl>
+<p>
+The
+<i>unlink()</i>
+function may fail and not unlink the file if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+The file named by
+<i>path</i>
+is a named STREAM.
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[ETXTBSY]<dd>
+The entry to be unlinked is the last directory entry to
+a pure procedure (shared text) file that is being executed.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_285">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_286">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Applications should use
+<i><a href="rmdir.htm">rmdir()</a></i>
+to remove a directory.
+</blockquote><h4><a name = "tag_000_010_287">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_288">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="close.htm">close()</a></i>,
+<i><a href="link.htm">link()</a></i>,
+<i><a href="remove.htm">remove()</a></i>,
+<i><a href="rmdir.htm">rmdir()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

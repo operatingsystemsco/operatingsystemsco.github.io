@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>Use and Implementation of Curses Interfaces</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font>
+</center>
+<hr size=2 noshade><blockquote>
+<h2>Use and Implementation of Curses Interfaces</h2>
+<P>
+See <a href="u018f.htm">Corrigendum U018</a>.
+<P>
+<xref type="1" name="interface"></xref>
+Each of the following statements applies unless explicitly stated
+otherwise in the detailed descriptions that follow.  If an argument to a
+function has an invalid value (such as a value outside the domain of the
+function, or a pointer outside the address space of the program, or a
+null pointer), the behaviour is undefined.  Any function declared in a
+header may also be implemented as a macro defined in the header, so a library
+function should not be declared explicitly if its header is included.
+Any macro definition of a function can be suppressed locally by
+enclosing
+the name of the function in parentheses, because the name is then not
+followed by the left parenthesis that indicates expansion of a macro
+function name.  For the same syntactic reason, it is permitted to take
+the address of a library function even if it is also defined as a macro.
+The use of the C-language
+<B>#undef</B>
+construct to remove any such macro definition
+will also ensure that an actual function
+is referred to.  Any invocation of a library function that is implemented
+as a macro will expand to code that evaluates each of its arguments
+exactly once, fully protected by parentheses where necessary, so it is
+generally safe to use arbitrary expressions as arguments.  Likewise,
+those function-like macros described in the following sections may be
+invoked in an expression anywhere a function with a compatible return
+type could be called.
+<p>
+Provided that a library function can be declared without reference to any
+type defined in a header, it is also permissible to declare the
+function, either explicitly or implicitly, and use it without
+including its associated header.
+If a function that accepts a variable number of
+arguments is not declared (explicitly or by including its associated
+header), the behaviour is undefined.
+<p>
+As a result of changes introduced in this version of the <B>Curses</B> specification, application
+writers are only required to include the minimum number of headers.
+Implementations of XSI-conformant systems will make all necessary
+symbols visible as described in the Headers section of this document.
+<h3>C Language Definition</h3>
+The C language that is the basis for the synopses and code examples in this
+document is <I>ISO C</I>, as specified in the referenced ISO&nbsp;C standard.
+<I>Common Usage C</I>, which refers to the C language
+before standardisation, was the basis for previous editions of this
+specification.
+<h3>The Compilation Environment</h3>
+<xref type="2" name="comp"></xref>
+Applications should ensure that the feature test macro _XOPEN_SOURCE is
+defined before inclusion of any header.  This is needed to enable the
+functionality described in this document, and possibly to enable functionality
+defined elsewhere in the Common Applications Environment.
+<p>
+The _XOPEN_SOURCE macro may be defined automatically by the
+compilation process, but to ensure maximum portability, applications
+should make sure that _XOPEN_SOURCE is defined by using either
+compiler options or
+<B>#define</B>
+directives in the source files, before any
+<B>#include</B>
+directives.  Identifiers in this document may only be undefined using the
+<B>#undef</B>
+directive as described in
+<xref href=interface></xref>
+or
+<xref href=names></xref>.
+These
+<B>#undef</B>
+directives must follow all
+<B>#include</B>
+directives of any XSI headers.
+<p>
+Most strictly conforming POSIX and ISO C applications will compile on systems
+compliant to this specification.  However, an application which uses any of
+the items marked as an extension to POSIX and ISO C, for any purpose other
+than that shown here, may not compile. In such cases, it may be necessary to
+alter those applications to use alternative identifiers.
+<p>
+Since this document is aligned with the ISO&nbsp;C standard,
+and since all functionality enabled by the _POSIX_C_SOURCE
+set equal to 2
+should be enabled by _XOPEN_SOURCE, there should be no need to
+define either _POSIX_SOURCE or _POSIX_C_SOURCE if _XOPEN_SOURCE is
+defined.  Therefore if _XOPEN_SOURCE is defined and
+_POSIX_SOURCE is defined, or _POSIX_C_SOURCE is set equal to 1 or 2,
+the behaviour is the same as if only _XOPEN_SOURCE is defined.
+However should _POSIX_C_SOURCE be set to a value greater than 2,
+the behaviour is undefined.
+<p>
+The
+<I>c89</I>
+and
+<I>cc</I>
+utilities recognise the additional
+<B>-l</B>
+operand for standard libraries:
+<dl compact>
+
+<dt><B>-l curses</B><dd>This operand makes visible all library functions referenced in this
+specification, (except for those labelled ENHANCED CURSES and except for
+portions marked with the <SMALL>EC</SMALL> margin legend).
+
+If the implementation defines _XOPEN_CURSES and if the application defines the
+_XOPEN_SOURCE_EXTENDED feature test macro, then
+<B>-l curses</B>
+also makes visible all library functions referenced in this specification and
+labelled ENHANCED CURSES and portions marked with the <SMALL>EC</SMALL> margin legend.
+
+</dl>
+<p>
+It is unspecified whether the library
+<B>libcurses.a</B>
+exists as a regular file.
+<p>
+An application that uses any API specified as ENHANCED CURSES or relies on
+any portion of this specification marked with the <SMALL>EC</SMALL> margin legend
+must define _XOPEN_SOURCE_EXTENDED = 1 in each source file or as part of its
+compilation environment.  When _XOPEN_SOURCE_EXTENDED = 1 is defined in a
+source file, it must appear before any header is included.
+<p>
+If the implementation supports the utilities marked
+<B>DEVELOPMENT</B>
+in the <B>XCU</B> specification, the
+<I>lint</I>
+utility recognises the additional
+<B>-l curses</B>
+operand for standard libraries:
+<dl compact>
+
+<dt><B>-l curses</B><dd>Names the library
+<B>llib-lcurses.ln</B>,
+which will contain functions specified in this document.
+
+</dl>
+<p>
+It is unspecified whether the library
+<B>llib-lcurses.ln</B>
+exists as a regular file.
+<h4>The X/Open Name Space (ENHANCED CURSES)</h4>
+<xref type="3" name="names"></xref>
+The requirements in this section are in effect only for implementations
+that claim Enhanced Curses compliance.
+<p>
+All identifiers in this document
+are defined in at least one of the headers, as shown in
+<xref href=headers></xref>.
+When _XOPEN_SOURCE is defined, each header defines or declares some
+identifiers, potentially conflicting with identifiers used by the
+application.  The set of identifiers visible to the application consists of
+precisely those identifiers from the header pages of the included headers, as
+well as additional identifiers reserved for the implementation.  In addition,
+some headers may make visible identifiers from other headers as indicated on
+the relevant header pages.
+<p>
+The identifiers reserved for use by the implementation are described below.
+<p>
+<ol type = 1>
+<p>
+<li>
+Each identifier with external linkage described in the header section
+is reserved for use as an identifier with external linkage if the
+header is included.
+<p>
+<li>
+Each macro name described in the header section is reserved for
+any use if the header is included.
+<p>
+<li>
+Each identifier with file scope described in the header section is
+reserved for use as an identifier with file scope in the same
+name space if the header is included.
+<p>
+<li>
+All identifiers consisting of exactly 2 upper-case letters.
+<p>
+</ol>
+<p>
+If any header is included, identifiers with the
+<B>_t</B>
+suffix are reserved for any use by the implementation.
+<p>
+If any header in the following table is included, macros with the prefixes
+shown may be defined.  After the last inclusion of a given header, an
+application may use identifiers with the corresponding prefixes for its own
+purpose, provided their use is preceded by an
+<B>#undef</B>
+of the corresponding macro.
+<p>
+<P><table  bordercolor=#000000 border=1<tr valign=top><th align=left><b>Header</b>
+<th align=left><b>Prefix</b>
+<tr valign=top><td align=left><b>&lt;curses.h&gt;</b>
+<td align=left>A_, ACS_, ALL_, BUTTON, COLOR_, KEY_, MOUSE, REPORT_, WA_, WACS_
+<tr valign=top><td align=left><b>&lt;term.h&gt;</b>
+<td align=left>ext_
+</table>
+<p>
+The following identifiers are reserved regardless of the inclusion of headers:
+<ol type = 1>
+<p>
+<li>
+All identifiers that begin with an underscore and either an
+upper-case letter or another underscore are always reserved for
+any use by the implementation.
+<p>
+<li>
+All identifiers that begin with an underscore are always reserved
+for use as identifiers with file scope in both the ordinary
+identifier and tag name spaces.
+<p>
+<li>
+All identifiers listed as reserved in the <B>XSH</B> specification are reserved for use as
+identifiers with external linkage.
+<p>
+</ol>
+<p>
+All the identifiers defined in this document that have external linkage are
+always reserved for use as identifiers with external linkage.
+<p>
+No other identifiers are reserved.
+<p>
+Applications must not declare or define identifiers with the same name as an
+identifier reserved in the same context. Since macro names are replaced
+whenever found, independent of scope and name space, macro names matching any
+of the reserved identifier names must not be defined if any associated header
+is included.
+<p>
+Headers may be included in any order, and each may be included more than once
+in a given scope, with no difference in effect from that of being included
+only once.
+<p>
+If used, a header must be included outside of any external declaration
+or definition, and it must be first included before the first reference
+to any type or macro it defines, or to any function or object it declares.
+However, if an identifier is declared or defined
+in more than one header, the second and subsequent associated headers
+may be included after the initial reference to the identifier.
+Prior to the inclusion of a header,
+the program must not define any macros with names lexically identical
+to symbols defined by that header.
+<br>
+<h4>Interfaces Implemented as Macros (ENHANCED CURSES)</h4>
+The requirements in this section are in effect only for implementations
+that claim Enhanced Curses compliance.
+<p>
+The following interfaces with arguments must be implemented as macros.  The
+relevance to the application programmer is that the `&amp;' character
+cannot be used before the arguments.
+<p>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Macros</b>
+<th align=center><b>Chapter 4 Entry</b>
+<tr valign=top><td align=left>COLOR_PAIR(), PAIR_NUMBER()
+<td align=left><i><a href="canch15.htm">can_change_color()</a></i>
+<tr valign=top><td align=left></B><I>getbegyx</I><B>(), </B><I>getmaxyx</I><B>(), </B><I>getparyx</I><B>(), </B><I>getyx</I><B>()
+<td align=left><i><a href="getbegyx.htm">getbegyx()</a></i>
+</table>
+<p>
+The descriptions of headers in
+<xref href=headers></xref>
+list other macros, like COLOR_BLACK, that do not take arguments.
+<h3>Relationship to the XSH Specification</h3>
+<h4>Error Numbers</h4>
+Most functions provide an error number in
+<I>errno</I>
+which is either a variable or macro defined in
+<i><a href="../xsh/errno42.htm">&lt;errno.h&gt;</a></i>;
+the macro expands to a modifiable
+lvalue
+of type
+int.
+<p>
+A list of valid values for
+<I>errno</I>
+and advice to application writers on the use of
+<I>errno</I>
+appears in the <B>XSH</B> specification.
+<a name="datatypes"><h3>Data Types</h3>&nbsp;</a>
+<xref type="2" name="datatypes"></xref>
+All of the data types used by Curses functions are defined by the
+implementation.  The following list describes these types:
+<dl compact>
+
+<dt>attr_t<dd>An integral type that can contain at least an unsigned short.  The type
+attr_t is used to hold an OR-ed set of attributes defined in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>
+that begin with the prefix WA_.
+
+<dt>bool<dd>Boolean data type
+
+<dt>chtype<dd>An integral type that can contain at least an unsigned char and
+attributes.  Values of type chtype are formed by OR-ing together an
+unsigned char value and zero or more of the base attribute
+flags defined in
+<xref href=curses.h></xref>
+that have the A_ prefix.  The application can extract these components of a
+chtype value using the base masks defined in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>
+for this purpose.
+
+The chtype data type also contains a colour-pair.  Values of type
+chtype are formed by OR-ing together an unsigned char value, a
+colour pair, and zero or more of the attributes defined in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>
+that begin with the prefix A_.  The application can extract these components
+of a chtype value using the masks defined in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>
+for this purpose.
+
+<dt>SCREEN<dd>An opaque terminal representation.
+
+<dt>wchar_t<dd>As described in
+<i><a href="../xsh/stdde256.htm">&lt;stddef.h&gt;</a></i>.
+
+<dt>cchar_t<dd>A type that can reference a string of wide characters of up to an
+implementation-dependent length, a colour-pair, and zero or more
+attributes from the set of all attributes defined in this document.
+A null cchar_t object is an object that references a empty
+wide-character string.  Arrays of cchar_t objects are terminated by a
+null cchar_t object.
+
+<dt>WINDOW<dd>An opaque window representation.
+
+</dl>
+
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

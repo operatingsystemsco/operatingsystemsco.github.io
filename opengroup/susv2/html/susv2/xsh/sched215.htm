@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sched_setscheduler</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_225">&nbsp;</a>NAME</h4><blockquote>
+sched_setscheduler - set scheduling policy and parameters
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_008_226">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sched208.htm">sched.h</a>&gt;
+
+int sched_setscheduler(pid_t <i>pid</i>, int <i>policy</i>,
+    const struct sched_param *<i>param</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_227">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sched_setscheduler()</i>
+function sets the scheduling policy and scheduling parameters of
+the process specified by
+<i>pid</i>
+to
+<i>policy</i>
+and the parameters specified in the
+<b>sched_param</b>
+structure pointed to by
+<i>param</i>,
+respectively.
+The value of the
+<i>sched_priority</i>
+member in the
+<b>sched_param</b>
+structure is any integer within the inclusive priority range
+for the scheduling policy specified by
+<i>policy</i>.
+If the value of
+<i>pid</i>
+is negative, the behaviour of the
+<i>sched_setscheduler()</i>
+function is unspecified.
+<p>
+The possible values for the
+<i>policy</i>
+parameter are defined in the header file
+<i><a href="sched208.htm">&lt;sched.h&gt;</a></i>.
+<p>
+If a process specified by
+<i>pid</i>
+exists and if the calling process has permission,
+the scheduling policy and scheduling parameters will be set for the
+process whose process ID is equal to
+<i>pid</i>.
+<p>
+If
+<i>pid</i>
+is zero, the scheduling policy and scheduling parameters will be set
+for the calling process.
+<p>
+The conditions under which one process has the appropriate privilege
+to change the scheduling parameters of another process
+are implementation-dependent.
+<p>
+Implementations may require that
+the requesting process have permission
+to set its own scheduling parameters or those of another process.
+Additionally, implementation-dependent restrictions may apply
+as to the appropriate privileges
+required to set a process's own scheduling policy, or another
+process's scheduling policy, to a particular value.
+<p>
+The
+<i>sched_setscheduler()</i>
+function is considered successful if it succeeds
+in setting the scheduling policy and scheduling parameters of the process
+specified by
+<i>pid</i>
+to the values specified by
+<i>policy</i>
+and the structure pointed to by
+<i>param</i>,
+respectively.
+<p>
+The effect of this function on individual threads is dependent on the
+scheduling contention scope of the threads:
+<ul>
+<p>
+<li>
+For threads with system scheduling contention scope, these functions
+have no effect on their scheduling.
+<p>
+<li>
+For threads with process scheduling contention scope,
+&nbsp;the threads' scheduling policy and associated parameters
+will not be affected.
+However,
+the scheduling of these threads with respect to threads in
+other processes may be dependent on the scheduling parameters of their
+process, which are governed using these functions.
+<p>
+</ul>
+<p>
+If an implementation supports a two-level scheduling model in which
+library threads are multiplexed on top of several kernel scheduled
+entities, then the underlying kernel scheduled entities for the system
+contention scope threads will not be affected by these functions.
+<p>
+The underlying kernel scheduled entities for the process contention
+scope threads will have their scheduling
+policy and associated scheduling parameters
+changed to the values specified in <i>policy</i> and <i>param</i>, 
+respectively.
+Kernel scheduled entities for use by process contention scope
+threads that are created after this call completes
+inherit their scheduling policy and associated
+scheduling parameters from the process.
+<p>
+This function is not atomic with respect to other threads in the
+process.
+Threads are allowed to continue to execute
+while this function call is in the process of changing the scheduling 
+policy and associated scheduling parameters for the underlying kernel 
+scheduled entities used by the process contention scope threads.
+</blockquote><h4><a name = "tag_000_008_228">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the function returns the former
+scheduling policy of the specified process.
+If the
+<i>sched_setscheduler()</i>
+function fails to complete successfully,
+the policy and scheduling paramenters remain unchanged, and
+the function returns a value of -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_008_229">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>sched_setscheduler()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of the
+<i>policy</i>
+parameter is invalid, or one or more of the parameters contained in
+<i>param</i>
+is outside the valid range for the specified scheduling policy.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>sched_setscheduler()</i>
+is not supported by this implementation.
+
+<dt>[EPERM]<dd>
+The requesting process does not have permission
+to set either or both of the scheduling parameters or
+the scheduling policy of the specified process.
+
+<dt>[ESRCH]<dd>
+No process can be found corresponding to that specified by
+<i>pid</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_230">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_231">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_232">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_233">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sched211.htm">sched_getparam()</a></i>,
+<i><a href="sched212.htm">sched_getscheduler()</a></i>,
+<i><a href="sched214.htm">sched_setparam()</a></i>,
+<i><a href="sched208.htm">&lt;sched.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_getschedparam</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1705">&nbsp;</a>NAME</h4><blockquote>
+pthread_getschedparam, pthread_setschedparam
+- dynamic thread scheduling parameters access
+(<b>REALTIME THREADS</b>)
+</blockquote><h4><a name = "tag_000_007_1706">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_getschedparam(pthread_t <i>thread</i>, int *<i>policy</i>,
+    struct sched_param *<i>param</i>);
+int pthread_setschedparam(pthread_t <i>thread</i>, int <i>policy</i>,
+    const struct sched_param *<i>param</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1707">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>pthread_getschedparam()</i>
+and
+<i>pthread_setschedparam()</i>
+allow the scheduling policy and scheduling parameters of individual threads
+within a multi-threaded process to be retrieved and set.
+For SCHED_FIFO and SCHED_RR,
+the only required member of the
+<b>sched_param</b>
+structure is the priority
+<i>sched_priority</i>.
+For SCHED_OTHER,
+the affected scheduling parameters are implementation-dependent.
+<p>
+The
+<i>pthread_getschedparam()</i>
+function retrieves the scheduling policy and scheduling parameters
+for the thread whose thread ID is given by
+<i>thread</i>
+and stores those values in
+<i>policy</i>
+and
+<i>param</i>,
+respectively.
+The priority value returned from
+<i>pthread_getschedparam()</i>
+is the value specified by the most recent
+<i>pthread_setschedparam()</i>
+or
+<i><a href="pthre147.htm">pthread_create()</a></i>
+call affecting the target thread,
+and does not reflect any temporary adjustments to its priority
+as a result of any priority inheritance or ceiling functions.
+The
+<i>pthread_setschedparam()</i>
+function sets the scheduling policy
+and associated scheduling parameters for the thread whose
+thread ID is given by
+<i>thread</i>
+to the policy and associated parameters provided in
+<i>policy</i>
+and
+<i>param</i>,
+respectively.
+<p>
+The
+<i>policy</i>
+parameter may have the value SCHED_OTHER,
+that has implementation-dependent scheduling parameters,
+SCHED_FIFO or SCHED_RR,
+that have the single scheduling parameter,
+<i>priority.</i>
+<p>
+If the
+<i>pthread_setschedparam()</i>
+function fails, no scheduling parameters will be changed 
+for the target thread.
+</blockquote><h4><a name = "tag_000_007_1708">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>pthread_getschedparam()</i>
+and
+<i>pthread_setschedparam()</i>
+functions return zero.
+Otherwise, an error number is returned to indicate the error.
+</blockquote><h4><a name = "tag_000_007_1709">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>pthread_getschedparam()</i>
+and
+<i>pthread_setschedparam()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[ENOSYS]<dd>
+The option _POSIX_THREAD_PRIORITY_SCHEDULING is not defined and the
+implementation does not support the function.
+
+</dl>
+<p>
+The
+<i>pthread_getschedparam()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ESRCH]<dd>
+The value specified by
+<i>thread</i>
+does not refer to a existing thread.
+
+</dl>
+<p>
+The
+<i>pthread_setschedparam()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value specified by
+<i>policy</i>
+or one of the scheduling parameters associated with
+the scheduling policy
+<i>policy</i>
+is invalid.
+
+<dt>[ENOTSUP]<dd>
+An attempt was made to set the policy or scheduling parameters to
+an unsupported value.
+
+<dt>[EPERM]<dd>
+The caller does not have the appropriate permission to set
+either the scheduling parameters or the scheduling policy of the
+specified thread.
+
+<dt>[EPERM]<dd>The implementation does not allow the application to modify
+one of the parameters to the value specified.
+
+<dt>[ESRCH]<dd>
+The value specified by
+<i>thread</i>
+does not refer to a existing thread.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_1710">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1711">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1712">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1713">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sched214.htm">sched_setparam()</a></i>,
+<i><a href="sched211.htm">sched_getparam()</a></i>,
+<i><a href="sched215.htm">sched_setscheduler()</a></i>,
+<i><a href="sched212.htm">sched_getscheduler()</a></i>,
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>,
+<i><a href="sched208.htm">&lt;sched.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Threads Extension (1003.1c-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

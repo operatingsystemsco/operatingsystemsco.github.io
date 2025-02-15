@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>dupwin</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_326">&nbsp;</a>NAME</h4><blockquote>
+dupwin - duplicate a window
+</blockquote><h4><a name = "tag_000_000_327">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+WINDOW *dupwin(WINDOW *<i>win</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_328">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>dupwin()</i>
+function creates a duplicate of the window <i>win</i>.
+</blockquote><h4><a name = "tag_000_000_329">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>dupwin()</i>
+returns a pointer to the new window.  Otherwise, it returns a null pointer.
+</blockquote><h4><a name = "tag_000_000_330">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_331">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="derwin.htm">derwin()</a></i>,
+<i><a href="doupdate.htm">doupdate()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

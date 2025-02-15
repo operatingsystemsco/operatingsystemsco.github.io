@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>mvscanw</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_607">&nbsp;</a>NAME</h4><blockquote>
+mvscanw, mvwscanw, scanw, wscanw - convert formatted input from a window
+</blockquote><h4><a name = "tag_002_001_608">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int mvscanw(int <i>y</i>, int <i>x</i>, char *<i>fmt</i>, ...);
+
+int mvwscanw(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, char *<i>fmt</i>, ...);
+
+int scanw(char *<i>fmt</i>, ...);
+
+int wscanw(WINDOW *<i>win</i>, char *<i>fmt</i>, ...);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_609">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions are similar to
+<i><a href="../xsh/scanf.htm">scanf()</a></i>.
+Their effect is as though
+<i><a href="mvwge89.htm">mvwgetstr()</a></i>
+were called to get a multi-byte character string from the current or specified
+window at the current or specified cursor position, and then
+<i><a href="../xsh/sscanf.htm">sscanf()</a></i>
+were used to interpret and convert that string.
+</blockquote><h4><a name = "tag_002_001_610">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_611">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_612">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getnstr.htm">getnstr()</a></i>,
+<i><a href="printw.htm">printw()</a></i>,
+<i><a href="../xsh/fscanf.htm">fscanf()</a></i>
+(in the <b>XSH</b> specification),
+<i><a href="../xsh/wcstombs.htm">wcstombs()</a></i>
+(in the <b>XSH</b> specification),
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

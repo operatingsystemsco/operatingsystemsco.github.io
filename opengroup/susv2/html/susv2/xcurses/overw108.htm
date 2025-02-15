@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>overlay</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_710">&nbsp;</a>NAME</h4><blockquote>
+overlay, overwrite - copy overlapped windows
+</blockquote><h4><a name = "tag_001_009_711">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int overlay(const WINDOW *<i>srcwin</i>, WINDOW *<i>dstwin</i>);
+
+int overwrite(const WINDOW *<i>srcwin</i>, WINDOW *<i>dstwin</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_712">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>overlay()</i>
+and
+<i>overwrite()</i>
+functions overlay <i>srcwin</i> on top of <i>dstwin</i>.  The <i>scrwin</i> and
+<i>dstwin</i> arguments need not be the same size; only text where the two
+windows overlap is copied.
+<p>
+The
+<i>overwrite()</i>
+function copies characters as though a sequence of
+<i><a href="winwc182.htm">win_wch()</a></i>
+and
+<i><a href="waddw158.htm">wadd_wch()</a></i>
+were performed with the destination window's attributes and background
+attributes cleared.
+<p>
+The
+<i>overlay()</i>
+function does the same thing, except that, whenever a character to be copied
+is the background character of the source window,
+<i>overlay()</i>
+does not copy the character but merely moves the destination cursor the width
+of the source background character.
+<p>
+If any portion of the overlaying window border is not the first column of
+a multi-column character then all the column positions will be replaced with
+the background character and rendition before the overlay is done. If the
+default background character is a multi-column character when this occurs,
+then these functions fail.
+</blockquote><h4><a name = "tag_001_009_713">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.  Otherwise, they return
+ERR.
+</blockquote><h4><a name = "tag_001_009_714">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_715">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="copywin.htm">copywin()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

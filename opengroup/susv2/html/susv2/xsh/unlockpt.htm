@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>unlockpt</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_289">&nbsp;</a>NAME</h4><blockquote>
+unlockpt - unlock a pseudo-terminal master/slave pair
+</blockquote><h4><a name = "tag_000_010_290">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+int unlockpt(int <i>fildes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_291">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>unlockpt()</i>
+function unlocks the slave pseudo-terminal device associated with the master
+to which <i>fildes</i> refers.
+<p>
+Portable applications must call
+<i>unlockpt()</i>
+before opening the slave side of a pseudo-terminal device.
+</blockquote><h4><a name = "tag_000_010_292">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>unlockpt()</i>
+returns 0.  Otherwise, it returns -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_010_293">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>unlockpt()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not a file descriptor open for writing.
+
+<dt>[EINVAL]<dd>
+The <i>fildes</i> argument is not associated with a master pseudo-terminal
+device.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_294">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_295">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_296">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_297">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="grantpt.htm">grantpt()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="ptsname.htm">ptsname()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

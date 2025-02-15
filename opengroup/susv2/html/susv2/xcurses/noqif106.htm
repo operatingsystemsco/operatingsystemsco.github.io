@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>noqiflush</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_009_684">&nbsp;</a>NAME</h4><blockquote>
+noqiflush, qiflush - enable/disable queue flushing
+</blockquote><h4><a name = "tag_001_009_685">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+void noqiflush(void);
+
+void qiflush(void);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_009_686">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i><a href="qiflush.htm">qiflush()</a></i>
+function causes all output in the display driver queue
+to be flushed whenever an interrupt key (interrupt, suspend, or quit) is
+pressed.
+The
+<i>noqiflush()</i>
+causes no such flushing to occur.  The default for the option is inherited
+from the display driver settings.
+</blockquote><h4><a name = "tag_001_009_687">&nbsp;</a>RETURN VALUE</h4><blockquote>
+These functions do not return a value.
+</blockquote><h4><a name = "tag_001_009_688">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_001_009_689">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Calling
+<i><a href="qiflush.htm">qiflush()</a></i>
+provides faster response to interrupts, but causes Curses
+to have the wrong idea of what is on the screen.
+The same effect is achieved outside Curses using the NOFLSH local mode flag
+specified in the <b>XBD</b> specification (<b>General Terminal Interface</b>).
+</blockquote><h4><a name = "tag_001_009_690">&nbsp;</a>SEE ALSO</h4><blockquote>
+<xref href=terminalinput><a href="intov.htm#tag_001_005">
+Input Processing
+</a></xref>,
+<i><a href="intrf47.htm">intrflush()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>,
+<b>XBD</b> specification, <a href="../xbd/termios.htm#tag_008_002"><b>Parameters that Can be Set</b>&nbsp;</a>  (NOFLSH flag).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

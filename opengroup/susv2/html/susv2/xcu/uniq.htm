@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>uniq</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2562">&nbsp;</a>NAME</h4><blockquote>
+uniq - report or filter out repeated lines in a file
+</blockquote><h4><a name = "tag_001_014_2563">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+uniq <b>[</b>-c|-d|-u<b>][</b>-f <i>fields</i><b>][</b>-s <i>char</i><b>][</b><i>input_file </i><b>[</b><i>output_file</i><b>]]</b>
+
+uniq <b>[</b>-c|-d|-u<b>][</b>-<i>n</i><b>][</b>+<i>m</i><b>][</b><i>input_file </i><b>[</b><i>output_file</i><b>]]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2564">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>uniq</i>
+utility will read an input file comparing adjacent lines,
+and write one copy of each input line on the output.
+The second and succeeding copies of repeated adjacent input lines
+will not be written.
+<p>
+Repeated lines in the input will not be detected if they are not adjacent.
+</blockquote><h4><a name = "tag_001_014_2565">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>uniq</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ;
+the obsolescent version does not, as
+one of the options begins with
+"+"
+and the
+<i>-m</i>
+and
+<i>+n</i>
+options do not have option letters.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-c</b>
+<dd>Precede each output line with
+a count of the number of times the line
+occurred in the input.
+
+<dt><b>-d</b>
+<dd>Suppress the writing of lines that are not repeated
+in the input.
+
+<dt><b>-f&nbsp;</b><i>fields</i>
+<dd>
+Ignore the first
+<i>fields</i>
+fields on each input
+line when doing comparisons, where
+<i>fields</i>
+is a positive decimal integer.
+A field is
+the maximal string matched by the basic regular expression:
+<pre>
+<code>
+[[:blank:]]*[^[:blank:]]*
+</code>
+</pre>
+
+If the
+<i>fields</i>
+option-argument specifies more fields than appear
+on an input line, a null string will be used for comparison.
+
+<dt><b>-s&nbsp;</b><i>chars</i>
+<dd>
+Ignore the first
+<i>chars</i>
+characters when doing comparisons, where
+<i>chars</i>
+is a positive decimal integer.
+If specified in conjunction with the
+<b>-f</b>
+option, the first
+<i>chars</i>
+characters after the first
+<i>fields</i>
+fields will be ignored.
+If the
+<i>chars</i>
+option-argument specifies more characters than
+remain on an input line, a null string will be used for comparison.
+
+<dt><b>-u</b>
+<dd>Suppress the writing of lines that
+are repeated in the input.
+
+<dt><b>-</b><i>n</i>
+<dd>Equivalent to
+<b>-f</b>&nbsp;<i>fields</i>
+with
+<i>fields</i>
+set to
+<i>n</i>.
+
+<dt><b>+</b><i>m</i><dd>Equivalent to
+<b>-s</b>&nbsp;<i>chars</i>
+with
+<i>chars</i>
+set to
+<i>m</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2566">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>input_file</i><dd>
+A pathname of the input file.
+If the
+<i>input_file</i>
+operand is not specified,
+or if the
+<i>input_file</i>
+is "-", the standard input will be used.
+
+<dt><i>output_file</i><dd>
+A pathname of the output file.
+If the
+<i>output_file</i>
+operand is not specified, the standard output will be used.
+The results are unspecified if the file named by
+<i>output_file</i>
+is the file named by
+<i>input_file</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2567">&nbsp;</a>STDIN</h4><blockquote>
+The standard input will be used only if no
+<i>input_file</i>
+operand is specified or if
+<i>input_file</i>
+is "-".
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_2568">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file must be a text file.
+</blockquote><h4><a name = "tag_001_014_2569">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>uniq</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files)
+which characters constitute a
+blank character
+in the current locale.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2570">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2571">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output will be used only if no
+<i>output_file</i>
+operand is specified.
+See the OUTPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_2572">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2573">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+If the
+<b>-c</b>
+option is specified, the output file must be empty
+or each line must be of the form:
+<p><code>
+<tt>"%d %s"</tt>, &lt;<i>number of duplicates</i>&gt;,
+&lt;<i>line</i>&gt;
+</code>
+<p>
+otherwise, the output file must be empty
+or each line must be of the form:
+<p><code>
+<tt>"%s"</tt>, &lt;<i>line</i>&gt;
+</code>
+</blockquote><h4><a name = "tag_001_014_2574">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2575">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The utility executed successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2576">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2577">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i><a href="sort.htm">sort</a></i>
+utility
+can be used to cause repeated lines to be adjacent in the input file.
+</blockquote><h4><a name = "tag_001_014_2578">&nbsp;</a>EXAMPLES</h4><blockquote>
+The following input file data (but flushed left) was
+used for a test series on
+<i>uniq</i>:
+<pre>
+<code>
+#01 foo0 bar0 foo1 bar1
+#02 bar0 foo1 bar1 foo1
+#03 foo0 bar0 foo1 bar1
+#04
+#05 foo0 bar0 foo1 bar1
+#06 foo0 bar0 foo1 bar1
+#07 bar0 foo1 bar1 foo0
+</code>
+</pre>
+<p>
+What follows is a series of test invocations of the
+<i>uniq</i>
+utility that use a mixture of
+<i>uniq</i>
+options against the input file data.
+These tests verify the meaning of
+<i>adjacent .</i>
+The
+<i>uniq</i>
+utility views the input data as a sequence of strings delimited by
+\n.
+Accordingly, for the
+<i>fields th</i>
+member of the sequence,
+<i>uniq</i>
+interprets unique or repreated
+adjacent lines strictly relative to the
+<i>fields +1th</i>
+member.
+<ol>
+<p>
+<li>
+This first example tests the line counting option,
+comparing each line of the input file data starting from the
+second field:
+<pre>
+<code>
+uniq -c -f 1 uniq_0I.t
+  1 #01 foo0 bar0 foo1 bar1
+  1 #02 bar0 foo1 bar1 foo0
+  1 #03 foo0 bar0 foo1 bar1
+  1 #04
+  2 #05 foo0 bar0 foo1 bar1
+  1 #07 bar0 foo1 bar1 foo0
+</code>
+</pre>
+<p>
+The number
+2,
+prefixing the fifth line of output, signifies that the
+<i>uniq</i>
+utility detected a pair of repeated lines.
+Given the input data, this can only be true when
+<i>uniq</i>
+is run using the
+<b>-f 1</b>
+option (which causes
+<i>uniq</i>
+to ignore the first field on each input line).
+<p>
+<li>
+The second example tests the option to suppress unique
+lines, comparing each line of the input file data starting
+from the second field:
+<pre>
+<code>
+uniq -d -f 1 uniq_0I.t
+#05 foo0 bar0 foo1 bar1
+</code>
+</pre>
+<p>
+<li>
+This test suppresses repeated lines, comparing each line
+of the input file data starting from the
+second field:
+<pre>
+<code>
+uniq -u -f 1 uniq_0I.t
+#01 foo0 bar0 foo1 bar1
+#02 bar0 foo1 bar1 foo1
+#03 foo0 bar0 foo1 bar1
+#04
+#07 bar0 foo1 bar1 foo0
+</code>
+</pre>
+<br>
+<p>
+<li>
+This suppresses unique lines, comparing each line of the input
+file data starting from the third character:
+<pre>
+<code>
+uniq -d -s 2 uniq_0I.t
+</code>
+</pre>
+<p>
+In the last example, the
+<i>uniq</i>
+utility
+found no input matching the above criteria.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_2579">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2580">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="comm.htm">comm</a></i>,
+<i><a href="sort.htm">sort</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

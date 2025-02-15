@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mq_getattr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_734">&nbsp;</a>NAME</h4><blockquote>
+mq_getattr - get message queue attributes
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_007_735">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mqueu106.htm">mqueue.h</a>&gt;
+
+int mq_getattr(mqd_t <i>mqdes</i>, struct mq_attr *<i>mqstat</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_736">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mqdes</i>
+argument specifies a message queue descriptor.
+The
+<i>mq_getattr()</i>
+function is used to get status information and attributes of the message
+queue and the open message queue description associated with the message
+queue descriptor.
+The results are returned in the 
+<i>mq_attr</i>
+structure referenced by the
+<i>mqstat</i>argument.
+<p>
+Upon return, the following members will have the values associated with the
+open message queue description as set when the message queue was opened and as
+modified by subsequent
+<i><a href="mqset104.htm">mq_setattr()</a></i>
+calls:
+<dl compact>
+
+<dt>mq_flags<dd>
+</dl>
+<p>
+The following attributes of the message queue are returned
+as set at message queue creation.
+<dl compact>
+
+<dt>mq_maxmsg<dd>
+<dt>mq_msgsize<dd>
+<dt>mq_curmsgs<dd>The number of messages currently on the queue.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_737">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, the
+<i>mq_getattr()</i>
+function returns zero.
+Otherwise, the function returns -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_007_738">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>mq_getattr()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>mqdes</i>
+argument is not a valid message queue descriptor.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>mq_getattr()</i>
+is not supported by this implementation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_739">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_740">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_741">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mqope101.htm">mq_open()</a></i>,
+<i><a href="mqsen103.htm">mq_send()</a></i>,
+<i><a href="mqset104.htm">mq_setattr()</a></i>
+<i><a href="mqueu106.htm">&lt;mqueue.h&gt;</a></i>,
+<i><a href="msgctl.htm">msgctl()</a></i>,
+<i><a href="msgget.htm">msgget()</a></i>,
+<i><a href="msgrcv.htm">msgrcv()</a></i>,
+<i><a href="msgsnd.htm">msgsnd()</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

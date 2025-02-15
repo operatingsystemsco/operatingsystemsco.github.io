@@ -1,0 +1,630 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>cp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_187">&nbsp;</a>NAME</h4><blockquote>
+cp - copy files
+</blockquote><h4><a name = "tag_001_014_188">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+cp <b>[</b>-fip<b>]</b><i> source_file target_file</i>
+
+cp <b>[</b>-fip<b>]</b><i> source_file</i> ... <i>target</i>
+
+cp -R <b>[</b>-fip<b>]</b><i> source_file</i> ... <i>target</i>
+
+cp -r <b>[</b>-fip<b>]</b><i> source_file</i> ... <i>target</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_189">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The first synopsis form is denoted by two operands, neither of which
+are existing files of type directory.
+The
+<i>cp</i>
+utility will copy the contents of
+<i>source_file</i>
+to the destination path named by
+<i>target_file.</i>
+<p>
+The second synopsis form is denoted by two or more operands where the
+<b>-R</b>
+or
+<b>-r</b>
+options are not specified and the first synopsis form is not applicable.
+It is an error if any
+<i>source_file</i>
+is a file of type directory, if
+<i>target</i>
+does not exist or if
+<i>target</i>
+is a file of a type defined by the <b>XSH</b> specification,
+but is not a file of type directory.
+The
+<i>cp</i>
+utility will copy the contents of each
+<i>source_file</i>
+to the destination path named by the concatenation of
+<i>target,</i>
+a slash character and the last component of
+<i>source_file.</i>
+<p>
+The third and fourth synopsis forms are denoted by two or more
+operands where the
+<b>-R</b>
+or
+<b>-r</b>
+options are specified.
+The
+<i>cp</i>
+utility
+will copy each file in the file hierarchy rooted in each
+<i>source_file</i>
+to a destination path named as follows.
+<p>
+If
+<i>target</i>
+exists and is a file of type directory, the name of the
+corresponding destination path for each file in the file hierarchy
+will be the concatenation of
+<i>target,</i>
+a slash character and the
+pathname of the file relative to the directory containing
+<i>source_file.</i>
+<p>
+If
+<i>target</i>
+does not exist and two operands are specified, the name of
+the corresponding destination path for
+<i>source_file</i>
+will be
+<i>target;</i>
+the name of the corresponding destination path for all other files in
+the file hierarchy will be the concatenation of
+<i>target,</i>
+a slash character and the pathname of the file relative to
+<i>source_file.</i>
+<p>
+It is an error if
+<i>target</i>
+does not exist and more than two
+operands are specified, or if
+<i>target</i>
+exists and is a file of a type defined by the <b>XSH</b> specification,
+but is not a file of type directory.
+<p>
+In the following description,
+<i>source_file</i>
+refers to the file that
+is being copied, whether specified as an operand or a file in a file
+hierarchy rooted in a
+<i>source_file</i>
+operand.
+The term
+<i>dest_file</i>
+refers to the file named by the destination path.
+<p>
+For each
+<i>source_file,</i>
+the following steps will be taken:
+<ol>
+<p>
+<li>
+If
+<i>source_file</i>
+references the same file as
+<i>dest_file,</i>
+<i>cp</i>
+may write a diagnostic message to standard error;
+it will do nothing more with
+<i>source_file</i>
+and will go on to any remaining files.
+<p>
+<li>
+If
+<i>source_file</i>
+is of type directory, the following steps will be taken:
+<ol type = a>
+<p>
+<li>
+If neither the
+<b>-R</b>
+or
+<b>-r</b>
+options were specified,
+<i>cp</i>
+will write a diagnostic message to standard error, do nothing more with
+<i>source_file</i>
+and go on to any remaining files.
+<p>
+<li>
+If
+<i>source_file</i>
+was not specified as an operand and
+<i>source_file</i>
+is dot or dot-dot,
+<i>cp</i>
+will do nothing more with
+<i>source_file</i>
+and go on to any remaining files.
+<p>
+<li>
+If
+<i>dest_file</i>
+exists and it is a file type not specified by the <b>XSH</b> specification,
+the behaviour is implementation-dependent.
+<p>
+<li>
+If
+<i>dest_file</i>
+exists and it is not of type directory,
+<i>cp</i>
+will write a diagnostic message to standard error,
+do nothing more with
+<i>source_file</i>
+or any files below
+<i>source_file</i>
+in the file hierarchy, and go on to any remaining files.
+<p>
+<li>
+If the directory
+<i>dest_file</i>
+does not exist, it will be created
+with file permission bits set to the same value as those of
+<i>source_file</i>,
+modified by the file creation mask of the user if the
+<b>-p</b>
+option was not
+specified, and then bitwise inclusively ORed with S_IRWXU.
+If
+<i>dest_file</i>
+cannot be created,
+<i>cp</i>
+will write a diagnostic message to standard error,
+do nothing more with
+<i>source_file,</i>
+and go on to any remaining files.
+It is unspecified if
+<i>cp</i>
+will attempt to copy files in the file hierarchy rooted in
+<i>source_file.</i>
+<p>
+<li>
+The files in the directory
+<i>source_file</i>
+will be copied to the directory
+<i>dest_file</i>,
+taking the four steps [1-4] listed here with the files as
+<i>source_file</i>s.
+<p>
+<li>
+If
+<i>dest_file</i>
+was created, its file permission bits will be changed
+(if necessary) to be the same as those of
+<i>source_file,</i>
+modified by the file creation mask of the user if the
+<b>-p</b>
+option was not specified.
+<p>
+<li>
+The
+<i>cp</i>
+utility will do nothing more with
+<i>source_file</i>
+and go on to any remaining files.
+<p>
+</ol>
+<p>
+<li>
+If
+<i>source_file</i>
+is of type regular file,
+the following steps will be taken:
+<ol type = a>
+<p>
+<li>
+If
+<i>dest_file</i>
+exists, the following steps are taken:
+<ol type = i>
+<p>
+<li>
+If the
+<b>-i</b>
+option is in effect, the
+<i>cp</i>
+utility will write
+a prompt to the standard error and read a line from the standard input.
+If the response is not affirmative,
+<i>cp</i>
+will do nothing more with
+<i>source_file</i>
+and go on to any remaining files.
+<p>
+<li>
+A file descriptor for
+<i>dest_file</i>
+will be obtained by
+performing actions equivalent to the <b>XSH</b> specification
+<i><a href="../xsh/open.htm">open()</a></i>
+function called using
+<i>dest_file</i>
+as the
+<i>path</i>
+argument, and the bitwise inclusive OR of O_WRONLY and O_TRUNC as the
+<i>oflag</i>
+argument.
+<p>
+<li>
+If the attempt to obtain a file descriptor fails and the
+<b>-f</b>
+option is in effect,
+<i>cp</i>
+will attempt to remove the file by
+performing actions equivalent to the <b>XSH</b> specification
+<i><a href="../xsh/unlink.htm">unlink()</a></i>
+function called using
+<i>dest_file</i>
+as the
+<i>path</i>
+argument.
+If this attempt succeeds,
+<i>cp</i>
+will continue with step 3b.
+<p>
+</ol>
+<p>
+<li>
+If
+<i>dest_file</i>
+does not exist, a file descriptor will be
+obtained by performing actions equivalent to the <b>XSH</b> specification
+<i><a href="../xsh/open.htm">open()</a></i>
+function called using
+<i>dest_file</i>
+as the
+<i>path</i>
+argument, and the bitwise inclusive OR of O_WRONLY and
+O_CREAT as the
+<i>oflag</i>
+argument.
+The file permission bits of
+<i>source_file</i>
+will be the
+<i>mode</i>
+argument.
+<p>
+<li>
+If the attempt to obtain a file descriptor fails,
+<i>cp</i>
+will write a diagnostic message to standard error,
+do nothing more with
+<i>source_file,</i>
+and go on to any remaining files.
+<p>
+<li>
+The contents of
+<i>source_file</i>
+will be written to the file descriptor.
+Any write errors will cause
+<i>cp</i>
+to write a diagnostic message to standard error and
+continue to step 3e.
+<p>
+<li>
+The file descriptor will be closed.
+<p>
+<li>
+The
+<i>cp</i>
+utility will do nothing more with
+<i>source_file.</i>
+If a write error occurred in step 3d, it is unspecified if
+<i>cp</i>
+continues with any remaining files.
+If no write error occurred in step 3d,
+<i>cp</i>
+will go on to any remaining files.
+<p>
+</ol>
+<p>
+<li>
+Otherwise, the following steps will be taken:
+<ol type = a>
+<p>
+<li>
+If the
+<b>-r</b>
+option was specified, the behaviour is implementation-dependent.
+<br>
+<p>
+<li>
+If the
+<b>-R</b>
+option was specified, the following steps will be taken:
+<ol type = i>
+<p>
+<li>
+The
+<i>dest_file</i>
+will be created with the same file type as
+<i>source_file</i>.
+<p>
+<li>
+If
+<i>source_file</i>
+is a file of type FIFO,
+the file permission bits will be the same as those of
+<i>source_file,</i>
+modified by the file creation mask of the user if the
+<b>-p</b>
+option was not specified.
+Otherwise, the permissions, owner ID and group ID of
+<i>dest_file</i>
+are implementation-dependent.
+<p>
+If this creation fails for any reason,
+<i>cp</i>
+will write a diagnostic message to standard error, do nothing more with
+<i>source_file</i>
+and go on to any remaining files.
+<p>
+</ol>
+<p>
+</ol>
+<p>
+</ol>
+<p>
+If the implementation provides additional or
+alternate access control mechanisms
+(see
+<b>file access permissions</b>
+in
+the <b>XBD</b> specification, <a href="../xbd/glossary.htm"><b>Glossary</b>&nbsp;</a> ),
+their effect on copies of files is implementation-dependent.
+</blockquote><h4><a name = "tag_001_014_190">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>cp</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-f</b>
+<dd>If a file descriptor for a destination file cannot be obtained,
+as described in step 3.a.ii.,
+attempt to unlink the destination file and proceed.
+
+<dt><b>-i</b>
+<dd>Write a prompt to standard error before copying to
+any existing destination file.
+If the response from the standard input
+is affirmative, the copy will be attempted, otherwise not.
+
+<dt><b>-p</b>
+<dd>Duplicate the following characteristics of each source file in
+the corresponding destination file:
+<ol>
+
+<li>
+The time of last data modification and time of last access.
+If this duplication fails for any reason,
+<i>cp</i>
+will write a diagnostic message to standard error.
+
+<li>
+The user ID and group ID.
+If this duplication fails for any reason, it is unspecified whether
+<i>cp</i>
+writes a diagnostic message to standard error.
+
+<li>
+The file permission bits and the S_ISUID and S_ISGID bits.
+Other, implementation-dependent, bits may be duplicated as well.
+If this duplication fails for any reason,
+<i>cp</i>
+will write a diagnostic message to standard error.
+
+</ol>
+
+If the user ID or the group ID cannot be duplicated, the
+file permission bits S_ISUID and S_ISGID will be cleared.
+If these bits are present in the source file but are not
+duplicated in the destination file, it is unspecified whether
+<i>cp</i>
+writes a diagnostic message to standard error.
+
+The order in which the preceding
+characteristics are duplicated is unspecified.
+The
+<i>dest_file</i>
+will not be deleted if these
+characteristics cannot be preserved.
+
+<dt><b>-R</b>
+<dd>Copy file hierarchies.
+
+<dt><b>-r</b>
+<dd>Copy file hierarchies.
+The treatment of special files is implementation-dependent.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_191">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>source_file</i><dd>
+A pathname of a file to be copied.
+
+
+<dt><i>target_file</i><dd>
+A pathname of an existing or non-existing file,
+used for the output when a single file is copied.
+
+<dt><i>target</i><dd>A pathname of a directory to contain the copied files.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_192">&nbsp;</a>STDIN</h4><blockquote>
+Used to read an input line in response to each prompt
+specified in the STDERR section.
+Otherwise, the standard input will not be used.
+</blockquote><h4><a name = "tag_001_014_193">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files specified as operands may be of any file type.
+</blockquote><h4><a name = "tag_001_014_194">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>cp</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files) and
+the behaviour of character classes
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale for the processing of affirmative responses
+that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_195">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_196">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_197">&nbsp;</a>STDERR</h4><blockquote>
+A prompt will be written to standard error under the conditions
+specified in the DESCRIPTION section.
+The prompt will contain the destination
+pathname, but its format is otherwise unspecified.
+Otherwise, the standard error will be used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_198">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output files may be of any type.
+</blockquote><h4><a name = "tag_001_014_199">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_200">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>All files were copied successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_201">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+If
+<i>cp</i>
+is prematurely terminated by a signal or error, files or
+file hierarchies may be only partially copied and files and
+directories may have incorrect permissions or access and modification times.
+</blockquote><h4><a name = "tag_001_014_202">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The difference between
+<b>-R</b>
+and
+<b>-r</b>
+is in the treatment by
+<i>cp</i>
+of file types other than regular and directory.
+The original
+<b>-r</b>
+flag, for
+historic reasons, does not handle special files any differently from
+regular files, but always reads the file and copies its contents.
+This has obvious problems in the presence of special file types,
+for example character devices, FIFOs and sockets.
+The
+<b>-R</b>
+option is intended to recreate the file hierarchy and the
+<b>-r</b>
+option supports historical practice.
+It is anticipated that a future issue of
+this specification will deprecate the
+<b>-r</b>
+option, and for that
+reason, there has been no attempt to fix its behaviour with respect
+to FIFOs or other file types where copying the file is clearly wrong.
+However, some systems support
+<b>-r</b>
+with the same abilities as the
+<b>-R</b>
+defined in the ISO/IEC 9945-2:1993 standard.
+To accommodate them as well as systems that do not,
+the differences between
+<b>-r</b>
+and
+<b>-R</b>
+are implementation-dependent.
+Implementations may make them identical.
+<p>
+The set-user-ID and set-group-ID bits are explicitly
+cleared when files are created.
+This is to prevent users from
+creating programs that are set-user-ID or
+set-group-ID to them when copying files
+or to make set-user-ID or
+set-group-ID files accessible to new groups of users.
+For example, if a file is set-user-ID and the copy has a different group ID
+than the source, a new group of users has execute permission to
+a set-user-ID program than did previously.
+In particular, this is a
+problem for superusers copying users' trees.
+</blockquote><h4><a name = "tag_001_014_203">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_204">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The
+<b>-r</b>
+option may be removed; use
+<b>-R</b>
+instead.
+</blockquote><h4><a name = "tag_001_014_205">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mv.htm">mv</a></i>,
+<i><a href="find.htm">find</a></i>,
+<i><a href="ln.htm">ln</a></i>,
+<i><a href="pax.htm">pax</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

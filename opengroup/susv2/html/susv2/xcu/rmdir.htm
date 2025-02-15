@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>rmdir</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1916">&nbsp;</a>NAME</h4><blockquote>
+rmdir - remove directories
+</blockquote><h4><a name = "tag_001_014_1917">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+rmdir <b>[</b>-p<b>]</b><i> dir</i>...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1918">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>rmdir</i>
+utility will remove the directory entry specified by each
+<i>dir</i>
+operand, which must refer to an empty directory.
+<p>
+Directories will be processed in the order specified.
+If a directory and a subdirectory of that directory
+are specified in a single invocation of the
+<i>rmdir</i>
+utility,
+the subdirectory must be specified before the parent directory
+so that the parent directory will be empty when the
+<i>rmdir</i>
+utility tries to remove it.
+</blockquote><h4><a name = "tag_001_014_1919">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>rmdir</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following option is supported:
+<dl compact>
+
+<dt><b>-p</b>
+<dd>Remove all directories in a pathname.
+For each
+<i>dir</i>
+operand:
+<ol>
+
+<li>
+The directory entry it names will be removed.
+
+<li>
+If the
+<i>dir</i>
+operand includes more than one pathname component,
+effects equivalent to the following command will occur:
+<code>
+rmdir -p $(dirname <i>dir</i>)
+</code>
+
+</ol>
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1920">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>dir</i><dd>A pathname of an empty directory to be removed.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1921">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1922">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1923">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>rmdir</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1924">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1925">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1926">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1927">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1928">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1929">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Each directory entry specified by a
+<i>dir</i>
+operand was removed successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1930">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1931">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The definition of an empty directory
+is one that contains, at most,
+directory entries for dot and dot-dot.
+</blockquote><h4><a name = "tag_001_014_1932">&nbsp;</a>EXAMPLES</h4><blockquote>
+If a directory
+<b>a</b>
+in the current directory is empty except it contains
+a directory
+<b>b</b>
+and
+<b>a/b</b>
+is empty except it contains a directory
+<b>c</b>:
+<pre>
+<code>
+rmdir -p a/b/c
+</code>
+</pre>
+will remove all three directories.
+</blockquote><h4><a name = "tag_001_014_1933">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1934">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="rm.htm">rm</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/remove.htm">remove()</a></i>,
+<i><a href="../xsh/rmdir.htm">rmdir()</a></i>,
+<i><a href="../xsh/unlink.htm">unlink()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

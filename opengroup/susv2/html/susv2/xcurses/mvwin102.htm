@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>insnstr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_553">&nbsp;</a>NAME</h4><blockquote>
+insnstr, insstr, mvinsnstr, mvinsstr, mvwinsnstr, mvwinsstr, winsnstr, winsstr
+- insert a multi-byte character string into a window
+</blockquote><h4><a name = "tag_002_001_554">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int insnstr(const char *<i>str</i>, int <i>n</i>);
+
+int insstr(const char *<i>str</i>);
+
+int mvinsnstr(int <i>y</i>, int <i>x</i>, const char *<i>str</i>, int <i>n</i>);
+
+int mvinsstr(int <i>y</i>, int <i>x</i>, const char *<i>str</i>);
+
+int mvwinsnstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, const char *<i>str</i>, int <i>n</i>);
+
+int mvwinsstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, const char *<i>str</i>);
+
+int winsnstr(WINDOW *<i>win</i>, const char *<i>str</i>, int <i>n</i>);
+
+int winsstr(WINDOW *<i>win</i>, const char *<i>str</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_555">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions insert a character string (as many characters as will fit on
+the line) before the current or specified position in the current or specified
+window.
+<p>
+These functions do not advance the cursor position.  These functions perform
+special-character processing.  The
+<i>insnstr()</i>
+and
+<i>winsnstr()</i>
+functions perform wrapping.  The
+<i><a href="insstr.htm">insstr()</a></i>
+and
+<i>winsstr()</i>
+functions do not perform wrapping.
+<p>
+The
+<i>insnstr()</i>,
+<i>mvinsnstr()</i>,
+<i>mvwinsnstr()</i>
+and
+<i>winsnstr()</i>
+functions insert
+at most <i>n</i> bytes.  If <i>n</i> is less than 1, the entire
+string is inserted.
+</blockquote><h4><a name = "tag_002_001_556">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_557">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_558">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Since the string may contain multi-byte characters, there might not be a
+one-to-one correspondence between the number of column positions occupied
+by the characters and the number of bytes in the string.
+</blockquote><h4><a name = "tag_002_001_559">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

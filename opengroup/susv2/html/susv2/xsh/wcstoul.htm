@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>wcstoul</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_653">&nbsp;</a>NAME</h4><blockquote>
+wcstoul - convert a wide-character string to an unsigned long
+</blockquote><h4><a name = "tag_000_010_654">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+unsigned long int wcstoul(const wchar_t *<i>nptr</i>, wchar_t *<i>*endptr</i>,
+     int <i>base</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_655">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>wcstoul()</i>
+function converts the initial portion of the wide-character string
+pointed to by
+<i>nptr</i>
+to
+<b>unsigned long int</b>
+representation.
+First it decomposes the input wide-character string
+into three parts: an initial,
+possibly empty, sequence of white-space wide-character codes
+(as specified by
+<i><a href="iswspace.htm">iswspace()</a></i>);
+a subject sequence interpreted as an integer represented
+in some radix determined by the value of
+<i>base</i>;
+and a final wide-character string of one or more unrecognised wide-character
+codes, including the terminating null wide-character code of the input
+wide-character string.
+Then it attempts to convert the subject sequence to an unsigned integer,
+and returns the result.
+<p>
+If
+<i>base</i>
+is 0, the expected form of the subject sequence is that of a
+decimal constant, octal constant or hexadecimal constant,
+any of which may be preceded by a + or - sign.
+A decimal constant begins with a non-zero digit, and consists
+of a sequence of decimal digits.
+An octal constant consists of the prefix
+0 optionally followed by a sequence of the digits 0 to 7 only.
+A hexadecimal constant consists of the prefix
+0x or 0X followed by a sequence of the decimal digits and letters
+a (or A) to f (or F) with values 10 to 15 respectively.
+<p>
+If the value of
+<i>base</i>
+is between 2 and 36, the expected form of the subject sequence is
+a sequence of letters and digits representing an integer with the
+radix specified by
+<i>base</i>,
+optionally preceded by a + or - sign, but not including an
+integer suffix.
+The letters from a (or A) to z (or Z) inclusive
+are ascribed the values 10 to 35; only letters whose ascribed
+values are less than that of
+<i>base</i>
+are permitted.
+If the value of
+<i>base</i>
+is 16, the wide-character codes 0x or 0X
+may optionally precede the sequence of letters and digits,
+following the sign if present.
+<p>
+The subject sequence is defined as the longest initial
+subsequence of the input wide-character string, starting with the first
+wide-character code that is not white space and is of the expected form.
+The subject sequence contains no wide-character codes if the input
+wide-character string
+is empty or consists entirely of white-space wide-character codes,
+or if the first wide-character code that is not white space
+is other than a sign or a permissible letter or digit.
+<p>
+If the subject sequence has the expected form and
+<i>base</i>
+is 0, the sequence of wide-character codes starting with the
+first digit
+is interpreted as an integer constant.
+If the subject sequence has the expected form and the value of
+<i>base</i>
+is between 2 and 36, it is used as the base for conversion,
+ascribing to each letter its value as given above.
+If the subject sequence begins with a minus sign, the value
+resulting from the conversion is negated.
+A pointer to the final wide-character string is
+stored in the object pointed to by
+<i>endptr</i>,
+provided that
+<i>endptr</i>
+is not a null pointer.
+<p>
+In other than the POSIX locale, additional implementation-dependent
+subject sequence forms may be accepted.
+<p>
+If the subject sequence is empty or does not have the expected
+form, no conversion is performed; the value of
+<i>nptr</i>
+is stored in the object pointed to by
+<i>endptr</i>,
+provided that
+<i>endptr</i>
+is not a null pointer.
+<p>
+The
+<i>wcstoul()</i>
+function will not change the setting of 
+<b>errno</b>
+if successful.
+<p>
+Because 0 and {ULONG_MAX}
+are returned on error and 0 is also a valid return on success,
+an application wishing to check for error situations should set
+<i>errno</i>
+to 0, then call
+<i>wcstoul()</i>,
+then check
+<i>errno</i>.
+</blockquote><h4><a name = "tag_000_010_656">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>wcstoul()</i>
+returns the converted value, if any.
+If no conversion could be performed, 0 is returned and
+<i>errno</i>
+may be set to indicate the error.
+If the correct value is outside the range of representable values,
+{ULONG_MAX} is returned and
+<i>errno</i>
+is set to [ERANGE] .
+</blockquote><h4><a name = "tag_000_010_657">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>wcstoul()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value of
+<i>base</i>
+is not supported.
+
+<dt>[ERANGE]<dd>
+The value to be returned is not representable.
+
+</dl>
+<p>
+The
+<i>wcstoul()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+No conversion could be performed.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_658">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_659">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Unlike
+<i><a href="wcstod.htm">wcstod()</a></i>
+and
+<i><a href="wcstol.htm">wcstol()</a></i>,
+<i>wcstoul()</i>
+must always return a non-negative number;
+so, using the return value of
+<i>wcstoul()</i>
+for out-of-range numbers with
+<i>wcstoul()</i>
+could cause more severe problems than just loss of precision
+if those numbers can ever be negative.
+</blockquote><h4><a name = "tag_000_010_660">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_661">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="iswalpha.htm">iswalpha()</a></i>,
+<i><a href="scanf.htm">scanf()</a></i>,
+<i><a href="wcstod.htm">wcstod()</a></i>,
+<i><a href="wcstol.htm">wcstol()</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the MSE working draft.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

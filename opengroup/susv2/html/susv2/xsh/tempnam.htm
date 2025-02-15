@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>tempnam</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_528">&nbsp;</a>NAME</h4><blockquote>
+tempnam - create a name for a temporary file
+</blockquote><h4><a name = "tag_000_009_529">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+char *tempnam(const char *<i>dir</i>, const char *<i>pfx</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_530">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>tempnam()</i>
+function generates a pathname that may be used for a temporary file.
+<p>
+The
+<i>tempnam()</i>
+function allows the user to control the choice of a directory.  The
+<i>dir</i>
+argument points to the name of the directory in which the file is to be
+created.  If
+<i>dir</i>
+is a null pointer
+or points to a string which is not a name
+for an appropriate directory, the path prefix defined as
+{P_tmpdir} in the
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>
+header is used.
+If that directory is not accessible,
+an implementation-dependent directory may be used.
+<p>
+Many applications prefer their temporary files to have certain
+initial letter sequences in their names.
+The
+<i>pfx</i>
+argument should be used for this.
+This argument may be a null pointer or point to a string
+of up to five bytes to be used as the beginning of the filename.
+<p>
+Some implementations of
+<i>tempnam()</i>
+may use
+<i><a href="tmpnam.htm">tmpnam()</a></i>
+internally.  On such implementations, if called more than {TMP_MAX}
+times in a single process, the behaviour is implementation-dependent.
+</blockquote><h4><a name = "tag_000_009_531">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>tempnam()</i>
+allocates space for a string, puts the generated pathname in that
+space and returns a pointer to it.
+The pointer is suitable for use in a subsequent call to
+<i><a href="free.htm">free()</a></i>.
+Otherwise it returns a null pointer and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_009_532">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>tempnam()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ENOMEM]<dd>
+Insufficient storage space is available.
+
+</dl>
+</blockquote><h4><a name = "tag_000_009_533">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_534">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+This function only creates pathnames.
+It is the application's responsibility to create and remove the files.
+Between the time a pathname is created and the file is opened, it
+is possible for some other process to create a file with the same name.
+Applications may find
+<i><a href="tmpfile.htm">tmpfile()</a></i>
+more useful.
+</blockquote><h4><a name = "tag_000_009_535">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_536">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fopen.htm">fopen()</a></i>,
+<i><a href="free.htm">free()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="tmpfile.htm">tmpfile()</a></i>,
+<i><a href="tmpnam.htm">tmpnam()</a></i>,
+<i><a href="unlink.htm">unlink()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

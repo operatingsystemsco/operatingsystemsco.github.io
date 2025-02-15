@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>add_wchnstr</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_192">&nbsp;</a>NAME</h4><blockquote>
+add_wchnstr, add_wchstr, mvadd_wchnstr, mvadd_wchstr,
+mvwadd_wchnstr, mvwadd_wchstr, wadd_wchnstr, wadd_wchstr
+- add an array of complex characters and renditions to a window
+</blockquote><h4><a name = "tag_002_001_193">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int add_wchnstr(const cchar_t *<i>wchstr</i>, int <i>n</i>);
+
+int add_wchstr(const cchar_t *<i>wchstr</i>);
+
+int wadd_wchnstr(WINDOW *<i>win</i>, const cchar_t *<i>wchstr</i>, int <i>n</i>);
+
+int wadd_wchstr(WINDOW *<i>win</i>, const cchar_t *<i>wchstr</i>);
+
+int mvadd_wchnstr(int <i>y</i>, int <i>x</i>, const cchar_t *<i>wchstr</i>, int <i>n</i>);
+
+int mvadd_wchstr(int <i>y</i>, int <i>x</i>, const cchar_t *<i>wchstr</i>);
+
+int mvwadd_wchnstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, const cchar_t *<i>wchstr</i>,
+                   int <i>n</i>);
+
+int mvwadd_wchstr(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, const cchar_t *<i>wchstr</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_194">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions write the array of <b>cchar_t</b> specified by <i>wchstr</i>
+into the current or specified window starting at the current or specified
+cursor position.
+<p>
+These functions do not advance the cursor.
+The results are unspecified if <i>wchstr</i> contains any special characters.
+<p>
+The functions end successfully on encountering a null <b>cchar_t</b>.  The
+functions also end successfully when they fill the current line.  If a
+character cannot completely fit at the end of the current line, those columns
+are filled with the background character and rendition.
+<p>
+The
+<i>add_wchnstr()</i>,
+<i>mvadd_wchnstr()</i>,
+<i>mvwadd_wchnstr()</i>
+and
+<i>wadd_wchnstr()</i>
+functions end successfully after writing <i>n</i> <b>cchar_t</b>s
+(or the entire array of <b>cchar_t</b>s, if <i>n</i> is -1).
+</blockquote><h4><a name = "tag_002_001_195">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_196">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_197">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

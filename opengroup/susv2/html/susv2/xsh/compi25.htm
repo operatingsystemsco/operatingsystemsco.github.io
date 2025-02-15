@@ -1,0 +1,696 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>The Compilation Environment</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade><blockquote>
+<center>
+<h3><a name = "tag_000_002">&nbsp;</a>The Compilation Environment</h3>
+</center>
+<xref type="2" name="comp"></xref>
+Applications should ensure that the feature test macro _XOPEN_SOURCE is
+defined with the value 500 before inclusion of any header.  This is
+needed to enable the
+functionality described in this specification,
+and possibly to enable functionality defined elsewhere in the Common
+Applications Environment.
+<p>
+Identifiers in this specification may only be undefined using the
+<b>#undef</b>
+directive as described in
+<xref href=interface><a href="inter81.htm#tag_000_006">
+Use and Implementation of Interfaces
+</a></xref>
+or
+<xref href=names><a href="#tag_000_002_001">
+The X/Open Name Space
+</a></xref>.
+These
+<b>#undef</b>
+directives must follow all
+<b>#include</b>
+directives of any XSI headers.
+<p>
+Most strictly conforming POSIX and ISO C applications will
+compile on systems
+compliant to this specification.  However, an application which
+uses any of the items marked as an extension to POSIX and
+ISO C, for any purpose
+other than that shown here, will not necessarily compile. In such cases,
+it may be
+necessary to alter those applications to use alternative identifiers.
+<p>
+Since this specification is aligned with the ISO&nbsp;C standard,
+and since all functionality enabled by _POSIX_C_SOURCE
+set greater than zero and less than or equal to 199506L
+should be enabled by _XOPEN_SOURCE set equal to 500, there should be no
+need to define either _POSIX_SOURCE or _POSIX_C_SOURCE if _XOPEN_SOURCE is
+so defined.  Therefore if _XOPEN_SOURCE is set equal to 500 and
+_POSIX_SOURCE is defined, or _POSIX_C_SOURCE is set greater than zero
+and less than or equal to 199506L,
+the behaviour is the same as if only _XOPEN_SOURCE is defined and set
+equal to 500.
+However, should _POSIX_C_SOURCE be set to a value greater than
+199506L, the behaviour is undefined.
+<h4><a name = "tag_000_002_001">&nbsp;</a>The X/Open Name Space</h4>
+<xref type="3" name="names"></xref>
+All identifiers in this specification except
+<i>environ</i>
+are defined in at least one of the headers, as shown in
+<xref href=headers></xref>.
+When _XOPEN_SOURCE is defined, each header defines or
+declares some identifiers, potentially
+conflicting with identifiers used by the application.
+The set of
+identifiers visible to the application consists of precisely those
+identifiers from the header pages of the included headers, as well
+as additional identifiers reserved for the implementation.
+In addition, some
+headers may make visible identifiers from other headers as indicated
+on the relevant header pages.
+<p>
+An implementation conforming to the referenced 
+<a href="../xnsix.htm">Networking Services, Issue 5</a>
+specification will define or declare an additional set of identifiers
+as shown in <a href="../xns/namespac.htm">the XNS Name Space</a>
+or the <a href="../xnsix.htm">XNS reference pages</a>.
+<p>
+The identifiers reserved for use by the implementation are
+described below.
+<ol>
+<p>
+<li>
+Each identifier with external linkage described in the header section
+is reserved for use as an identifier with external linkage if the
+header is included.
+<p>
+<li>
+Each macro name described in the header section is reserved for
+any use if the header is included.
+<p>
+<li>
+Each identifier with file scope described in the header section is
+reserved for use as an identifier with file scope in the same
+name space if the header is included.
+<p>
+</ol>
+<p>
+If any header in the following table is included,
+identifiers with the prefixes, suffixes or complete names shown
+are reserved for any use by the implementation.
+<hr size=2 noshade>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top>
+<tr valign=top><th align=center><b>Header</b>
+<th align=center><b>Prefix</b>
+<th align=center><b>Suffix</b>
+<th align=center><b>Complete Name</b>
+<tr valign=top><td align=left><b>&lt;aio.h&gt;</b>
+<td align=left>aio_, lio_, AIO_, LIO_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;dirent.h&gt;</b>
+<td align=left>d_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;errno.h&gt;</b>
+<td align=left>E
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;fcntl.h&gt;</b>
+<td align=left>l_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;glob.h&gt;</b>
+<td align=left>gl_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;grp.h&gt;</b>
+<td align=left>gr_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;limits.h&gt;</b>
+<td align=left>&nbsp;
+<td align=left>_MAX
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;locale.h&gt;</b>
+<td align=left>LC_[A-Z]
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;mqueue.h&gt;</b>
+<td align=left>mq_, MQ_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;ndbm.h&gt;</b>
+<td align=left>dbm_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;poll.h&gt;</b>
+<td align=left>pd_, ph_, ps_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;pthread.h&gt;</b>
+<td align=left>pthread_, PTHREAD_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;pwd.h&gt;</b>
+<td align=left>pw_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;regex.h&gt;</b>
+<td align=left>re_, rm_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sched.h&gt;</b>
+<td align=left>sched_, SCHED_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;semaphore.h&gt;</b>
+<td align=left>sem_, SEM_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;signal.h&gt;</b>
+<td align=left>sa_, SIG[A-Z], SIG_[A-Z], ss_, sv_, si_, SI_, sigev_, SIGEV_, sival_, uc_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;stropts.h&gt;</b>
+<td align=left>bi_, ic_, l_, sl_, str_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/ipc.h&gt;</b>
+<td align=left>ipc_
+<td align=left>&nbsp;
+<td align=left>key, pad, seq
+<tr valign=top><td align=left><b>&lt;sys/mman.h&gt;</b>
+<td align=left>shm_, MAP_, MCL_, MS_, PROT_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/msg.h&gt;</b>
+<td align=left>msg
+<td align=left>&nbsp;
+<td align=left>msg
+<tr valign=top><td align=left><b>&lt;sys/resource.h&gt;</b>
+<td align=left>rlim_, ru_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/sem.h&gt;</b>
+<td align=left>sem
+<td align=left>&nbsp;
+<td align=left>sem
+<tr valign=top><td align=left><b>&lt;sys/shm.h&gt;</b>
+<td align=left>shm
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/stat.h&gt;</b>
+<td align=left>st_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/statvfs.h&gt;</b>
+<td align=left>f_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/time.h&gt;</b>
+<td align=left>fds_, it_, tv_, FD_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/times.h&gt;</b>
+<td align=left>tms_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/uio.h&gt;</b>
+<td align=left>iov_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/utsname.h&gt;</b>
+<td align=left>uts_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/wait.h&gt;</b>
+<td align=left>si_, W[A-Z], P_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;termios.h&gt;</b>
+<td align=left>c_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;time.h&gt;</b>
+<td align=left>tm_, clock_, timer_, it_, tv_, CLOCK_, TIMER_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;ucontext.h&gt;</b>
+<td align=left>uc_, ss_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;ulimit.h&gt;</b>
+<td align=left>UL_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;utime.h&gt;</b>
+<td align=left>utim_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;utmpx.h&gt;</b>
+<td align=left>ut_
+<td align=left>_LVL, _TIME, _PROCESS
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;wordexp.h&gt;</b>
+<td align=left>we_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>ANY header</b>
+<td align=left>&nbsp;
+<td align=left>_t
+<td align=left>&nbsp;
+</table>
+<dl><dt><b>Note:</b>
+<dd>The notation [A-Z] indicates any upper-case letter in the portable
+character set.
+The notation [a-z] indicates any lower-case letter in the portable
+character set.
+Commas and spaces in the lists of prefixes and complete names in the above
+table are not part of any prefix or complete name.
+</dl>
+If any header in the following table is included, macros with the prefixes
+shown may be defined.  After the last inclusion of a given header, an
+application may use identifiers with the corresponding prefixes for its own
+purpose, provided their use is preceded by an
+<b>#undef</b>
+of the corresponding macro.
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Header</b>
+<th colspan=5 align=center><b>Prefix</b>
+<tr valign=top><td align=left><b>&lt;dlfcn.h&gt;</b>
+<td align=left>RTLD_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;fcntl.h&gt;</b>
+<td align=left>F_
+<td align=left>O_
+<td align=left>S_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;fmtmsg.h&gt;</b>
+<td align=left>MM_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;fnmatch.h&gt;</b>
+<td align=left>FNM_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;ftw.h&gt;</b>
+<td align=left>FTW
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;glob.h&gt;</b>
+<td align=left>GLOB_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;ndbm.h&gt;</b>
+<td align=left>DBM_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;nl_types.h&gt;</b>
+<td align=left>NL_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;poll.h&gt;</b>
+<td align=left>POLL
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;regex.h&gt;</b>
+<td align=left>REG_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;signal.h&gt;</b>
+<td align=left>SA_
+<td align=left>SIG_[0-9a-z_]
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&nbsp;</b>
+<td align=left>BUS_
+<td align=left>CLD_
+<td align=left>FPE_
+<td align=left>ILL_
+<td align=left>POLL_
+<tr valign=top><td align=left><b>&nbsp;</b>
+<td align=left>SEGV_
+<td align=left>SI_
+<td align=left>SS_
+<td align=left>SV_
+<td align=left>TRAP_
+<tr valign=top><td align=left><b>&lt;stropts.h&gt;</b>
+<td align=left>FLUSH[A-Z]
+<td align=left>I_
+<td align=left>M_
+<td align=left>MUXID_R[A-Z]
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&nbsp;</b>
+<td align=left>S_
+<td align=left>SND[A-Z]
+<td align=left>STR
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;syslog.h&gt;</b>
+<td align=left>LOG_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/ipc.h&gt;</b>
+<td align=left>IPC_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/mman.h&gt;</b>
+<td align=left>PROT_
+<td align=left>MAP_
+<td align=left>MS_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/msg.h&gt;</b>
+<td align=left>MSG[A-Z]
+<td align=left>MSG_[A-Z]
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/resource.h&gt; </b>
+<td align=left>PRIO_
+<td align=left>RLIM_
+<td align=left>RLIMIT_
+<td align=left>RUSAGE_
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/sem.h&gt;</b>
+<td align=left>SEM_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/shm.h&gt;</b>
+<td align=left>SHM[A-Z]
+<td align=left>SHM_[A-Z]
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/socket.h&gt;</b>
+<td align=left>AF_
+<td align=left>MSG_
+<td align=left>PF_
+<td align=left>SO
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/stat.h&gt;</b>
+<td align=left>S_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/statvfs.h&gt;</b>
+<td align=left>ST_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/time.h&gt;</b>
+<td align=left>FD_
+<td align=left>ITIMER_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/uio.h&gt;</b>
+<td align=left>IOV_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;sys/wait.h&gt;</b>
+<td align=left>BUS_
+<td align=left>CLD_
+<td align=left>FPE_
+<td align=left>ILL_
+<td align=left>POLL_
+<tr valign=top><td align=left><b>&nbsp;</b>
+<td align=left>SEGV_
+<td align=left>SI_
+<td align=left>TRAP_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<tr valign=top><td align=left><b>&lt;termios.h&gt;</b>
+<td align=left>V
+<td align=left>I
+<td align=left>O
+<td align=left>TC
+<td align=left>B[0-9]
+<tr valign=top><td align=left><b>&lt;wordexp.h&gt;</b>
+<td align=left>WRDE_
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+<td align=left>&nbsp;
+</table>
+<dl><dt><b>Note:</b>
+<dd>The notation [0-9] indicates any digit.
+The notation [A-Z] indicates any upper-case letter in the portable
+character set.
+The notation [0-9a-z_] indicates any digit,
+any lower-case letter in the portable character set or underscore.
+</dl>
+<br>
+<p>
+The following identifiers are reserved regardless
+of the inclusion of headers.
+<ol>
+<p>
+<li>
+All identifiers that begin with an underscore and either an
+upper-case letter or another underscore are always reserved for
+any use by the implementation.
+<p>
+<li>
+All identifiers that begin with an underscore are always reserved
+for use as identifiers with file scope in both the ordinary
+identifier and tag name spaces.
+<p>
+<li>
+All identifiers in the table below are reserved for use as
+identifiers with external linkage.
+Some of these identifiers do not appear in this specification, but are
+reserved for future use by the ISO&nbsp;C standard.
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><td align=left> abort abs acos acosf acosl asctime asin asinf asinl atan atan2 atan2f atan2l atanf atanl atexit atof atoi atol bsearch calloc ceil ceilf ceill clearerr clock cos cosf cosh coshf coshl 
+<td align=left> cosl ctime difftime div errno exit exp expf expl fabs fabsf fabsl fclose feof ferror fflush fgetc fgetpos fgets fgetwc fgetws floor floorf floorl fmod fmodf fmodl fopen fprintf fputc fputs 
+<td align=left> fputwc fputws fread free freopen frexp frexpf frexpl fscanf fseek fsetpos ftell fwide fwprintf fwrite fwscanf getc getchar getenv gets getwc getwchar gmtime is[a-z]* labs ldexp ldexpf ldexpl ldiv localeconv localtime 
+<td align=left> log log10 log10f log10l logf logl longjmp malloc mblen mbrlen mbrtowc mbsinit mbsrtowcs mbstowcs mbtowc mem[a-z]* mktime modf modff modfl perror pow powf powl printf putc putchar puts putwc putwchar qsort 
+<td align=left> raise rand realloc remove rename rewind scanf setbuf setjmp setlocale setvbuf signal sin sinf sinh sinhf sinhl sinl sprintf sqrt sqrtf sqrtl srand sscanf str[a-z]* swprintf swscanf system tan tanf tanh 
+<td align=left> tanhf tanhl tanl time tmpfile tmpnam to[a-z]* ungetc ungetwc va_end vfprintf vfwprintf vprintf vsprintf vswprintf vwprintf wcrtomb wcs[a-z]* wctob wctomb wctrans wctype wcwidth wmem[a-z]* wprintf wscanf 
+</table>
+<dl><dt><b>Note:</b>
+<dd>The notation [a-z] indicates any lower-case letter in the portable character
+set.  The notation * indicates any combination of digits,
+letters in the portable character set, and underscore.
+</dl>
+<p>
+</ol>
+<hr size=2 noshade>
+<dl compact>
+
+<dt>4.<dd>The following identifiers are also reserved for use as identifiers with
+external linkage:
+
+</dl>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><td align=left><i>a64l</i>
+<td align=left>endservent
+<td align=left>getpgid
+<td align=left>logb
+<td align=left>regex
+<td align=left>sigset
+<tr valign=top><td align=left><i>acosh</i>
+<td align=left>endutxent
+<td align=left>getpmsg
+<td align=left>lstat
+<td align=left>remainder
+<td align=left>sigstack
+<tr valign=top><td align=left><i>asinh</i>
+<td align=left>expm1
+<td align=left>getpriority
+<td align=left>makecontext
+<td align=left>remque
+<td align=left>srandom
+<tr valign=top><td align=left><i>atanh</i>
+<td align=left>fattach
+<td align=left>getpwent
+<td align=left>mknod
+<td align=left>rindex
+<td align=left>statvfs
+<tr valign=top><td align=left><i>basename</i>
+<td align=left>fchdir
+<td align=left>getrlimit
+<td align=left>mkstemp
+<td align=left>rint
+<td align=left>strcasecmp
+<tr valign=top><td align=left><i>bcmp</i>
+<td align=left>fchmod
+<td align=left>getrusage
+<td align=left>mktemp
+<td align=left>sbrk
+<td align=left>strdup
+<tr valign=top><td align=left><i>bcopy</i>
+<td align=left>fchown
+<td align=left>getsid
+<td align=left>mmap
+<td align=left>scalb
+<td align=left>strncasecmp
+<tr valign=top><td align=left><i>brk</i>
+<td align=left>fcvt
+<td align=left>getsubopt
+<td align=left>mprotect
+<td align=left>select
+<td align=left>swapcontext
+<tr valign=top><td align=left><i>bsd_signal</i>
+<td align=left>fdetach
+<td align=left>gettimeofday
+<td align=left>msync
+<td align=left>setcontext
+<td align=left>symlink
+<tr valign=top><td align=left><i>bzero</i>
+<td align=left>ffs
+<td align=left>getutxent
+<td align=left>munmap
+<td align=left>setgrent
+<td align=left>sync
+<tr valign=top><td align=left><i>cbrt</i>
+<td align=left>fmtmsg
+<td align=left>getutxid
+<td align=left>nextafter
+<td align=left>setitimer
+<td align=left>syslog
+<tr valign=top><td align=left><i>closelog</i>
+<td align=left>fstatvfs
+<td align=left>getutxline
+<td align=left>nftw
+<td align=left>setlogmask
+<td align=left>tcgetsid
+<tr valign=top><td align=left><i>dbm_clearerr</i>
+<td align=left>ftime
+<td align=left>getwd
+<td align=left>openlog
+<td align=left>setpgrp
+<td align=left>truncate
+<tr valign=top><td align=left><i>dbm_close</i>
+<td align=left>ftok
+<td align=left>grantpt
+<td align=left>poll
+<td align=left>setpriority
+<td align=left>ttyslot
+<tr valign=top><td align=left><i>dbm_delete</i>
+<td align=left>ftruncate
+<td align=left>ilogb
+<td align=left>ptsname
+<td align=left>setpwent
+<td align=left>ualarm
+<tr valign=top><td align=left><i>dbm_error</i>
+<td align=left>gcvt
+<td align=left>index
+<td align=left>putmsg
+<td align=left>setreuid
+<td align=left>unlockpt
+<tr valign=top><td align=left><i>dbm_fetch</i>
+<td align=left>getcontext
+<td align=left>initstate
+<td align=left>putpmsg
+<td align=left>setrlimit
+<td align=left>usleep
+<tr valign=top><td align=left><i>dbm_firstkey</i>
+<td align=left>getdate
+<td align=left>insque
+<td align=left>pututxline
+<td align=left>setstate
+<td align=left>utimes
+<tr valign=top><td align=left><i>dbm_nextkey</i>
+<td align=left>getdtablesize
+<td align=left>ioctl
+<td align=left>random
+<td align=left>setutxent
+<td align=left>valloc
+<tr valign=top><td align=left><i>dbm_open</i>
+<td align=left>getgrent
+<td align=left>isastream
+<td align=left>re_comp
+<td align=left>sigaltstack
+<td align=left>vfork
+<tr valign=top><td align=left><i>dbm_store</i>
+<td align=left>getgrgid
+<td align=left>killpg
+<td align=left>re_exec
+<td align=left>sighold
+<td align=left>wait3
+<tr valign=top><td align=left><i>dirname</i>
+<td align=left>gethostid
+<td align=left>l64a
+<td align=left>readlink
+<td align=left>sigignore
+<td align=left>waitid
+<tr valign=top><td align=left><i>ecvt</i>
+<td align=left>getitimer
+<td align=left>lchown
+<td align=left>readv
+<td align=left>siginterrupt
+<td align=left>writev
+</table>
+<p>
+<p>
+All the identifiers defined in this specification that have external
+linkage are always reserved for use as identifiers with external linkage.
+<p>
+No other identifiers are reserved.
+<p>
+Applications must not declare or define identifiers with the same name as an
+identifier reserved in the same context. Since macro names are replaced
+whenever found, independent of scope and name space, macro names matching any
+of the reserved identifier names must not be defined if any associated header
+is included.
+<p>
+Except that the effect of each inclusion of
+<i><a href="asser16.htm">&lt;assert.h&gt;</a></i>
+depends on the definition of NDEBUG, headers may be included
+in any order, and each may be included more than once in a given scope,
+with no difference in effect from that of being included only once.
+<p>
+If used, a header must be included outside of any external declaration
+or definition, and it must be first included before the first reference
+to any type or macro it defines, or to any function or object it declares.
+However, if an identifier is declared or defined
+in more than one header, the second and subsequent associated headers
+may be included after the initial reference to the identifier.
+Prior to the inclusion of a header,
+the program must not define any macros with names lexically identical
+to symbols defined by that header.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

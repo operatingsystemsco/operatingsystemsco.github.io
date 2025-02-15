@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>tcflush</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_009_453">&nbsp;</a>NAME</h4><blockquote>
+tcflush - flush non-transmitted output data, non-read input data or both
+</blockquote><h4><a name = "tag_000_009_454">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="termi288.htm">termios.h</a>&gt;
+
+int tcflush(int <i>fildes</i>, int <i>queue_selector</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_009_455">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Upon successful completion,
+<i>tcflush()</i>
+discards data written to the object referred to by
+<i>fildes</i>
+(an open file descriptor associated with a terminal)
+but not transmitted, or data received but not read, depending on the
+value of
+<i>queue_selector</i>:
+<ul>
+<p>
+<li>
+If
+<i>queue_selector</i>
+is TCIFLUSH it flushes data received but not read.
+<p>
+<li>
+If
+<i>queue_selector</i>
+is TCOFLUSH it flushes data written but not transmitted.
+<p>
+<li>
+If
+<i>queue_selector</i>
+is TCIOFLUSH
+it flushes both data received but not read and data written but not
+transmitted.
+<p>
+</ul>
+<p>
+Attempts to use
+<i>tcflush()</i>
+from a process which is a member of a background process group on a
+<i>fildes</i>
+associated with its controlling terminal, will cause the process group
+to be sent a SIGTTOU signal.
+If the calling process is blocking or ignoring SIGTTOU signals,
+the process is allowed to perform the operation, and no signal is
+sent.
+</blockquote><h4><a name = "tag_000_009_456">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, 0 is returned. Otherwise, -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_009_457">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>tcflush()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid file descriptor.
+
+<dt>[EINVAL]<dd>
+The
+<i>queue_selector</i>
+argument is not a supported value.
+
+<dt>[ENOTTY]<dd>
+The file associated with
+<i>fildes</i>
+is not a terminal.
+
+</dl>
+<p>
+The
+<i>tcflush()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EIO]<dd>
+The process group of the writing process is orphaned,
+and the writing process is not ignoring or blocking SIGTTOU.
+
+</dl>
+</blockquote><h4><a name = "tag_000_009_458">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_459">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_009_460">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+In the ISO&nbsp;POSIX-1 standard, the possibility of an [EIO] error occurring is
+described in <b>XBD</b> specification, <a href="../xbd/termios.htm#tag_008_001_004"><b>Terminal Access Control</b>&nbsp;</a>, but it is not mentioned in the
+<i><a href="tcflow.htm">tcflow()</a></i>
+interface definition.
+It has become clear that this omission was unintended,
+so it is likely that the [EIO] error will be reclassified as
+a &quot;will fail&quot; 
+in a future issue of the POSIX standard.
+</blockquote><h4><a name = "tag_000_009_461">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="tcdrain.htm">tcdrain()</a></i>,
+<i><a href="termi288.htm">&lt;termios.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>,
+the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

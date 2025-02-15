@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>dlopen</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_003_142">&nbsp;</a>NAME</h4><blockquote>
+dlopen - gain access to an executable object file
+</blockquote><h4><a name = "tag_000_003_143">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="dlfcn40.htm">dlfcn.h</a>&gt;
+
+void *dlopen(const char *<i>file</i>, int <i>mode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_003_144">&nbsp;</a>DESCRIPTION</h4><blockquote>
+<i>dlopen()</i>
+makes an executable object file specified by <i>file</i>
+available to the calling program.
+The class of files eligible for this operation and the manner of their
+construction are specified by the implementation, 
+though typically such files are
+executable objects such as shared libraries, relocatable files or programs.
+Note that some implementations permit the construction of dependencies
+between such objects that are embedded within files. In such cases, a
+<i>dlopen()</i>
+operation will load such dependencies in addition to the object
+referenced by <i>file</i>.
+Implementations may also impose specific
+constraints on the construction of programs that can employ 
+<i>dlopen()</i>
+and its related services. 
+<p>
+A successful
+<i>dlopen()</i>
+returns a <i>handle</i> which the caller may use on subsequent calls to
+<i><a href="dlsym.htm">dlsym()</a></i>
+and
+<i><a href="dlclose.htm">dlclose()</a></i>.
+The value of this <i>handle</i>
+should not be interpreted in any way by the caller.
+<p>
+<i>file</i>
+is used to construct a pathname to the object file. If
+<i>file</i>
+contains a slash character, the
+<i>file</i>
+argument is used as the pathname for the file. Otherwise, 
+<i>file</i>
+is used in an
+implementation-dependent manner to yield a pathname. 
+<p>
+If the value of <i>file</i> is 0, 
+<i>dlopen()</i>
+provides a <i>handle</i> on a global symbol object.
+This object provides access to the symbols
+from an ordered set of objects consisting of
+the original program image file, together with
+any objects loaded at program startup as specified by that process image file
+(for example, shared libraries), and the set of objects loaded using a 
+<i>dlopen()</i>
+operation together with the
+RTLD_GLOBAL
+flag. As the latter set of objects can change during execution, the set
+identified by <i>handle</i> can also change dynamically. 
+<p>
+Only a single copy of an object file is brought into the
+address space, even if 
+<i>dlopen()</i>
+is invoked multiple times in reference to the file, and even if different
+pathnames are used to reference the file.
+<p>
+The <i>mode</i> parameter describes how
+<i>dlopen()</i>
+will operate upon <i>file</i>
+with respect to the processing of relocations and the scope of visibility of
+the symbols provided within <i>file</i>.
+When an object is brought into the address space of a process,
+it may contain references to symbols whose addresses are not known
+until the object is loaded. These references must be relocated
+before the symbols can be accessed. The <i>mode</i>
+parameter governs when these relocations take place and may
+have the following values:
+<dl compact>
+
+<dt>RTLD_LAZY<dd>
+Relocations are performed at an implementation-dependent time,
+ranging from the time of the
+<i>dlopen()</i>
+call until the first reference to a given symbol occurs. Specifying
+RTLD_LAZY
+should improve performance on implementations supporting dynamic symbol
+binding as a process may not reference all of the functions in any given
+object. And, for systems supporting dynamic symbol resolution for
+normal process execution, this behaviour mimics the normal handling of process
+execution.
+
+<dt>RTLD_NOW<dd>
+All necessary relocations are performed when the object is first loaded.
+This may waste some processing if relocations are performed
+for functions that are never referenced. This behaviour may be useful for
+applications that need to know as soon as an object is loaded
+that all symbols referenced during execution will be available.
+
+</dl>
+<p>
+Any object loaded by 
+<i>dlopen()</i>
+that requires relocations
+against global symbols can reference the symbols in the original
+process image file, any objects loaded at program startup, from the
+object itself as well as any other object included in the same
+<i>dlopen()</i>
+invocation, and any objects that were loaded in any 
+<i>dlopen()</i>
+invocation and which specified the 
+RTLD_GLOBAL flag.
+To determine the scope of visibility for the symbols loaded with a
+<i>dlopen()</i>
+invocation, the
+<i>mode</i>
+parameter should be bitwise or'ed with one of the following values:
+<dl compact>
+
+<dt>RTLD_GLOBAL<dd>
+The object's symbols are made available for the relocation processing
+of any other object. In addition, symbol lookup using
+<i>dlopen</i>(<i>0, mode</i>)
+and an associated
+<i><a href="dlsym.htm">dlsym()</a></i>
+allows objects loaded with this
+<i>mode</i>
+to be searched.
+
+<dt>RTLD_LOCAL<dd>
+The object's symbols are not made available for the relocation processing
+of any other object.
+
+</dl>
+<p>
+If neither RTLD_GLOBAL nor RTLD_LOCAL
+are specified, then an implementation-specified default behaviour will be
+applied.
+<p>
+If a <i>file</i> is specified in multiple
+<i>dlopen()</i>
+invocations, <i>mode</i>
+is interpreted at each invocation. Note, however, that once
+RTLD_NOW
+has been specified all relocations will have been completed rendering
+further
+RTLD_NOW
+operations redundant and any further
+RTLD_LAZY
+operations irrelevant. Similarly note that once
+RTLD_GLOBAL
+has been specified the object will maintain the
+RTLD_GLOBAL
+status regardless of any previous or future specification of
+RTLD_LOCAL,
+so long as the object remains in the address space (see 
+<i><a href="dlclose.htm">dlclose()</a></i>).
+<p>
+Symbols introduced into a program through calls to
+<i>dlopen()</i>
+may be used in relocation activities. Symbols so introduced may duplicate
+symbols already defined by the program or previous
+<i>dlopen()</i>
+operations. To resolve the ambiguities such a situation might present, the
+resolution of a symbol reference to symbol definition is based on a symbol
+resolution order.
+Two such resolution orders are defined: 
+<i>load</i>
+or 
+<i>dependency</i>
+ordering.
+<i>Load</i>
+order establishes an ordering among symbol definitions, such that the
+definition first loaded (including definitions from the image file and any
+dependent objects loaded with it) has priority over objects added 
+later (via 
+<i>dlopen()</i>).
+<i>Load</i> ordering is used in relocation processing.
+<i>Dependency</i>
+ordering uses a breadth-first order starting with a given object, then all
+of its dependencies, then any dependents of those, iterating until all
+dependencies are satisfied.
+With the exception of the global symbol object obtained via a
+<i>dlopen()</i>
+operation on a <i>file</i> of 0, <i>dependency</i> ordering is used by the 
+<i><a href="dlsym.htm">dlsym()</a></i>
+function.
+<i>Load</i> ordering is used in 
+<i><a href="dlsym.htm">dlsym()</a></i>
+operations upon the global symbol object.
+<p>
+When an object is first made accessible via
+<i>dlopen()</i>
+it and its dependent objects are added in
+<i>dependency</i>
+order. Once all the objects are added, relocations are performed using
+<i>load</i>
+order. Note that if an object or its dependencies had been previously
+loaded, the <i>load</i> and <i>dependency</i>
+orders may yield different resolutions.
+<p>
+The symbols introduced by
+<i>dlopen()</i>
+operations, and available through
+<i><a href="dlsym.htm">dlsym()</a></i>
+are at a minimum those which are exported as symbols of global scope by 
+the object. Typically such symbols will be those that were specified in
+(for example) C source code as having <i>extern</i> linkage. The precise 
+manner in which an implementation constructs the set of exported symbols for a
+<i>dlopen()</i>
+object is specified by that implementation.
+</blockquote><h4><a name = "tag_000_003_145">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If
+<i>file</i>
+cannot be found, cannot be opened for reading, is not of an appropriate
+object format for processing by
+<i>dlopen()</i>,
+or if an error occurs during the process of loading
+<i>file</i>
+or relocating its symbolic references, 
+<i>dlopen()</i>
+will return NULL.
+More detailed diagnostic information will be
+available through
+<i><a href="dlerror.htm">dlerror()</a></i>.
+</blockquote><h4><a name = "tag_000_003_146">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_003_147">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_148">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_149">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_003_150">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="dlclose.htm">dlclose()</a></i>,
+<i><a href="dlerror.htm">dlerror()</a></i>,
+<i><a href="dlsym.htm">dlsym()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

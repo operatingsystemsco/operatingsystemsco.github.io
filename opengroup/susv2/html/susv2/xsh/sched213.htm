@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sched_rr_get_interval</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_207">&nbsp;</a>NAME</h4><blockquote>
+sched_rr_get_interval - get execution time limits
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_008_208">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sched208.htm">sched.h</a>&gt;
+
+int sched_rr_get_interval(pid_t <i>pid</i>, struct timespec *<i>interval</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_209">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sched_rr_get_interval()</i>
+function updates the
+<b>timespec</b>
+structure referenced by the
+<i>interval</i>
+argument to contain the current execution time limit (that is, time quantum)
+for the process specified by
+<i>pid</i>.
+If
+<i>pid</i>
+is zero, the current execution time limit for the calling process will
+be returned.
+</blockquote><h4><a name = "tag_000_008_210">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>sched_rr_get_interval()</i>
+function returns zero.
+Otherwise, it returns a value of -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_008_211">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>sched_rr_get_interval()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ENOSYS]<dd>
+The
+<i><a href="sched209.htm">sched_get_priority_max()</a></i>,
+<i><a href="sched210.htm">sched_get_priority_min()</a></i>
+and
+<i>sched_rr_get_interval()</i>
+functions are not supported by this implementation.
+
+<dt>[ESRCH]<dd>
+No process can be found corresponding to that specified by
+<i>pid</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_212">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_213">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_214">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_215">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sched211.htm">sched_getparam()</a></i>,
+<i><a href="sched214.htm">sched_setparam()</a></i>,
+<i><a href="sched209.htm">sched_get_priority_max()</a></i>,
+<i><a href="sched212.htm">sched_getscheduler()</a></i>,
+<i><a href="sched215.htm">sched_setscheduler()</a></i>,
+<i><a href="sched208.htm">&lt;sched.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

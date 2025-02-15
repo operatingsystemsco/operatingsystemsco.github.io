@@ -1,0 +1,582 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ar</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_039">&nbsp;</a>NAME</h4><blockquote>
+ar - create and maintain library archives
+</blockquote><h4><a name = "tag_000_000_040">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+ar -d<b>[</b>-v<b>][</b>-l<b>]</b><i> archive file</i> ...
+
+ar -m<b>[</b>-abilv<b>][</b><i>posname</i><b>]</b><i> archive file</i> ...
+
+ar -p<b>[</b>-v<b>][</b>-s<b>]</b><i>archive</i><b> [</b><i>file</i> ...<b>]</b>
+
+ar -q<b>[</b>-clv<b>] </b><i>archive file</i> ...
+
+ar -r<b>[</b>-cuv<b>][</b>-abil<b>][</b><i>posname</i><b>]</b><i>archive file</i> ...
+
+ar -t<b>[</b>-v<b>][</b>-s<b>]</b><i>archive </i><b>[</b><i>file</i> ...<b>]</b>
+
+ar -x<b>[</b>-v<b>][</b>-sCT<b>]</b><i>archive </i><b>[</b><i>file</i> ...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_041">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ar</i>
+utility
+can be used to create and maintain groups of files
+combined into an archive.
+Once an archive has been created, new files can be added,
+and existing files can be extracted, deleted or replaced.
+When an archive consists entirely of valid object files,
+the implementation will format the archive so that it is usable
+as a library for link editing (see
+<i><a href="c89.htm">c89</a></i>,
+<i><a href="cc.htm">cc</a></i>
+and
+<i><a href="fort77.htm">fort77</a></i>).
+When some of the archived files are not valid object files,
+the suitability of the archive for library use is undefined.
+If an archive file
+consists entirely of printable files,
+the entire archive file is printable.
+<p>
+When
+<i>ar</i>
+creates an archive file, it creates administrative information
+in a format that is portable across all machines.
+When there is at least one object file that
+<i>ar</i>
+recognises as such in the archive,
+an archive symbol table is created in the archive file
+and maintained by
+<i>ar</i>;
+it is used by the link editor
+to search the archive file.
+Whenever the
+<i>ar</i>
+utility is used to create or update the contents of such an archive, the
+symbol table is rebuilt.
+The
+<b>-s</b>
+option forces the symbol table to be rebuilt.
+<p>
+All
+<i>file</i>
+operands can be pathnames.
+However, files
+within archives are named by a filename, which is the last component of
+the pathname used when the file was entered into the archive.
+The comparison of
+<i>file</i>
+operands to the names of files in archives is
+performed by comparing the last component of the operand to the name of the
+archive file.
+<p>
+It is unspecified whether multiple files
+in the archive may be identically named.
+In the case of such files, however, each
+<i>file</i>
+and
+<i>posname</i>
+operand will match
+only the first archive file having a name that is the same as the
+last component of the operand.
+</blockquote><h4><a name = "tag_000_000_042">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>ar</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-a</b>
+<dd>Position new files in the archive after the file named by the
+<i>posname</i>
+operand.
+
+<dt><b>-b</b>
+<dd>Position new files in the archive before the file named by the
+<i>posname</i>
+operand.
+
+<dt><b>-c</b>
+<dd>Suppress the diagnostic message that is written to standard error
+by default when
+the archive file
+<i>archive</i>
+is created.
+
+<dt><b>-C</b>
+<dd>Prevent extracted files from replacing
+like-named files in the file system.
+This option is useful when
+<b>-T</b>
+is also used, to prevent truncated
+filenames from replacing files
+with the same prefix.
+
+<dt><b>-d</b>
+<dd>Delete one or more
+<i>file</i>s
+from
+<i>archive.</i>
+
+<dt><b>-i</b>
+<dd>Position new files in the archive before the file named by the
+<i>posname</i>
+operand (equivalent to
+<b>-b</b>).
+
+<dt><b>-l</b>
+<dd>Place temporary files in the local current working directory,
+rather than in the directory specified by the environment variable
+<i>TMPDIR</i>
+or in the default directory. (<b>LEGACY</b>)
+
+<dt><b>-m</b>
+<dd>Move the named files.
+The
+<b>-a</b>,
+<b>-b</b>
+or
+<b>-i</b>
+options with the
+<i>posname</i>
+operand indicate the position;
+otherwise, move the files to the end of the archive.
+
+<dt><b>-p</b>
+<dd>Write the contents of the
+<i>file</i>s
+from
+<i>archive</i>
+to the standard output.
+If no
+<i>file</i>s
+are specified, the contents
+of all files in the archive will be written
+in the order of the archive.
+
+<dt><b>-q</b>
+<dd>Quickly append the named files to the end of the archive file.
+In this case
+<i>ar</i>
+does not check whether the added members
+are already in the archive.
+This is useful to bypass the searching otherwise done
+when creating a large archive piece by piece.
+
+<dt><b>-r</b>
+<dd>Replace or add
+<i>file</i>s
+to
+<i>archive</i>.
+If the archive named by
+<i>archive</i>
+does not exist, a new archive file will be created
+and a diagnostic message will be written to standard error
+(unless the
+<b>-c</b>
+option is specified).
+If no
+<i>file</i>s
+are specified and the
+<i>archive</i>
+exists, the results are undefined.
+Files that replace existing files will not change the
+order of the archive.
+Files that do not replace existing files will be appended to the archive.
+
+<dt><b>-s</b>
+<dd>Force the regeneration of the archive symbol table even if
+<i>ar</i>
+is not invoked with an option that will modify the archive file contents.
+This option is useful to restore the archive symbol table after
+it has been stripped; see
+<i><a href="strip.htm">strip</a></i>.
+
+<dt><b>-t</b>
+<dd>Write a table of contents of
+<i>archive</i>
+to the standard output.
+The files specified by the
+<i>file</i>
+operands will be included in the written list.
+If no
+<i>file</i>
+operands are specified, all files in
+<i>archive</i>
+will be included
+in the order of the archive.
+
+<dt><b>-T</b>
+<dd>Allow filename truncation of extracted files
+whose archive names are longer than the file system
+can support.
+By default, extracting a file with a name that
+is too long is an error;
+a diagnostic message will be written and
+the file will not be extracted.
+
+<dt><b>-u</b>
+<dd>Update older files.
+When used with the
+<b>-r</b>
+option, files within the archive will be replaced
+only if the corresponding
+<i>file</i>
+has a modification time
+that is at least as new as the modification time
+of the file within the archive.
+
+<dt><b>-v</b>
+<dd>Give verbose output.
+When used with the option characters
+<b>-d</b>,
+<b>-r</b>
+or
+<b>-x</b>,
+write a detailed file-by-file description of the archive creation
+and maintenance activity, as described in the STDOUT section.
+
+When used with
+<b>-p</b>,
+write the name of the file to the standard output
+before writing the file itself to the standard output,
+as described in the STDOUT section.
+
+When used with
+<b>-t</b>,
+include a long listing of information about the files
+within the archive,
+as described in the STDOUT section.
+
+
+<dt><b>-x</b>
+<dd>Extract the files named by the
+<i>file</i>
+operands from
+<i>archive</i>.
+The contents of the archive file will not be changed.
+If no
+<i>file</i>
+operands are given, all files in the archive
+will be extracted.
+If the filename of a file extracted from the archive is longer
+than that supported in the directory to which it is being extracted,
+the results are undefined.
+The modification time of each file extracted will be set to the
+time the file is extracted from the archive.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_043">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>archive</i><dd>A pathname of the archive file.
+
+<dt><i>file</i><dd>A pathname.
+Only the last component will be used when
+comparing against the names of files in the archive.
+If two or more
+<i>file</i>
+operands have the same last pathname
+component (basename), the results are unspecified.
+The implementation's archive format will not truncate valid filenames
+of files added to or replaced in the archive.
+
+<dt><i>posname</i><dd>
+The name of a file in the archive file, used for
+relative positioning; see options
+<b>-m</b>
+and
+<b>-r</b>.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_044">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_000_000_045">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file named by
+<i>archive</i>
+must be a file in the format created by
+<i>ar</i>
+<b>-r</b>.
+</blockquote><h4><a name = "tag_000_000_046">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>ar</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LC_TIME</i><dd>
+Determine the format
+and content for date and time
+strings written by
+<i>ar</i>
+<b>-tv</b>.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TMPDIR</i><dd>
+Determine the pathname that
+overrides the default directory for temporary files, if any.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_047">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_048">&nbsp;</a>STDOUT</h4><blockquote>
+If the
+<b>-d</b>
+option is used with the
+<b>-v</b>
+option, the standard output format is:
+<code>
+<p>
+<tt>"d - %s\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+where
+&lt;<i>file</i>&gt;
+is the operand specified on the command line.
+<p>
+If the
+<b>-p</b>
+option is used with the
+<b>-v</b>
+option,
+<i>ar</i>
+will precede the contents of each file with:
+<code>
+<p>
+<tt>"\n&lt;%s&gt;\n\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+<p>
+where
+&lt;<i>file</i>&gt;
+is the operand specified on the command line, if
+<i>file</i>
+operands were specified,
+and the name of the file in the archive if they were not.
+<p>
+If the
+<b>-r</b>
+option is used with the
+<b>-v</b>
+option, and
+<i>file</i>
+is already in the archive, the standard output format is:
+<code>
+<p>
+<tt>"r - %s\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+where
+&lt;<i>file</i>&gt;
+is the operand specified on the command line.
+<p>
+If
+<i>file</i>
+is being added to the archive with the
+<b>-r</b>
+option, the standard output format is:
+<code>
+<p>
+<tt>"a - %s\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+where
+&lt;<i>file</i>&gt;
+is the operand specified on the command line.
+<p>
+If the
+<b>-t</b>
+option is used,
+<i>ar</i>
+writes the names of the files to the standard output in the format:
+<code>
+<p>
+<tt>"%s\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+where
+&lt;<i>file</i>&gt;
+is the operand specified on the command line,
+if
+<i>file</i>
+operands were specified, or the name of the file in the
+archive if they were not.
+<p>
+If the
+<b>-t</b>
+option is used with the
+<b>-v</b>
+option, the standard output format is:
+<code>
+<p>
+<tt>"%s %u/%u %u %s %d %d:%d %d %s\n"</tt>, &lt;<i>member&nbsp;mode</i>&gt;,
+&lt;<i>user&nbsp;ID</i>&gt;,
+&lt;<i>group&nbsp;ID</i>&gt;,
+&lt;<i>number&nbsp;of&nbsp;bytes&nbsp;in&nbsp;member</i>&gt;,
+&lt;<i>abbreviated&nbsp;month</i>&gt;,
+&lt;<i>day-of-month</i>&gt;,
+&lt;<i>hour</i>&gt;,
+&lt;<i>minute</i>&gt;,
+&lt;<i>year</i>&gt;,
+&lt;<i>file</i>&gt;
+</p>
+</code>
+<p>
+Where:
+<dl compact>
+
+<dt><i>&lt;file&gt;</i><dd>is the operand specified on the command line, if
+<i>file</i>
+operands were specified, or the name of the file in the
+archive if they were not.
+
+<dt><i>&lt;member&nbsp;mode&gt;</i><dd>is formatted the same as the
+&lt;<i>file&nbsp;mode</i>&gt;
+string defined in the STDOUT section of
+<i><a href="ls.htm">ls</a></i>,
+except that the first character, the
+&lt;<i>entry type</i>&gt;,
+is not used;
+the string represents the file mode of the archive member
+at the time it was added to or replaced in the archive.
+
+</dl>
+<p>
+The following represent the last-modification time
+of a file when it was most recently
+added to or replaced in the archive:
+<dl compact>
+
+<dt><i>&lt;abbreviated&nbsp;month&gt;</i><dd>
+is equivalent to the
+<b>%b</b>
+format in
+<i><a href="date.htm">date</a></i>.
+
+<dt><i>&lt;day-of-month&gt;</i><dd>is equivalent to the
+<b>%e</b>
+format in
+<i><a href="date.htm">date</a></i>.
+
+<dt><i>&lt;hour&gt;</i><dd>is equivalent to the
+<b>%H</b>
+format in
+<i><a href="date.htm">date</a></i>.
+
+<dt><i>&lt;minute&gt;</i><dd>is equivalent to the
+<b>%M</b>
+format in
+<i><a href="date.htm">date</a></i>.
+
+<dt><i>&lt;year&gt;</i><dd>is equivalent to the
+<b>%Y</b>
+format in
+<i><a href="date.htm">date</a></i>.
+
+</dl>
+<p>
+When
+<i>LC_TIME</i>
+does not specify the POSIX locale, a different format
+and order of presentation of these fields relative to each other
+may be used in a format appropriate in the specified locale.
+<p>
+If the
+<b>-x</b>
+option is used with the
+<b>-v</b>
+option, the standard output format is:
+<p><code>
+<tt>"x - %s\n"</tt>, &lt;<i>file</i>&gt;
+</code>
+where
+&lt;<i>file</i>&gt;
+is the operand specified on the command line,
+if
+<i>file</i>
+operands were specified, or the name of the file in the
+archive if they were not.
+</blockquote><h4><a name = "tag_000_000_049">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+The diagnostic message about creating a new archive when
+<b>-c</b>
+is not specified will not modify the exit status.
+</blockquote><h4><a name = "tag_000_000_050">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+Archives are files with unspecified formats.
+</blockquote><h4><a name = "tag_000_000_051">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_052">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_053">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_054">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_055">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_056">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about 
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_000_000_057">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="c89.htm">c89</a></i>,
+<i><a href="cc.htm">cc</a></i>,
+<i><a href="cpio.htm">cpio</a></i>,
+<i><a href="pax.htm">pax</a></i>,
+<i><a href="strip.htm">strip</a></i>.
+the <b>XSH</b> specification
+<i><a href="../xsh/unist299.htm">&lt;unistd.h&gt;</a></i>
+description of
+{POSIX_NO_TRUNC}.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

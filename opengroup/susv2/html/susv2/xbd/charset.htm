@@ -1,0 +1,829 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>Character Set</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<center>
+<h2><a name = "tag_001">&nbsp;</a>Character Set</h2>
+</center>
+<xref type="1" name="chars"></xref>
+<p>
+<h3><a name = "tag_001_001">&nbsp;</a>Portable Character Set</h3>
+<xref type="2" name="charset"></xref>
+Conforming implementations support one or more coded character sets.
+Each supported locale includes the
+<i>portable character set</i>
+specified in the following table.
+<pre>
+<table  bordercolor=#000000 border=1<tr valign=top><th align=center><b>Symbolic Name</b>
+<th align=center><b>Glyph</b>
+<th align=center><b>Symbolic Name</b>
+<th align=center><b>Glyph</b>
+<th align=center><b>Symbolic Name</b>
+<th align=center><b>Glyph</b>
+<tr valign=top><td align=left>&nbsp;
+<td align=center>&nbsp;
+<td align=left>&nbsp;
+<td align=center>&nbsp;
+<td align=left>&lt;circumflex&gt;
+<td align=center>^
+<tr valign=top><td align=left>&lt;NUL&gt;
+<td align=center> &nbsp;
+<td align=left>&lt;colon&gt;
+<td align=center>:
+<td align=left>&lt;circumflex-accent&gt;
+<td align=center>^
+<tr valign=top><td align=left>&lt;alert&gt;
+<td align=center>&nbsp;
+<td align=left>&lt;semicolon&gt;
+<td align=center>;
+<td align=left>&lt;underscore&gt;
+<td align=center>_
+<tr valign=top><td align=left>&lt;backspace&gt;
+<td align=center>&nbsp;
+<td align=left>&lt;less-than-sign&gt;
+<td align=center>&lt;
+<td align=left>&lt;underline&gt;
+<td align=center>_
+<tr valign=top><td align=left>&lt;tab&gt;
+<td align=center>&nbsp; 
+<td align=left>&lt;equals-sign&gt;
+<td align=center>=
+<td align=left>&lt;low-line&gt;
+<td align=center>_
+<tr valign=top><td align=left>&lt;newline&gt;
+<td align=center>&nbsp; 
+<td align=left>&lt;greater-than-sign&gt;
+<td align=center>&gt;
+<td align=left>&lt;grave-accent&gt;
+<td align=center>`
+<tr valign=top><td align=left>&lt;vertical-tab&gt;
+<td align=center>&nbsp; 
+<td align=left>&lt;question-mark&gt;
+<td align=center>?
+<td align=left>&lt;a&gt;
+<td align=center>a
+<tr valign=top><td align=left>&lt;form-feed&gt;
+<td align=center>&nbsp; 
+<td align=left>&lt;commercial-at&gt;
+<td align=center>@
+<td align=left>&lt;b&gt;
+<td align=center>b
+<tr valign=top><td align=left>&lt;carriage-return&gt;
+<td align=center>&nbsp; 
+<td align=left>&lt;A&gt;
+<td align=center>A
+<td align=left>&lt;c&gt;
+<td align=center>c
+<tr valign=top><td align=left>&lt;space&gt;
+<td align=center>&nbsp; 
+<td align=left>&lt;B&gt;
+<td align=center>B
+<td align=left>&lt;d&gt;
+<td align=center>d
+<tr valign=top><td align=left>&lt;exclamation-mark&gt;
+<td align=center>!
+<td align=left>&lt;C&gt;
+<td align=center>C
+<td align=left>&lt;e&gt;
+<td align=center>e
+<tr valign=top><td align=left>&lt;quotation-mark&gt;
+<td align=center>"
+<td align=left>&lt;D&gt;
+<td align=center>D
+<td align=left>&lt;f&gt;
+<td align=center>f
+<tr valign=top><td align=left>&lt;number-sign&gt;
+<td align=center>#
+<td align=left>&lt;E&gt;
+<td align=center>E
+<td align=left>&lt;g&gt;
+<td align=center>g
+<tr valign=top><td align=left>&lt;dollar-sign&gt;
+<td align=center>$
+<td align=left>&lt;F&gt;
+<td align=center>F
+<td align=left>&lt;h&gt;
+<td align=center>h
+<tr valign=top><td align=left>&lt;percent-sign&gt;
+<td align=center>%
+<td align=left>&lt;G&gt;
+<td align=center>G
+<td align=left>&lt;i&gt;
+<td align=center>i
+<tr valign=top><td align=left>&lt;ampersand&gt;
+<td align=center>&amp;
+<td align=left>&lt;H&gt;
+<td align=center>H
+<td align=left>&lt;j&gt;
+<td align=center>j
+<tr valign=top><td align=left>&lt;apostrophe&gt;
+<td align=center>'
+<td align=left>&lt;I&gt;
+<td align=center>I
+<td align=left>&lt;k&gt;
+<td align=center>k
+<tr valign=top><td align=left>&lt;left-parenthesis&gt;
+<td align=center>(
+<td align=left>&lt;J&gt;
+<td align=center>J
+<td align=left>&lt;l&gt;
+<td align=center>l
+<tr valign=top><td align=left>&lt;right-parenthesis&gt;
+<td align=center>)
+<td align=left>&lt;K&gt;
+<td align=center>K
+<td align=left>&lt;m&gt;
+<td align=center>m
+<tr valign=top><td align=left>&lt;asterisk&gt;
+<td align=center>*
+<td align=left>&lt;L&gt;
+<td align=center>L
+<td align=left>&lt;n&gt;
+<td align=center>n
+<tr valign=top><td align=left>&lt;plus-sign&gt;
+<td align=center>+
+<td align=left>&lt;M&gt;
+<td align=center>M
+<td align=left>&lt;o&gt;
+<td align=center>o
+<tr valign=top><td align=left>&lt;comma&gt;
+<td align=center>,
+<td align=left>&lt;N&gt;
+<td align=center>N
+<td align=left>&lt;p&gt;
+<td align=center>p
+<tr valign=top><td align=left>&lt;hyphen&gt;
+<td align=center>-
+<td align=left>&lt;O&gt;
+<td align=center>O
+<td align=left>&lt;q&gt;
+<td align=center>q
+<tr valign=top><td align=left>&lt;hyphen-minus&gt;
+<td align=center>-
+<td align=left>&lt;P&gt;
+<td align=center>P
+<td align=left>&lt;r&gt;
+<td align=center>r
+<tr valign=top><td align=left>&lt;period&gt;
+<td align=center>.
+<td align=left>&lt;Q&gt;
+<td align=center>Q
+<td align=left>&lt;s&gt;
+<td align=center>s
+<tr valign=top><td align=left>&lt;full-stop&gt;
+<td align=center>.
+<td align=left>&lt;R&gt;
+<td align=center>R
+<td align=left>&lt;t&gt;
+<td align=center>t
+<tr valign=top><td align=left>&lt;slash&gt;
+<td align=center>/
+<td align=left>&lt;S&gt;
+<td align=center>S
+<td align=left>&lt;u&gt;
+<td align=center>u
+<tr valign=top><td align=left>&lt;solidus&gt;
+<td align=center>/
+<td align=left>&lt;T&gt;
+<td align=center>T
+<td align=left>&lt;v&gt;
+<td align=center>v
+<tr valign=top><td align=left>&lt;zero&gt;
+<td align=center>0
+<td align=left>&lt;U&gt;
+<td align=center>U
+<td align=left>&lt;w&gt;
+<td align=center>w
+<tr valign=top><td align=left>&lt;one&gt;
+<td align=center>1
+<td align=left>&lt;V&gt;
+<td align=center>V
+<td align=left>&lt;x&gt;
+<td align=center>x
+<tr valign=top><td align=left>&lt;two&gt;
+<td align=center>2
+<td align=left>&lt;W&gt;
+<td align=center>W
+<td align=left>&lt;y&gt;
+<td align=center>y
+<tr valign=top><td align=left>&lt;three&gt;
+<td align=center>3
+<td align=left>&lt;X&gt;
+<td align=center>X
+<td align=left>&lt;z&gt;
+<td align=center>z
+<tr valign=top><td align=left>&lt;four&gt;
+<td align=center>4
+<td align=left>&lt;Y&gt;
+<td align=center>Y
+<td align=left>&lt;left-brace&gt;
+<td align=center>{
+<tr valign=top><td align=left>&lt;five&gt;
+<td align=center>5
+<td align=left>&lt;Z&gt;
+<td align=center>Z
+<td align=left>&lt;left-curly-bracket&gt;
+<td align=center>{
+<tr valign=top><td align=left>&lt;six&gt;
+<td align=center>6
+<td align=left>&lt;left-square-bracket&gt;
+<td align=center>[
+<td align=left>&lt;vertical-line&gt;
+<td align=center>|
+<tr valign=top><td align=left>&lt;seven&gt;
+<td align=center>7
+<td align=left>&lt;backslash&gt;
+<td align=center>\
+<td align=left>&lt;right-brace&gt;
+<td align=center>}
+<tr valign=top><td align=left>&lt;eight&gt;
+<td align=center>8
+<td align=left>&lt;reverse-solidus&gt;
+<td align=center>\
+<td align=left>&lt;right-curly-bracket&gt;
+<td align=center>}
+<tr valign=top><td align=left>&lt;nine&gt;
+<td align=center>9
+<td align=left>&lt;right-square-bracket&gt;
+<td align=center>]
+<td align=left>&lt;tilde&gt;
+<td align=center>~
+</table>
+<h6 align=center><xref table="Portable Character Set"><a name="tagt_1">&nbsp;</a></xref>Table: Portable Character Set</h6>
+<xref type="7" name="portchar"></xref>
+</pre>
+<p>
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>
+defines the characters in the portable character
+set and the corresponding symbolic character names used to
+identify each character in a character set description file.
+The table contains
+more than one symbolic character name for characters whose
+traditional name differs from the chosen name.
+<p>
+This specification set places only the following requirements
+on the encoded values of the characters in the portable character set:
+<ul>
+<p>
+<li>
+If the encoded values associated with each member of the
+portable character set are not invariant across all
+locales supported by the implementation, the results
+achieved by an application accessing those locales are unspecified.
+<p>
+<li>
+The encoded values associated with the digits
+0
+to
+9
+will be such that the value of each character after
+0
+will be one greater than the value of the previous character.
+<p>
+<li>
+A null character, NUL,
+which has all bits set to zero, will be in the
+set of characters.
+<p>
+<li>
+The encoded values associated with the members of the portable
+character set are each represented in a single byte.
+Moreover, if the
+value is stored in an object of C-language type
+<b>char</b>,
+it is guaranteed to be
+positive (except the NUL, which is always zero).
+<p>
+</ul>
+<h3><a name = "tag_001_002">&nbsp;</a>Character Encoding</h3>
+<xref type="2" name="char_enc"></xref>
+The POSIX locale contains the characters in
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>,
+which have the properties listed in
+<xref href=lc_ctype><a href="locale.htm#tag_005_003_001">
+LC_CTYPE
+</a></xref>.
+Implementations may also add other characters.
+In other locales, the presence, meaning and representation of
+any additional characters is locale-specific.
+<p>
+In locales other than the POSIX locale, a character may have a
+state-dependent encoding.
+There are two types of these encodings:
+<ul>
+<p>
+<li>
+A single-shift encoding (where each character not in the initial shift
+state is preceded by a shift code) can be defined
+if each shift-code and character sequence is considered a multi-byte
+character.
+This is done using the concatenated-constant format in a character set 
+description file, as described in
+<xref href=charmap><a href="#tag_001_004">
+Character Set Description File
+</a></xref>.
+If the implementation supports a character encoding of this type,
+all of the standard utilities in the <b>XCU</b> specification will support it.
+Use of a single-shift encoding
+with any of the functions in the <b>XSH</b> specification that
+do not specifically mention the effects of state-dependent encoding
+is implementation-dependent.
+<p>
+<li>
+A locking-shift encoding (where the state of the character is
+determined by a shift code that may affect more than the
+single character following it) cannot be defined with the current
+character set description file format.
+Use of a locking-shift encoding with any of the standard utilities
+in the <b>XCU</b> specification
+or with any of the functions in the <b>XSH</b> specification that
+do not specifically mention the effects of state-dependent encoding
+is implementation-dependent.
+<p>
+</ul>
+<p>
+While in the initial shift state, all characters in the
+portable character set retain their usual interpretation and do
+not alter the shift state.
+The interpretation for subsequent bytes in the sequence is a
+function of the current shift state.
+A byte with all bits zero is interpreted as the null character
+independent of shift state.
+Thus a byte with all bits zero must never occur in the second or
+subsequent bytes of a character.
+<p>
+The maximum allowable number of bytes in a character in the
+current locale is indicated by MB_CUR_MAX, defined in the <b>XSH</b> specification
+<i><a href="../xsh/stdli258.htm">&lt;stdlib.h&gt;</a></i>,
+and by the
+<b>&lt;mb_cur_max&gt;</b>
+value in a character set description file; see
+<xref href=charmap><a href="#tag_001_004">
+Character Set Description File
+</a></xref>.
+The implementation's maximum number of bytes in a character is
+defined by the C-language macro
+{MB_LEN_MAX}.
+<h3><a name = "tag_001_003">&nbsp;</a>C Language Wide-character Codes</h3>
+<xref type="2" name="widechar"></xref>
+In the shell, the standard utilities are written
+so that the encodings of characters are described by the
+locale's LC_CTYPE definition (see
+<xref href=lc_ctype><a href="locale.htm#tag_005_003_001">
+LC_CTYPE
+</a></xref>)
+and there is no differentiation between characters
+consisting of single octets
+(8-bit bytes), larger bytes,
+or multiple bytes.
+However, in the C language,
+a differentiation is made.
+To ease the handling of variable length
+characters, the C language has introduced the concept of wide
+character codes.
+<p>
+All wide-character codes in a given process
+consist of an equal number of bits.
+This is in contrast to characters, which can consist of a variable
+number of bytes.
+The byte or byte sequence that represents a character can also be
+represented as a wide-character code.
+Wide-character codes thus provide a
+uniform size for
+manipulating text data.
+A wide-character code having all bits zero is the
+null wide-character code
+(see
+<xref href=nullwidechar><a href="glossary.htm#tag_004_000_179">
+null wide-character code
+</a></xref>),
+and terminates
+wide-character strings
+(see
+<xref href=widechar><a href="#tag_001_003">
+C Language Wide-character Codes
+</a></xref>).
+The wide-character value for each member of the
+Portable Character Set will equal its
+value when used as the lone character in an
+integer character constant.
+Wide-character codes for other characters
+are locale- and implementation-dependent.
+State shift bytes do not have a wide-character code representation.
+<h3><a name = "tag_001_004">&nbsp;</a>Character Set Description File</h3>
+<xref type="2" name="charmap"></xref>
+Implementations provide a character set
+description file for at least one coded character set
+supported by the implementation.
+These files are referred
+to elsewhere in this specification set as
+<i>charmap</i>
+files.
+It is implementation-dependent whether or not users or applications can
+provide additional character set description files.
+<p>
+This specification set does not require that multiple character sets
+or codesets be supported.
+Although multiple charmap
+files are supported, it is the responsibility of the implementation
+to provide the file or files;
+if only one is provided, only that one will be accessible using the
+<i><a href="../xcu/local1.htm">localedef</a></i>
+utility's
+<b>-f</b>
+option (although in the case of just one file on the system,
+<b>-f</b>
+is not useful).
+<p>
+Each character set description file defines
+characteristics for the coded character set and
+the encoding for the characters
+specified in
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>
+and may define encoding for additional
+characters supported by the implementation.
+Other information about the coded character set may also be in the file.
+Coded character set character values are defined
+using symbolic character names followed by character encoding values.
+<p>
+The character set description file provides:
+<ul>
+<p>
+<li>
+The capability to describe character set attributes (such as collation
+order or character classes) independent of character set encoding, and
+using only the characters in the portable character set.
+This makes it
+possible to create generic
+<i><a href="../xcu/local1.htm">localedef</a></i>
+source files for all codesets that share the portable character set
+(such as the ISO 8859 family or IBM Extended ASCII).
+<p>
+<li>
+Standardised symbolic names for all characters in the portable character
+set, making it possible to refer to any such character
+regardless of encoding.
+<p>
+</ul>
+<p>
+The charmap file was introduced to resolve problems with the
+portability of, especially,
+<i><a href="../xcu/local1.htm">localedef</a></i>
+sources.
+This specification set assumes that the portable character set is constant
+across all locales, but does not prohibit implementations from supporting
+two incompatible codings, such as
+both ASCII and EBCDIC.
+Such dual-support implementations
+should have all charmaps and
+<i><a href="../xcu/local1.htm">localedef</a></i>
+sources encoded using one
+portable character set, in effect cross-compiling for the other
+environment.
+Naturally, charmaps (and
+<i><a href="../xcu/local1.htm">localedef</a></i>
+sources) are
+only portable without transformation between systems using the same
+encodings for the portable character set.
+They can, however, be transformed
+between two sets using only a subset of the actual characters
+(the portable set).
+However, the particular coded
+character set used for an application or an implementation
+does not necessarily imply different characteristics or collation;
+on the contrary, these attributes should in many
+cases be identical, regardless of codeset.
+The charmap provides the capability to define a common
+locale definition for multiple codesets (the same
+<i><a href="../xcu/local1.htm">localedef</a></i>
+source can be used for codesets with different extended
+characters;
+the ability in the charmap to define empty
+names allows for characters missing in certain codesets).
+<p>
+Each symbolic name specified in
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>
+is included in
+the file and is mapped to a unique encoding value
+(except for those symbolic names that are shown
+with identical glyphs).
+If the control characters commonly associated with
+the symbolic names in the following table
+are supported by
+the implementation, the symbolic names and their
+corresponding encoding values are included in the file.
+Some of the
+encodings associated with the
+symbolic names in this table may be
+the same as characters in
+the portable character set table.
+<pre>
+<center>
+<table  bordercolor=#000000 border=1 align=center>
+<tr valign=top><td align=center>&lt;ACK&gt;
+<td align=center>&lt;DC2&gt;
+<td align=center>&lt;ENQ&gt;
+<td align=center>&lt;FS&gt;
+<td align=center>&lt;IS4&gt;
+<td align=center>&lt;SOH&gt;
+<tr valign=top><td align=center>&lt;BEL&gt;
+<td align=center>&lt;DC3&gt;
+<td align=center>&lt;EOT&gt;
+<td align=center>&lt;GS&gt;
+<td align=center>&lt;LF&gt;
+<td align=center>&lt;STX&gt;
+<tr valign=top><td align=center>&lt;BS&gt;
+<td align=center>&lt;DC4&gt;
+<td align=center>&lt;ESC&gt;
+<td align=center>&lt;HT&gt;
+<td align=center>&lt;NAK&gt;
+<td align=center>&lt;SUB&gt;
+<tr valign=top><td align=center>&lt;CAN&gt;
+<td align=center>&lt;DEL&gt;
+<td align=center>&lt;ETB&gt;
+<td align=center>&lt;IS1&gt;
+<td align=center>&lt;RS&gt;
+<td align=center>&lt;SYN&gt;
+<tr valign=top><td align=center>&lt;CR&gt;
+<td align=center>&lt;DLE&gt;
+<td align=center>&lt;ETX&gt;
+<td align=center>&lt;IS2&gt;
+<td align=center>&lt;SI&gt;
+<td align=center>&lt;US&gt;
+<tr valign=top><td align=center>&lt;DC1&gt;
+<td align=center>&lt;EM&gt;
+<td align=center>&lt;FF&gt;
+<td align=center>&lt;IS3&gt;
+<td align=center>&lt;SO&gt;
+<td align=center>&lt;VT&gt;
+</table>
+<h6 align=center><xref table="Control Character Set"><a name="tagt_2">&nbsp;</a></xref>Table: Control Character Set</h6>
+<xref type="7" name="cntlchar"></xref>
+</center>
+</pre>
+<p>
+The following declarations can precede the character definitions.
+Each must consist of the symbol shown in the following list,
+starting in column 1,
+including the surrounding brackets, followed by one or more
+blank characters,
+followed by the value to be assigned to the symbol.
+<dl compact>
+
+<dt><b>&lt;code_set_name&gt;</b><dd>The name of the coded character set for which
+the character set description file is defined.
+The characters of the name must be taken from the
+set of characters
+with visible glyphs defined in
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>.
+
+<dt><b>&lt;mb_cur_max&gt;</b><dd>The maximum number of bytes in a multi-byte character.
+This defaults to 1.
+
+<dt><b>&lt;mb_cur_min&gt;</b><dd>An unsigned positive integer value that
+defines the minimum number of bytes in a
+character for the encoded character set.
+On XSI-conformant systems,
+<b>&lt;mb_cur_min&gt;</b>
+is always 1.
+
+<dt><b>&lt;escape_char&gt;</b><dd>The escape character used to indicate that the
+characters following will be interpreted in a
+special way, as defined later in this section.
+This defaults to backslash
+(\),
+which is the character glyph used in all the following text and examples,
+unless otherwise noted.
+
+<dt><b>&lt;comment_char&gt;</b><dd>The character that when placed in column 1 of a
+charmap
+line, is used to indicate that the line is to be ignored.
+The default character is the number sign (#).
+
+</dl>
+<p>
+The character set mapping definitions will be all the lines
+immediately following an identifier line containing the string
+<b>CHARMAP</b>
+starting in column 1, and preceding a trailer
+line containing the string
+<b>END</b>CHARMAP
+starting in column 1.
+Empty lines and lines containing a
+<b>&lt;comment_char&gt;</b>
+in the first column will be ignored.
+Each non-comment line of the character set mapping
+definition (that is, between the
+<b>CHARMAP</b>
+and
+<b>END</b>CHARMAP
+lines of the file) must be in either of two forms:
+<p>
+<dl compact><dt> <dd>
+<p>
+<tt>"%s %s %s\n"</tt>, &lt;<i>symbolic-name</i>&gt;,
+&lt;<i>encoding</i>&gt;,
+&lt;<i>comments</i>&gt;
+</p>
+</dl>
+</p>
+or:
+<p>
+<dl compact><dt> <dd>
+<p>
+<tt>"%s...%s %s %s\n"</tt>, &lt;<i>symbolic-name</i>&gt;,
+&lt;<i>symbolic-name</i>&gt;,
+&lt;<i>encoding</i>&gt;,
+&lt;<i>comments</i>&gt;
+</p>
+</dl>
+</p>
+<p>
+In the first format, the line in the character set mapping definition
+defines a single symbolic name and a corresponding encoding.
+A symbolic name is one or more characters from the set shown
+with visible glyphs in
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>,
+enclosed between angle brackets.
+A character following an escape character is interpreted as itself;
+for example, the sequence
+&lt;\\\&gt;&gt;
+represents the symbolic name
+\&gt;
+enclosed between angle brackets.
+<p>
+In the second format, the line in the character set mapping definition
+defines a range of one or more symbolic names.
+In this form, the symbolic
+names must consist of zero or more non-numeric characters from the set
+shown with visible glyphs in
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>,
+followed by an integer formed by one or more decimal digits.
+The characters preceding the integer
+must be
+identical in the two symbolic names, and the integer formed by the digits
+in the second symbolic name must be equal to or greater than the integer
+formed by the digits in the first name.
+This is interpreted
+as a series of symbolic names formed from the common part and each of
+the integers between the first and the second integer, inclusive.
+As an example,
+&lt;j0101&gt;...&lt;j0104&gt;
+is interpreted as the symbolic names
+&lt;j0101&gt;,
+&lt;j0102&gt;,
+&lt;j0103&gt;
+and
+&lt;j0104&gt;,
+in that order.
+<p>
+A character set mapping definition line must exist for all symbolic
+names specified in
+<xref href=portchar><a href="#tagt_1">
+Portable Character Set
+</a></xref>,
+and must define the coded character value
+that corresponds to the character glyph indicated in the table, or
+the coded character value that corresponds with the control character
+symbolic name.
+If the control characters commonly associated with the
+symbolic names in 
+<xref href=cntlchar><a href="#tagt_2">
+Control Character Set
+</a></xref>
+are supported by the implementation,
+the symbolic name and the corresponding encoding value must be included
+in the file.
+Additional unique symbolic names may be included.
+A coded character value can be represented by more than one symbolic name.
+<p>
+The encoding part is expressed as one (for single-byte character
+values) or more concatenated decimal, octal or hexadecimal
+constants in the following formats:
+<p>
+<dl compact><dt> <dd>
+<tt>"%cd%d"</tt>, &lt;<i>escape_char</i>&gt;,
+&lt;<i>decimal&nbsp;byte&nbsp;value</i>&gt;
+</dl>
+</p>
+<p>
+<dl compact><dt> <dd>
+<tt>"%cx%x"</tt>, &lt;<i>escape_char</i>&gt;,
+&lt;<i>hexadecimal&nbsp;byte&nbsp;value</i>&gt;
+</dl>
+</p>
+<p>
+<dl compact><dt> <dd>
+<tt>"%c%o"</tt>, &lt;<i>escape_char</i>&gt;,
+&lt;<i>octal&nbsp;byte&nbsp;value</i>&gt;
+</dl>
+</p>
+<p>
+Decimal constants must be represented by two or three decimal
+digits, preceded by the escape character and the lower-case letter
+d;
+for example,
+\d05,
+\d97
+or
+\d143.
+Hexadecimal constants must be represented by
+two hexadecimal digits, preceded by the escape
+character and the lower-case letter
+x;
+for example,
+\x05,
+\x61
+or
+\x8f.
+Octal constants must be represented by two or three octal
+digits, preceded by the escape character; for example,
+\05,
+\141
+or
+\217.
+In a portable charmap file, each constant must represent an 8-bit byte.
+Implementations supporting other
+byte sizes may allow constants to represent values larger than those
+that can be represented in 8-bit bytes, and to allow additional
+digits in constants.
+When constants are concatenated for multi-byte character values,
+they must be of the same type, and
+interpreted in byte order from
+first to last with the least significant byte of the multi-byte character
+specified by the last constant.
+The manner in which these
+constants are represented in the character
+stored in the system is implementation-dependent.
+(This big endian notation was chosen for reasons of portability.
+There is no requirement that the internal representation
+in the computer memory be in this same order.)
+Omitting bytes from a multi-byte character definition
+produces undefined results.
+<p>
+In lines defining ranges of symbolic names, the encoded value is the
+value for the first symbolic name in the range (the symbolic name
+preceding the ellipsis).
+Subsequent symbolic names defined by the range
+will have encoding values in increasing order.
+For example, the line:
+<code>
+<pre>
+&lt;j0101&gt;...&lt;j0104&gt;    \d129\d254
+</code>
+</pre>
+<p>
+will be interpreted as:
+<code>
+<pre>
+&lt;j0101&gt;              \d129\d254
+&lt;j0102&gt;              \d129\d255
+&lt;j0103&gt;              \d130\d0
+&lt;j0104&gt;              \d130\d1
+</code>
+</pre>
+<p>
+Note that this line will be interpreted as the example even on
+systems with bytes larger than 8 bits.
+<p>
+The comment is optional.
+<p>
+For the interpretation of the dollar sign and the number sign, see
+<xref href=dollarsign><a href="glossary.htm#tag_004_000_079">
+dollar sign
+</a></xref>
+and
+<xref href=numbersign><a href="glossary.htm#tag_004_000_180">
+number sign
+</a></xref>.
+
+<hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

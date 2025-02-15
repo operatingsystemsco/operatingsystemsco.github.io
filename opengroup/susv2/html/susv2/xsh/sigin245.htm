@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>siginterrupt</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_636">&nbsp;</a>NAME</h4><blockquote>
+siginterrupt - allow signals to interrupt functions
+</blockquote><h4><a name = "tag_000_008_637">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="signa248.htm">signal.h</a>&gt;
+
+int siginterrupt(int <i>sig</i>, int <i>flag</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_638">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>siginterrupt()</i>
+function is used to change the restart
+behaviour when a function is interrupted by the specified signal.
+The function <i>siginterrupt</i>(<i>sig</i>, <i>flag</i>) has an
+effect as if implemented as:
+<pre>
+<code>
+siginterrupt(int sig, int flag) {
+    int ret;
+    struct sigaction act;
+
+    (void) sigaction(sig, NULL, &amp;act);
+    if (flag)
+        act.sa_flags &amp;= ~SA_RESTART;
+    else
+        act.sa_flags |= SA_RESTART;
+    ret = sigaction(sig, &amp;act, NULL);
+    return ret;
+}
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_639">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>siginterrupt()</i>
+returns 0.  Otherwise -1 is returned and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_008_640">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>siginterrupt()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>sig</i>
+argument is not a valid signal number.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_641">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_642">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>siginterrupt()</i>
+function supports programs written to historical system interfaces.
+A portable application, when being written or rewritten, should use
+<i><a href="sigac238.htm">sigaction()</a></i>
+with the SA_RESTART flag instead of
+<i>siginterrupt()</i>.
+</blockquote><h4><a name = "tag_000_008_643">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_644">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

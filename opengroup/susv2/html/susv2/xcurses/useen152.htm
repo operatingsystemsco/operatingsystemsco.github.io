@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>use_env</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_117">&nbsp;</a>NAME</h4><blockquote>
+use_env - specify source of screen size information
+</blockquote><h4><a name = "tag_002_001_118">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+void use_env(bool <i>boolval</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_119">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>use_env()</i>
+function specifies the technique by which the
+implementation determines the size of the screen.  If <i>boolval</i> is FALSE,
+the implementation uses the values of <i>lines</i> and <i>columns</i> specified
+in the <b>terminfo</b> database.  If <i>boolval</i> is TRUE, the implementation uses
+the
+and
+environment variables.  The initial value is TRUE.
+<p>
+Any call to
+<i>use_env()</i>
+must precede calls to
+<i><a href="initscr.htm">initscr()</a></i>,
+<i><a href="newterm.htm">newterm()</a></i>
+or
+<i><a href="setup125.htm">setupterm()</a></i>.
+</blockquote><h4><a name = "tag_002_001_120">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The function does not return a value.
+</blockquote><h4><a name = "tag_002_001_121">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_122">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="delcu23.htm">del_curterm()</a></i>,
+<i><a href="initscr.htm">initscr()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

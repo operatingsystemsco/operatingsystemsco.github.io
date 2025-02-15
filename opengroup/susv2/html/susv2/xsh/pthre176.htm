@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_rwlock_init</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1585">&nbsp;</a>NAME</h4><blockquote>
+pthread_rwlock_init, pthread_rwlock_destroy
+- initialise or destroy a read-write lock object
+</blockquote><h4><a name = "tag_000_007_1586">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;    
+
+int pthread_rwlock_init(pthread_rwlock_t *rwlock,
+    const pthread_rwlockattr_t <i>*attr</i>);
+int pthread_rwlock_destroy(pthread_rwlock_t <i>*rwlock</i>);
+pthread_rwlock_t <i>rwlock</i>=PTHREAD_RWLOCK_INITIALIZER;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1587">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The 
+<i>pthread_rwlock_init()</i>
+function initialises the read-write lock referenced by <i>rwlock</i> with 
+the attributes referenced by <i>attr</i>.  If <i>attr</i> is NULL, the
+default 
+read-write lock attributes are used; the effect is the same as 
+passing the address of a default read-write lock attributes object. 
+Once initialised, the lock can be used any 
+number of times without being re-initialised. 
+Upon successful initialisation, the state of the read-write lock 
+becomes initialised and unlocked. 
+Results are undefined if 
+<i>pthread_rwlock_init()</i>
+is called specifying an already initialised read-write lock. 
+Results are undefined if a read-write lock is used without first being 
+initialised.
+<p>
+If the 
+<i>pthread_rwlock_init()</i>
+function fails, <i>rwlock</i> is not initialised and the contents of 
+<i>rwlock</i> are undefined.
+<p>
+The 
+<i>pthread_rwlock_destroy()</i>
+function destroys the read-write lock object referenced by <i>rwlock</i>
+and 
+releases any resources used by the lock. 
+The effect of subsequent use of the lock is undefined until the lock 
+is re-initialised by another call to 
+<i>pthread_rwlock_init()</i>.
+An implementation may cause 
+<i>pthread_rwlock_destroy()</i>
+to set the object referenced by <i>rwlock</i> to an invalid value. 
+Results are undefined if 
+<i>pthread_rwlock_destroy()</i>
+is called when any thread holds <i>rwlock</i>. 
+Attempting to destroy an uninitialised 
+read-write lock results in undefined behaviour. 
+A destroyed read-write lock object can be re-initialised using 
+<i>pthread_rwlock_init()</i>;
+the results of otherwise referencing the read-write lock object after it 
+has been destroyed are undefined.     
+<p>
+In cases where default read-write lock attributes are appropriate, the
+macro PTHREAD_RWLOCK_INITIALIZER can be used to initialise read-write locks
+that are statically allocated. 
+The effect is equivalent to dynamic initialisation by a call to 
+<i>pthread_rwlock_init()</i>
+with the parameter <i>attr</i> specified as NULL, except that no error 
+checks are performed. 
+</blockquote><h4><a name = "tag_000_007_1588">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the 
+<i>pthread_rwlock_init()</i>
+and 
+<i>pthread_rwlock_destroy()</i>
+functions return zero.  Otherwise, an 
+error number is returned to indicate the error. 
+The [EBUSY] and [EINVAL] error checks, if implemented, will 
+act as if they were performed immediately at the beginning of processing 
+for the function and caused an error return 
+prior to modifying the state of the read-write lock specified by
+<i>rwlock</i>. 
+</blockquote><h4><a name = "tag_000_007_1589">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>pthread_rwlock_init()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EAGAIN]<dd>
+The system lacked the necessary resources (other than memory)
+to initialise another read-write lock.
+
+<dt>[ENOMEM]<dd>
+Insufficient memory exists to initialise the read-write lock.
+
+<dt>[EPERM]<dd>
+The caller does not have the privilege to perform the operation.
+
+</dl>
+<p>
+The
+<i>pthread_rwlock_init()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+The implementation has detected an attempt to re-initialise the
+object referenced by <i>rwlock</i>, a previously initialised but
+not yet destroyed read-write lock.
+
+<dt>[EINVAL]<dd>
+The value specified by <i>attr</i> is invalid.
+
+</dl>
+<p>
+The
+<i>pthread_rwlock_destroy()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+The implementation has detected an attempt to destroy the
+object referenced by <i>rwlock</i> while it is locked.
+
+<dt>[EINVAL]<dd>
+The value specified by <i>attr</i> is invalid.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_1590">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1591">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Similar functions are being developed by IEEE PASC.
+In keeping with its objective of ensuring that CAE
+Specifications are fully aligned with formal standards, The Open Group
+intends to add any new interfaces adopted by an official IEEE standard
+in this area.
+</blockquote><h4><a name = "tag_000_007_1592">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1593">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>,
+<i><a href="pthre178.htm">pthread_rwlock_rdlock()</a></i>,
+<i><a href="pthre182.htm">pthread_rwlock_wrlock()</a></i>,
+<i><a href="pthre185.htm">pthread_rwlockattr_init()</a></i>,
+<i><a href="pthre181.htm">pthread_rwlock_unlock()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

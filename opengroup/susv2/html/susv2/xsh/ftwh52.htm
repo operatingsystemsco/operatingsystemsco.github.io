@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;ftw.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_377">&nbsp;</a>NAME</h4><blockquote>
+ftw.h - file tree traversal
+</blockquote><h4><a name = "tag_000_005_378">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;ftw.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_379">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;ftw.h&gt;</i>
+header defines the
+<b>FTW</b>
+structure that includes at least the following members:
+<pre>
+<code>
+int  base
+int  level
+</code>
+</pre>
+<p>
+The
+<i>&lt;ftw.h&gt;</i>
+header defines macros for use as values of the third argument to the
+application-supplied function that is passed as the second argument to
+<i><a href="ftw.htm">ftw()</a></i>
+and
+<i><a href="nftw.htm">nftw</i>()</a>:
+<dl compact>
+
+<dt>FTW_F<dd>
+File.
+
+<dt>FTW_D<dd>
+Directory.
+
+<dt>FTW_DNR<dd>
+Directory without read permission.
+
+<dt>FTW_DP<dd>
+Directory with subdirectories visited.
+
+<dt>FTW_NS<dd>
+Unknown type, <i>stat</i>() failed.
+
+<dt>FTW_SL<dd>
+Symbolic link.
+
+<dt>FTW_SLN<dd>
+Symbolic link that names a non-existent file.
+
+</dl>
+<p>
+The
+<i>&lt;ftw.h&gt;</i>
+header defines macros for use as values of the fourth argument to
+<i><a href="nftw.htm">nftw()</a></i>:
+<dl compact>
+
+<dt>FTW_PHYS<dd>
+Physical walk, does not follow symbolic links.  Otherwise,
+<i><a href="nftw.htm">nftw()</a></i>
+will follow links but will not walk down any path that crosses itself.
+
+<dt>FTW_MOUNT<dd>
+The walk will not cross a mount point.
+
+<dt>FTW_DEPTH<dd>
+All subdirectories will be visited before the directory itself.
+
+<dt>FTW_CHDIR<dd>
+The walk will change to each directory before reading it.
+
+</dl>
+<p>
+The following are declared as functions and may also be defined as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+int <a href="ftw.htm">ftw</a>(const char *,
+    int (*)(const char *, const struct stat *, int), int);
+int <a href="nftw.htm">nftw</a>(const char *, int (*)
+    (const char *, const struct stat *, int, struct FTW*),
+    int, int);
+</code>
+</pre>
+<p>
+The
+<i>&lt;ftw.h&gt;</i>
+header defines the
+<b>stat</b>
+structure and the symbolic names for
+<b>st_mode</b>
+and the file type test macros as described in
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+<p>
+Inclusion of the
+<i>&lt;ftw.h&gt;</i>
+header may also make visible all symbols from
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+</blockquote><h4><a name = "tag_000_005_380">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_381">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_382">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ftw.htm">ftw()</a></i>,
+<i><a href="nftw.htm">nftw()</a></i>,
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

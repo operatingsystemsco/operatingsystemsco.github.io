@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fchown</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_004_128">&nbsp;</a>NAME</h4><blockquote>
+fchown - change owner and group of a file
+</blockquote><h4><a name = "tag_000_004_129">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int fchown(int <i>fildes</i>, uid_t <i>owner</i>, gid_t <i>group</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_004_130">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fchown()</i>
+function has the same effect as
+<i><a href="chown.htm">chown()</a></i>
+except that the file whose owner and group are to be changed is specified by
+the file descriptor
+<i>fildes</i>.
+</blockquote><h4><a name = "tag_000_004_131">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>fchown()</i>
+returns 0.  Otherwise, it returns -1 and sets
+<i>errno</i> to indicate the error.
+</blockquote><h4><a name = "tag_000_004_132">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>fchown()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The <i>fildes</i> argument is not an open file descriptor.
+
+<dt>[EPERM]<dd>
+The effective user ID does not match the owner of the file or the
+process does not have appropriate privilege.
+
+<dt>[EROFS]<dd>
+The file referred to by <i>fildes</i> resides on a read-only file system.
+
+</dl>
+<p>
+The
+<i>fchown()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The owner or group ID is not a value supported by the implementation.
+
+<dt>[EIO]<dd>
+A physical I/O error has occurred.
+
+<dt>[EINTR]<dd>
+The
+<i>fchown()</i>
+function was interrupted by a signal which was caught.
+
+</dl>
+</blockquote><h4><a name = "tag_000_004_133">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_134">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_135">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_136">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="chown.htm">chown()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

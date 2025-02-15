@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>basename</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_269">&nbsp;</a>NAME</h4><blockquote>
+basename - return the last component of a pathname
+</blockquote><h4><a name = "tag_000_001_270">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="libge87.htm">libgen.h</a>&gt;
+
+char *basename(char *<i>path</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_271">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>basename()</i>
+function takes the pathname pointed to by
+<i>path</i>
+and returns a pointer to the final component of the pathname, deleting
+any trailing '/' characters.
+<p>
+If the string consists entirely of the '/' character,
+<i>basename()</i>
+returns a pointer to the string "/" .
+<p>
+If
+<i>path</i>
+is a null pointer or points to an empty string,
+<i>basename()</i>
+returns a pointer to the string "." .
+<p>
+The
+<i>basename()</i>
+function may modify the string pointed to by <i>path</i>, and may return a
+pointer to static storage that may then be overwritten by a subsequent call to
+<i>basename()</i>.
+<p>
+This interface need not be reentrant.
+</blockquote><h4><a name = "tag_000_001_272">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>basename()</i>
+function returns a pointer to the final component of
+<i>path</i>.
+</blockquote><h4><a name = "tag_000_001_273">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_001_274">&nbsp;</a>EXAMPLES</h4><blockquote>
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Input String</b>
+<th align=center><b>Output String</b>
+<tr valign=top><td align=left>"/usr/lib"
+<td align=left>"lib"
+<tr valign=top><td align=left>"/usr/"
+<td align=left>"usr"
+<tr valign=top><td align=left>"/"
+<td align=left>"/"
+</table>
+</blockquote><h4><a name = "tag_000_001_275">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_276">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_277">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="dirname.htm">dirname()</a></i>,
+<i><a href="libge87.htm">&lt;libgen.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

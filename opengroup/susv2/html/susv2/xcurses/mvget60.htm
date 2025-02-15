@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>get_wch</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_392">&nbsp;</a>NAME</h4><blockquote>
+get_wch, mvget_wch, mvwget_wch, wget_wch
+- get a wide character from a terminal
+</blockquote><h4><a name = "tag_002_001_393">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int get_wch(wint_t *<i>ch</i>);
+
+int mvget_wch(int <i>y</i>, int <i>x</i>, wint_t *<i>ch</i>);
+
+int mvwget_wch(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, wint_t *<i>ch</i>);
+
+int wget_wch(WINDOW *<i>win</i>, wint_t *<i>ch</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_394">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions read a character from the terminal associated with the
+current or specified window.  If
+<i><a href="keypad.htm">keypad()</a></i>
+is enabled, these functions respond to the pressing of a function key by
+setting the object pointed to by
+<i>ch</i>
+to the corresponding KEY_ value defined in
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>
+and returning KEY_CODE_YES.
+<p>
+Processing of terminal input is subject to the general rules described in
+<xref href=terminalinput><a href="intov.htm#tag_001_005">
+Input Processing
+</a></xref>.
+<p>
+If echoing is enabled, then the character is echoed as though it were
+provided as an input argument to
+<i><a href="addwc4.htm">add_wch()</a></i>,
+except for the following characters:
+<p><table  align=center><tr valign=top><th align=left><i> &lt;backspace&gt;, &lt;left-arrow&gt; and the current erase character: </i>
+<th align=left><i> The input is interpreted as specified in and then the character at the resulting cursor position is deleted as though were called, except that if the cursor was originally in the first column of the line, then the user is alerted as though were called. </i>
+<tr valign=top><td align=left><i>Function keys</i>
+<td align=left><i> The user is alerted as though were called.  Information concerning the function keys is not returned to the caller. </i>
+</table>
+<p>
+If the current or specified window is not a pad, and it has been moved or
+modified since the last refresh operation, then it will be refreshed before
+another character is read.
+</blockquote><h4><a name = "tag_002_001_395">&nbsp;</a>RETURN VALUE</h4><blockquote>
+When these functions successfully report the pressing of a function key, they
+return KEY_CODE_YES.  When they successfully report a wide character, they
+return OK.  Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_396">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_397">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Applications should not define the escape key by itself as a single-character
+function.
+<p>
+When using these functions,
+<i><a href="nocbreak.htm">nocbreak()</a></i>
+mode and
+<i><a href="echo.htm">echo()</a></i>
+mode should not be used at the same time.  Depending on the state of the
+terminal when each character is typed, the application may produce undesirable
+results.
+</blockquote><h4><a name = "tag_002_001_398">&nbsp;</a>SEE ALSO</h4><blockquote>
+<xref href=terminalinput><a href="intov.htm#tag_001_005">
+Input Processing
+</a></xref>,
+<i><a href="beep.htm">beep()</a></i>,
+<i><a href="cbreak.htm">cbreak()</a></i>,
+<i><a href="inswc45.htm">ins_wch()</a></i>,
+<i><a href="keypad.htm">keypad()</a></i>,
+<i><a href="move.htm">move()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>,
+<i><a href="../xsh/wchar309.htm">&lt;wchar.h&gt;</a></i>
+(in the <b>XSH</b> specification).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

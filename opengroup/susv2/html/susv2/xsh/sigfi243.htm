@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sigfillset</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_624">&nbsp;</a>NAME</h4><blockquote>
+sigfillset - initialise and fill a signal set
+</blockquote><h4><a name = "tag_000_008_625">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="signa248.htm">signal.h</a>&gt;
+
+int sigfillset(sigset_t *<i>set</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_626">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sigfillset()</i>
+function initialises the signal set pointed to by <i>set</i>,
+such that all signals
+defined in this document are included.
+</blockquote><h4><a name = "tag_000_008_627">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>sigfillset()</i>
+returns 0.  Otherwise, it returns -1 and sets
+<i>errno</i>
+to indicate the error.
+</blockquote><h4><a name = "tag_000_008_628">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_008_629">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_630">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_631">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_632">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sigad239.htm">sigaddset()</a></i>,
+<i><a href="sigde241.htm">sigdelset()</a></i>,
+<i><a href="sigem242.htm">sigemptyset()</a></i>,
+<i><a href="sigis246.htm">sigismember()</a></i>,
+<i><a href="sigpe249.htm">sigpending()</a></i>,
+<i><a href="sigpr250.htm">sigprocmask()</a></i>,
+<i><a href="sigsu252.htm">sigsuspend()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

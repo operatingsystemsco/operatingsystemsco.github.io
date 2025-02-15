@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getpriority</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_683">&nbsp;</a>NAME</h4><blockquote>
+getpriority, setpriority - get or set the nice value
+</blockquote><h4><a name = "tag_000_005_684">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysre270.htm">sys/resource.h</a>&gt;
+
+int getpriority(int <i>which</i>, id_t <i>who</i>);
+int setpriority(int <i>which</i>, id_t <i>who</i>, int <i>value</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_685">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getpriority()</i>
+function obtains the nice value of a process, process group or user.
+The
+<i>setpriority()</i>
+function sets the nice value of a process, process group or user to
+<i>value</i>
++ NZERO.
+<p>
+Target processes are specified by the values of the <i>which</i> and <i>who</i>
+arguments.  The <i>which</i> argument may be one of the following values:
+PRIO_PROCESS, PRIO_PGRP or PRIO_USER, indicating that the <i>who</i> argument
+is to be interpreted as a process ID, a process group ID or an
+effective user ID, respectively.  
+A 0 value for the <i>who</i> argument specifies the current process,
+process group or user.
+<p>
+The nice value set with
+<i>setpriority()</i>
+is applied to the process.
+If the process is multi-threaded, the nice value affects all
+system scope threads in the process.
+<p>
+If more than one process is specified,
+<i>getpriority()</i>
+returns value NZERO less than the lowest nice value pertaining
+to any of the specified processes, and
+<i>setpriority()</i>
+sets the nice values of all of the specified processes to
+<i>value</i>
++ NZERO.
+<p>
+The default nice value is NZERO; lower nice values cause more
+favourable scheduling.
+While the range of valid nice values is [0, NZERO*2 -1],
+implementations may enforce more restrictive limits.
+If
+<i>value</i>
++ NZERO is less than the system's lowest supported nice value,
+<i>setpriority()</i>
+sets the nice value to the lowest supported value; if
+<i>value</i>
++ NZERO is greater than the system's highest supported nice value,
+<i>setpriority()</i>
+sets the nice value to the highest supported value.
+<p>
+Only a process with appropriate privileges can lower its nice value.
+<p>
+Any processes or threads using SCHED_FIFO or SCHED_RR are unaffected
+by a call to
+<i>setpriority()</i>.
+This is not considered an error.
+<p>
+The effect of changing the nice value may vary depending on the
+process-scheduling algorithm in effect.
+<p>
+Because
+<i>getpriority()</i>
+can return the value -1 on successful completion, it is necessary to set
+<i>errno</i> to 0 prior to a call to
+<i>getpriority()</i>.
+If
+<i>getpriority()</i>
+returns the value -1, then <i>errno</i> can be checked to see if an
+error occurred or if the value is a legitimate nice value.
+</blockquote><h4><a name = "tag_000_005_686">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>getpriority()</i>
+returns an integer in the range from -NZERO to NZERO-1.
+Otherwise, -1 is returned and <i>errno</i> is set to indicate
+the error.
+<p>
+Upon successful completion,
+<i>setpriority()</i>
+returns 0.
+Otherwise, -1 is returned and <i>errno</i> is set to indicate the error.
+</blockquote><h4><a name = "tag_000_005_687">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>getpriority()</i>
+and
+<i>setpriority()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[ESRCH]<dd>
+No process could be located using the <i>which</i>
+and <i>who</i> argument values specified.
+
+<dt>[EINVAL]<dd>
+The value of the <i>which</i> argument was not recognised,
+or the value of the <i>who</i> argument is not a valid
+process ID, process group ID or user ID.
+
+</dl>
+<p>
+In addition,
+<i>setpriority()</i>
+may fail if:
+<dl compact>
+
+<dt>[EPERM]<dd>
+A process was located, but neither the real nor effective user ID of
+the executing process match the effective user ID of the process whose
+nice value is being changed.
+
+<dt>[EACCES]<dd>
+A request was made to change the nice value
+to a lower numeric value and the current process does not have
+appropriate privileges.
+
+</dl>
+</blockquote><h4><a name = "tag_000_005_688">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_689">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>getpriority()</i>
+and
+<i>setpriority()</i>
+functions work with an offset nice value (nice value minus NZERO).
+The nice value is in the range [0, 2*NZERO -1], while the return
+value for
+<i>getpriority()</i>
+and the third parameter for
+<i>setpriority()</i>
+are in the range [-NZERO, NZERO -1].
+</blockquote><h4><a name = "tag_000_005_690">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_691">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="nice.htm">nice()</a></i>,
+<i><a href="sched209.htm">sched_get_priority_max()</a></i>,
+<i><a href="sched215.htm">sched_setscheduler()</a></i>,
+<i><a href="sysre270.htm">&lt;sys/resource.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

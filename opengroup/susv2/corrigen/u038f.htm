@@ -1,0 +1,815 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Corrigendum U024</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p><font size="5"><strong>Corrigendum: U038<br>
+</strong></font><br>
+<font size="3"><strong>Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>&nbsp;&nbsp;&nbsp;
+5 February 1999</font></p>
+
+<p><strong>Document:&nbsp;&nbsp; </strong>Networking Services (XNS), Issue 4 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; Open Group CAE Specification, 09/94, C438<strong><br>
+<br>
+Code:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>02/99 C438/U038<strong><br>
+</strong><br>
+<strong>Contents:</strong>&nbsp;&nbsp;&nbsp; This Corrigendum publishes new item:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U038/XNS4-999 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+and incorporates existing published Corrigenda:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U024:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U024/XNS-009<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U024/XNS-010<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U008:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U008/XNS-1.1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U008/XNS-1.2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.6<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.7<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.8<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.9<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.10<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U003/XTI-1.11<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+This Corrigendum therefore supersedes U024, U008 and U003.</p>
+
+<hr>
+
+<p><strong>Change Number: </strong>U038/XNS-999<strong><br>
+</strong><br>
+<strong>Title:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clarify
+usage of the long data types to enable systems simultaneously to conform<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to XNS4 and XNS5<br>
+<br>
+<strong>Qualifier:</strong>&nbsp;&nbsp; Major technical<br>
+<br>
+<strong>Rationale:</strong>&nbsp; Add text clarifying the usage the long data types in a
+way that will enable systems<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+simultaneously to conform to XNS4 and XNS5.<br>
+<br>
+<strong>Change:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Add a new Section 1.6 (on page 7)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+To assist portability to 64-bit systems, all references in this specification <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to the types long and unsigned long may be taken to refer to integral types <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(signed and unsigned respectively) of at least 32 bits in length.</p>
+
+<hr>
+
+<p><font size="5"><strong>Corrigendum U024 (July 1997)</strong></font></p>
+
+<hr>
+
+<p><strong>Change Number: </strong>U024/XNS-009<strong><br>
+</strong><br>
+<strong>Title:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In UNIX 95 XTI,
+t_getprotaddr() legal states are incorrect for orderly release transports.<br>
+<br>
+<strong>Qualifier: </strong>Major technical<br>
+<br>
+<strong>Rationale:</strong> The current XTI t_getprotaddr() specification for UNIX 95 is
+broken for transports <br>
+that support orderly release. It specifies that the peeraddr should not be returned except
+in <br>
+T_DATAXFER states. However, such transports can function with half-open connections
+indefinitely <br>
+in states T_INREL and T_OUTREL, and there needs to be a way to find out the remote
+endpoint <br>
+address in these states.<br>
+<br>
+This specific change is also aligned with the future direction taken by evolution of XTI
+interface <br>
+specification in Networking Services Issue 5 (UNIX 98).<br>
+<br>
+See also related CR XO-XNS-010, below.<br>
+<br>
+<strong>Change:</strong> <br>
+Change the last sentence in the description fort_getprotoaddr() on Page 66, from</p>
+
+<blockquote>
+  <p>If the transport endpoint is not in T_DATAXFER state, zero is returned in the len field
+  of <br>
+  peeraddr.</p>
+</blockquote>
+
+<p>to</p>
+
+<blockquote>
+  <p>If the transport endpoint is not in T_DATAXFER, T_INREL or T_OUTREL states, <br>
+  zero is returned in the len field of peeraddr.</p>
+</blockquote>
+
+<hr>
+
+<p><strong>Change Number: </strong>U024/XNS-010<br>
+<br>
+<strong>Title:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In UNIX 95 XTI,
+allow t_getprotaddr() in T_OUTCON state<br>
+<br>
+<strong>Qualifier:</strong> Minor technical<br>
+<br>
+<strong>Rationale:</strong> In the XTI specification for UNIX 95, t_getprotoaddr() is
+limited to allowing the ability<br>
+to retrieve the remote address in only the T_DATAXFER state.<br>
+<br>
+The first change in this Corrigendum addresses also allowing this in T_INCON and T_OUTCON <br>
+states. <br>
+<br>
+This change (XO-XNS-010) adds allowing it in T_OUTCON state, because there is no reason <br>
+to restrict it (since while the association is not established in this state, nevertheless
+the address <br>
+of the remote endpoint to which connection request is made is known to the interface). <br>
+<br>
+This specific change is also aligned with the future direction taken by evolution of XTI
+interface <br>
+specification in Networking Services Issue 5 (UNIX 98).<br>
+<br>
+<strong>Change:</strong> In the last sentence in the description fort_getprotoaddr() on
+Page 66, add T_OUTCON <br>
+as one of the states where zero is not required to be returned in the len field of
+peeraddr (alongside <br>
+T_INREL and T_OUTREL, as prescribed by change XO-XNS-009 of this Corrigendum).<br>
+<br>
+===========================================================================<br>
+<br>
+<font size="5"><strong>Corrigendum U008 (May 1995)</strong></font></p>
+
+<hr>
+
+<p><strong>Change number: </strong>U008/XNS-1.1<strong><br>
+</strong><br>
+<strong>Title: </strong>X/Open Networking Services Issue 4, X/Open CAE Specification,
+09/94, C438:<br>
+XTI headers and definitions &lt;xti.h&gt; binary values<strong>.<br>
+</strong><br>
+<strong>Qualifier:</strong> Major Technical<br>
+<br>
+<strong>Rationale:</strong> The &lt;xti.h&gt; header file specifies binary values for
+symbolic constants. It also includes<br>
+protocol specific symbolicconstants. Some of these constants defined values can conflict
+with <br>
+values already defined on a vendors platform in other header files and can therefore cause
+name space <br>
+and binary compatibility problems. This is manifest by XTI as part of the Single UNIX
+specification. <br>
+<br>
+The XNET-36 meeting addressed this problem as a matter of urgency, with the aim of
+recommending <br>
+a solution which would avoid delaying development of the Single UNIX test suite. Leaving
+aside <br>
+considerations of binary portability, and also argument over how it came about that the
+developers <br>
+of the earlier XTI specification came to specify binary values in the first place, the
+arguments for the two<br>
+opposing positions expressed during XNET-36 (on the numerical values assigned to symbolic <br>
+constants in the XPG4 &lt;xti.h&gt; file) were: 
+
+<ul>
+  <li>the xti.h values should stay mandatory since there may be applications out there which
+    rely <br>
+    on XTI implementations making exactly these values available</li>
+  <li>these values should be made only illustrative since some new implementors of XTI already
+    <br>
+    have transport providers with other values implemented and they wish neither to migrate <br>
+    them and corresponding applications to the XPG4 XTI values nor to maintain dual transport<br>
+    providers.</li>
+</ul>
+
+<p>XNET-36 captured its majority position in Resolution 36-8:</p>
+
+<blockquote>
+  <p>&quot;XNET recommends that regarding the mandatory character of the current XTI header <br>
+  definition, specifically the binary values specified therein, the values as specified in
+  the list <br>
+  to be agreed should not be mandatory for the purposes of the UNIX brand, while they <br>
+  should remain mandatory for branding in other environments.&quot;</p>
+</blockquote>
+
+<p>In recommending this solution, XNET recognised it was proposing introducing a slight
+difference <br>
+in the meaning of the XTI brand obtained for Single UNIX and that obtained for other
+environments: <br>
+existing and new XTI applications written for non-UNIX environments will not be fully
+portable <br>
+to the Single UNIX environment (there is no problem in the opposite direction).<br>
+<br>
+Regarding the scale and context of this problem, it is important to note that only
+applications relying <br>
+on specific numerical values of the symbolic constants would have to be modified when
+ported to XTI implementations providing different values. Of course, the purpose of
+symbolic constants is to <br>
+remove numerical values from programs, and textbooks on programming generally advise
+against <br>
+a style making programs dependent on numerical values. It is therefore to be hoped that
+the problem <br>
+is limited to only a rather small number of applications written in questionable style,
+and therefore <br>
+in practice this should not be a major technical issue.<br>
+<br>
+The whole matter is significant because of its branding implications. The compromise
+expressed <br>
+in XNET resolution 36-8, namely a single XTI brand with different conformance requirements
+<br>
+in UNIX and XPG4 environments, proved not acceptable. <br>
+<br>
+As a result, X/Open proposed that the Appendix on the XTI header file is modified so that
+some <br>
+or all of the values included therein are declared as &quot;recommended but not
+mandatory&quot; for <br>
+compliance with the XTI specification. In a preliminary poll of XNET representatives, this
+solution <br>
+was accepted, with a slight preference for making &quot;recommended but not
+mandatory&quot; only those <br>
+values which cause contention. <br>
+<br>
+The change proposed here does this. If accepted, it will be issued as a Corrigendum to
+ensure <br>
+immediate effect.<br>
+<br>
+<strong>Change:</strong> In the Networking Services Issue 4 CAE Specification, Appendix F:
+Headers and <br>
+Definitions for XTI: 
+
+<ol>
+  <li>After the first paragraph in Appendix F (on Page 253), add the following new paragraph:<blockquote>
+      <p>Values specified for some of the symbolic constants in this XTI header definition <br>
+      are designated as not mandatory for conformance purposes. These are identified <br>
+      by the comment<br>
+      /* value is recommended only, not mandatory */<br>
+      on the same line as that constant.</p>
+    </blockquote>
+  </li>
+  <li>Add a comment <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* value is recommended only, not
+    mandatory */<br>
+    to the following constants (in the change details below, the side headings are included
+    solely <br>
+    for ease of&nbsp; identification in the existing Appendix F, and will not be duplicated in
+    Appendix F):<br>
+    <br>
+    General definitions for option management<br>
+    T_ALLOPT<br>
+    <br>
+    XTI-level <br>
+    XTI_GENERIC<br>
+    <br>
+    XTI-level options<br>
+    XTI_DEBUG<br>
+    XTI_LINGER<br>
+    XTI_RCVBUF<br>
+    XTI_RCVLOWAT<br>
+    XTI_SNDBUF<br>
+    XTI_SNDLOWAT<br>
+    <br>
+    Protocol Levels<br>
+    ISO_TP<br>
+    <br>
+    Options for QoS and Expedited Data (ISO 8072:1986)<br>
+    TCO_THROUGHPUT<br>
+    TCO_TRANSDEL<br>
+    TCO_RESERRORRATE<br>
+    TCO_TRANSFAILPROB<br>
+    TCO_ESTFAILPROB<br>
+    TCO_RELFAILPROB<br>
+    TCO_ESTDELAY<br>
+    TCO_RELDELAY<br>
+    TCO_CONNRESIL<br>
+    TCO_PROTECTION<br>
+    TCO_PRIORITY<br>
+    TCO_EXPD<br>
+    <br>
+    TCL_TRANSDEL<br>
+    TCL_RESERRORRATE<br>
+    TCL_PROTECTION<br>
+    TCL_PRIORITY<br>
+    <br>
+    Management Options<br>
+    TCO_LTPDU<br>
+    TCO_ACKTIME<br>
+    TCO_REASTIME<br>
+    TCO_EXTFORM<br>
+    TCO_FLOWCTRL<br>
+    TCO_CHECKSUM<br>
+    TCO_NETEXP<br>
+    TCO_NETRECPTCF<br>
+    TCO_PREFCLASS<br>
+    TCO_ALTCLASS1<br>
+    TCO_ALTCLASS2<br>
+    TCO_ALTCLASS3<br>
+    TCO_ALTCLASS4<br>
+    <br>
+    TCL_CHECKSUM<br>
+    <br>
+    TCP level<br>
+    INET_TCP<br>
+    <br>
+    TCP-level Options<br>
+    TCP_NODELAY<br>
+    TCP_MAXSEG<br>
+    TCP_KEEPALIVE<br>
+    <br>
+    UDP level<br>
+    INET_UDP<br>
+    <br>
+    UDP-level Options<br>
+    UDP_CHECKSUM<br>
+    <br>
+    IP level<br>
+    INET_IP<br>
+    <br>
+    IP-level Options<br>
+    IP_OPTIONS<br>
+    IP_TOS<br>
+    IP_TTL<br>
+    IP_REUSEADDR<br>
+    IP_DONTROUTE<br>
+    IP_BROADCAST</li>
+</ol>
+
+<hr>
+
+<p><strong>Change number: </strong>U008/XNS-1.2<strong><br>
+</strong><br>
+<strong>Title:</strong>&nbsp;&nbsp;&nbsp;&nbsp; Conformance Statement Questionnaire (CSQ)
+for the XPG4 Transport Service (XTI) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+component Version 2: new question on whether recommended header values are used.<br>
+<br>
+<strong>Qualifier:</strong> Major Technical<br>
+<br>
+<strong>Rationale:</strong> Change XNS-1.1 in this Corrigendum gives the rationale and
+detailed change <br>
+information for changing certain XTI header values from mandatory to recommended.<br>
+<br>
+Consequent on change XNS-1.1, it is valuable to add a further question to the XTI
+component <br>
+CSQ to ask whether the recommended values have been implemented or not. This CR proposes <br>
+adding that question.<br>
+<br>
+<strong>Change:</strong> In the Conformance Statement Questionnaire (CSQ) for the XPG4
+Transport Service <br>
+(XTI) component Version 2, add a further question to the end of the CSQ, after
+&quot;Optional <br>
+Support for Protocols or Protocol Profiles&quot;, formulated in the following style to
+conform <br>
+to the CSQ format:<br>
+<br>
+.H 2 &quot;Recommended XTI Header Values Implemented&quot;<br>
+\f4Question 13: Does your implementation use all the<br>
+recommended values identified in the XTI specification<br>
+as &quot;recommended only, not mandatory for conformance&quot;?\fP<br>
+.DS I<br>
+.\&quot; ANSWER &quot;YES&quot; OR &quot;NO&quot; ON THE LINE BELOW<br>
+Yes/No<br>
+.DE<br>
+.DS I F<br>
+If &quot;No&quot;, list all those which deviate from the <br>
+recommended values. If necessary, use a separate sheet.<br>
+.\&quot; LIST ALL THOSE WHICH ARE DIFFERENT, AND GIVE THE<br>
+.\&quot; ACTUAL VALUE USED.<br>
+Rationale:<br>
+.DE<br>
+.DS I F<br>
+An XTI transport provider does not have to implement <br>
+these recommended values in order to be compliant. <br>
+However, it is valuable to know this so that users <br>
+can easily check whether an XTI application which <br>
+relies on these values will be portable to this XTI <br>
+implementation: if the answer is &quot;Yes&quot; then such <br>
+an XTI application will be portable to this <br>
+implementation; if &quot;No&quot; then it will not.<br>
+.DE<br>
+.P<br>
+Reference:<br>
+.DS I F<br>
+X/Open Corrigendum U008 to Networking Services Issue 4 <br>
+(X/Open Document Number C438). This Corrigendum revises <br>
+Networking Services Appendix F &quot;XTI Headers and <br>
+Definitions&quot; to define certain values assigned to <br>
+constants as &quot;recommended, not mandatory.&quot;<br>
+.DE<br>
+<br>
+=============================================================================<br>
+<br>
+<font size="5"><strong>Corrigendum U003 (June 1994)</strong></font></p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.1<strong><br>
+</strong><br>
+<strong>Title:</strong> t_accept() address binding for resfd in state T_IDLE<br>
+<br>
+<strong>Qualifier: </strong>Major Technical<br>
+<br>
+<strong>Rationale:</strong> Although some transport implementations (e.g., ISO)<br>
+support multiple endpoints binding to the same protocol<br>
+address, most TCP implementations do not. This<br>
+limitation has led to the following widespread practice.<br>
+<br>
+A user calls t_bind() to bind resfd to an arbitrary<br>
+port on the local host, then calls t_accept() (with<br>
+fd != resfd) which binds resfd the same address as fd.<br>
+For resfd, a change of address takes place. Thus this<br>
+behavior is called &quot;the magic address switch&quot;.<br>
+<br>
+Appendix B.3, t_accept(), second paragraph, second<br>
+sentence, states that &quot;Also, resfd must be bound to the<br>
+same address as fd.&quot; This requirement is not true for<br>
+most TCP implementations. Moreover, this requirement<br>
+makes the implementation of a compliant XTI interface<br>
+over these TCP providers very difficult, if not<br>
+impossible. Finally, the current practice based on the<br>
+magic address switch works and applications are using<br>
+it.<br>
+<br>
+In order to allow implementations that perform the magic<br>
+address switch to comply with XTI, the following change<br>
+is needed.<br>
+<br>
+<strong>Change:</strong> In Appendix B section B.3 (page 113), t_accept(), second <br>
+paragraph:<br>
+<br>
+Remove second sentence:<br>
+<br>
+&quot;Also, resfd must be bound to the same address as fd.&quot;<br>
+<br>
+Add the following text at the end of the same paragraph:<br>
+<br>
+&quot;If such a restriction exists, a user has the<br>
+following alternatives for accepting a connection<br>
+on a different endpoint (resfd != fd): (1) call<br>
+t_accept() while resfd is in state T_UNBND; or<br>
+(2) bind to an arbitrary unused local address,<br>
+and then call t_accept() in the T_IDLE state. In<br>
+the second case, t_accept() will change the resfd<br>
+address to be the same as that of fd. For<br>
+portability, the first alternative is recommended.<br>
+<br>
+On page 113, t_bind(), second paragraph change the<br>
+beginning of the first sentence from:<br>
+<br>
+&quot;In connection-oriented mode, ...&quot;<br>
+<br>
+to:<br>
+<br>
+&quot;In some implementations, in connection-oriented<br>
+mode,...&quot;<br>
+<br>
+Branding: Branding should require that a vendor state if multiple<br>
+binds of an endpoint to the same address are allowed,<br>
+and if not, whether the implementation performs the<br>
+magic address during t_accept().<br>
+<br>
+Testing: An XTI implementation can and should be tested for<br>
+allowing multiple binds of an endpoint to the same<br>
+address and for performing the magic address switch.</p>
+
+<hr>
+
+<p><strong>Change number:</strong> U003/XTI-1.2<br>
+<br>
+<strong>Title:</strong> Add t_close() semantics to appendix C.4.<br>
+<br>
+<strong>Qualifier:</strong> Major Technical<br>
+<br>
+<strong>Rationale:</strong> Appendix C of the XTI spec. needs to be modified <br>
+to alert application writers they can not always <br>
+depend on the behavior of the t_close().<br>
+<br>
+<strong>Change:</strong> At the end of Appendix C section C.4, add the following <br>
+text:<br>
+<br>
+11. The semantics of closing a connection may be <br>
+different across transport providers. For example, <br>
+closing a connection to ISO is abortive while<br>
+closing a connection to TCP is orderly. A portable <br>
+application should not assume either facility is <br>
+available. If the service provider is of type <br>
+COTS_ORD, a portable application should use the <br>
+t_sndrel()/t_rcvrel() prior to calling t_close().</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.3<strong><br>
+</strong><br>
+<strong>Title:</strong> Add t_close() semantics to Appendix B.<br>
+<br>
+<strong>Qualifier:</strong> Major Technical<br>
+<br>
+<strong>Rationale:</strong> Appendix B of the XTI spec. needs to clarify Internet<br>
+transport protocol TCP action on t_close().<br>
+<br>
+<strong>Change:</strong> Insert the following text in the alphabetically <br>
+appropriate place in Section &quot;B.3 Functions&quot; (after <br>
+t_bind() description and before t_connect() description):<br>
+<br>
+t_close()<br>
+The t_close() call will result in close() call to be made<br>
+on the descriptor of this XTI communication endpoint.<br>
+If there are no other descriptors in this process or any<br>
+other process which reference this communication endpoint,<br>
+the close() call will perform an orderly connection<br>
+termination according to the rules of a TCP CLOSE call on<br>
+this connection endpoint as specified in standards RFC 793<br>
+and RFC 1122. If the XTI_LINGER option is supported and is<br>
+used to enable the linger option, the linger time will <br>
+affect the time an implementation lingers in the <br>
+execution of t_close() or close(). A linger time of 0 <br>
+specified with XTI_LINGER option may cause an abortive<br>
+release of a TCP connection resulting in lost data.</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.4<strong><br>
+</strong><br>
+<strong>Title:</strong> Add t_close() semantics to Appendix A.<br>
+<br>
+<strong>Qualifier:</strong> Major Technical<br>
+<br>
+<strong>Rationale:</strong> Appendix A of the XTI spec. needs to clarify ISO transport <br>
+protocol action on t_close(); this clarification needs <br>
+to take into account that:<br>
+1. ISO transport does not support the orderly release <br>
+function.<br>
+2. without orderly release, the XTI_LINGER option has no<br>
+meaning for an ISO transport provider.<br>
+<br>
+<strong>Change:</strong> Insert the following text in the alphabetically <br>
+appropriate place in Section &quot;A.3 Functions&quot; (after <br>
+t_bind() description and before t_connect() description):<br>
+<br>
+t_close() <br>
+The t_close() call will cause a close() call to be made<br>
+on the descriptor of this XTI communication endpoint.<br>
+If there are no other descriptors in this process or any<br>
+other process which reference this communication<br>
+endpoint, the close() call will perform an abortive<br>
+release on any connection associated with this endpoint.</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.5<strong><br>
+</strong><br>
+<strong>Title:</strong> Add t_close() semantics to Appendix I.<strong><br>
+</strong><br>
+<strong>Qualifier:</strong> Major Technical<br>
+<br>
+<strong>Rationale: </strong>Change the semantics of mapping a t_close() to being <br>
+an orderly close. t_close() can map to the close <br>
+semantics of the underlying provider. Since SNA provides<br>
+an orderly close, and since mapping to an orderly close <br>
+makes it easier to map XTI applications to an SNA <br>
+transport, mapping t_close() to an orderly SNA close <br>
+makes more sense.<br>
+<br>
+Appendix I of the XTI Specification needs to be modified <br>
+to alert application writers of the t_close() semantics<br>
+for the SNA Transport Provider.<br>
+<br>
+Change 1. Replace section I.2.1, item 6 &quot;Orderly release&quot;, <br>
+with the following text:<br>
+<br>
+&quot;6. t_close()<br>
+<br>
+The semantics of t_close() on an SNA Transport <br>
+Provider is simplex orderly, that is, the send <br>
+pipe of the XTI application issuing the<br>
+t_close() is closed, but the receive pipe <br>
+remains open. Any data sent prior to the <br>
+t_close() will be delivered to the partner.&quot;<br>
+<br>
+2. In table I-5, page 216, t_close() entry:<br>
+- Replace &quot;DEALLOCATE TYPE(ABEND)&quot;<br>
+with &quot;DEALLOCATE TYPE(FLUSH)&quot;<br>
+<br>
+- Remove sentence that says &quot;May be a delay if <br>
+XTI_LINGER ooption activated with non-zero <br>
+linger value.&quot;<br>
+<br>
+3. In table I-9, page 221, change &quot;TYPE(ABEND_PROG)&quot;<br>
+to &quot;TYPE(FLUSH)&quot;</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.6<strong><br>
+</strong><br>
+<strong>Title: </strong>RT_UNUSED not used. so delete its definition.<br>
+<br>
+<strong>Qualifier:</strong> Minor Technical<br>
+<br>
+<strong>Rationale:</strong> With regard to the &quot;General purpose defines&quot;,
+T_UNUSED <br>
+is not used elsewhere in the document.<br>
+<br>
+<strong>Change:</strong> In Appendix F page 164, remove its definition.</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.7<strong><br>
+</strong><br>
+<strong>Title: </strong>Zero value of maxlen<br>
+<br>
+<strong>Qualifier:</strong> Minor Technical<br>
+<br>
+<strong>Rationale: </strong>With regard to the sentence &quot;If maxlen is not large <br>
+enough to hold the returned address, an error will result&quot; <br>
+in the description of t_bind() on page 54, and to similar <br>
+text in the descriptions of functions t_connect(), <br>
+t_getprotaddr(), t_listen(), t_rcvconnect(), t_optmgmt(), <br>
+t_rcvdis(), t_rcvudata(), t_rcvuderr(): if the maxlen <br>
+value of an output parameter is too small, the function <br>
+fails with [TBUFOVFLW] only if maxlen &gt; 0, but not if <br>
+maxlen=0 (see the description for [TBUFOVFLW] in the <br>
+Errors section. The idea was that a user is allowed to <br>
+selectively discard output information by setting the <br>
+maxlen field of the appropriate output parameter to zero.<br>
+(Setting the complete output structure to NULL would <br>
+result in a total information loss.) Unfortunately, <br>
+the behaviour of the call in case that maxlen = 0 was <br>
+only implicitly described in the decription of [TBUFOVFLW].<br>
+<br>
+This change removes conflicting statements from the XTI<br>
+specification. Applications and implementations that <br>
+follow the descriptions of the TBUFOVFLW error will be <br>
+unaffected by this change. Applications and implementations<br>
+that follow the function descriptions could be affected. <br>
+There could be implications for testing and branding <br>
+if the test suite follows the function descriptions rather <br>
+than the TBUFOVFLW error descriptions.<br>
+<br>
+<strong>Change:</strong> 1. In the description of t_bind(), replace the sentence <br>
+&quot;If maxlen is not ...&quot; <br>
+by <br>
+&quot;If maxlen equals zero, no address is returned. If <br>
+maxlen is greater than zero and less than the length <br>
+of the address, t_bind() fails.&quot;<br>
+<br>
+2. In the description of t_connect(), replace<br>
+&quot;However, rcvcall may be a null . . t_connect()&quot; <br>
+by<br>
+&quot;However, maxlen can be set to zero, in which case no<br>
+information to this specific argument is given to <br>
+the user on the return from t_connect(). If rcvcall <br>
+is set to NULL, no information at all is returned.&quot;<br>
+<br>
+3. At the end of the description of t_getprotaddr(), <br>
+add &quot;If the maxlen field of boundaddr <br>
+or peeraddr is set to zero, no address is returned.&quot;<br>
+<br>
+4. In the description of t_listen(), after &quot; . . maximum <br>
+size of the buffer for each&quot; (page 71), add &quot;If the <br>
+maxlen field of call-&gt;addr, call-&gt;opt, or call-&gt;udata <br>
+is set to zero, no information is returned for this <br>
+parameter.&quot;<br>
+<br>
+5. In the description of t_optmgmt(), after the sentence<br>
+ending &quot;.. options are to be placed.&quot; add <br>
+the sentence: &quot;If maxlen in ret is set to zero, no <br>
+options values are returned.&quot;.<br>
+<br>
+6. In the description of t_rcvconnect(), <br>
+replace the sentence &quot;However, call may be a null <br>
+pointer,..&quot; by &quot;However, maxlen can be set to zero, <br>
+in which case no information to this specific argument <br>
+is given to the user on the return from t_rcvconnect(). <br>
+If call is set to NULL, no information at all is <br>
+returned.&quot;.<br>
+<br>
+7. In the description of t_rcvdis(), replace <br>
+the sentence &quot;If a user does not care...&quot; by &quot;The <br>
+maxlen field of udata may be set to zero, if the user <br>
+does not care about incoming data. If, in addition, <br>
+the user does not need to know the value of reason <br>
+or sequence, discon may be set to NULL and any user <br>
+data associated with the disconnect indication shall <br>
+be discarded.&quot;<br>
+<br>
+8. In the descriptions of t_rcvudata() (page 92) and<br>
+rcvvudata() (TBA), after &quot; . . maximum size of the <br>
+buffer for each&quot;, add &quot;If the maxlen field of addr <br>
+or opt is set to zero, no information is returned <br>
+in the buf field of this parameter.&quot;<br>
+<br>
+9. In the description of t_rcvuderr(), after <br>
+&quot; . . maximum size of the buffer for each&quot; (page 92), <br>
+add &quot;If this field is set to zero for addr or opt, <br>
+no information is returned in the buf field of this </p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.8<strong><br>
+</strong><br>
+<strong>Title: </strong>System error on t_close()<br>
+<br>
+<strong>Qualifier:</strong> Minor Technical<br>
+<br>
+<strong>Rationale:</strong> t_close is eventually mapped to close(). A close could <br>
+fail with EINTR. Consequently, one should allow for a <br>
+system error. <br>
+<br>
+<strong>Change:</strong> Add <br>
+&quot;[TSYSERR] A system error has occurred during execution <br>
+of this function.&quot;<br>
+to the list of errors of t_close() on page 48.</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.9<br>
+<br>
+<strong>Title:</strong> TOUTSTATE and t_optmgmt()<br>
+<br>
+<strong>Qualifier:</strong> Minor Technical<br>
+<br>
+<strong>Rationale:</strong> t_optmgmt() is valid in all states and so cannot generate<br>
+[TOUTSTATE]. <br>
+<br>
+<strong>Change:</strong> Remove the TOUTSTATE entry from the list of ERRORS for<br>
+t_optmgmt() on page 73.</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.10<strong><br>
+</strong><br>
+<strong>Title:</strong> TACCes and t_optmgmt()<br>
+<br>
+<strong>Qualifier:</strong> Minor Technical<br>
+<br>
+<strong>Rationale: </strong>The description for the T_NEGOTIATE flag on page 69 says <br>
+that the status T_NOTSUPPORT is returned is the status <br>
+field, if the user attempts to negotiate a privileged <br>
+option. Thus, [TACCES] can not be generated by t_optmgmt().<br>
+<br>
+This change should not affect existing applications (if <br>
+there are any that test for return of TACCES by <br>
+t_optmgmt(), then they can continue to do so, but the <br>
+test will of course always fail). It will only affect <br>
+implementations if there are any that actually generate <br>
+TACCES from t_optmgmt(). Similarly, it will not affect <br>
+the test suite unless this actually tests that TACCES<br>
+is returned by t_optmgmt() under certain conditions <br>
+(in which case, it would be interesting to know what <br>
+those condidtions are).<br>
+<br>
+<strong>Change:</strong> Remove [TACCES] from the list on page 73.</p>
+
+<hr>
+
+<p><strong>Change number: </strong>U003/XTI-1.11<strong><br>
+</strong><br>
+<strong>Title:</strong> Expedited data and RFC 1006<br>
+<br>
+<strong>Qualifier: </strong>Minor Technical<br>
+<br>
+Rationale: This text is not in the XTI CAE Specification, but is <br>
+probably intended to be added in order to describe support <br>
+for RFC 1006. In the text in the table in Appendix A <br>
+section A.3 on page 105, for &quot;ISO over TCP&quot;, it should <br>
+be made clear that the value of info-&gt;etsdu depends on <br>
+the negotiation of expedited data transfer. <br>
+<br>
+As this relates to a possible future change, rather to the<br>
+existing specification, there is no effect on existing<br>
+applications or implementations, or on testing or branding.<br>
+<br>
+<strong>Change:</strong> Ensure that the relevant entry is annotated &quot;(3)&quot; when<br>
+describing support for RFC 1006.</p>
+
+<hr>
+
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sem_destroy</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_279">&nbsp;</a>NAME</h4><blockquote>
+sem_destroy - destroy an unnamed semaphore
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_008_280">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="semap227.htm">semaphore.h</a>&gt;
+
+int sem_destroy(sem_t *<i>sem</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_281">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sem_destroy()</i>
+function is used to destroy the unnamed semaphore indicated by
+<i>sem</i>.
+Only a semaphore that was created using
+<i><a href="semin221.htm">sem_init()</a></i>
+may be destroyed using
+<i>sem_destroy()</i>;
+the effect of calling
+<i>sem_destroy()</i>
+with a named semaphore is undefined.
+The effect of subsequent use of the semaphore
+<i>sem</i>
+is undefined until
+<i>sem</i>
+is re-initialised by another call to
+<i><a href="semin221.htm">sem_init()</a></i>.
+<p>
+It is safe to destroy an initialised semaphore upon which no threads
+are currently blocked.
+The effect of destroying a semaphore
+upon which other threads 
+are currently blocked is undefined.
+</blockquote><h4><a name = "tag_000_008_282">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+a value of zero is returned.
+Otherwise,
+a value of -1
+is returned and
+<i>errno</i>
+is set to indicate
+the error.
+</blockquote><h4><a name = "tag_000_008_283">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>sem_destroy()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>sem</i>
+argument is not a valid semaphore.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>sem_destroy()</i>
+is not supported by this implementation.
+
+</dl>
+<p>
+The 
+<i>sem_destroy()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+There are currently processes blocked on the semaphore.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_284">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_285">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_286">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_287">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="semctl.htm">semctl()</a></i>,
+<i><a href="semget.htm">semget()</a></i>,
+<i><a href="semop.htm">semop()</a></i>,
+<i><a href="semin221.htm">sem_init()</a></i>,
+<i><a href="semop222.htm">sem_open()</a></i>,
+<i><a href="semap227.htm">&lt;semaphore.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

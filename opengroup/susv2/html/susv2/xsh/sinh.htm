@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sinh</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_786">&nbsp;</a>NAME</h4><blockquote>
+sinh - hyperbolic sine function
+</blockquote><h4><a name = "tag_000_008_787">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+double sinh(double <i>x</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_788">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sinh()</i>
+function computes the hyperbolic sine of
+<i>x</i>.
+<p>
+An application wishing to check for error situations should set
+<i>errno</i>
+to 0 before calling
+<i>sinh()</i>.
+If
+<i>errno</i>
+is non-zero on return, or the return value is NaN,
+an error has occurred.
+</blockquote><h4><a name = "tag_000_008_789">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>sinh()</i>
+returns the hyperbolic sine of
+<i>x</i>.
+<p>
+If the result would cause an overflow, &plusmn;HUGE_VAL is
+returned and
+<i>errno</i>
+is set to [ERANGE].
+<p>
+If the result would cause underflow, 0.0 is returned and
+<i>errno</i>
+may be set to [ERANGE].
+<p>
+If
+<i>x</i>
+is NaN, NaN is returned
+and
+<i>errno</i>
+may be set to [EDOM].
+</blockquote><h4><a name = "tag_000_008_790">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>sinh()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ERANGE]<dd>
+The result would cause overflow.
+
+</dl>
+<p>
+The
+<i>sinh()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>
+The value of
+<i>x</i>
+is NaN.
+
+<dt>[ERANGE]<dd>
+The result would cause underflow.
+
+</dl>
+<p>
+No other errors will occur.
+</blockquote><h4><a name = "tag_000_008_791">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_792">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_793">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_794">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="asinh.htm">asinh()</a></i>,
+<i><a href="cosh.htm">cosh()</a></i>,
+<i><a href="isnan.htm">isnan()</a></i>,
+<i><a href="tanh.htm">tanh()</a></i>,
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

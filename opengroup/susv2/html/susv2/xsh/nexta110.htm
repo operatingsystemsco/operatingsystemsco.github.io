@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>nextafter</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_874">&nbsp;</a>NAME</h4><blockquote>
+nextafter - next representable double-precision floating-point number
+</blockquote><h4><a name = "tag_000_007_875">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="mathh95.htm">math.h</a>&gt;
+
+double nextafter(double <i>x</i>, double <i>y</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_876">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>nextafter()</i>
+function computes the next representable double-precision floating-point value
+following <i>x</i> in the direction of <i>y</i>.
+Thus, if <i>y</i> is less than
+<i>x</i>,
+<i>nextafter()</i>
+returns the largest representable floating-point
+number less than <i>x</i>.
+<p>
+An application wishing to check for error situations should set
+<i>errno</i>
+to 0 before calling
+<i>nextafter()</i>.
+If
+<i>errno</i>
+is non-zero on return, or the value NaN is returned,
+an error has occurred.
+</blockquote><h4><a name = "tag_000_007_877">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>nextafter()</i>
+function returns the next representable double-precision floating-point value
+following <i>x</i> in the direction of <i>y</i>.
+<p>
+If <i>x</i> or <i>y</i> is NaN, then
+<i>nextafter()</i>
+returns NaN and may set <i>errno</i> to [EDOM].
+<p>
+If <i>x</i> is finite and the correct function value would overflow, HUGE_VAL
+is returned and
+<i>errno</i>
+is set to [ERANGE].
+</blockquote><h4><a name = "tag_000_007_878">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>nextafter()</i>
+function will fail if:
+<dl compact>
+
+<dt>[ERANGE]<dd>
+The correct value would overflow.
+
+</dl>
+<p>
+The
+<i>nextafter()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EDOM]<dd>
+The <i>x</i> or <i>y</i> argument is NaN.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_879">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_880">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_881">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_882">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mathh95.htm">&lt;math.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

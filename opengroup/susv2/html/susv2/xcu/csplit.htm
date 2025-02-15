@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>csplit</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_244">&nbsp;</a>NAME</h4><blockquote>
+csplit - split files based on context
+</blockquote><h4><a name = "tag_001_014_245">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+csplit <b>[</b>-ks<b>][</b>-f <i>prefix</i><b>][</b>-n <i>number</i><b>] </b><i>file arg1</i> ...<i>argn</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_246">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>csplit</i>
+utility reads the file named by the
+<i>file</i>
+operand, writes all or part of that file
+into other files as directed by the
+<i>arg</i>
+operands, and writes the sizes of the files.
+</blockquote><h4><a name = "tag_001_014_247">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>csplit</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-f&nbsp;</b><i>prefix</i>
+<dd>
+Name the created files
+<i>prefix</i><b>00</b>,
+<i>prefix</i><b>01</b>,
+...,
+<i>prefixn</i>.
+The default is <b>xx00</b> ...
+<b>xx</b><i>n</i>.
+If the
+<i>prefix</i>
+argument would create a filename exceeding
+{NAME_MAX}
+bytes, an error will result,
+<i>csplit</i>
+will exit with a diagnostic message
+and no files will be created.
+
+<dt><b>-k</b>
+<dd>Leave previously created files intact.
+By default,
+<i>csplit</i>
+will remove created files if an error occurs.
+
+<dt><b>-n&nbsp;</b><i>number</i>
+<dd>
+Use
+<i>number</i>
+decimal digits to form filenames for the file pieces.
+The default is 2.
+
+<dt><b>-s</b>
+<dd>Suppress the output of file size messages.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_248">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>The pathname of a text file to be split.
+If
+<i>file</i>
+is "-", the standard input will be used.
+
+</dl>
+<p>
+The operands
+<i>arg1</i>
+...
+<i>argn</i>
+can be a combination of the following:
+<dl compact>
+
+<dt>/<i>rexp</i>/<b>[</b><i>offset</i><b>]</b><dd>
+Create a file using the content of the lines
+from the current line up to, but not including,
+the line that results from the evaluation of the
+regular expression with
+<i>offset</i>,
+if any, applied.
+The regular expression
+<i>rexp</i>
+must follow the rules for
+basic regular expressions described in
+the <b>XBD</b> specification, <a href="../xbd/re.htm#tag_007_003"><b>Basic Regular Expressions</b>&nbsp;</a> .
+The optional
+<i>offset</i>
+must be a positive or negative integer value representing a number of lines.
+The integer value must be preceded by "+" or "-".
+If the selection of lines from an offset expression of this type
+would create a file with zero lines, or one with
+greater than the number of lines left in the input file, the
+results are unspecified.
+After the section is created,
+the current line will be set to the line that results
+from the evaluation of the regular expression with any
+offset applied.
+The pattern match of
+<i>rexp</i>
+always is applied from the current line
+to the end of the file.
+
+
+<dt>%<i>rexp</i>%<b>[</b><i>offset</i><b>]</b><dd>
+This operand is the same as
+/<i>rexp</i>/<b>[</b><i>offset</i><b>]</b>,
+except that
+no file will be created for the
+selected section of the input file.
+
+<dt><i>line_no</i><dd>Create a file from the current line up to
+(but not including) the line number
+<i>line_no</i>.
+Lines in the file will be numbered starting at one.
+The current line becomes
+<i>line_no</i>.
+
+<dt><b>{</b><i>num</i><b>}</b><dd>Repeat operand.
+This operand can follow any of the operands described previously.
+If it follows a
+<i>rexp</i>
+type operand, that operand will be applied
+<i>num</i>
+more times.
+If it follows a
+<i>line_no</i>
+operand, the file will be split every
+<i>line_no</i>
+lines,
+<i>num</i>
+times, from that point.
+
+</dl>
+<p>
+An error will be reported if an operand does not reference a line
+between the current position and the end of the file.
+</blockquote><h4><a name = "tag_001_014_249">&nbsp;</a>STDIN</h4><blockquote>
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_250">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input file must be a text file.
+</blockquote><h4><a name = "tag_001_014_251">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>csplit</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+within regular expressions.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files) and
+the behaviour of character classes within regular expressions.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_252">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+If the
+<b>-k</b>
+option is specified, created files will be retained.
+Otherwise the default action occurs.
+</blockquote><h4><a name = "tag_001_014_253">&nbsp;</a>STDOUT</h4><blockquote>
+Unless the
+<b>-s</b>
+option is used, the standard output will consist of one line per file created,
+with a format as follows:
+<p><code>
+<tt>"%d\n"</tt>, &lt;<i>file size in bytes</i>&gt;
+</code>
+</blockquote><h4><a name = "tag_001_014_254">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_255">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output files will contain portions of the original input file, otherwise
+unchanged.
+</blockquote><h4><a name = "tag_001_014_256">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_257">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_258">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+By default, created files will be removed if an error occurs.
+When the
+<b>-k</b>
+option is specified, created files will not be removed
+if an error occurs.
+</blockquote><h4><a name = "tag_001_014_259">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_260">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+This example creates four files, <b>cobol00</b> ... <b>cobol03</b>:
+<pre>
+<code>
+csplit -f cobol file '/procedure division/' /par5./ /par16./
+</code>
+</pre>
+<p>
+After editing the split files, they can be recombined as follows:
+<pre>
+<code>
+cat cobol0[0-3] &gt; file
+</code>
+</pre>
+<p>
+Note that this example overwrites the original file.
+<p>
+<li>
+This example would split the file after the first 99 lines,
+and every 100 lines thereafter, up to 9999 lines;
+this is because lines in the file are numbered from 1
+rather than zero, for historical reasons:
+<pre>
+<code>
+csplit -k file&nbsp;&nbsp;100&nbsp;&nbsp;{99}
+</code>
+</pre>
+<p>
+<li>
+Assuming that
+<b>prog.c</b>
+follows the C-language
+coding convention of ending routines with a
+"}"
+at the beginning of the line,
+this example will create a file containing each separate
+C routine (up to 21) in
+<b>prog.c</b>:
+<pre>
+<code>
+csplit -k prog.c '%main(%'  '/^}/+1' {20}
+</code>
+</pre>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_261">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about 
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_262">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sed.htm">sed</a></i>,
+<i><a href="split.htm">split</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

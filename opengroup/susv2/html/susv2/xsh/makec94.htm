@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>makecontext</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_487">&nbsp;</a>NAME</h4><blockquote>
+makecontext, swapcontext - manipulate user contexts
+</blockquote><h4><a name = "tag_000_007_488">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="ucont297.htm">ucontext.h</a>&gt;
+
+void makecontext(ucontext_t *<i>ucp</i>, (void *<i>func</i>)(), int <i>argc</i>, ...);
+int swapcontext(ucontext_t *<i>oucp</i>, const ucontext_t *<i>ucp</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_489">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>makecontext()</i>
+function modifies the context specified by <i>ucp</i>,
+which has been initialised using
+<i><a href="getco56.htm">getcontext()</a></i>.
+When this context is resumed using
+<i><a href="swapc265.htm">swapcontext()</a></i>
+or
+<i><a href="setco228.htm">setcontext()</a></i>,
+program execution continues by calling
+<i>func</i>,
+passing it the arguments that follow <i>argc</i> in the
+<i>makecontext()</i>
+call.
+<p>
+Before a call is made to
+<i>makecontext()</i>,
+the context being modified should have a stack allocated for it.  The value of
+<i>argc</i> must match the number of integer arguments passed to
+<i>func</i>,
+otherwise the behaviour is undefined.
+<p>
+The <i>uc_link</i> member is used to determine the context that will be
+resumed when the context being modified by
+<i>makecontext()</i>
+returns.  The <i>uc_link</i> member should be initialised prior to the call to
+<i>makecontext()</i>.
+<p>
+The
+<i><a href="swapc265.htm">swapcontext()</a></i>
+function saves the current context in the context structure pointed to by
+<i>oucp</i>
+and sets the context to the context structure pointed to by
+<i>ucp</i>.
+</blockquote><h4><a name = "tag_000_007_490">&nbsp;</a>RETURN VALUE</h4><blockquote>
+On successful completion,
+<i><a href="swapc265.htm">swapcontext()</a></i>
+returns 0.  Otherwise, -1 is returned and
+<i>errno</i> is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_491">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i><a href="swapc265.htm">swapcontext()</a></i>
+function will fail if:
+<dl compact>
+
+<dt>[ENOMEM]<dd>
+The <i>ucp</i> argument does not have enough stack left to complete the
+operation.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_492">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_493">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_494">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_495">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exit.htm">exit()</a></i>,
+<i><a href="getco56.htm">getcontext()</a></i>,
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sigpr250.htm">sigprocmask()</a></i>,
+<i><a href="ucont297.htm">&lt;ucontext.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

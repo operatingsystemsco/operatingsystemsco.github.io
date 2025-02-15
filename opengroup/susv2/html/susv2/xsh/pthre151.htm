@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>pthread_getconcurrency</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1351">&nbsp;</a>NAME</h4><blockquote>
+pthread_getconcurrency, pthread_setconcurrency -
+get or set level of concurrency
+</blockquote><h4><a name = "tag_000_007_1352">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="pthre114.htm">pthread.h</a>&gt;
+
+int pthread_getconcurrency(void);
+int pthread_setconcurrency(int <i>new_level</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1353">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Unbound threads in a process may or may not be required to be
+simultaneously active. By default, the threads
+implementation ensures that a sufficient number of threads are active
+so that the process can continue to make
+progress. While this conserves system resources, it may not produce
+the most effective level of concurrency.
+<p>
+The 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+function allows an application to inform
+the threads implementation of its desired concurrency level,
+<i>new_level</i>.
+The actual level of concurrency provided by the implementation as a
+result of this function call is unspecified.
+<p>
+If <i>new_level</i> is zero, it causes the implementation to maintain
+the concurrency level at its discretion as if
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+was never called.
+<p>
+The 
+<i>pthread_getconcurrency()</i>
+function returns the 
+value set by a previous call to the 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+function.  If the 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+function was not previously called,
+this function returns zero to indicate that the implementation
+is maintaining the concurrency level.
+<p>
+When an application calls 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+it is
+informing the implementation of its desired
+concurrency level. The implementation uses this as a hint,
+not a requirement.
+<p>
+If an implementation does not support multiplexing of user threads
+on top of several kernel scheduled entities,
+the 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+and 
+<i>pthread_getconcurrency()</i>
+functions
+will be provided for source code
+compatibility but they will have no effect when called. To maintain
+the function semantics, the <i>new_level</i>
+parameter will be saved when 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+is called so
+that a subsequent call to
+<i>pthread_getconcurrency()</i>
+returns the same value.
+</blockquote><h4><a name = "tag_000_007_1354">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+function returns zero.  Otherwise, an error number is returned
+to indicate the error.
+<p>
+The 
+<i>pthread_getconcurrency()</i>
+function always returns the concurrency level set by a previous call to 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>.
+If the 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+function has never been called, 
+<i>pthread_getconcurrency()</i>
+returns zero.
+</blockquote><h4><a name = "tag_000_007_1355">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The value specified by <i>new_level</i> is negative.
+
+<dt>[EAGAIN]<dd>
+The value specific by <i>new_level</i> would cause a system resource
+to be exceeded.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_1356">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1357">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Use of these functions changes the state of the underlying
+concurrency upon which the application depends. Library
+developers are advised to not use the 
+<i>pthread_getconcurrency()</i>
+and 
+<i><a href="pthre190.htm">pthread_setconcurrency()</a></i>
+functions since their
+use may conflict with an applications use of these functions.
+</blockquote><h4><a name = "tag_000_007_1358">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1359">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="pthre114.htm">&lt;pthread.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

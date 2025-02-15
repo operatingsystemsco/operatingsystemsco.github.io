@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>wctrans</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_707">&nbsp;</a>NAME</h4><blockquote>
+wctrans - define character mapping
+</blockquote><h4><a name = "tag_000_010_708">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wctyp311.htm">wctype.h</a>&gt;
+
+wctrans_t wctrans(const char *<i>charclass</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_709">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>wctrans()</i>
+function is defined for valid character mapping names 
+identified in the current locale.
+The
+<i>charclass</i>
+is a string identifying a generic character mapping name for which 
+codeset-specific information is required.  The following character 
+mapping names are defined in all locales - "tolower" and "toupper".
+<p>
+The function returns a value of type
+<b>wctrans_t</b>,
+which can be used as the second argument to subsequent calls of
+<i><a href="towct295.htm">towctrans()</a></i>.
+The
+<i>wctrans()</i>
+function determines values of
+<b>wctrans_t</b>
+according to the rules of the coded
+character set defined by character mapping information
+in the program's locale (category LC_CTYPE).
+The values returned by
+<i>wctrans()</i>
+are valid until a call to
+<i><a href="setlo231.htm">setlocale()</a></i>
+that modifies the category LC_CTYPE.
+</blockquote><h4><a name = "tag_000_010_710">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>wctrans()</i>
+function returns 0 if the given character mapping name is not valid
+for the current locale (category LC_CTYPE),
+otherwise it returns a non-zero object of type
+<b>wctrans_t</b>
+that can be used in calls to
+<i><a href="towct295.htm">towctrans()</a></i>.
+</blockquote><h4><a name = "tag_000_010_711">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>wctrans()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The character mapping name pointed to by 
+<i>charclass</i>
+is not valid in the current locale.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_712">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_713">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_714">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_715">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="towct295.htm">towctrans()</a></i>,
+<i><a href="wctyp311.htm">&lt;wctype.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from ISO/IEC 9899:1990/Amendment 1:1995 (E).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

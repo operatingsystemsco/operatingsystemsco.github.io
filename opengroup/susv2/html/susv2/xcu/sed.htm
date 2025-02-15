@@ -1,0 +1,776 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>sed</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1973">&nbsp;</a>NAME</h4><blockquote>
+sed - stream editor
+</blockquote><h4><a name = "tag_001_014_1974">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+sed <b>[</b>-n<b>] </b><i>script</i><b>[</b><i>file</i>...<b>]</b>
+
+sed <b>[</b>-n<b>][</b>-e <i>script</i><b>]</b>...<b>[</b>-f <i>script_file</i><b>]</b>...<b>[</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1975">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>sed</i>
+utility is a stream editor that reads one or more text files,
+makes editing changes according to
+a script of editing commands,
+and writes the results to standard output.
+The script is obtained from either the
+<i>script</i>
+operand string or a combination of the option-arguments from the
+<b>-e</b>&nbsp;<i>script</i>
+and
+<b>-f</b>&nbsp;<i>script_file</i>
+options.
+</blockquote><h4><a name = "tag_001_014_1976">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>sed</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that the order of presentation of the
+<b>-e</b>
+and
+<b>-f</b>
+options is significant.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-e&nbsp;</b><i>script</i>
+<dd>
+Add the editing commands specified by the
+<i>script</i>
+option-argument to the end of the script of editing commands.
+The
+<i>script</i>
+option-argument has the same properties as the
+<i>script</i>
+operand, described in the OPERANDS section.
+
+<dt><b>-f&nbsp;</b><i>script_file</i>
+<dd>
+Add the editing commands in the file
+<i>script_file</i>
+to the end of the script.
+
+<dt><b>-n</b>
+<dd>Suppress the default output
+(in which each line, after it is examined
+for editing, is written to standard output).
+Only lines explicitly selected for output will be written.
+
+</dl>
+<p>
+Multiple
+<b>-e</b>
+and
+<b>-f</b>
+options may be specified.
+All commands are
+added to the script in the order specified, regardless of their origin.
+</blockquote><h4><a name = "tag_001_014_1977">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file whose contents will be read and edited.
+If multiple
+<i>file</i>
+operands are specified, the named files will be read in the
+order specified and the concatenation will be edited.
+If no
+<i>file</i>
+operands are specified,
+the standard input will be used.
+
+<dt><i>script</i><dd>A string to be used as the script of editing commands.
+The application must not present a
+<i>script</i>
+that violates the restrictions of a text file
+except that the final character need not be a
+newline character.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1978">&nbsp;</a>STDIN</h4><blockquote>
+The standard input will be used only if no
+<i>file</i>
+operands are specified.
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_1979">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files must be text files.
+The
+<i>script_file</i>s
+named by the
+<b>-f</b>
+option will consist of editing commands, one per line.
+</blockquote><h4><a name = "tag_001_014_1980">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>sed</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+within regular expressions.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single-
+versus multi-byte characters in arguments and input files),
+and the behaviour of character classes within regular expressions.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1981">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1982">&nbsp;</a>STDOUT</h4><blockquote>
+The input files are written to standard output,
+with the editing commands specified in
+the script applied.
+If the
+<b>-n</b>
+option is specified, only those
+input lines selected by the script
+will be written to standard output.
+</blockquote><h4><a name = "tag_001_014_1983">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1984">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output files are text files whose formats are
+dependent on the editing commands given.
+</blockquote><h4><a name = "tag_001_014_1985">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+The
+<i>script</i>
+consists of editing commands, one per line,
+of the following form:
+<pre>
+<dl compact><dt> <dd>
+<b>[</b>address<b>[</b>,address<b>]]</b>command<b>[</b>arguments<b>]</b>
+</dl>
+</pre>
+<p>
+Zero or more
+blank characters
+are accepted before the first address and before
+<i>command.</i>
+<p>
+In default operation,
+<i>sed</i>
+cyclically copies a line of input,
+less its terminating
+newline character,
+into a
+<i>pattern space</i>
+(unless there is something left after a
+<b>D</b>
+command),
+applies in sequence all commands whose addresses
+select that pattern space,
+and at the end of the script copies the pattern space
+to standard output (except when
+<b>-n</b>
+is specified) and deletes the pattern space.
+Whenever the pattern space is written to standard output
+or a named file,
+<i>sed</i>
+will immediately follow it with a
+newline character.
+<p>
+Some of the commands use a
+<i>hold space</i>
+to save all or part of the
+<i>pattern space</i>
+for subsequent retrieval.
+The
+<i>pattern</i>
+and
+<i>hold</i>
+<i>spaces</i>
+will each be able to hold at least 8192 bytes.
+<h5><a name = "tag_001_014_1985_001">&nbsp;</a>Addresses in sed</h5>
+An address
+is either empty, a decimal number that counts
+input lines cumulatively across files, a "$"
+character that addresses the last line of input,
+or a context address
+(which consists of a regular expression as described in
+<xref href=sedre><a href="#tag_001_014_1985_002">
+Regular Expressions in sed
+</a></xref>,
+preceded and followed by a delimiter, usually a slash).
+<p>
+A command line with no addresses selects every pattern space.
+<p>
+A command line with
+one address selects each pattern space that matches the address.
+<p>
+A command line with
+two addresses selects the inclusive range from the first
+pattern space that matches the first address to
+the next pattern space that matches the second.
+(If the second address is a number less than or equal
+to the line number first selected, only one line will be selected.)
+Starting at the first line following the selected range,
+<i>sed</i>
+looks again for the first address.
+Thereafter the process is repeated.
+<p>
+Editing commands can be applied only to non-selected pattern
+spaces by use of the negation command
+"!"
+(see
+<xref href=sedcmds><a href="#tag_001_014_1985_003">
+Editing Commands in sed
+</a></xref>).
+<h5><a name = "tag_001_014_1985_002">&nbsp;</a>Regular Expressions in sed</h5>
+<xref type="5" name="sedre"></xref>
+The
+<i>sed</i>
+utility supports the basic regular expressions described in the <b>XBD</b> specification, <a href="../xbd/re.htm#tag_007_003"><b>Basic Regular Expressions</b>&nbsp;</a> ,
+with the following additions:
+<ul>
+<p>
+<li>
+In a context address, the construction
+\cREc
+where
+<i>c</i>
+is any character other than a backslash or newline character,
+is identical to
+/RE/
+If the character designated by
+<i>c</i>
+appears following a backslash,
+then it is considered to be that literal
+character, which does not terminate the RE.
+For example, in the context address
+\xabc\xdefx,
+the second
+x
+stands for itself, so that the
+regular expression is
+abcxdef.
+<p>
+<li>
+The escape sequence
+\n
+matches a
+newline character
+embedded in the pattern space.
+A literal
+newline
+character must not be used in the regular expression
+of a context address or in the substitute command.
+<p>
+</ul>
+<h5><a name = "tag_001_014_1985_003">&nbsp;</a>Editing Commands in sed</h5>
+<xref type="5" name="sedcmds"></xref>
+In the following list of commands, the
+maximum number of permissible addresses
+for each command is indicated by
+<b>[</b><i>0addr</i><b>]</b>,
+<b>[</b><i>1addr</i><b>]</b>
+or
+<b>[</b><i>2addr</i><b>]</b>,
+representing zero, one or two addresses.
+<p>
+The argument
+<i>text</i>
+consists of one or more lines.
+Each embedded
+newline character
+in the text must be preceded by a backslash.
+Other backslashes in text
+are removed and the following
+character is treated literally.
+<p>
+The
+<b>r</b>
+and
+<b>w</b>
+commands take an optional
+<i>rfile</i>
+(or
+<i>wfile</i>)
+parameter, separated from the command letter by
+one or more
+blank characters;
+implementations may allow zero separation as an extension.
+<p>
+The argument
+<i>rfile</i>
+or the argument
+<i>wfile</i>
+terminates the command line.
+Each
+<i>wfile</i>
+will be created before processing begins.
+Implementations support at least
+ten
+<i>wfile</i>
+arguments in the script;
+the actual number
+(greater than or equal to 10)
+that will be supported
+by the implementation is unspecified.
+The use of the
+<i>wfile</i>
+parameter causes that file to be initially
+created, if it does not exist, or
+will replace the contents of an existing file.
+<p>
+The
+<b>b</b>,
+<b>r</b>,
+<b>s</b>,
+<b>t</b>,
+<b>w</b>,
+<b>y</b>,
+<b>!</b>
+and
+<b>:</b>
+commands accept additional arguments.
+The following synopses indicate which arguments
+must be separated from the commands by a single
+space character.
+<p>
+Two of the commands take a
+<i>command-list</i>,
+which is a list of
+<i>sed</i>
+commands separated by
+newline characters,
+as follows:
+<pre>
+<code>
+{ <i>command</i>
+<i>command</i>
+. . .
+}
+</code>
+</pre>
+<p>
+The
+"{"
+can be preceded with
+blank characters
+and can be followed with white space.
+The
+<i>commands</i>
+can be preceded by white space.
+The terminating
+"}"
+must be preceded by a
+newline character
+and then zero or more
+blank characters.
+<p>
+<dl compact>
+
+<dt><b>[</b><i>2addr</i><b>] {</b><i>command-list</i><dd>
+<dt><b>}</b><dd>
+Execute
+<i>command-list</i>
+only when the pattern space is selected.
+
+<dt><b>[</b><i>1addr</i><b>]a\</b><dd>
+<dt><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text</i><dd>Write
+<i>text</i>
+to standard output
+just before each attempt to fetch a line of input, whether by
+executing the
+<b>N</b>
+command or by beginning a new cycle.
+
+<dt><b>[</b><i>2addr</i><b>]b&nbsp;[</b><i>label</i><b>]</b><dd>
+Branch to the
+<b>:</b>
+command bearing the
+<i>label</i>.
+If
+<i>label</i>
+is not specified, branch to the end of the script.
+The implementation supports
+<i>labels</i>
+recognised as unique up to at least 8 characters;
+the actual length (greater than or equal to 8) that is supported
+by the implementation is unspecified.
+It is unspecified whether exceeding a label length
+causes an error or a silent truncation.
+
+<dt><b>[</b><i>2addr</i><b>]c\</b><dd>
+<dt><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text</i><dd>Delete the pattern space.
+With a 0 or 1 address or at the end of a 2-address range, place
+<i>text</i>
+on the output.
+
+<dt><b>[</b><i>2addr</i><b>]d</b><dd>
+Delete the pattern space and start the next cycle.
+
+<dt><b>[</b><i>2addr</i><b>]D</b><dd>
+Delete the initial segment of the pattern space up to and including
+the first
+newline character
+and start the next cycle.
+
+<dt><b>[</b><i>2addr</i><b>]g</b><dd>
+Replace the contents of the pattern space
+by the contents of the hold space.
+
+<dt><b>[</b><i>2addr</i><b>]G</b><dd>
+Append to the pattern space a
+newline character
+followed by the contents of the hold space.
+
+<dt><b>[</b><i>2addr</i><b>]h</b><dd>
+Replace the contents of the hold space
+with the contents of the pattern space.
+
+<dt><b>[</b><i>2addr</i><b>]H</b><dd>
+Append to the hold space a
+newline character
+followed by the contents of the pattern space.
+
+<dt><b>[</b><i>1addr</i><b>]i\</b><dd>
+<dt><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text</i><dd>Write
+<i>text</i>
+to standard output.
+
+<dt><b>[</b><i>2addr</i><b>]l</b><dd>
+(The letter ell.)
+Write the pattern space to standard output in a
+visually unambiguous form.
+The characters listed in the table in
+the <b>XBD</b> specification, <a href="../xbd/notation.htm"><b>File Format Notation</b>&nbsp;</a> 
+(\\,
+\a,
+\b,
+\f,
+\r,
+\t,
+\v)
+will be written as the corresponding escape sequence;
+the
+\n
+in that table is not applicable.
+Non-printable characters not in that table
+will be written as one three-digit octal number
+(with a preceding
+backslash character)
+for each byte in the character (most significant byte first).
+If the size of a byte on the system is greater than nine bits,
+the format used for non-printable characters is implementation-dependent.
+
+Long lines will be folded, with the point of
+folding indicated by writing a
+backslash followed by a
+newline character;
+the length at which folding occurs is unspecified,
+but should be appropriate for the output device.
+The end of each line will be marked with a "$".
+
+<dt><b>[</b><i>2addr</i><b>]n</b><dd>
+Write the pattern space to standard output
+if the default output has not been suppressed, and
+replace the pattern space with the next line of input.
+
+<dt><b>[</b><i>2addr</i><b>]N</b><dd>
+Append the next line of input to the pattern space, using
+an embedded
+newline character
+to separate the appended material from the original material.
+Note that the current line number changes.
+
+<dt><b>[</b><i>2addr</i><b>]p</b><dd>
+Write the pattern space to standard output.
+
+<dt><b>[</b><i>2addr</i><b>]P</b><dd>
+Write the pattern space, up to the first
+newline character,
+to standard output.
+
+<dt><b>[</b><i>1addr</i><b>]q</b><dd>
+Branch to the end of the script and quit without starting a new cycle.
+
+<dt><b>[</b><i>1addr</i><b>]</b>r <i>rfile</i><dd>
+Copy the contents of
+<i>rfile</i>
+to standard output
+just before each attempt to fetch a line of input.
+If
+<i>rfile</i>
+does not exist or cannot be read,
+it is treated as if it were an empty file,
+causing no error condition.
+
+<dt><b>[</b><i>2addr</i><b>]s/</b><i>regular expression</i><b>/</b><i>replacement</i><b>/</b><i>flags</i><dd>
+Substitute the
+<i>replacement</i>
+string for instances of the
+<i>regular expression</i>
+in the pattern space.
+Any character other than
+backslash
+or
+newline
+can be used instead of a slash to
+delimit the RE and the replacement.
+Within the RE and the replacement,
+the RE delimiter itself can be used as a literal
+character if it is preceded by a backslash.
+
+An ampersand (<b>&amp;</b>) appearing in the
+<i>replacement</i>
+will be replaced by the string matching the RE.
+The special meaning of "&amp;" in this context can be
+suppressed by preceding it by backslash.
+The characters
+<b>\</b><i>n</i>,
+where
+<i>n</i>
+is a digit,
+will be replaced by the text matched by the
+corresponding backreference expression.
+For each backslash (\) encountered in scanning
+<i>replacement</i>
+from beginning to end, the following character loses its special meaning
+(if any).
+It is unspecified what special meaning is given to any character
+other than &amp;, \ or digits.
+
+A line can be split by substituting a
+newline
+character into it.
+The application must escape the
+newline character
+in the
+<i>replacement</i>
+by preceding it by backslash.
+A substitution is considered to have been
+performed even if the replacement string is identical to the
+string that it replaces.
+
+The value of
+<i>flags</i>
+must be zero or more of:
+<dl compact>
+
+<dt><i>n</i><dd>Substitute for the <i>n</i>th occurrence only of the
+<i>regular expression</i>
+found within the pattern space.
+
+<dt><b>g</b><dd>Globally substitute for all non-overlapping instances of the
+<i>regular expression</i>
+rather than just the
+first one.
+If both
+g
+and
+<i>n</i>
+are specified,
+the results are unspecified.
+
+<dt><b>p</b><dd>Write the pattern space to standard output if a replacement was made.
+
+<dt><b>w</b> <i>wfile</i><dd>Write.
+Append the pattern space to
+<i>wfile</i>
+if a replacement was made.
+
+</dl>
+<br>
+<p>
+<dt><b>[</b><i>2addr</i><b>]t&nbsp;[</b><i>label</i><b>]</b><dd>
+Test.
+Branch to the
+<b>:</b>
+command bearing the
+<i>label</i>
+if any
+substitutions have been made since the most recent
+reading of an input line or execution of a
+<b>t</b>.
+If
+<i>label</i>
+is not specified, branch to the end of the script.
+<p>
+<dt><b>[</b><i>2addr</i><b>]w</b> <i>wfile</i><dd>
+Append (write) the pattern space to
+<i>wfile</i>.
+<p>
+<dt><b>[</b><i>2addr</i><b>]x</b><dd>
+Exchange the contents of the pattern and hold spaces.
+<p>
+<dt><b>[</b><i>2addr</i><b>]y/</b><i>string1</i><b>/</b><i>string2</i><b>/</b><dd>
+Replace all occurrences of characters in
+<i>string1</i>
+with the corresponding characters in
+<i>string2</i>.
+If the number of characters in
+<i>string1</i>
+and
+<i>string2</i>
+are not equal, or if any of the characters in
+<i>string1</i>
+appear more than once, the results are undefined.
+Any character other than backslash or newline
+can be used instead of slash to delimit the strings.
+Within
+<i>string1</i>
+and
+<i>string2</i>,
+the delimiter itself can be used as a literal
+character if it is preceded by a backslash.
+<p>
+<dt><b>[</b><i>2addr</i><b>]!</b><i>command</i><dd><p>
+<dt><b>[</b><i>2addr</i><b>]!{</b><i>command-list</i><dd><p>
+<dt><b>}</b><dd>Apply the
+<i>command</i>
+or
+<i>command-list</i>
+only to the lines that are not
+selected by the addresses.
+<p>
+<dt><b>[</b><i>0addr</i><b>]:</b><i>label</i><dd>
+This command does nothing; it bears a
+<i>label</i>
+for the
+<b>b</b>
+and
+<b>t</b>
+commands to branch to.
+<p>
+<dt><b>[</b><i>1addr</i><b>]=</b><dd>
+Write the following to standard output:
+<p><code>
+<tt>"%d\n"</tt>, &lt;<i>current line number</i>&gt;
+</code>
+<p>
+<dt><b>[</b><i>0addr</i><b>]</b><dd>An empty command is ignored.
+<p>
+<dt><b>[</b><i>0addr</i><b>]#</b><dd>
+The
+"#"
+and the remainder of the line are ignored
+(treated as a comment), with the single exception that
+if the first two characters in the file are
+#n,
+the default output is suppressed;
+this is the equivalent of specifying
+<b>-n</b>
+on the command line.
+<p>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1986">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1987">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1988">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Regular expressions match entire strings,
+not just individual lines,
+but a
+newline character
+is matched by
+\n
+in a
+<i>sed</i>
+RE; a newline character is not allowed in an RE.
+Also note that
+\n
+cannot be used to match a
+newline character
+at the end of an arbitrary input line;
+newline characters
+appear in the pattern space as a result of the
+<b>N</b>
+editing command.
+<br>
+</blockquote><h4><a name = "tag_001_014_1989">&nbsp;</a>EXAMPLES</h4><blockquote>
+This
+<i>sed</i>
+script simulates the BSD
+<i><a href="cat.htm">cat</a></i>
+<b>-s</b>
+command, squeezing excess blank lines from standard input.
+<pre>
+<code>
+sed -n '
+# Write non-empty lines.
+/./ {
+    p
+    d
+    }
+# Write a single empty line, then look for more empty lines.
+/^$/    p
+# Get next line, discard the held &lt;newline&gt; (empty line),
+# and look for more empty lines.
+:Empty
+/^$/    {
+    N
+    s/.//
+    b Empty
+    }
+# Write the non-empty line before going back to search
+# for the first in a set of empty lines.
+    p
+'
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1990">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_1991">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="awk.htm">awk</a></i>,
+<i><a href="ed.htm">ed</a></i>,
+<i><a href="grep.htm">grep</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

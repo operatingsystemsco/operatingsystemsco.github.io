@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>head</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_928">&nbsp;</a>NAME</h4><blockquote>
+head - copy the first part of files
+</blockquote><h4><a name = "tag_001_014_929">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+head <b>[</b>-n <i>number</i><b>][</b><i>file</i>...<b>]</b>
+
+head <b>[</b><i>number</i><b>][</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_930">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>head</i>
+utility will copy its input files to the standard output,
+ending the output for each file at a designated point.
+<p>
+Copying will end at the point in each input file indicated by the
+<b>-n</b>&nbsp;<i>number</i>
+option
+(or the
+<b>-</b><i>number</i>
+argument).
+The option-argument
+<i>number</i>
+will be counted in units of lines.
+</blockquote><h4><a name = "tag_001_014_931">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>head</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> ,
+except that the obsolescent version accepts multi-character numeric options.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-n&nbsp;</b><i>number</i>
+<dd>
+The first
+<i>number</i>
+lines of each input file will be copied to
+standard output.
+The
+<i>number</i>
+option-argument must be a positive decimal integer.
+
+<dt><b>-</b><i>number</i><dd>
+The
+<i>number</i>
+argument is a positive decimal integer with the
+same effect as the <b>-n </b><i>number</i> option.
+
+</dl>
+<p>
+If no options are specified,
+<i>head</i>
+will act as if
+<b>-n 10</b>
+had been specified.
+</blockquote><h4><a name = "tag_001_014_932">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of an input file.
+If no
+<i>file</i>
+operands are specified,
+the standard input will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_933">&nbsp;</a>STDIN</h4><blockquote>
+The standard input will be used only if no
+<i>file</i>
+operands are specified.
+See the INPUT FILES section.
+</blockquote><h4><a name = "tag_001_014_934">&nbsp;</a>INPUT FILES</h4><blockquote>
+Input files must be text files, but the line length
+is not restricted to
+{LINE_MAX}
+bytes.
+</blockquote><h4><a name = "tag_001_014_935">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>head</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_936">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_937">&nbsp;</a>STDOUT</h4><blockquote>
+The standard output will contain
+designated portions of the input files.
+<p>
+If multiple
+<i>file</i>
+operands are specified,
+<i>head</i>
+will precede the output for each with the header:
+<p><code>
+<tt>"\n==&gt; %s &lt;==\n"</tt>, &lt;<i>pathname</i>&gt;
+</code>
+except that the first header written will not include the initial
+newline character.
+</blockquote><h4><a name = "tag_001_014_938">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_939">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_940">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_941">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_942">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_943">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_944">&nbsp;</a>EXAMPLES</h4><blockquote>
+To write the first ten lines of all files
+(except those with a leading period)
+in the directory:
+<pre>
+<code>
+head *
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_945">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The obsolescent
+<i>-number</i>
+form may be withdrawn in a future issue.
+Applications should use the
+<b>-n</b>&nbsp;<i>number</i>
+option.
+</blockquote><h4><a name = "tag_001_014_946">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="sed.htm">sed</a></i>,
+<i><a href="tail.htm">tail</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>chgat</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_324">&nbsp;</a>NAME</h4><blockquote>
+chgat, mvchgat, mvwchgat, wchgat - change renditions of characters in a window
+</blockquote><h4><a name = "tag_002_001_325">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int chgat(int <i>n</i>, attr_t <i>attr</i>, short <i>color</i>, const void *<i>opts</i>);
+
+int mvchgat(int <i>y</i>, int <i>x</i>, int <i>n</i>, attr_t <i>attr</i>, short <i>color</i>,
+            const void *<i>opts</i>);
+
+int mvwchgat(WINDOW *<i>win</i>, int <i>y</i>, int <i>x</i>, int <i>n</i>, attr_t <i>attr</i>,
+             short <i>color</i>, const void *<i>opts</i>);
+
+int wchgat(WINDOW *<i>win</i>, int <i>n</i>, attr_t <i>attr</i>, short <i>color</i>,
+           const void *<i>opts</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_326">&nbsp;</a>DESCRIPTION</h4><blockquote>
+These functions change the renditions of the next <i>n</i> characters in the
+current or specified window (or of the remaining characters on the
+current or specified line, if
+<i>n</i> is -1), starting at the current or specified cursor position.  The
+attributes and colors are specified by <i>attr</i> and <i>color</i> as for
+<i><a href="setcchar.htm">setcchar()</a></i>.
+<p>
+These functions do not update the cursor.
+These functions do not perform wrapping.
+<p>
+A value of <i>n</i> that is greater than the remaining characters on a line is
+not an error.
+<p>
+The <i>opts</i> argument is reserved for definition in a future edition of this
+document.  Currently, the application must provide a null pointer as
+<i>opts</i>.
+</blockquote><h4><a name = "tag_002_001_327">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise, they return ERR.
+</blockquote><h4><a name = "tag_002_001_328">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_329">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="setcchar.htm">setcchar()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

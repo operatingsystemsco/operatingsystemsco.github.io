@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>re_comp</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_1888">&nbsp;</a>NAME</h4><blockquote>
+re_comp, re_exec - compile and execute regular expressions
+(<b>LEGACY</b>)
+</blockquote><h4><a name = "tag_000_007_1889">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="recom200.htm">re_comp.h</a>&gt;
+
+char *re_comp(const char *<i>string</i>);
+int re_exec(const char *<i>string</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_1890">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>re_comp()</i>
+function converts a regular expression string (RE) into an internal form
+suitable for pattern matching.  The
+<i>re_exec()</i>
+function compares the string pointed to by the <i>string</i> argument with the
+last regular expression passed to
+<i>re_comp()</i>.
+<p>
+If
+<i>re_comp()</i>
+is called with a null pointer argument, the current regular expression remains
+unchanged.
+<p>
+Strings passed to both
+<i>re_comp()</i>
+and
+<i>re_exec()</i>
+must be terminated by a null byte, and may include newline characters.
+<p>
+The
+<i>re_comp()</i>
+and
+<i>re_exec()</i>
+functions support
+<i>simple regular expressions</i>,
+which are defined below.
+<p>
+The following one-character REs match a single character:
+<dl compact>
+
+<dt>1.1<dd>An ordinary character (not one of those discussed in 1.2 below) is a
+one-character RE that matches itself.
+
+<dt>1.2<dd>A backslash (\) followed by any special character is a one-character RE that
+matches the special character itself.  The special characters are:
+<ol type = a>
+
+<li>
+<b>.</b>, <b>*</b>, <b>[</b>, and
+<b>\</b> (period, asterisk, left square bracket,
+and backslash, respectively), which are always special, except
+when they appear within square brackets (<b>[]</b>; see 1.4 below).
+
+<li>
+^ (caret or circumflex), which is special at the
+beginning of an entire RE (see 3.1 and 3.2 below), or when it immediately
+follows the left of a pair of square brackets (<b>[]</b>) (see 1.4
+below).
+
+<li>
+<b>$</b> (dollar symbol), which is special at the end of an entire RE (see
+3.2 below).
+
+<li>
+The character used to bound (delimit) an entire RE, which is special for that
+RE.
+
+</ol>
+
+<dt>1.3<dd>A period (<b>.</b>) is a one-character RE that matches any character except
+new-line.
+
+<dt>1.4<dd>A non-empty string of characters enclosed in square brackets (<b>[]</b>)
+is a one-character RE that matches any one
+character in that string.
+If, however, the first character of the string is a circumflex
+(^), the one-character RE matches any character except
+new-line and the remaining characters in the string.
+The ^ has this special meaning only if it occurs first in the string.
+The minus (<b>-</b>) may be used to indicate a range of consecutive
+ASCII characters;
+for example, <b>[0-9]</b> is equivalent to <b>[0123456789]</b>.
+The <b>-</b> loses this special meaning if it occurs first (after
+an initial ^, if any) or last in the string.
+The right square bracket (<b>]</b>) does not terminate such a string when it
+is the first character within it (after an initial ^, if any);
+for example, <b>[]a-f]</b> matches either a right square
+bracket (<b>]</b>) or one of the letters <b>a</b> through <b>f</b> inclusive.
+The four characters listed in 1.2.a above stand for themselves
+within such a string of characters.
+
+</dl>
+<br>
+<p>
+The following rules may be used to construct REs from one-character REs:
+<dl compact>
+
+<dt>2.1<dd>A one-character RE is a RE that matches whatever the one-character RE matches.
+
+<dt>2.2<dd>A one-character RE followed by an asterisk (<b>*</b>) is a RE that matches
+zero or more occurrences of the one-character RE.  If there is any choice, the
+longest leftmost string that permits a match is chosen.
+
+<dt>2.3<dd>A one-character RE
+followed by <b>\{</b><i>m</i><b>\}</b>,
+<b>\{</b><i>m,</i><b>\}</b>, or
+<b>\{</b><i>m,n</i><b>\}</b> is a
+RE that matches a
+range of occurrences of the one-character RE.  The values of
+<i>m</i>
+and
+<i>n</i>
+must be non-negative integers less than 256;
+<b>\{</b><i>m</i><b>\}</b> matches
+exactly
+<i>m</i>
+occurrences;
+<b>\{</b><i>m,</i><b>\}</b> matches
+at least
+<i>m</i>
+occurrences;
+<b>\{</b><i>m,n</i><b>\}</b> matches
+any number
+of occurrences
+between
+<i>m</i>
+and
+<i>n</i>
+inclusive.  Whenever a choice exists, the RE matches as many occurrences as
+possible.
+
+<dt>2.4<dd>The concatenation of REs is a RE that matches the concatenation of the strings
+matched by each component of the RE.
+
+<dt>2.5<dd>A RE enclosed between the character sequences <b>\(</b> and <b>\)</b> is a
+RE that matches whatever the unadorned RE matches.
+
+<dt>2.6<dd>The expression <b>\</b><i>n</i> matches the same string of characters
+as was matched by an expression enclosed between <b>\(</b> and <b>\)</b>
+earlier in the same RE.  Here
+<i>n</i>
+is a digit; the sub-expression specified is that beginning with the
+<i>n</i>-th
+occurrence of <b>\(</b> counting from the left.
+For example, the expression ^\(.*\)\1$ matches a line
+consisting of two repeated appearances of the same string.
+
+</dl>
+<p>
+Finally, an entire
+RE may be constrained to match only an initial segment or final segment of a
+line (or both).
+<dl compact>
+
+<dt>3.1<dd>A circumflex (^) at the beginning of an entire RE constrains that RE to match
+an initial segment of a line.
+
+<dt>3.2<dd>A dollar symbol (<b>$</b>) at the end of an entire RE constrains that RE
+to match a final
+segment of a line.  The construction ^<i>entire RE</i>$ constrains the
+entire RE to match the entire line.
+
+</dl>
+<p>
+The null RE (that is, <b>//</b>) is equivalent to the last RE encountered.
+<p>
+The behaviour of
+<i>re_comp()</i>
+and
+<i>re_exec()</i>
+in locales other than the POSIX locale is unspecified.
+<p>
+These interfaces need not be reentrant.
+</blockquote><h4><a name = "tag_000_007_1891">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>re_comp()</i>
+function returns a null pointer when the string pointed to by the <i>string</i>
+argument is successfully converted.  Otherwise, a pointer to
+an unspecified error message string is returned.
+<p>
+Upon successful completion,
+<i>re_exec()</i>
+returns 1 if <i>string</i>
+matches the last compiled regular expression.  Otherwise,
+<i>re_exec()</i>
+returns 0 if <i>string</i> fails to match the last
+compiled regular expression, and -1 if the compiled regular
+expression is invalid (indicating an internal error).
+</blockquote><h4><a name = "tag_000_007_1892">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_007_1893">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1894">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+For portability to implementations conforming to earlier versions of this
+specification,
+<i><a href="regcomp.htm">regcomp()</a></i>
+and
+<i><a href="regexec.htm">regexec()</a></i>
+are preferred to these functions.
+</blockquote><h4><a name = "tag_000_007_1895">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_1896">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="regcomp.htm">regcomp()</a></i>,
+<i><a href="recom200.htm">&lt;re_comp.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

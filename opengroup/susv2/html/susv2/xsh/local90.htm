@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;locale.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_375">&nbsp;</a>NAME</h4><blockquote>
+locale.h - category macros
+</blockquote><h4><a name = "tag_000_007_376">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;locale.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_377">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>&lt;locale.h&gt;</i>
+header provides a definition for structure <b>lconv</b>, which
+includes at least the following members.
+(See the definitions of LC_MONETARY in the <b>XBD</b> specification, <a href="../xbd/locale.htm#tag_005_003_003"><b>LC_MONETARY</b>&nbsp;</a>, and the <b>XBD</b> specification, <a href="../xbd/locale.htm#tag_005_003_004"><b>LC_NUMERIC</b>&nbsp;</a>.)
+<pre>
+<code>
+char    *currency_symbol
+char    *decimal_point
+char     frac_digits
+char    *grouping
+char    *int_curr_symbol
+char     int_frac_digits
+char    *mon_decimal_point
+char    *mon_grouping
+char    *mon_thousands_sep
+char    *negative_sign
+char     n_cs_precedes
+char     n_sep_by_space
+char     n_sign_posn
+char    *positive_sign
+char     p_cs_precedes
+char     p_sep_by_space
+char     p_sign_posn
+char    *thousands_sep
+</code>
+</pre>
+<p>
+The
+<i>&lt;locale.h&gt;</i>
+header defines NULL (as defined in
+<i><a href="stdde256.htm">&lt;stddef.h&gt;</a></i>)
+and at least the following as macros:
+<pre>
+LC_ALL
+LC_COLLATE
+LC_CTYPE
+LC_MESSAGES
+LC_MONETARY
+LC_NUMERIC
+LC_TIME
+</pre>
+<p>
+which expand to distinct integral-constant
+expressions, for use as the first argument to the
+<i><a href="setlo231.htm">setlocale()</a></i>
+function.
+<p>
+Additional macro definitions, beginning with the characters
+LC_ and an upper-case letter, may also be given here.
+<p>
+The following are declared as functions and may also be defined
+as macros.
+Function prototypes must be provided for use with an ISO C
+compiler.
+<pre>
+<code>
+struct  lconv *<a href="local91.htm">localeconv</a>(void);
+char    <a href="setlo231.htm">setlocale</a>(int, const char *);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_378">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_379">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_380">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="local91.htm">localeconv()</a></i>,
+<i><a href="setlo231.htm">setlocale()</a></i>,
+the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

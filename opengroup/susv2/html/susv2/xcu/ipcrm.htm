@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>ipcrm</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_985">&nbsp;</a>NAME</h4><blockquote>
+ipcrm - remove a message queue, semaphore set or shared
+memory segment identifier
+</blockquote><h4><a name = "tag_001_014_986">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+ipcrm <b>[</b> -q msgid | -Q msgkey | -s semid | -S semkey |
+    -m shmid | -M shmkey <b>]</b> ...
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_987">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>ipcrm</i>
+utility removes zero or more message queues, semaphore
+sets or shared memory segments. The interprocess communication
+facilities to be removed are specified by the options.
+<p>
+Only a user with appropriate privilege is allowed to remove an
+interprocess communication facility that was not created by or
+owned by the user invoking
+<i>ipcrm</i>.
+</blockquote><h4><a name = "tag_001_014_988">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>ipcrm</i>
+facility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-q&nbsp;</b><i>msgid</i>
+<dd>
+Remove the message queue identifier
+<i>msgid</i>
+from the system and destroy the message queue and
+data structure associated with it.
+
+<dt><b>-m&nbsp;</b><i>shmid</i>
+<dd>
+Remove the shared memory identifier
+<i>shmid</i>
+from the system.
+The shared memory segment and data
+structure associated with it are destroyed after
+the last detach.
+
+<dt><b>-s&nbsp;</b><i>semid</i>
+<dd>
+Remove the semaphore identifier
+<i>semid</i>
+from the system and destroy the set of semaphores and
+data structure associated with it.
+
+<dt><b>-Q&nbsp;</b><i>msgkey</i>
+<dd>
+Remove the message queue identifier, created
+with key
+<i>msgkey</i>,
+from the system and destroy the
+message queue and data structure associated with it.
+
+<dt><b>-M&nbsp;</b><i>shmkey</i>
+<dd>
+Remove the shared memory identifier, created
+with key
+<i>shmkey</i>,
+from the system.
+The shared memory segment and data structure associated
+with it are destroyed after the last detach.
+
+<dt><b>-S&nbsp;</b><i>semkey</i>
+<dd>
+Remove the semaphore identifier, created with key
+<i>semkey</i>,
+from the system and destroy the set
+of semaphores and data structure associated with it.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_989">&nbsp;</a>OPERANDS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_990">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_991">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_992">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>ipcrm</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalization
+variables that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalization variables contain an invalid
+setting, the utility will behave as if none of the variables had been set.
+
+<dt><i>LC_ALL</i><dd>If set to a non-empty string value, override the values
+of all the other internationalization variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the locale for the interpretation of
+sequences of bytes of text data as characters (for
+example, single- as opposed to multi-byte characters in
+arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect the
+format and contents of diagnostic messages written to
+standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues for the
+processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_993">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_994">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_995">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_996">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_997">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_998">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt> 0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_999">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1000">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1001">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1002">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1003">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ipcs.htm">ipcs</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/msgctl.htm">msgctl()</a></i>,
+<i><a href="../xsh/semctl.htm">semctl()</a></i>,
+<i><a href="../xsh/shmctl.htm">shmctl()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

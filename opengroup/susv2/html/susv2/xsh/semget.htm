@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>semget</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_366">&nbsp;</a>NAME</h4><blockquote>
+semget - get set of semaphores
+</blockquote><h4><a name = "tag_000_008_367">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysse271.htm">sys/sem.h</a>&gt;
+
+int semget(key_t <i>key</i>, int <i>nsems</i>, int <i>semflg</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_368">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>semget()</i>
+function returns the semaphore identifier associated with
+<i>key</i>.
+<p>
+A semaphore identifier with its associated
+<b>semid_ds</b>
+data structure and its associated set of
+<i>nsems</i>
+semaphores,
+see
+<i><a href="sysse271.htm">&lt;sys/sem.h&gt;</a></i>,
+are created for
+<i>key</i>
+if one of the following is true:
+<ul>
+<p>
+<li>
+The argument
+<i>key</i>
+is equal to IPC_PRIVATE .
+<p>
+<li>
+The argument
+<i>key</i>
+does not already have a semaphore identifier associated with it
+and (<i>semflg</i>&nbsp;&amp;&nbsp;IPC_CREAT) is non-zero.
+<p>
+</ul>
+<p>
+Upon creation, the
+<b>semid_ds</b>
+data structure associated with the new semaphore identifier is
+initialised as follows:
+<ul>
+<p>
+<li>
+In the operation permissions structure
+<i>sem_perm.cuid</i>,
+<i>sem_perm.uid</i>,
+<i>sem_perm.cgid</i>
+and
+<i>sem_perm.gid</i>
+are set equal to the effective user ID
+and effective group ID,
+respectively, of the calling process.
+<p>
+<li>
+The low-order 9 bits of
+<i>sem_perm.mode</i>
+are set equal to the low-order 9 bits of
+<i>semflg</i>.
+<p>
+<li>
+The variable
+<i>sem_nsems</i>
+is set equal to the value of
+<i>nsems</i>.
+<p>
+<li>
+The variable
+<i>sem_otime</i>
+is set equal to 0 and
+<i>sem_ctime</i>
+is set equal to the current time.
+<p>
+<li>
+The data structure associated with each semaphore in
+the set is not initialised.
+The
+<i><a href="semctl.htm">semctl()</a></i>
+function with the command SETVAL or SETALL
+can be used to initialise each semaphore.
+<p>
+</ul>
+</blockquote><h4><a name = "tag_000_008_369">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>semget()</i>
+returns a non-negative integer, namely a semaphore identifier;
+otherwise, it returns -1 and
+<i>errno</i>
+will be set to indicate the error.
+</blockquote><h4><a name = "tag_000_008_370">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>semget()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+A semaphore identifier exists for
+<i>key</i>,
+but operation permission as specified by the low-order 9 bits of
+<i>semflg</i>
+would not be granted.  See
+<a href="ipc.htm">IPC</a>.
+
+<dt>[EEXIST]<dd>
+A semaphore identifier exists for the argument
+<i>key</i>
+but ((<i>semflg</i>&amp;IPC_CREAT)&amp;&amp;(<i>semflg</i>&amp;IPC_EXCL))
+is non-zero.
+
+
+<dt>[EINVAL]<dd>
+The value of
+<i>nsems</i>
+is either less than or equal to 0 or
+greater than the system-imposed limit,
+or a semaphore identifier exists for the argument
+<i>key</i>,
+but the number of semaphores in the
+set associated with it is less than
+<i>nsems</i>
+and
+<i>nsems</i>
+is not equal to 0.
+
+<dt>[ENOENT]<dd>
+A semaphore identifier does not exist for the argument
+<i>key</i>
+and (<i>semflg</i>&amp;IPC_CREAT) is equal to 0.
+
+<dt>[ENOSPC]<dd>
+A semaphore identifier is to be created but
+the system-imposed limit on the maximum number of
+allowed semaphores system-wide would be exceeded.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_371">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_372">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The POSIX Realtime Extension defines alternative interfaces for interprocess communication.
+Application developers who need to use IPC should design their
+applications so that modules using the IPC routines described in
+<a href="ipc.htm">IPC</a>
+can be easily modified to use the alternative interfaces.
+</blockquote><h4><a name = "tag_000_008_373">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_374">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="semctl.htm">semctl()</a></i>,
+<i><a href="semop.htm">semop()</a></i>,
+<i><a href="semcl218.htm">sem_close()</a></i>,
+<i><a href="semde219.htm">sem_destroy()</a></i>,
+<i><a href="semge220.htm">sem_getvalue()</a></i>,
+<i><a href="semin221.htm">sem_init()</a></i>,
+<i><a href="semop222.htm">sem_open()</a></i>,
+<i><a href="sempo223.htm">sem_post()</a></i>,
+<i><a href="semun225.htm">sem_unlink()</a></i>,
+<i><a href="semwa226.htm">sem_wait()</a></i>,
+<i><a href="sysse271.htm">&lt;sys/sem.h&gt;</a></i>,
+<a href="ipc.htm">IPC</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 2 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,701 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>at</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_077">&nbsp;</a>NAME</h4><blockquote>
+at - execute commands at a later time
+</blockquote><h4><a name = "tag_000_000_078">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+at <b>[</b>-m<b>][</b>-f <i>file</i><b>][</b>-q <i>queuename</i><b>] </b>-t <i>time</i>
+
+at <b>[</b>-m<b>][</b>-f <i>file</i><b>][</b>-q <i>queuename</i><b>] </b><i>timespec</i> ...
+
+at -r <i>at_job_id</i> ...
+
+at -l -q <i>queuename</i>
+
+at -l <b>[</b><i>at_job_id</i> ...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_079">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>at</i>
+utility reads commands from standard input and
+groups them together as an
+<i>at-job ,</i>
+to be executed at a later time.
+<p>
+The at-job will be executed in a separate
+invocation of the shell, running in a separate process group
+with no controlling terminal, except that
+the environment variables, current working directory,
+file creation mask and other implementation-dependent
+execution-time attributes
+in effect when the
+<i>at</i>
+utility is executed
+will be retained and used when the at-job is executed.
+<p>
+When the at-job is submitted, the
+<i>at_job_id</i>
+and scheduled time are written to
+standard error.
+The
+<i>at_job_id</i>
+is an identifier that will be a string consisting solely
+of alphanumeric characters and the period character.
+The
+<i>at_job_id</i>
+is assigned by the system when the job is scheduled
+such that it uniquely identifies a particular job.
+<p>
+User notification and the processing of the job's
+standard output and standard error are described under the
+<b>-m</b>
+option.
+<p>
+Users are permitted to use
+<i>at</i>
+if their name appears in the file
+<b>/usr/lib/cron/at.allow</b>.
+If that file does not exist, the file
+<b>/usr/lib/cron/at.deny</b>
+is checked to determine if the user
+should be denied access to
+<i>at</i>.
+If neither file exists, only a process with the appropriate privileges
+is allowed to submit a job.
+If only
+<b>at.deny</b>
+exists and is empty, global usage is permitted.
+The
+<b>at.allow</b>
+and
+<b>at.deny</b>
+files consist of one user name per line.
+</blockquote><h4><a name = "tag_000_000_080">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>at</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-f&nbsp;</b><i>file</i>
+<dd>Specify the pathname of a file to be used as the source of the at-job,
+instead of standard input.
+
+<dt><b>-l</b>
+<dd>(The letter ell.)
+Report all jobs scheduled for the invoking user
+if no
+<i>at_job_id</i>
+operands are specified.
+If
+<i>at_job_id</i>s
+are specified, report only information for these jobs.
+The output will be written to standard output.
+
+<dt><b>-m</b>
+<dd>Send mail to the invoking user after the at-job has run,
+announcing its completion.
+Standard output and standard error produced by the at-job
+will be mailed to the user
+as well, unless redirected elsewhere.
+Mail will be sent even if the job produces no output.
+
+If
+<b>-m</b>
+is not used, the job's standard output and standard error
+will be provided to the user
+&nbsp;by means of mail,
+&nbsp;unless they are redirected elsewhere;
+if there is no such output to provide, the implementation
+need not notify the user of the job's completion.
+
+<dt><b>-q&nbsp;</b><i>queuename</i>
+<dd>
+Specify in which queue to schedule a job for submission.
+When used with the
+<b>-l</b>
+option, limit the search to that particular queue.
+By default, at-jobs will be scheduled in queue
+a.
+In contrast, queue
+b
+is reserved for batch jobs.
+(See the
+<i><a href="batch.htm">batch</a></i>
+utility.)
+The meanings of all other
+<i>queuenames</i>
+are implementation-dependent.
+
+<dt><b>-r</b>
+<dd>Remove the jobs with the specified
+<i>at_job_id</i>
+operands that were previously scheduled by the
+<i>at</i>
+utility.
+
+<dt><b>-t&nbsp;</b><i>time</i>
+<dd>Submit the job to be run at the time specified by the
+<i>time</i>
+option-argument, which must have the format as specified by the
+<i><a href="touch.htm">touch</a></i>
+utility.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_081">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>at_job_id</i><dd>
+The name reported by a previous invocation of the
+<i>at</i>
+utility at the time the job was scheduled.
+
+<dt><i>timespec</i><dd>Submit the job to be run at the date and time specified.
+All of the
+<i>timespec</i>
+operands are interpreted as if they
+were separated by
+space characters
+and concatenated, and
+are parsed as described
+in the grammar at the end of this section.
+The date and time are interpreted as being
+in the timezone of the user (as determined by the
+<i>TZ</i>
+variable), unless a timezone name appears as part of
+<i>time</i>,
+below.
+
+In the POSIX locale, the following describes the three
+parts of the time specification string.
+All of the values from the LC_TIME categories
+in the POSIX locale are recognised
+in a case-insensitive manner.
+<dl compact>
+
+<dt><i>time</i><dd>The
+<i>time</i>
+can be specified as one, two or four digits.
+One- and two-digit numbers are taken to be hours,
+four-digit numbers to be hours and minutes.
+The time can alternatively be specified as two numbers
+separated by a colon, meaning
+<i>hour</i><b>:</b><i>minute</i>.
+An AM/PM indication
+(one of the values from the
+<b>am_pm</b>
+keywords in the LC_TIME locale category)
+can follow the time;
+otherwise, a 24-hour clock time is understood.
+A timezone name can also follow
+to further qualify the time.
+The acceptable timezone names are implementation-dependent,
+except that they will be case-insensitive and the string
+<b>utc</b>
+is supported to indicate the time
+is in Coordinated Universal Time.
+The
+<i>time</i>
+field can also be one of the following tokens
+in the POSIX locale:
+<dl compact>
+
+<dt><b>midnight</b><dd>Indicates the time 12:00 am (00:00).
+
+<dt><b>noon</b><dd>Indicates the time 12:00 pm.
+
+<dt><b>now</b><dd>Indicate the current day and time.
+Invoking
+<i>at</i>
+&lt;<i>now</i>&gt;
+will submit an at-job for potentially immediate execution
+(that is, subject only to
+unspecified scheduling delays).
+
+</dl>
+<p>
+<dt><i>date</i><dd>An optional
+<i>date</i>
+can be specified as either
+a month name
+(one of the values from the
+<b>mon</b>
+or
+<b>abmon</b>
+keywords in the LC_TIME locale category)
+followed by a day number
+(and possibly year number preceded by a comma) or
+a day of the week
+(one of the values from the
+<b>day</b>
+or
+<b>abday</b>
+keywords in the LC_TIME locale category).
+Two special days
+are recognised
+in the POSIX locale:
+<dl compact>
+
+<dt><b>today</b><dd>Indicates the current day.
+
+<dt><b>tomorrow</b><dd>Indicates the day following the current day.
+
+</dl>
+<p>
+If no
+<i>date</i>
+is given,
+<b>today</b>
+is assumed if the given time
+is greater than the current time, and
+<b>tomorrow</b>
+is assumed if it is less.
+If the given month is less than the current month (and no year is
+given), next year is assumed.
+<p>
+<dt><i>increment</i><dd>
+The optional
+<i>increment</i>
+is a number preceded by a plus sign
+(+)
+and suffixed by one of the following:
+<b>minutes</b>,
+<b>hours</b>,
+<b>days</b>,
+<b>weeks</b>,
+<b>months</b>
+or
+<b>years</b>.
+(The singular forms will be also accepted.)
+The keyword
+<b>next</b>
+is equivalent to an increment number of
++&nbsp;1.
+For example, the following are equivalent commands:
+<pre>
+<code>
+at 2pm + 1 week
+at 2pm next week
+</code>
+</pre>
+<p>
+</dl>
+<p>
+</dl>
+<p>
+The following grammar describes the precise format of
+<i>timespec</i>
+in the POSIX locale.
+The general conventions for this style of grammar are described in
+<xref href=grammar></xref>.
+This formal syntax takes precedence over
+the preceding text syntax description.
+The longest possible token or delimiter will be recognised
+at a given point.
+When used in a
+<i>timespec</i>,
+white space also delimits tokens.
+<pre>
+<code>
+%token hr24clock_hr_min
+%token hr24clock_hour
+/*
+  A hr24clock_hr_min is a one, two or four digit number.  A one or two
+  digit number constitutes a hr24clock_hour.  A hr24clock_hour may be
+  any of the single digits '0' - '9', or may be double digits, ranging
+  from "00" - "23".  If a hr24clock_hr_min is a four digit number, the
+  first two digits must be a valid hr24clock_hour, while the last two
+  represent the number of minutes, from "00" - "59".
+*/
+
+%token wallclock_hr_min
+%token wallclock_hour
+/*
+  A wallclock_hr_min is a one, two or four digit number.  A one or two
+  digit number constitutes a wallclock_hour.  A wallclock_hour may be
+  any of the single digits '1' - '9', or may be double digits, ranging
+  from "01" - "12".  If a wallclock_hr_min is a four digit number, the
+  first two digits must be a valid wallclock_hour, while the last two
+  represent the number of minutes, from "00" - "59".
+*/
+
+%token minute
+/*
+  A minute is a one or two digit number whose values can be '0' - '9'
+  or "00" - "59".
+*/
+
+%token day_number
+/*
+  A day_number is a number in the range appropriate for the particular
+  month and year specified by month_name and year_number, respectively.
+  If no year_number is given, the current year is assumed if the given
+  date and time are later this year.  If no year_number is given and
+  the date and time have already occurred this year and the month is
+  not the current month, next year is the assumed year.
+*/
+
+%token year_number
+/*
+  A year_number is a four-digit number representing the year A.D., in
+  which the at_job is to be run.
+*/
+
+%token inc_number
+/*
+  The inc_number is the number of times the succeeding increment
+  period is to be added to the specified date and time.
+*/
+
+%token timezone_name
+/*
+  The name of an optional timezone suffix to the time field, in an
+  implementation-dependent format.
+*/
+
+%token month_name
+/*
+  One of the values from the "mon" or "abmon" keywords in the LC_TIME
+  locale category.
+*/
+
+%token day_of_week
+/*
+  One of the values from the "day" or "abday" keywords in the LC_TIME
+  locale category.
+*/
+
+%token am_pm
+/*
+  One of the values from the "am_pm" keyword in the LC_TIME locale
+  category.
+*/
+
+%start timespec
+%%
+timespec    : time
+            | time date
+            | time increment
+            | time date increment
+            | nowspec
+            ;
+
+nowspec     : "now"
+            | "now" increment
+            ;
+
+time        : hr24clock_hr_min
+            | hr24clock_hr_min timezone_name
+            | hr24clock_hour ":" minute
+            | hr24clock_hour ":" minute timezone_name
+            | wallclock_hr_min am_pm
+            | wallclock_hr_min am_pm timezone_name
+            | wallclock_hour ":" minute am_pm
+            | wallclock_hour ":" minute am_pm timezone_name
+            | "noon"
+            | "midnight"
+            ;
+
+date        : month_name day_number
+            | month_name day_number "," year_number
+            | day_of_week
+            | "today"
+            | "tomorrow"
+            ;
+
+increment   : "+" inc_number inc_period
+            | "next" inc_period
+            ;
+
+inc_period  : "minute" | "minutes"
+            | "hour" | "hours"
+            | "day" | "days"
+            | "week" | "weeks"
+            | "month" | "months"
+            | "year" | "years"
+            ;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_082">&nbsp;</a>STDIN</h4><blockquote>
+The standard input must be
+a text file consisting of commands acceptable to the
+shell command language described in
+<xref href=shell><a href="chap2.htm#tag_001">
+Shell Command Language
+</a></xref>.
+The standard input will only be used if no
+<b>-f</b>&nbsp;<i>file</i>
+option is specified.
+</blockquote><h4><a name = "tag_000_000_083">&nbsp;</a>INPUT FILES</h4><blockquote>
+See the STDIN section.
+<p>
+The text files
+<b>/usr/lib/cron/at.allow</b>
+and
+<b>/usr/lib/cron/at.deny</b>
+contain user names, one per line, of users who are, respectively,
+authorised or denied access to the
+<i>at</i>
+and
+<i><a href="batch.htm">batch</a></i>
+utilities.
+</blockquote><h4><a name = "tag_000_000_084">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>at</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>LC_TIME</i><dd>
+Determine the format and contents for date and time
+strings written and accepted by
+<i>at</i>.
+
+<dt><i>SHELL</i><dd>Determine a name
+of a command interpreter to be used to invoke the at-job.
+If the variable is unset or null,
+<i><a href="sh.htm">sh</a></i>
+will be used.
+If it is set to a value other than a name for
+<i><a href="sh.htm">sh</a></i>,
+the implementation will do one of the following:
+use that shell;
+use
+<i><a href="sh.htm">sh</a></i>;
+use the login shell from the user database; or
+any of the preceding accompanied by a
+warning diagnostic about which was chosen.
+
+<dt><i>TZ</i><dd>Determine the timezone.
+The job will be submitted for execution at the
+time specified by
+<i>timespec</i>
+or
+<b>-t</b>&nbsp;<i>time</i>
+relative to the timezone specified by the
+<i>TZ</i>
+variable.
+If
+<i>timespec</i>
+specifies a timezone, it will override
+<i>TZ .
+</i>If
+<i>timespec</i>
+does not specify a timezone and
+<i>TZ</i>
+is unset or null, an unspecified default timezone will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_085">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_000_000_086">&nbsp;</a>STDOUT</h4><blockquote>
+When standard input is a terminal, prompts of unspecified
+format for each line of the user input described in
+the STDIN section may be written to standard output.
+<p>
+In the POSIX locale,
+the following will be written to the standard output
+for each job when jobs are listed in response to the
+<b>-l</b>
+option:
+<code>
+<p>
+<tt>"%s\t%s\n"</tt>, <i>at_job_id</i>,
+&lt;<i>date</i>&gt;
+</code>
+where
+&lt;<i>date</i>&gt;
+is equivalent in format to the output of:
+<pre>
+<code>
+date +"%a %b %e %T %Y"
+</code>
+</pre>
+<p>
+The date and time written will be adjusted so
+that they appear in the timezone of the user (as
+determined by the
+<i>TZ</i>
+variable).
+</blockquote><h4><a name = "tag_000_000_087">&nbsp;</a>STDERR</h4><blockquote>
+The following will be written to standard error
+when a job has been successfully submitted:
+<code>
+<p>
+<tt>"job %s at %s\n"</tt>, <i>at_job_id</i>,
+&lt;<i>date</i>&gt;
+</code>
+where
+&lt;<i>date</i>&gt;
+has the same format as is described in the STDOUT section.
+Neither this, nor warning messages concerning the selection
+of the command interpreter, are considered a diagnostic
+that changes the exit status.
+<p>
+Diagnostic messages, if any, are written to standard error.
+</blockquote><h4><a name = "tag_000_000_088">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_089">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_090">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>The
+<i>at</i>
+utility successfully submitted, removed or listed
+a job or jobs.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_000_000_091">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+The job will not be scheduled, removed or listed.
+</blockquote><h4><a name = "tag_000_000_092">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The format of the
+<i>at</i>
+command line shown here is guaranteed only for the POSIX locale.
+Other cultures may be supported with substantially different
+interfaces, although implementations are encouraged to provide
+comparable levels of functionality.
+<p>
+Since the commands run in a separate shell invocation,
+running in a separate process group
+with no controlling terminal,
+open file descriptors, traps and priority
+inherited from the invoking environment are lost.
+<p>
+Some implementations do not allow substitution of
+different shells using
+<i>SHELL .
+</i>System&nbsp;V systems, for example, have used the
+login shell value for the user in
+<b>/etc/passwd</b>.
+To select reliably another command interpreter,
+the user must include it as part of the script, such as:
+<pre>
+<code>
+<b>$</b> at 1800
+myshell myscript
+<b>job ... at ...
+$
+</b></code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_093">&nbsp;</a>EXAMPLES</h4><blockquote>
+<ol>
+<p>
+<li>
+This sequence can be used at a terminal:
+<pre>
+<code>
+at -m 0730 tomorrow
+sort &lt; file &gt;outfile
+EOT
+</code>
+</pre>
+<p>
+<li>
+This sequence, which demonstrates redirecting standard
+error to a pipe, is useful in a command procedure (the sequence of
+output redirection specifications is significant):
+<pre>
+<code>
+at now + 1 hour &lt;&lt;!
+diff file1 file2 2&gt;&amp;1 &gt;outfile | mailx mygroup
+!
+</code>
+</pre>
+<p>
+<li>
+To have a job reschedule itself,
+<i>at</i>
+can be invoked from within the
+at-job.
+For example, this daily processing script named
+<b>my.daily</b>
+will run every day (although
+<i><a href="crontab.htm">crontab</a></i>
+is a more appropriate vehicle for such work):
+<pre>
+<code>
+# my.daily runs every day
+<i>daily processing</i>
+at now tomorrow &lt; my.daily
+</code>
+</pre>
+<p>
+<li>
+The spacing of the three portions of the
+POSIX locale
+<i>timespec</i>
+is quite flexible
+as long as there are no ambiguities.
+Examples of various times and operand presentation include:
+<pre>
+<code>
+at 0815am Jan 24
+at 8 :15amjan24
+at now "+ 1day"
+at 5 pm FRIday
+at '17
+        utc+
+        30minutes'
+</code>
+</pre>
+<p>
+</ol>
+</blockquote><h4><a name = "tag_000_000_094">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_000_095">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="batch.htm">batch</a></i>,
+<i><a href="crontab.htm">crontab</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,304 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>rename</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_096">&nbsp;</a>NAME</h4><blockquote>
+rename - rename a file
+</blockquote><h4><a name = "tag_000_008_097">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+int rename(const char *<i>old</i>, const char *<i>new</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_098">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>rename()</i>
+function changes the name of a file.  The
+<i>old</i>
+argument points to the pathname of the file to be renamed.
+The
+<i>new</i>
+argument points to the new pathname of the file.
+<p>
+If the
+<i>old</i>
+argument and the
+<i>new</i>
+argument both refer to, and both link to the same existing file,
+<i>rename()</i>
+returns successfully and performs no other action.
+<p>
+If the
+<i>old</i>
+argument points to the pathname of a file that is not a
+directory, the
+<i>new</i>
+argument must not point to the pathname of a directory.
+If the link named by the
+<i>new</i>
+argument exists, it is removed and
+<i>old</i>
+renamed to
+<i>new</i>.
+In this case, a link named
+<i>new</i>
+will remain visible to other processes throughout the
+renaming operation and will refer either to the file referred to
+by
+<i>new</i>
+or
+<i>old</i>
+before the operation began.
+Write access permission is required for both the directory
+containing
+<i>old</i>
+and the directory containing
+<i>new</i>.
+<p>
+If the
+<i>old</i>
+argument points to the pathname of a directory, the
+<i>new</i>
+argument must not point to the pathname of a file that is not a
+directory.
+If the directory named by the
+<i>new</i>
+argument exists, it will be removed and
+<i>old</i>
+renamed to
+<i>new</i>.
+In this case, a link named
+<i>new</i>
+will exist throughout the renaming operation and will refer
+either to the file referred to by
+<i>new</i>
+or
+<i>old</i>
+before the operation began.
+Thus, if
+<i>new</i>
+names an existing directory, it must be an empty
+directory.
+<p>
+If <i>old</i> points to a pathname that names a symbolic link,
+the symbolic link is renamed.
+If <i>new</i> points to a pathname that names a symbolic link,
+the symbolic link is removed.
+<p>
+The
+<i>new</i>
+pathname must not contain a path prefix that names
+<i>old</i>.
+Write access permission is required for the directory containing
+<i>old</i>
+and the directory containing
+<i>new</i>.
+If the
+<i>old</i>
+argument points to the pathname of a directory,
+write access permission may be required for the directory named
+by
+<i>old</i>,
+and, if it exists, the directory named by
+<i>new</i>.
+<p>
+If the link named by the
+<i>new</i>
+argument exists and the file's link count becomes 0 when it is
+removed and no process has the file open, the space occupied by the
+file will be freed and the file will no longer be accessible.
+If one or more processes have the file open when the last link is
+removed, the link will be removed before
+<i>rename()</i>
+returns, but the removal of the file contents will be postponed
+until all references to the file are closed.
+<p>
+Upon successful completion,
+<i>rename()</i>
+will mark for update the
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the parent directory of each file.
+</blockquote><h4><a name = "tag_000_008_099">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>rename()</i>
+returns 0.  Otherwise, -1 is returned,
+<i>errno</i>
+is set to indicate the error, and neither the file named by
+<i>old</i>
+nor the file named by
+<i>new</i>
+will be changed or created.
+<br>
+</blockquote><h4><a name = "tag_000_008_100">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>rename()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+A component of either path prefix denies search permission;
+or one of the directories containing
+<i>old</i>
+or
+<i>new</i>
+denies write permissions;
+or, write permission is required and is denied for a directory
+pointed to by the
+<i>old</i>
+or
+<i>new</i>
+arguments.
+
+<dt>[EBUSY]<dd>
+The directory named by
+<i>old</i>
+or
+<i>new</i>
+is currently in use by the system or another process, and the
+implementation considers this an error.
+
+<dt>[EEXIST]&nbsp;or&nbsp;[ENOTEMPTY]<dd>
+
+The link named by
+<i>new</i>
+is a directory that is not an empty directory.
+
+<dt>[EINVAL]<dd>
+The
+<i>new</i>
+directory pathname contains a path prefix that names the
+<i>old</i>
+directory.
+
+<dt>[EIO]<dd>
+A physical I/O error has occurred.
+
+<dt>[EISDIR]<dd>
+The
+<i>new</i>
+argument points to a directory and the
+<i>old</i>
+argument points to a file that is not a directory.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving either pathname.
+
+<dt>[EMLINK]<dd>
+The file named by
+<i>old</i>
+is a directory, and the link count of the parent directory of
+<i>new</i>
+would exceed {LINK_MAX}.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>old</i>
+or
+<i>new</i>
+argument exceeds {PATH_MAX}
+or a pathname component is longer than {NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+The link named by
+<i>old</i>
+does not name an existing file,
+or either
+<i>old</i>
+or
+<i>new</i>
+points to an empty string.
+
+<dt>[ENOSPC]<dd>
+The directory that would contain
+<i>new</i>
+cannot be extended.
+
+<dt>[ENOTDIR]<dd>
+A component of either path prefix is not a directory;
+or the
+<i>old</i>
+argument names a directory and
+<i>new</i>
+argument names a non-directory file.
+
+<dt>[EPERM] or [EACCES]<dd>
+
+The S_ISVTX flag is set on the directory containing the file referred to by
+<i>old</i> and the caller is not the file owner, nor is the caller the
+directory owner, nor does the caller have appropriate privileges; or <i>new</i>
+refers to an existing file, the S_ISVTX flag is set on the directory
+containing this file and the caller is not the file owner, nor is the caller
+the directory owner, nor does the caller have appropriate privileges.
+
+<dt>[EROFS]<dd>
+The requested operation requires writing in a directory on a
+read-only file system.
+
+<dt>[EXDEV]<dd>
+The links named by
+<i>new</i>
+and
+<i>old</i>
+are on different file systems and the
+implementation does not support links between file systems.
+
+</dl>
+<p>
+The
+<i>rename()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EBUSY]<dd>
+The file named by the
+<i>old</i>
+&nbsp;or
+<i>new</i>
+arguments is a named STREAM.
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+<dt>[ETXTBSY]<dd>
+The file to be renamed is a pure procedure (shared text) file
+that is being executed.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_101">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_102">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_103">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_104">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="link.htm">link()</a></i>,
+<i><a href="rmdir.htm">rmdir()</a></i>,
+<i><a href="symlink.htm">symlink()</a></i>,
+<i><a href="unlink.htm">unlink()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

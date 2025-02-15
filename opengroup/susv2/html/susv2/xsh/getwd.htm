@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>getwd</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_824">&nbsp;</a>NAME</h4><blockquote>
+getwd - get the current working directory pathname
+</blockquote><h4><a name = "tag_000_005_825">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+char *getwd(char *<i>path_name</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_826">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>getwd()</i>
+function determines an absolute pathname of the current working directory of
+the calling process, and copies that pathname into the array pointed to by the
+<i>path_name</i> argument.
+<p>
+If the length of the pathname of the current working directory
+is greater than ({PATH_MAX} + 1) including the null byte,
+<i>getwd()</i>
+fails and returns a null pointer.
+</blockquote><h4><a name = "tag_000_005_827">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, a pointer to the string containing the absolute
+pathname of the current working directory is returned.  Otherwise,
+<i>getwd()</i>
+returns a null pointer and the contents of the array pointed to by
+<i>path_name</i> are undefined.
+</blockquote><h4><a name = "tag_000_005_828">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_005_829">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_830">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+For portability to implementations conforming to earlier versions of this
+specification,
+<i><a href="getcwd.htm">getcwd()</a></i>
+is preferred over this function.
+</blockquote><h4><a name = "tag_000_005_831">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_832">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getcwd.htm">getcwd()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

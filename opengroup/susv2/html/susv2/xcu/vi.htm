@@ -1,0 +1,3331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>vi</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2809">&nbsp;</a>NAME</h4><blockquote>
+vi - screen-oriented (visual) display editor
+</blockquote><h4><a name = "tag_001_014_2810">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+vi <b>[</b>-rR<b>][</b>-l<b>][</b>-c <i>command</i><b>][</b>-t <i>tagstring</i><b>][</b>-w <i>size</i><b>][</b><i>file</i>...<b>]</b>
+
+vi <b>[</b>-rR<b>][</b>-l<b>][</b>+<i>command</i><b>][</b>-t <i>tagstring</i><b>][</b>-w <i>size</i><b>][</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2811">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>vi</i>
+(visual) utility is a screen-oriented text editor.
+The user can switch back and forth between
+<i>vi</i>
+and the line editor
+<i><a href="ex.htm">ex</a></i>
+and execute
+<i><a href="ex.htm">ex</a></i>
+commands
+from within
+<i>vi</i>.
+<p>
+When using
+<i>vi</i>,
+the terminal screen acts as a window into the
+editing buffer.
+Changes made to the editing buffer are reflected in the screen display;
+the position of the cursor on the screen indicates
+the position within the editing buffer.
+<p>
+Certain block-mode terminals do not have all the capabilities
+necessary to support the complete
+<i>vi</i>
+definition.
+When these commands cannot be supported on such terminals, this
+condition will not produce an error message such as &quot;not an editor
+command&quot; or report a syntax error.
+The implementation may either accept the
+commands and produce
+results on the
+screen that are the result of an unsuccessful attempt to meet the
+requirements of this specification or
+report an error
+describing the terminal-related deficiency.
+</blockquote><h4><a name = "tag_001_014_2812">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>vi</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> 
+except for the obsolescent
+<i>+command</i>
+option.
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-c&nbsp;</b><i>command</i>
+<dd>
+
+<dt>+<i>command</i><dd>
+Begin editing by executing the specified
+<i><a href="ex.htm">ex</a></i>
+command-mode commands.
+As with normal
+<i><a href="ex.htm">ex</a></i>
+command-line entries, the
+<i>command</i>
+option-argument can consist of multiple
+<i><a href="ex.htm">ex</a></i>
+commands separated
+by vertical-line characters
+(|).
+The use of commands that enter input mode
+in this manner produces undefined results.
+
+<dt><b>-l</b>
+<dd>Set lisp mode (see
+<xref href=exedops><a href="ex.htm#tag_001_014_598_052">
+Edit Options in ex
+</a></xref>).
+
+<dt><b>-r</b>
+<dd>Attempt to recover the named
+<i>file</i>s
+after an editor or system crash, after
+the editor has been terminated by a signal or after the use of a
+<b>pre</b>
+(<i>ex</i>)
+editor command.
+
+If no
+<i>file</i>
+operands are given,
+all other options, the
+<i>EXINIT</i>
+variable, and any
+<b>.exrc</b>
+files will be ignored;
+a list of all recoverable files
+available to the invoking user will be written;
+and
+<i>vi</i>
+will exit without reading files or processing user commands.
+
+<dt><b>-R</b>
+<dd>Set read-only mode, preventing accidental overwriting of the files.
+Any command that would write to a file requires the
+"!"
+suffix (see, for example, the
+<b>write</b>
+command)
+to be effective in this mode.
+
+<dt><b>-t&nbsp;</b><i>tagstring</i>
+<dd>
+Edit the file containing the specified
+<i>tagstring</i>
+and set the initial position within the edit buffer
+to the point of definition of the tag.
+(See
+<i><a href="ctags.htm">ctags</a></i>.)
+The tags feature represented by
+<b>-t</b>&nbsp;<i>tagstring</i>
+and the
+<b>ta</b>
+command is optional.
+It is provided on any system that
+also provides
+a conforming
+implementation of
+<i><a href="ctags.htm">ctags</a></i>;
+otherwise, the use of
+<b>-t</b>
+produces undefined results.
+
+
+<dt><b>-w&nbsp;</b><i>size</i>
+<dd>Set the value of the
+<i>window</i>
+editor option to
+<i>size</i>.
+See the
+<b>window</b>
+option.
+
+</dl>
+<p>
+If both the
+<b>-t</b>&nbsp;<i>tagstring</i>
+and
+<b>-c</b>&nbsp;<i>command</i>
+(or the obsolescent
+<i>+command</i>)
+options are given, the
+<b>-t</b>&nbsp;<i>tagstring</i>
+will be processed first; that is,
+the file containing the tag is selected by
+<b>-t</b>
+and then the command is executed.
+</blockquote><h4><a name = "tag_001_014_2813">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>file</i><dd>A pathname of a file to be edited.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2814">&nbsp;</a>STDIN</h4><blockquote>
+The standard input consists of a series of commands
+and input text, as described in the EXTENDED DESCRIPTION section.
+</blockquote><h4><a name = "tag_001_014_2815">&nbsp;</a>INPUT FILES</h4><blockquote>
+Input files must be text files or files that would be text files
+except for an incomplete last line that is not longer than
+{LINE_MAX}
+- 1 bytes in length and contains no NUL characters.
+The editing of other forms of files may optionally be allowed by
+<i>vi</i>
+implementations.
+<p>
+The
+<b>.exrc</b>
+files (see the EXTENDED DESCRIPTION section)
+must be text files consisting of
+<i><a href="ex.htm">ex</a></i>
+commands.
+<p>
+By default,
+<i>vi</i>
+will read lines from the files to be edited without
+interpreting any of those lines as any form of editor command.
+</blockquote><h4><a name = "tag_001_014_2816">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>vi</i>:
+<dl compact>
+
+<dt><i>COLUMNS</i><dd>
+Override the system-selected horizontal screen size.
+See
+the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> 
+for valid values and results when it is unset or null.
+
+<dt><i>EXINIT</i><dd>Determine a list of
+<i><a href="ex.htm">ex</a></i>
+commands that will be executed on editor startup,
+before reading the first file.
+The list can contain multiple commands by separating
+them using a vertical-line
+(|)
+character.
+See also the EXTENDED DESCRIPTION section
+for more details of the initialisation phase.
+
+<dt><i>HOME</i><dd>Determine
+a pathname of a directory that will be searched for an editor
+startup file named
+<b>.exrc</b>;
+see the EXTENDED DESCRIPTION section.
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+within regular expressions.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files),
+the behaviour of character classes within regular expressions,
+the classification of characters as upper- or lower-case letters,
+the case conversion of letters,
+and the detection of word boundaries.
+
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>LINES</i><dd>Override the system-selected vertical screen size,
+used as the number of lines in a screenful and the vertical
+screen size in visual mode.
+See
+the <b>XBD</b> specification, <a href="../xbd/envvar.htm"><b>Environment Variables</b>&nbsp;</a> 
+for valid values and results when it is unset or null.
+
+<dt><i>PATH</i><dd>Determine the search path
+for the shell command specified in the editor commands
+<b>shell</b>,
+<b>read</b>
+and
+<b>write</b>
+and the visual-mode command
+"!";
+see the description of command search and execution in
+<xref href=cmdsea><a href="chap2.htm#tag_001_009_001_001">
+Command Search and Execution
+</a></xref>.
+
+<dt><i>SHELL</i><dd>Determine
+the preferred command-line interpreter for use in
+"!",
+<b>shell</b>,
+<b>read</b>
+and other commands with an operand of the form
+!<i>string</i>
+For the
+<b>shell</b>
+command the program will be invoked with the single argument
+<b>-i</b>,
+for all others it will be invoked with the two arguments
+<b>-c</b>
+and
+<i>string</i>.
+If this
+variable is null or not set, the
+<i><a href="sh.htm">sh</a></i>
+utility will be used.
+
+<dt><i>TERM</i><dd>Determine the name of the terminal type.
+If this variable is
+unset or null, an unspecified default terminal type will be used.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2817">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+The following actions will be taken upon receipt of signals:
+<dl compact>
+
+<dt>SIGINT<dd>The current editor command will be aborted.
+The editor will prompt for another command.
+
+<dt>SIGCONT<dd>
+The screen will be refreshed (if in
+<i>visual</i>
+mode).
+
+<dt>SIGHUP<dd>
+If the current buffer has changed since the last
+e
+or
+w
+command,
+<i>vi</i>
+will attempt to save the current file in a state such
+that it can be recovered later by an
+<i><a href="ex.htm">ex</a></i>
+or
+<i>vi</i>
+<b>-r</b>
+command.
+
+</dl>
+<p>
+The action taken for all other signals is unspecified.
+</blockquote><h4><a name = "tag_001_014_2818">&nbsp;</a>STDOUT</h4><blockquote>
+If standard output is a terminal device,
+it may be used for writing prompts to the user,
+for informational messages and for writing lines from the file.
+If standard output is not a terminal device,
+undefined results occur.
+</blockquote><h4><a name = "tag_001_014_2819">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_2820">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output from
+<i>vi</i>
+are text files that are identical to
+the input files if no changes have been made to those files
+by commands,
+with the exception that in all cases
+where a forced session termination (the
+<i><a href="ex.htm">ex</a></i>
+command
+q!)
+has not been issued prior to any write of the file,
+a trailing
+newline character
+will be added to the last line of the file if one was not
+present in the input.
+</blockquote><h4><a name = "tag_001_014_2821">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+Only the visual mode of the editor is described in this section.
+See the
+<i><a href="ex.htm">ex</a></i>
+utility for additional editing capabilities used in
+<i>vi</i>.
+<p>
+The pathname of the file being edited by
+<i>vi</i>
+is the
+<i>current</i>
+file.
+The text of the file will be read into a
+<i>buffer</i>,
+and all editing changes will be performed in this buffer;
+changes will have no effect on the file until the buffer is written out
+explicitly.
+Lines in the buffer may each be limited to
+{LINE_MAX}
+bytes
+and an error message may be displayed if the limit is exceeded
+during editing.
+<p>
+The
+<i>alternative</i>
+pathname is the name of the last file mentioned in an
+editor command, or the previous current pathname if the last file
+mentioned became the current file.
+When the character
+"%"
+appears in a pathname entered as part of a command argument,
+the character will be replaced by the current pathname;
+the character
+"#"
+will be replaced by the alternative pathname.
+The characters
+"%"
+and
+"#"
+can be escaped by preceding them with a backslash.
+<p>
+During initialisation, before the
+first file is read or any user commands from the terminal are processed,
+if the environment variable
+<i>EXINIT</i>
+is set, the editor will execute the
+<i><a href="ex.htm">ex</a></i>
+commands contained in that variable.
+If the variable is not set,
+<i>vi</i>
+will attempt to read
+<i><a href="ex.htm">ex</a></i>
+commands from the file
+<b>$HOME/.exrc</b>
+(the file
+<b>.exrc</b>
+in the directory referred to by the
+<i>HOME</i>
+environment variable).
+If and only if
+<i>EXINIT</i>
+or
+<b>$HOME/.exrc</b>
+sets the editor option
+<b>exrc</b>,
+<i>vi</i>
+finally will attempt to read
+<i><a href="ex.htm">ex</a></i>
+commands from a file
+<b>.exrc</b>
+in the current directory.
+In the event that
+<i>EXINIT</i>
+is not set and the current directory is the
+user's home directory, any
+<b>.exrc</b>
+file will only be processed once.
+No
+<b>.exrc</b>
+file will be read unless it is owned by the
+same user ID as the effective user ID of the process.
+After any
+<b>.exrc</b>
+files are processed, any commands specified by the
+<b>-c</b>
+option will be processed.
+<p>
+After initialisation,
+<i>vi</i>
+will be in
+<i>command</i>
+mode;
+<i>input</i>
+mode can be entered by several commands used to
+insert or change text.
+In input mode, an
+escape character
+can be used to
+return to command mode;
+other uses of the
+escape character
+are described in
+<xref href=viterm><a href="#tag_001_014_2821_018">
+Terminate Command or Input Mode
+</a></xref>.
+The results of entering
+newline characters
+in input mode are affected by the setting of the
+<b>autoindent</b>
+editor variable.
+<p>
+The last (bottom) line of the screen is used to display
+the input for search commands ("/" and "?"), for
+<i><a href="ex.htm">ex</a></i>
+commands (":"), and system commands ("!").
+It is also used to report errors or display
+informational messages.
+The editor prompts for input for commands by displaying the command
+("/", "?", ":" or "!")
+at the beginning of the last line of the screen.
+All subsequent characters will be then taken as input until
+a line terminator is entered.
+<p>
+An interrupt typed during text input,
+or during the input of a command on the bottom line,
+will terminate the input (or cancel the command)
+and will return the editor to command mode.
+During command mode, an interrupt
+will alert the terminal.
+In general, an alert indicates an error (such as unrecognised key).
+<p>
+Lines displayed on the screen containing only a tilde
+(~)
+indicate
+that the last line above them is the last line
+in the editing buffer
+(the ~
+lines are past the end of the editing buffer).
+<p>
+There may be lines on the screen marked with an "@".
+These indicate space on the screen not
+corresponding to lines in the file.
+This will happen if there is space at the bottom
+of the screen for some text, but the next line of
+the buffer will not fit.
+(It may also happen on a terminal with limited local intelligence.
+In this case, these lines can be removed by entering a
+&lt;control&gt;-R,
+forcing the editor to refresh the screen.)
+<h5><a name = "tag_001_014_2821_001">&nbsp;</a>Command Descriptions in vi</h5>
+The cursor, in general, is placed on the current line
+and in the current column position as noted for each command
+described below.
+If the current line is not in the display window,
+then the display window will be either scrolled or refreshed
+to cause the current line to be in the display window.
+If the screen is refreshed, the current line will be positioned
+as close to the center of the display window as possible.
+If the current line is less than one-half window lines
+from the
+beginning of the editing buffer, the first line of the buffer
+will be displayed on the first line of the display window.
+If the current line is less than one-half window lines
+from the end of the editing buffer, the remaining lines of the display
+window after the last line of the file will contain only a
+~
+character in column position 1.
+If the screen is scrolled rather than refreshed, the
+current line will be placed at the top of the display window
+if the current line is before the first line displayed.
+If the current line is after the last line displayed,
+the display window will be scrolled up and the current line
+will be placed on the last line of the display window.
+<p>
+As stated previously, the cursor is generally placed
+on the current column position of the current line.
+The one exception to this is if the current column position
+is beyond the end of the current line.
+In this case, the cursor will be placed on the last character
+of the current line.
+However, the current column position value will not be altered by this.
+Thus, if the current line changes to a longer line, the cursor
+will be moved back out to the current column position or
+to the end of the line if it is shorter than the current column.
+<p>
+Unless otherwise specified, the commands are interpreted in command
+mode and have no special effect in input mode.
+<p>
+Some of the following command descriptions (such as
+a,
+A,
+c,
+and so on) move the cursor and enter input mode.
+The indications of
+<i>Current line</i>
+and
+<i>Current column</i>
+are for the cursor movement up to the beginning of input mode.
+Depending on the text inserted, the cursor will generally wind up
+in a totally different location by the time command mode is reentered.
+The cursor movement that accompanies the transition
+from input mode to command mode is described in
+<xref href=viterm><a href="#tag_001_014_2821_018">
+Terminate Command or Input Mode
+</a></xref>.
+<p>
+The following symbols are used in this section to represent
+arguments to commands, to describe commands or to specify the new
+values of the current line and column indicators following
+execution of the command.
+<dl compact>
+
+<dt><i>bigword</i><dd>A maximal sequence of non-blank characters preceded and followed by
+blank
+characters or the beginning or end of a line or the file.
+
+<dt><i>buffer</i><dd>One of a number of named areas for saving text.
+Commands that change or delete text can be preceded by a
+buffer specification argument
+<i>buffer</i>.
+It is specified
+in the form
+<b>"</b><i>c</i>,
+where
+<i>c</i>
+represents the name of a
+buffer, one of the lower-case letters of the POSIX locale.
+Specifying
+<i>buffer</i>
+will cause the area of text affected by
+the command to be stored into the buffer as it was before
+the command took effect.
+This argument is also used on
+the put commands
+(p
+and
+P)
+to specify the buffer that will provide the text to insert.
+When a command synopsis shows both
+<b>[</b><i>buffer</i><b>]</b>
+and
+<b>[</b><i>count</i><b>]</b>
+preceding the command letter,
+either can precede the other.
+
+If the buffer name is specified in upper-case,
+and the buffer is to be modified (as with a
+deletion or yanking command)
+the buffer will be appended to
+rather than being overwritten.
+If the buffer is not to be modified (as in a visual mode
+put commands) the buffer name can be specified in lower-case or
+upper-case with the same results.
+There will be also one unnamed buffer, which is the repository
+for all text deleted (with the
+<b>delete</b>
+or visual mode
+d
+command) or yanked (with the
+<b>yank</b>
+or visual mode
+y
+command) when no buffer is specified.
+
+There are also
+numbered buffers, 1 to 9, inclusive, which are accessible only from
+visual mode.
+These buffers are special in that,
+in visual mode, when deleted text is placed in the unnamed buffer,
+it also will be placed in buffer 1, the previous contents of
+buffer 1 will be placed in buffer 2, and so on.
+Any text in buffer 9 will be lost.
+Text that is yanked (or otherwise copied) into the unnamed
+buffer will not modify the numbered buffers.
+Text cannot be placed directly into the numbered
+buffers although it can be retrieved from them by using a
+visual mode put command with the buffer name given as a number.
+When the
+<i>buffer</i>
+modifier is not used in the commands below, the unnamed buffer
+is the default.
+
+<dt><i>column</i><dd>The (previous) value of the current column indicator.
+
+<dt><i>count</i><dd>A positive integer used as an optional argument to most commands,
+either to give a size or a position (for
+display or movement commands), or as a repeat count (for
+commands that change text).
+This argument is optional
+and defaults to 1 unless otherwise noted in the
+individual command description.
+
+<dt><i>end-of-line</i><dd>
+A description of the current column indicator value
+meaning that the current column
+indicator will be set always to indicate the last character of
+the current line.
+Until the current column indicator is
+changed, the cursor will be always positioned to the last
+character of whatever line is current.
+
+<dt><i>line</i><dd>The (previous) value of the current line indicator.
+
+<dt><i>non-blank</i><dd>
+A description of the current column indicator value
+meaning that the current column indicator
+will be set to the position of the first
+non-blank character of the current line.
+If the current line has no non-blank characters,
+the indicator will be set to the position of the
+last character of the line.
+
+<dt><i>motion</i><dd>A command used as an optional trailing argument to some commands,
+indicating the extent of text to be affected by the command.
+The
+<i>motion</i>
+argument can be either the command character repeated
+or a cursor movement command.
+In the former case, exactly the current line is affected.
+In the latter case, the region specified will be from the current cursor
+position to just before the cursor position indicated by the motion command.
+If the command operates on lines
+only, then all the lines that fall partly or wholly
+within this region are affected.
+Otherwise, the exact region as described above is affected.
+The following commands are considered to be cursor motion commands:
+<pre>
+<dl compact><dt> <dd>
+<table <tr valign=top><th align=left>$
+<th align=left>^
+<th align=left>e
+<th align=left>M
+<tr valign=top><td align=left>%
+<td align=left>&quot;
+<td align=left>&lt;control&gt;-F
+<td align=left>&lt;control&gt;-N
+<tr valign=top><td align=left>''
+<td align=left>`<i>letter</i>
+<td align=left>F
+<td align=left>N
+<tr valign=top><td align=left>'<i>letter</i>
+<td align=left>{
+<td align=left>f
+<td align=left>n
+<tr valign=top><td align=left>(
+<td align=left>|
+<td align=left>G
+<td align=left>&lt;control&gt;-P
+<tr valign=top><td align=left>)
+<td align=left>}
+<td align=left>&lt;control&gt;-H
+<td align=left>&lt;space&gt;
+<tr valign=top><td align=left>,
+<td align=left>0
+<td align=left>H
+<td align=left>&lt;control&gt;-T
+<tr valign=top><td align=left>-
+<td align=left>&lt;control&gt;-B
+<td align=left>&lt;control&gt;-J
+<td align=left>T
+<tr valign=top><td align=left>/
+<td align=left>B
+<td align=left>j
+<td align=left>t
+<tr valign=top><td align=left>;
+<td align=left>b
+<td align=left>k
+<td align=left>&lt;control&gt;-U
+<tr valign=top><td align=left>?
+<td align=left>&lt;control&gt;-D
+<td align=left>L
+<td align=left>W
+<tr valign=top><td align=left>[[
+<td align=left>&lt;control&gt;-E
+<td align=left>l
+<td align=left>w
+<tr valign=top><td align=left>]]
+<td align=left>E
+<td align=left>&lt;control&gt;-M
+<td align=left>&lt;control&gt;-Y
+</table>
+</dl>
+</pre>
+<p>
+The optional
+<i>count</i>
+prefix available for some of the motion commands
+can be included and is considered part of the
+<i>motion</i>
+argument.
+For example, in
+<b>c2w</b>,
+the
+<b>2w</b>
+is the
+<i>motion</i>
+argument.
+<p>
+<dt><i>previous context</i><dd>
+A state set whenever a non-relative motion command is executed in
+<i>vi</i>.
+<p>
+<dt><i>paragraph</i><dd>
+An area of text that begins with either the beginning of a file,
+an empty line, or section boundary and continues
+until either an empty line, section boundary or the end of
+the editing buffer.
+Additional paragraph boundaries can be defined by the
+<i><a href="ex.htm">ex</a></i>
+<b>paragraph</b>
+option.
+<p>
+<dt><i>section</i><dd>An area of text that starts with a line whose first character
+is either a
+form-feed character
+or an open brace
+({)
+and continues until the next section or the
+end of the editing buffer.
+The beginning and end of the editing buffer are also considered
+section boundaries.
+Additional section boundaries can be defined by the
+<i><a href="ex.htm">ex</a></i>
+<b>sections</b>
+option.
+<p>
+<dt><i>sentence</i><dd>
+An area of text that begins with either the beginning of
+the editing buffer or the first non-blank character following the
+previous sentence, paragraph or section boundary
+and continues until the end of the editing buffer or a
+period, exclamation point or question mark (".", "!", "?")
+character followed by either an end-of-line or two
+space characters.
+Any number of closing parentheses, brackets or double-quote
+(")", "]", """) characters can appear between the
+period, exclamation point or question mark and the space characters
+or end-of-line.
+<p>
+<dt><i>window</i><dd>The current value of the editor option
+<b>window</b>.
+<p>
+<dt><i>word</i><dd>In the POSIX locale,
+<i>vi</i>
+recognises two kinds of words:
+<ul>
+<p>
+<li>
+A maximal sequence of letters, digits and
+underscores, delimited at both ends by:
+characters other than letters, digits or underscores;
+the beginning or end of a line;
+or the end of the editing buffer.
+<p>
+<li>
+A maximal sequence of characters other
+than letters, digits, underscores or white space,
+delimited at both ends by:
+a letter, digit, underscore or white space;
+the beginning or end of a line;
+or the end of the editing buffer.
+<p>
+</ul>
+<p>
+<dt><b>!</b><dd>A character that
+can be appended to the command to modify its operation as detailed
+in the individual command descriptions.
+<p>
+</dl>
+<p>
+After processing a
+command, if the current line and column indicators have been
+changed to specify a character not currently on the screen, the
+editor will scroll or page the
+text to bring the needed character onto the screen.
+If the new current line is within
+<i>window</i>
+lines of the previous current line, and the terminal is capable of
+scrolling in the indicated direction, the text will be scrolled the
+minimum number of lines necessary to present the needed character.
+Otherwise, the screen will be redisplayed with the new current line
+positioned in the middle of the screen.
+<p>
+The following rules specify how exceptions will be handled.
+When a movement command would cause a window to display beyond
+the beginning of the
+editing buffer, the window displayed is the window
+beginning with the first line of the editing buffer.
+When a movement
+command would cause a window to be displayed beyond the end of
+the editing buffer,
+the terminal will be alerted
+and the command aborted.
+When the current line is empty, the cursor
+will be placed in the first position of the line on the screen.
+When the current column indicator value is beyond the end of the
+current line, the cursor will be placed on the last character of the
+current line, but the current column indicator will be unchanged.
+<p>
+The following rules specify how position exceptions will be handled.
+When the current column indicator is at the beginning (end) of a
+line and would be set to a position before the beginning (after
+the end) of the current line, the command will not be executed,
+the terminal will be alerted,
+and the current position
+will remain unchanged.
+Otherwise, when the current column indicator
+would be set to a position before the beginning (after the end) of
+the current line, it will be set instead to the position of the first
+(last) character of that line.
+When the current line indicator
+would be set to a position before the beginning (after the end) of
+the editing buffer, the command will not be executed,
+the terminal will be alerted,
+and the current position
+will remain unchanged.
+<h5><a name = "tag_001_014_2821_002">&nbsp;</a>Page Backwards</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-B
+</code>
+</pre>
+<p>
+Page backward in the file, allowing two lines of
+overlap, by displaying the window starting at line
+[<i>line</i>
+-
+(<i>count</i>
+*
+(<i>window</i>-2))].
+<p>
+<i>Current line :</i>
+The last line displayed.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the first character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_003">&nbsp;</a>Scroll Forward</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-D
+</code>
+</pre>
+<p>
+Scroll forward
+<i>count</i>
+lines in the file.
+If
+<i>count</i>
+is
+not specified, the same number of lines will be scrolled as by
+the previous
+&lt;control&gt;-D
+or
+&lt;control&gt;-U
+command.
+On the
+first
+&lt;control&gt;-D
+or
+&lt;control&gt;-U
+command, the amount
+scrolled will be one-half the number of lines in a screenful.
+See the
+<i><a href="ex.htm">ex</a></i>
+<b>scroll</b>
+option.
+<p>
+<i>Current line :</i>
+(<i>line</i>
++ amount scrolled).
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the first character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_004">&nbsp;</a>Scroll Forward by Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-E
+</code>
+</pre>
+<p>
+Scroll forward
+<i>count</i>
+lines, leaving the current line
+and column as is if possible.
+<p>
+<i>Current line :</i>
+Unchanged unless the current line scrolls off the
+screen; otherwise, move to the first line displayed.
+<p>
+<i>Current column :</i>
+Unchanged unless the current line scrolls off the screen; otherwise,
+move to the first character if it is a blank line or the last character
+of the line if the position of the current column is further into the
+line than the position of the last column of the line.
+<h5><a name = "tag_001_014_2821_005">&nbsp;</a>Page Forward</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-F
+</code>
+</pre>
+<p>
+Page forward in the file, allowing two lines of
+overlap, by displaying the window starting at line
+[<i>line</i>
++
+(<i>count</i>
+*
+(<i>window</i>-2))].
+<p>
+<i>Current line :</i>
+The first line displayed.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the first character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_006">&nbsp;</a>Display Information</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   &lt;control&gt;-G
+</code>
+</pre>
+<p>
+Display an informational message listing the current
+pathname, current line, number of lines and other
+unspecified information, as does the
+<i><a href="ex.htm">ex</a></i>
+command
+<i>file</i>.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_007">&nbsp;</a>Move Cursor Backwards</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-H
+<br>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> h
+</code>
+</pre>
+<p>
+Move the cursor back
+<i>count</i>
+characters on the current line.
+No characters will be
+erased from the screen by this command.
+In input mode,
+&lt;control&gt;-H
+will have the exact same function.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to
+(<i>column</i>
+- the number of columns occupied by
+<i>count</i>
+characters ending with the previous current column)
+or the beginning of the line if
+<i>count</i>
+is greater than the number of characters
+preceding the current character in the current line.
+<h5><a name = "tag_001_014_2821_008">&nbsp;</a>Move Down in Column</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-J
+<br>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> j
+<br>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-N
+</code>
+</pre>
+<p>
+Move the cursor down
+<i>count</i>
+lines without changing the current column.
+<p>
+<i>Current line :</i>
+<i>current line</i>
++
+<i>count</i>.
+Unchanged if
+<i>count</i>
+is greater than the number of lines in the buffer
+following the current line.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_009">&nbsp;</a>Clear and Redisplay</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   &lt;control&gt;-L
+</code>
+</pre>
+<p>
+Clear and redisplay the screen.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_010">&nbsp;</a>Move Cursor Down to Non-blank</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-M
+<br>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> +
+</code>
+</pre>
+<p>
+Move the cursor down
+<i>count</i>
+lines
+to the first non-blank character of that line.
+<p>
+<i>Current line :</i>
+<i>line</i>
++
+<i>count</i>.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the first character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_011">&nbsp;</a>Move Up in Column</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-P
+<br>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> k
+</code>
+</pre>
+<p>
+Move the cursor up
+<i>count</i>
+lines
+without changing the current column.
+<p>
+<i>Current line :</i>
+<i>line</i>
+-
+<i>count</i>.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_012">&nbsp;</a>Redraw Screen</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   &lt;control&gt;-R
+</code>
+</pre>
+<p>
+Redraw the current screen.
+If any lines have been deleted from
+the logical screen and flagged as deleted on the terminal using
+the "@" convention (see
+the beginning of the EXTENDED DESCRIPTION section),
+they will be deleted, and
+the logical screen will be redisplayed.
+Lines flagged with @
+because they do not fit on the terminal display will not be affected.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_013">&nbsp;</a>Move Forward with Tabs</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   &lt;control&gt;-T
+</code>
+</pre>
+<p>
+Move the cursor forward
+<i>shiftwidth</i>
+(see the
+<i><a href="ex.htm">ex</a></i>
+<b>shiftwidth</b>
+option)
+positions in insert mode by inserting
+tab
+characters, followed by space characters, as necessary,
+if the current cursor position is at the
+beginning of a line or preceded only by
+blank characters.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+<i>column</i>
++
+<i>shiftwidth</i>.
+<h5><a name = "tag_001_014_2821_014">&nbsp;</a>Scroll Backward</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-U
+</code>
+</pre>
+<p>
+Scroll backward
+<i>count</i>
+lines in the file.
+If
+<i>count</i>
+is
+not specified, the same number of lines will be scrolled as by
+the previous
+&lt;control&gt;-D
+or
+&lt;control&gt;-U
+command.
+On the first
+&lt;control&gt;-D
+or
+&lt;control&gt;-U
+command, the amount scrolled will be the value of the
+<i><a href="ex.htm">ex</a></i>
+<b>scroll</b>
+editor option.
+<p>
+<i>Current line :</i>
+(<i>line</i>
+- amount scrolled).
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the first character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_015">&nbsp;</a>Escape Next Character</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   &lt;control&gt;-V <i>character</i>
+<br>
+<i>Synopsis</i>:   &lt;control&gt;-Q <i>character</i>
+</code>
+</pre>
+<p>
+Allow the entry of a subsequent
+<i>character</i>,
+removing any special meaning to the editor it has in input
+mode (for example, the escape character).
+The character
+^
+will be displayed in
+the current cursor position until the subsequent character
+is typed, which then replaces the character
+^.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_016">&nbsp;</a>Delete Word</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   &lt;control&gt;-W
+</code>
+</pre>
+<p>
+Delete the word preceding the cursor
+(including any blank characters between the end of the word and the
+current cursor position) in input mode by moving the cursor back to the
+beginning of the word.
+No characters will be erased from the
+screen by this command.
+Only text entered during the
+current input mode session and on the current line can be
+deleted with this command.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Moved back as described above.
+<h5><a name = "tag_001_014_2821_017">&nbsp;</a>Scroll Backward by Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;control&gt;-Y
+</code>
+</pre>
+<p>
+Scroll backward
+<i>count</i>
+lines, leaving the current line
+and column as is, if possible.
+<p>
+<i>Current line :</i>
+Unchanged unless the current line scrolls off the
+screen; otherwise, the last line displayed.
+<p>
+<i>Current column :</i>
+Unchanged unless the current line scrolls off the screen; otherwise,
+move to the first character if it is a blank line or the last character
+of the line if the position of the current column is further into the
+line than the position of the last column of the line.
+<h5><a name = "tag_001_014_2821_018">&nbsp;</a>Terminate Command or Input Mode</h5>
+<xref type="5" name="viterm"></xref>
+<pre>
+<code>
+<i>Synopsis</i>:   &lt;ESC&gt;
+</code>
+</pre>
+<p>
+The effects of
+the escape character
+depend on the mode and the command being entered, as follows:
+<ul>
+<p>
+<li>
+In command mode:
+<ul>
+<p>
+<li>
+If a line-oriented command ("/", "?", ":" or "!")
+is being entered,
+terminate the line-oriented command and execute it.
+<p>
+<li>
+If only part of a command has been
+entered, cancel the partial command.
+A command is not considered to be partially entered until at least one
+non-<i>count</i>
+character has been entered.
+For example,
+33c&lt;ESC&gt;
+is partially entered and silently canceled,
+whereas
+33&lt;ESC&gt;
+alerts the terminal
+(see the next item).
+<p>
+<li>
+Otherwise, alert the terminal.
+<p>
+</ul>
+<p>
+<li>
+In input mode:
+Terminate input mode and return to command mode.
+At this point any text that was deleted in input
+mode, but that has not yet been erased from the screen,
+will be erased from the screen; the current line will be redisplayed to
+match exactly the changes made in input mode.
+<p>
+</ul>
+<p>
+<i>Current line :</i>
+When a line-oriented command is being terminated,
+the current line indicator will be set as given for that command.
+Otherwise, unchanged.
+<p>
+<i>Current column :</i>
+When a line-oriented command is being terminated,
+the current column indicator will be set as given for that command.
+When terminating input mode, if the cursor is not at the
+beginning of a line, the current
+column position will be set to
+(<i>column</i>
+- the width of the
+last character inserted).
+Otherwise, unchanged.
+<p>
+<h5><a name = "tag_001_014_2821_019">&nbsp;</a>Move Cursor Forward</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt;space&gt;
+<br>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> l  (ell)
+</code>
+</pre>
+<p>
+Move the cursor forward
+<i>count</i>
+characters without changing the current line.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+(<i>current column</i>
++ the width of the next
+<i>count</i>
+characters)
+or the end of the line if
+<i>count</i>
+is greater than the number of characters in the line following
+the current column.
+<h5><a name = "tag_001_014_2821_020">&nbsp;</a>Replace Text with Results from Shell Command</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> ! <i>motion shell-commands</i> &lt;newline&gt;
+</code>
+</pre>
+<p>
+Pass the lines specified by
+<i>count</i>
+and
+<i>motion</i>
+as standard input to a shell command,
+for the program named in the
+<i>SHELL</i>
+environment variable,
+and replace those lines
+with the standard output of the shell command.
+An implementation may consider a
+<i>motion</i>
+command that does not result in an integral number of lines to be an error.
+After the
+<i>motion</i>
+is entered, the text of the command will be
+prompted for on the last line of the display as described
+at the beginning of the EXTENDED DESCRIPTION section.
+A warning will be issued if the buffer has been changed since the last write.
+<p>
+Within the text of
+<i>command</i>,
+"%"
+and
+"#"
+will be expanded as pathnames (the current and alternative pathnames,
+respectively),
+and
+"!"
+will be replaced with the text of the previous
+"!"
+or
+:!
+command.
+(Thus,
+!!
+will repeat the previous
+"!"
+command.)
+If no
+"!"
+or
+:!
+command has yet been executed, an
+informational message will be displayed stating the problem.
+<p>
+The special meanings of
+"%",
+"#"
+and
+"!"
+can be overridden by
+escaping them with a backslash character.
+This command is affected by the
+<i><a href="ex.htm">ex</a></i>
+editor options
+<b>autowrite</b>
+and
+<b>writeany</b>.
+<p>
+<i>Current line :</i>
+The first line in
+<i>range</i>.
+<p>
+<i>Current column :</i>
+The first column of the replaced text.
+<h5><a name = "tag_001_014_2821_021">&nbsp;</a>Move Cursor to End-of-line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> $
+</code>
+</pre>
+<p>
+Move the cursor forward to the end of a line.
+The
+<i>count</i>
+argument specifies the number of lines, including
+the current line, to move forward.
+<p>
+<i>Current line :</i>
+<i>line</i>
++
+<i>count</i>
+- 1.
+<p>
+<i>Current column :</i>
+<i>end-of-line</i>.
+<h5><a name = "tag_001_014_2821_022">&nbsp;</a>Move to Matching Character</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   %
+</code>
+</pre>
+<p>
+Move the cursor to the parenthesis or
+curly brace matching the parenthesis or curly brace
+at the current position or on the
+current line forward from the current position.
+Matching will be determined as follows:
+for a left parenthesis
+(respectively curly brace) the
+editing buffer will be searched forward until
+either a left or right parenthesis is found.
+If a left parenthesis is found, a counter is incremented by one and if a
+right parenthesis is found, a counter is decremented by one,
+and the search continues (until the end of the editing buffer is found).
+If a right parenthesis is found when the count is less than or
+equal to zero, it is the matching parenthesis.
+For a right parenthesis (respectively curly brace)
+the editing buffer will be searched
+backward (to the beginning of the editing buffer), and each right
+parenthesis increments the counter, and each left parenthesis
+decrements it.
+When searching for parentheses, curly braces
+are not counted, and vice versa.
+If there is no
+matching character,
+the terminal will be alerted
+and the current position will remain unchanged.
+<p>
+<i>Current line :</i>
+Move to the line containing the matching character, as
+described above.
+<p>
+<i>Current column :</i>
+Move to the column containing the matching character, as
+described above.
+<h5><a name = "tag_001_014_2821_023">&nbsp;</a>Repeat Substitution</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   &amp;
+</code>
+</pre>
+<p>
+Repeat the previous substitution command (equivalent to the
+<i><a href="ex.htm">ex</a></i>
+&amp; command)
+using the current line as the target.
+Flags specified on the previous substitution command
+will be ignored by this command.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged if the previous current column indicator
+value was
+<i>end-of-line</i>;
+otherwise, move to the first non-blank character of the current line
+or the first character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_024">&nbsp;</a>Return to Previous Context at Beginning of Line</h5>
+<xref type="5" name="virpcbl"></xref>
+<pre>
+<code>
+<i>Synopsis</i>:   &quot;
+<br>
+<i>Synopsis</i>:   ' <i>letter</i>
+</code>
+</pre>
+<p>
+Return to the previous context when followed by a
+'
+character, if the context still exists,
+placing the cursor at the first non-blank character of the line
+or the last character if the line is a blank line.
+If the previous context no longer exists, the
+'
+command will have no effect.
+When followed by a lower-case letter from the POSIX locale,
+return to the line
+marked with that letter (see the
+m
+command),
+at the first non-blank character in the line.
+<p>
+When used with an operator such as <b>d</b> to specify an extent
+of text, the operation takes place over complete lines.
+(See also
+<xref href=virpc><a href="#tag_001_014_2821_025">
+Return to Previous Context
+</a></xref>.)
+<p>
+<i>Current line :</i>
+Move to the line from the previous context.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_025">&nbsp;</a>Return to Previous Context</h5>
+<xref type="5" name="virpc"></xref>
+<pre>
+<code>
+<i>Synopsis</i>:   &quot;
+<br>
+<i>Synopsis</i>:   ` <i>letter</i>
+</code>
+</pre>
+<p>
+When followed by a ` character,
+return to the previous context,
+placing the cursor at the character position marked.
+(The previous context will be set whenever
+a non-relative move is made.)
+When followed by a lower-case letter from the POSIX locale,
+return to the line
+marked with that letter (see the <b>m</b> command),
+at the character position marked.
+<p>
+When used with an operator such as <b>d</b> to specify an extent
+of text, the operation takes place from the exact
+marked place to the current position within the line.
+(See also
+<xref href=virpcbl><a href="#tag_001_014_2821_024">
+Return to Previous Context at Beginning of Line
+</a></xref>.)
+<p>
+<i>Current line :</i>
+Move to the line from the previous context.
+<p>
+<i>Current column :</i>
+Set to the position of the character marked from the previous context.
+<h5><a name = "tag_001_014_2821_026">&nbsp;</a>Return to Previous Section</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   [[
+</code>
+</pre>
+<p>
+Back up to the previous section boundary.
+This command is affected by the
+<i><a href="ex.htm">ex</a></i>
+<b>sections</b>
+option.
+Note that the brackets in this command
+are part of the command syntax itself
+and are not metacharacters.
+<p>
+If the
+<i>lisp</i>
+option is set,
+a section boundary is also identified by a
+line with a leading
+"(".
+<p>
+<i>Current line :</i>
+Move to the previous line that is a section boundary
+or to the first line of the
+editing buffer if no more section
+boundaries exist preceding the current line.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_027">&nbsp;</a>Move to Next Section</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   ]]
+</code>
+</pre>
+<p>
+Move forward to a section boundary.
+This command is affected by the
+<i><a href="ex.htm">ex</a></i>
+<b>sections</b>
+option.
+Note that the brackets in this command
+are part of the command syntax itself
+and are not metacharacters.
+<p>
+If the
+<i>lisp</i>
+option is set,
+a section boundary is also identified by a
+line with a leading
+"(".
+<p>
+<i>Current line :</i>
+Move to the next line that is a section boundary
+or to the last line of the
+editing buffer if no more section
+boundaries exist following the current line.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_028">&nbsp;</a>Move to First Non-blank Position on Current Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   ^
+</code>
+</pre>
+<p>
+Move to the first non-blank position on the current line.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_029">&nbsp;</a>Move Back to Beginning of Sentence</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> (
+</code>
+</pre>
+<p>
+Move backward to the beginning of a sentence.
+A
+<i>count</i>
+will move back that many sentences.
+<p>
+If the
+<i>lisp</i>
+option is set, a
+<i>lisp</i>
+s-expression is considered a sentence
+for this command.
+<p>
+<i>Current line :</i>
+Move to the line containing the beginning of the sentence.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the sentence.
+<h5><a name = "tag_001_014_2821_030">&nbsp;</a>Move Forward to Beginning of Sentence</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> )
+</code>
+</pre>
+<p>
+Move forward to the beginning of a sentence.
+A
+<i>count</i>
+will move forward that many sentences.
+<p>
+If the
+<i>lisp</i>
+option is set, a
+<i>lisp</i>
+s-expression is considered a sentence
+for this command.
+<p>
+<i>Current line :</i>
+Move to the line containing the beginning of the sentence.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the sentence.
+<h5><a name = "tag_001_014_2821_031">&nbsp;</a>Move Back to Preceding Paragraph</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b>{
+</code>
+</pre>
+<p>
+Move back to the beginning of the preceding paragraph.
+A
+<i>count</i>
+specifies the number of paragraphs to move backward.
+This command is affected by the
+<i><a href="ex.htm">ex</a></i>
+<b>paragraph</b>
+option.
+<p>
+<i>Current line :</i>
+Move to the line containing the beginning of the previous paragraph.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line.
+<h5><a name = "tag_001_014_2821_032">&nbsp;</a>Move Forward to Next Paragraph</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> }
+</code>
+</pre>
+<p>
+Move forward to the beginning of the next paragraph.
+A
+<i>count</i>
+specifies the number of paragraphs to move forward.
+This command is affected by the
+<i><a href="ex.htm">ex</a></i>
+<b>paragraph</b>
+option.
+<p>
+<i>Current line :</i>
+Move to the line containing the beginning of the next paragraph.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line.
+<h5><a name = "tag_001_014_2821_033">&nbsp;</a>Move to Specific Column Position</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> |
+</code>
+</pre>
+<p>
+Place the cursor in the column position identified by
+<i>count</i>
+(if that position exists on the line).
+If
+<i>count</i>
+is omitted, it defaults to 1.
+If the length of the current line is less than
+<i>count</i>,
+the cursor will be placed at the end of the current line.
+If the column position is spanned by a
+tab
+or a wide character, the cursor will be placed on the character
+following the
+<i>count</i>-th
+column position.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the column position represented by
+<i>count</i>.
+<h5><a name = "tag_001_014_2821_034">&nbsp;</a>Reverse Find Character</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> ,
+</code>
+</pre>
+<p>
+Reverse the last
+f,
+F,
+t
+or
+T
+command,
+looking the other way in the current line.
+A
+<i>count</i>
+will be equivalent to repeating the search that many times.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the first column position of the next character found.
+<h5><a name = "tag_001_014_2821_035">&nbsp;</a>Move to First Non-blank of Previous Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> -
+</code>
+</pre>
+<p>
+Move to the first non-blank character in the previous line.
+A
+<i>count</i>
+specifies how many lines to move back.
+<p>
+<i>Current line :</i>
+<i>line</i>
+-
+<i>count</i>
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_036">&nbsp;</a>Repeat</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> .
+</code>
+</pre>
+<p>
+Repeat the last command that changed the buffer.
+A
+<i>count</i>
+will be passed on to the command being repeated.
+<p>
+<i>Current line :</i>
+Dependent on the results of the execution of the
+last command that changed the buffer.
+<p>
+<i>Current column :</i>
+Dependent on the results of the execution of the
+last command that changed the buffer.
+<h5><a name = "tag_001_014_2821_037">&nbsp;</a>Find Regular Expression</h5>
+<pre>
+<code>
+<i>Synopsis</i>:    /
+</code>
+</pre>
+<p>
+Prompt the user to enter
+a string on the last line on the screen,
+interpret it as a regular expression (see
+<xref href=exre><a href="ex.htm#tag_001_014_598_050">
+Regular Expressions in ex
+</a></xref>),
+and scan forward for the next occurrence of a matching string.
+The search will begin when a
+newline character
+or an
+escape character
+is entered to terminate the pattern;
+it can be prematurely terminated with an interrupt.
+<p>
+When used with an operator to specify an extent of text,
+the defined region is from the current cursor position
+to the beginning of the matched string.
+Whole lines can be specified by giving an offset from the
+matched line
+(using a closing / followed by a <b>+</b><i>n</i> or <b>-</b><i>n</i>).
+<p>
+<i>Current line :</i>
+Move to the line in which the first (or next) regular expression match occurred.
+<p>
+<i>Current column :</i>
+Move to the column of the first character of the matched string.
+<h5><a name = "tag_001_014_2821_038">&nbsp;</a>Move to First Character in Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   0  (zero)
+</code>
+</pre>
+<p>
+Move to the first character on the current line.
+(The zero will not be interpreted as a command
+when it is preceded by a non-zero digit.)
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Column position 1.
+<h5><a name = "tag_001_014_2821_039">&nbsp;</a>Execute an ex Command</h5>
+<xref type="5" name="viex"></xref>
+<pre>
+<code>
+<i>Synopsis</i>:    :
+</code>
+</pre>
+<p>
+Execute an
+<i><a href="ex.htm">ex</a></i>
+command.
+The implementation need not support an
+<i><a href="ex.htm">ex</a></i>
+command that enters input mode (that is,
+<b>append</b>,
+<b>change</b>
+or
+<b>insert</b>).
+The <b>:</b> character, as well as the entered command,
+will be displayed on the bottom line.
+The command will be executed when the input is terminated by entering a
+newline character
+or an
+escape character.
+Typing a
+&lt;control&gt;-V
+(or
+&lt;control&gt;-Q)
+character will escape the following character,
+allowing its literal value to be entered.
+<dl><dt><b>Note:</b>
+<dd>This special property of
+&lt;control&gt;-V
+and
+&lt;control&gt;-Q
+is only effective in visual or open modes
+and in
+<i><a href="ex.htm">ex</a></i>
+commands called from visual or open mode with the ":"
+command.
+</dl>
+<p>
+If the
+<b>ex</b>
+command causes the screen to be scrolled or causes an escape to the shell,
+<b>vi</b>
+will display a message indicating that it is waiting for a
+newline
+character.
+When a
+newline
+or an
+escape
+character is entered, the
+screen will be refreshed.
+<p>
+When executing an individual
+<i><a href="ex.htm">ex</a></i>
+command by entering ":", it is not possible to enter a
+newline character
+as part of the command because it is considered the
+end of the command.
+As explained in
+<xref href=exrep><a href="ex.htm#tag_001_014_598_051">
+Replacement Strings in ex
+</a></xref>,
+a
+&lt;control&gt;-M
+preceded by a
+&lt;control&gt;-V
+(or
+&lt;control&gt;-Q)
+escape character in a regular expression substitution is mapped into a
+newline character.
+A different approach is to enter
+<i><a href="ex.htm">ex</a></i>
+command mode by using the
+<i>vi</i>
+Q
+command (and later resuming visual mode with the
+<i><a href="ex.htm">ex</a></i>
+vi
+command).
+In
+<i><a href="ex.htm">ex</a></i>
+command mode, the single-line limitation does not exist.
+So, for example, the following is valid:
+<pre>
+<code>
+Q
+s/break here/break\
+here/
+vi
+</code>
+</pre>
+<p>
+<i>Current line :</i>
+Dependent on the results of the execution of the
+<i><a href="ex.htm">ex</a></i>
+command.
+<p>
+<i>Current column :</i>
+Dependent on the results of the execution of the
+<i><a href="ex.htm">ex</a></i>
+command.
+<h5><a name = "tag_001_014_2821_040">&nbsp;</a>Repeat Find</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> ;
+</code>
+</pre>
+<p>
+Repeat the last character find using
+f,
+F,
+t
+or
+T.
+A
+<i>count</i>
+will move the cursor to (or next to) the
+<i>count</i>-th
+occurrence of the character.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the column containing the character being searched for.
+If no matching character is found, it will be unchanged.
+<h5><a name = "tag_001_014_2821_041">&nbsp;</a>Shift Left</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &lt; <i>motion</i>
+</code>
+</pre>
+<p>
+Shift lines left one
+<i>shiftwidth</i>
+(see the
+<i><a href="ex.htm">ex</a></i>
+<b>shiftwidth</b>
+option).
+The command must be followed by a motion command to specify lines.
+A
+<i>count</i>
+will be passed through to the motion command.
+<p>
+When
+<i>motion</i>
+is
+"&lt;",
+it will shift the current line
+(or
+<i>count</i>
+lines starting at the current one).
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_042">&nbsp;</a>Shift Right</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> &gt; <i>motion</i>
+</code>
+</pre>
+<p>
+Shift lines right one
+<i>shiftwidth</i>
+(see the
+<i><a href="ex.htm">ex</a></i>
+<b>shiftwidth</b>
+option).
+The command must be followed by a motion command to specify lines.
+A
+<i>count</i>
+will be passed through to the motion command.
+<p>
+When
+<i>motion</i>
+is
+"&gt;",
+it will shift the current line
+(or
+<i>count</i>
+lines starting at the current one).
+<p>
+Empty lines will not be changed.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_043">&nbsp;</a>Scan Backwards for Regular Expression</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   ?
+</code>
+</pre>
+<p>
+Scan backwards, the reverse of <b>/</b>.
+<p>
+<i>Current line :</i>
+Move to the line in which the next succeeding regular expression match occurred.
+<p>
+<i>Current column :</i>
+Move to the column of the first character of the matched string.
+<h5><a name = "tag_001_014_2821_044">&nbsp;</a>Execute</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   @<i>buffer</i>
+</code>
+</pre>
+<p>
+Execute each line of the named buffer as one or more
+<i>vi</i>
+commands (including
+<i><a href="ex.htm">ex</a></i>
+commands, as described in
+<xref href=viex><a href="#tag_001_014_2821_039">
+Execute an ex Command
+</a></xref>).
+If the buffer name is @, then the last buffer
+executed is used;
+if there is no last buffer, an error will occur.
+The text of a macro may contain an @ character calling another macro;
+however, recursively calling the same macro produces undefined behaviour.
+A
+<i>vi</i>
+error will terminate all currently executing macros.
+All changes made during a macro
+call will be treated as a unit and can be undone with a single
+u
+command.
+<p>
+<i>Current line :</i>
+Dependent on the results of the execution of the
+<i>vi</i>
+commands.
+<p>
+<i>Current column :</i>
+Dependent on the results of the execution of the
+<i>vi</i>
+commands.
+<h5><a name = "tag_001_014_2821_045">&nbsp;</a>Reverse Case</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> ~
+</code>
+</pre>
+<p>
+Reverse the case of the
+<i>count</i>
+characters beginning at the current cursor position.
+Lower-case alphabetic characters will be changed to upper-case and
+upper-case characters changed to lower-case.
+This command will have
+no effect on non-alphabetic characters.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the next column unless it is on the last
+character of the line, in which case it will remain unchanged.
+<h5><a name = "tag_001_014_2821_046">&nbsp;</a>Reindent</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b>=<b>[</b><i>motion</i><b>]</b>
+</code>
+</pre>
+<p>
+If the
+<i>lisp</i>
+option is set, reindents the specified lines,
+as though they were typed in with
+<b>lisp</b>
+and
+<b>autoindent</b>
+set.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the line or the last character
+if the line is a blank line.
+<h5><a name = "tag_001_014_2821_047">&nbsp;</a>Append</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> a
+</code>
+</pre>
+<p>
+Enter input mode, appending the entered text after the current
+cursor position.
+A
+<i>count</i>
+will cause the inserted text up to the first newline character
+to be replicated that many times; if a newline character
+appears in the inserted text,
+only one occurrence of it and any characters following it will be inserted.
+For example, if the current line is
+<b>abc</b>,
+the command:
+<pre>
+<code>
+03afoo&lt;newline&gt;bar
+</code>
+</pre>
+changes that line to:
+<pre>
+<code>
+afoofoofoo
+barbc
+</code>
+</pre>
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+<i>column</i>
++ 1.
+<h5><a name = "tag_001_014_2821_048">&nbsp;</a>Append at End-of-line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> A
+</code>
+</pre>
+<p>
+Append
+<i>count</i>
+copies of the input text at the end of the
+current line, equivalent to
+$<b>[</b><i>count</i><b>]</b>
+a.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+See the
+a
+command.
+<h5><a name = "tag_001_014_2821_049">&nbsp;</a>Move Backward to Preceding Word</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> b
+</code>
+</pre>
+<p>
+Move the cursor backward to the beginning of a word by
+repeating the following algorithm
+<i>count</i>
+times:
+If the current
+position is at the beginning of a word,
+the current
+position will move to the first character of the preceding word.
+Otherwise, the current position will move to the first
+character of the word at the current position.
+If no preceding word exists on the current line, the current
+position will move to the first character of the last word
+on the first preceding line that contains a word.
+For this command, an empty or blank line will be considered to contain
+exactly one word.
+<p>
+<i>Current line :</i>
+Set to the line containing the word selected.
+<p>
+<i>Current column :</i>
+Set to the first character of the word selected.
+<h5><a name = "tag_001_014_2821_050">&nbsp;</a>Move Backward to Preceding Bigword</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> B
+</code>
+</pre>
+<p>
+Move the cursor backward to the beginning of a bigword by repeating the
+following algorithm
+<i>count</i>
+times:
+If the current position is at the beginning of a bigword or the
+character at the current position cannot be part of a bigword, the
+current position will move to the first character of the preceding bigword.
+Otherwise, the current position will move to the first
+character of the bigword at the current position.
+If no preceding
+bigword exists on the current line, the current position will move to
+the first character of the last bigword on the first preceding line
+that contains a bigword.
+For this command, an empty or blank line is considered
+to contain exactly one bigword.
+<p>
+<i>Current line :</i>
+Set to the line containing the bigword selected.
+<p>
+<i>Current column :</i>
+Set to the first character of the bigword selected.
+<h5><a name = "tag_001_014_2821_051">&nbsp;</a>Change</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> c <i>motion</i>
+</code>
+</pre>
+<p>
+Delete the specified region of text and enter input mode to
+replace it with the entered text.
+If more than part of a single line is affected,
+the deleted text will be saved in the numeric buffers.
+If only part of the current line is affected,
+then the last character to be deleted will be
+marked with a $.
+A
+<i>count</i>
+will be passed through to the
+motion command.
+<p>
+<i>Current line :</i>
+The current line and column position are dependent on the
+<i>motion</i>
+command following the
+c.
+For example,
+<b>cw</b>
+changes a
+word,
+c[[
+changes from the beginning of the current section, and so on.
+<p>
+<i>Current column :</i>
+See
+<i>Current line ,</i>
+above
+<h5><a name = "tag_001_014_2821_052">&nbsp;</a>Change to End-of-line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> C
+</code>
+</pre>
+<p>
+Change text from the current position to the end-of-line
+(<i>line</i>
++
+<i>count</i>
+- 1);
+equivalent to:
+<pre>
+<code>
+<b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> c$
+</code>
+</pre>
+<p>
+<i>Current line :</i>
+See the
+c
+command.
+<p>
+<i>Current column :</i>
+See the
+c
+command.
+<h5><a name = "tag_001_014_2821_053">&nbsp;</a>Delete</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> d <i>motion</i>
+</code>
+</pre>
+<p>
+Delete the specified region of text.
+If more than part of a line is affected, the
+text will be saved in the numeric buffers
+as well as any named
+<i>buffer</i>.
+A
+<i>count</i>
+will be passed through to the
+motion command.
+<p>
+<i>Current line :</i>
+The current line and column position are dependent on the
+<i>motion</i>
+command following the
+d.
+For example,
+<b>dw</b>
+deletes a
+word,
+d$
+deletes to the end of the line, and so on.
+<p>
+<i>Current column :</i>
+See
+<i>Current line ,</i>
+above.
+<h5><a name = "tag_001_014_2821_054">&nbsp;</a>Delete to End-of-line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>]</b> D
+</code>
+</pre>
+<p>
+Delete the text from the current position to the end of
+the current line; equivalent to:
+<pre>
+<code>
+<b>[</b><i>buffer</i><b>]</b> d$
+</code>
+</pre>
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to maximum of
+<i>column</i>
+- 1 or 1.
+<h5><a name = "tag_001_014_2821_055">&nbsp;</a>Move to End-of-word</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> e
+</code>
+</pre>
+<p>
+Move the cursor forward to the end of a word, by repeating the
+following algorithm
+<i>count</i>
+times:
+If the current position is the
+end of a word, the current position will move to the last
+character of the following word.
+Otherwise, the current
+position will move to the last character of the word at the
+current position.
+If no succeeding word exists on the current
+line, the current position will move to the last character of
+the first word on the next following line that contains a word.
+For this command,
+an empty or blank line is considered to contain
+exactly one word.
+<p>
+<i>Current line :</i>
+Set to the line containing the word selected.
+<p>
+<i>Current column :</i>
+Set to the last character of the word selected.
+<h5><a name = "tag_001_014_2821_056">&nbsp;</a>Move to End-of-bigword</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> E
+</code>
+</pre>
+<p>
+Move the cursor forward to the end of a bigword, by repeating the
+following algorithm
+<i>count</i>
+times:
+If the current position is the end of a bigword or the
+character at that position cannot be part of a bigword, the current
+position will move to the last character of the following bigword.
+Otherwise, the current position will move to the last character of the
+bigword at the current position.
+If no succeeding bigword exists on
+the current line, the current position will move to the last character
+of the first bigword on the next following line that contains a bigword.
+<p>
+For this command, an empty or blank line is considered to contain
+exactly one bigword.
+<p>
+<i>Current line :</i>
+Set to the line containing the bigword selected.
+<p>
+<i>Current column :</i>
+Set to the last character of the bigword selected.
+<h5><a name = "tag_001_014_2821_057">&nbsp;</a>Find Character in Current Line (Forward)</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> f <i>character</i>
+</code>
+</pre>
+<p>
+Scan the rest of the current line for the single character
+<i>character</i>
+and move the cursor to it if it is found.
+A
+<i>count</i>
+will repeat the find that many times.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to the column position containing the
+character that was scanned for.
+Unchanged if insufficient characters were
+found to satisfy the
+<i>count</i>.
+<h5><a name = "tag_001_014_2821_058">&nbsp;</a>Find Character in Current Line (Reverse)</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> F <i>character</i>
+</code>
+</pre>
+<p>
+Scan backwards in the current line for the single character
+<i>character</i>,
+moving the cursor to it if it is found.
+A
+<i>count</i>
+will be equivalent to repeating the search that many times.
+If the search is unsuccessful,
+the terminal will be alerted
+and the current column
+position will remain unchanged.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to the last character found moving backwards.
+<h5><a name = "tag_001_014_2821_059">&nbsp;</a>Move to Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> G
+</code>
+</pre>
+<p>
+Move the cursor to line
+<i>count</i>,
+or
+to the last line of the editing buffer if
+<i>count</i>
+is not
+specified.
+<p>
+<i>Current line :</i>
+<i>count</i>,
+if specified; otherwise, the last line.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_060">&nbsp;</a>Move to Top of Screen</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> H
+</code>
+</pre>
+<p>
+Move the cursor to the line
+(<i>count</i>
+- 1)
+lines from the top of the current window
+(that is, the
+<i>count</i>-th
+line, one-based, currently
+displayed).
+<p>
+<i>Current line :</i>
+<i>count</i>
+on the screen, as described above.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_061">&nbsp;</a>Insert Before Cursor</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> i
+</code>
+</pre>
+<p>
+Enter input mode, inserting the entered text before the cursor.
+(See also the
+a
+command.)
+A
+<i>count</i>
+will cause the inserted text up to the first
+newline character
+to be replicated that many times; if a
+newline character
+appears in the inserted text,
+only one occurrence of it and any characters following it will be inserted.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_062">&nbsp;</a>Insert at Beginning of Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> I
+</code>
+</pre>
+<p>
+Enter input mode at the beginning of a line.
+This command behaves identically to the
+<b>^[</b><i>count</i><b>]i</b>
+command.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character
+of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_063">&nbsp;</a>Join</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> J
+</code>
+</pre>
+<p>
+Join the current line with the next one, supplying appropriate spacing
+(in the POSIX locale):
+one space character between words, two space characters after a period,
+and no space characters at all when
+the last character of the first line is a
+blank character
+or when the first
+character of the next line is
+")".
+In the case of lines ending with
+blank characters,
+the
+blanks characters
+will be retained, no spaces will be added,
+and the lines will be joined together.
+A
+<i>count</i>
+will cause that many lines (minimum 2) to
+be joined, rather than 2.
+A count of 1 will be treated as 2.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the character after the last character of the original line.
+<h5><a name = "tag_001_014_2821_064">&nbsp;</a>Move to Bottom of Screen</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> L
+</code>
+</pre>
+<p>
+Move the cursor to the first non-blank character of
+the last line on the screen.
+A
+<i>count</i>
+will move to that line counting from the bottom.
+When used with an operator, whole lines are affected.
+<p>
+<i>Current line :</i>
+<i>last line</i>
+-
+<i>count</i>
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_065">&nbsp;</a>Mark Position</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   m<i> letter</i>
+</code>
+</pre>
+<p>
+Mark the current position of the cursor with
+a single POSIX locale lower-case letter
+<i>letter</i>.
+The exact position is referred to by
+` <i>letter</i> ;
+the line is referred to by
+'<i>letter</i>.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_066">&nbsp;</a>Move to Middle of Screen</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   M
+</code>
+</pre>
+<p>
+Move the cursor to the middle line on the screen,
+at the first non-blank position on the line.
+<p>
+<i>Current line :</i>
+Move to a line approximately in the middle of the display window.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the last character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_067">&nbsp;</a>Repeat Regular Expression Find (Forward)</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   n
+</code>
+</pre>
+<p>
+Repeat the last <b>/</b> or <b>?</b> scanning command.
+<p>
+<i>Current line :</i>
+Set to the line containing the character string found by the scan.
+Unchanged if no match was found.
+<p>
+<i>Current column :</i>
+Move to the first character of the character string found by the scan.
+Unchanged if no match was found.
+<h5><a name = "tag_001_014_2821_068">&nbsp;</a>Repeat Regular Expression Find (Reverse)</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   N
+</code>
+</pre>
+<p>
+Scan for the next match of the last pattern given to
+<b>/</b> or <b>?</b>, but in the reverse direction;
+this is the reverse of <b>n</b>.
+<p>
+<i>Current line :</i>
+Move to the matched line if a match is found or
+unchanged if no match is found.
+<p>
+<i>Current column :</i>
+Move to the first column position of the matched string or
+unchanged if no match is found.
+<h5><a name = "tag_001_014_2821_069">&nbsp;</a>Insert Empty Line Below</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   o
+</code>
+</pre>
+<p>
+Open a line below the current line and enter input mode.
+<p>
+<i>Current line :</i>
+The newly-created line,
+(<i>line</i>+1).
+<p>
+<i>Current column :</i>
+If the editor option
+<b>autoindent</b>
+is not set,
+move to the first column; otherwise, as in the
+description of the
+<i><a href="ex.htm">ex</a></i>
+<b>autoindent</b>
+option.
+<h5><a name = "tag_001_014_2821_070">&nbsp;</a>Insert Empty Line Above</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   O
+</code>
+</pre>
+<p>
+Open a new line above the current line and enter input mode.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+If the editor option
+<b>autoindent</b>
+is not set,
+move to the first column; otherwise, as described in the
+description of
+<b>autoindent</b>
+in
+<i><a href="ex.htm">ex</a></i>.
+<h5><a name = "tag_001_014_2821_071">&nbsp;</a>Put from Buffer Following</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>]</b> p
+</code>
+</pre>
+<p>
+Insert text from buffer
+<i>buffer</i>
+following the current column or current line, as described
+for the
+P
+command.
+If
+<i>buffer</i>
+is omitted, the unnamed buffer is used.
+<p>
+<i>Current line :</i>
+(<i>Current&nbsp;line</i>+1)
+if the buffer contains whole lines; otherwise, unchanged.
+<p>
+<i>Current column :</i>
+First non-blank
+character of the inserted text if the buffer contained whole lines;
+otherwise, the last character of the inserted text.
+<h5><a name = "tag_001_014_2821_072">&nbsp;</a>Put from Buffer Before</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>]</b> P
+</code>
+</pre>
+<p>
+Put the last deleted text back before and above the cursor.
+The text will go back as whole lines above the cursor if
+it was deleted as whole lines.
+Otherwise, the text will be inserted just before the cursor.
+<p>
+The command can be preceded by a named buffer specification (<b>"</b><i>x</i>),
+to retrieve the contents of the buffer.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the last column position of the inserted characters.
+If the buffer contains whole lines, the
+current column will be the first non-blank character of the
+inserted characters.
+<h5><a name = "tag_001_014_2821_073">&nbsp;</a>Enter ex Mode</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   Q
+</code>
+</pre>
+<p>
+Quit from
+<i>vi</i>
+and enter
+<i><a href="ex.htm">ex</a></i>
+command mode.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_074">&nbsp;</a>Replace Character</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> r <i>character</i>
+</code>
+</pre>
+<p>
+Replace a character on the screen with the character entered.
+If
+<i>count</i>
+is specified, the single character entered will replace
+the current character and each of the next
+<i>count</i>
+- 1
+characters in the line.
+(For example,
+7rx
+changes the next seven characters to be
+<b>xxxxxxx</b>).
+Unlike the
+R
+command,
+entering a
+newline character
+will replace the character with a
+newline character;
+however, when used with
+<i>count</i>,
+the next
+<i>count</i>
+characters in the line will be replaced by a single
+newline character.
+<p>
+<i>Current line :</i>
+Unchanged unless the replacement character is a
+newline character,
+in which case the current line will be incremented by 1.
+<p>
+<i>Current column :</i>
+Set to the last column position
+occupied by the replacement character,
+unless the replacement character is a
+newline character,
+in which case the current column position will be 1.
+<h5><a name = "tag_001_014_2821_075">&nbsp;</a>Replace Characters</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   R
+</code>
+</pre>
+<p>
+Replace characters on the screen with characters entered.
+If the end of the existing line is encountered, it will be as if
+insert mode was entered at that point.
+If a
+newline character
+is entered before the end of the existing line, it will be
+entered into the editing buffer as if it was inserted, and replacement
+will continue on the newly created line.
+No other line but
+the one in which the
+R
+command was given will be affected.
+<p>
+<i>Current line :</i>
+Set to the line at the end of the replaced text.
+<p>
+<i>Current column :</i>
+Set to the end of the replaced text, if text was replaced.
+If no text was replaced, set to the column
+position of the character after which text would have been replaced if
+that character is on the current line;
+otherwise, 1.
+<h5><a name = "tag_001_014_2821_076">&nbsp;</a>Substitute Character</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> s
+</code>
+</pre>
+<p>
+Substitute
+<i>count</i>
+characters in the current line
+starting with the current column position; equivalent to:
+<pre>
+<code>
+<b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> c&lt;space&gt;
+</code>
+</pre>
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_077">&nbsp;</a>Substitute lines</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> S
+</code>
+</pre>
+<p>
+Change whole lines (same as <b>cc</b>).
+A
+<i>count</i>
+will change that many lines;
+<i>count</i>
+lines will be deleted and
+<i>vi</i>
+will enter input mode.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to column position 1 or to the position indicated
+by the previous line if
+<b>autoindent</b>
+is set.
+<h5><a name = "tag_001_014_2821_078">&nbsp;</a>Move Cursor to Before Character (Forward)</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> t <i>character</i>
+</code>
+</pre>
+<p>
+Move the cursor forward within the
+current line to the character position just before a
+subsequent occurrence of
+<i>character</i>.
+A
+<i>count</i>
+will place the cursor just before the
+<i>count</i>-th
+occurrence of the character when searching the line forwards.
+If the search is unsuccessful,
+the terminal will be alerted
+and the cursor position will remain unchanged.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Move to the position before an occurrence of
+<i>character</i>
+following
+<i>column</i>
+(non-inclusive).
+<h5><a name = "tag_001_014_2821_079">&nbsp;</a>Move Cursor to After Character (Reverse)</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> T <i>character</i>
+</code>
+</pre>
+<p>
+Scan backwards in the current line for the single character
+<i>character</i>
+and if found, place the cursor just after that character.
+A
+<i>count</i>
+will place the
+cursor just after the
+<i>count</i>-th
+occurrence of the character when
+searching the line backwards.
+If
+<i>count</i>-th
+occurrences of the
+character do not exist,
+the terminal will be alerted
+and the current column position will remain unchanged.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to the column after the scanned character.
+Unchanged if the character was not found.
+<h5><a name = "tag_001_014_2821_080">&nbsp;</a>Undo</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   u
+</code>
+</pre>
+<p>
+Reverse the last change made to the current buffer.
+If repeated, the command will alternate between these two
+states, thus is its own inverse.
+When used after an insert that inserted text
+on more than one line, the lines will be saved in the
+numeric named buffers.
+<p>
+<i>Current line :</i>
+Move to the position of the first line changed, if the
+reversal affects only one line or represents an
+addition or change; otherwise, move to the line preceding
+the deleted text.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character on the updated current line.
+<h5><a name = "tag_001_014_2821_081">&nbsp;</a>Undo Current Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   U
+</code>
+</pre>
+<p>
+Restore the current line to its state before
+the cursor was last moved to it.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to column position 1 or to the position indicated
+by the previous line if
+<b>autoindent</b>
+is set.
+<h5><a name = "tag_001_014_2821_082">&nbsp;</a>Move to Beginning of Word</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> w
+</code>
+</pre>
+<p>
+Move the cursor forward to the beginning of a
+word by repeating the following algorithm
+<i>count</i>
+times:
+If the current position is at the beginning of a word,
+the current position will move
+to the first character of the next word.
+If no subsequent word exists on the current line,
+the current position will move to
+the first character of the first word on the first
+following line that contains a word.
+<p>
+For this command, an empty or blank line is considered to contain
+exactly one word.
+<p>
+<i>Current line :</i>
+Set to the line containing the word selected.
+<p>
+<i>Current column :</i>
+Set to the first character of the word selected.
+<h5><a name = "tag_001_014_2821_083">&nbsp;</a>Move to Beginning of Bigword</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count</i><b>]</b> W
+</code>
+</pre>
+<p>
+Move the cursor forward to the beginning of a bigword by
+repeating the following algorithm
+<i>count</i>
+times:
+If the current
+position is within a bigword or the character at that
+position cannot be part of a bigword, the current position
+will move to the first character of the next bigword.
+If no subsequent bigword exists on the current line, the current
+position will move to the first character of the first
+bigword on the first following line that contains a bigword.
+For this command, an empty or blank line
+is considered to contain exactly one bigword.
+<p>
+<i>Current line :</i>
+Set to the line containing the bigword selected.
+<p>
+<i>Current column :</i>
+Set to the first character of the bigword selected.
+<h5><a name = "tag_001_014_2821_084">&nbsp;</a>Delete Character at Cursor</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> x
+</code>
+</pre>
+<p>
+Delete
+<i>count</i>
+characters in the current line starting
+with the current column position; equivalent to:
+<pre>
+<code>
+<b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> dl
+</code>
+</pre>
+If the number of characters to be deleted is
+greater than or equal to the number of characters
+to the end of the line, delete all of the characters
+from the current position to the end of the line and
+move the cursor to the new last character on the line.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to the greater of
+- the width of the
+<i>count</i>
+deleted characters)
+or 1.
+<h5><a name = "tag_001_014_2821_085">&nbsp;</a>Delete Character Before Cursor</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> X
+</code>
+</pre>
+<p>
+Delete the character before the cursor;
+equivalent to:
+<pre>
+<code>
+<b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> dh
+</code>
+</pre>
+A
+<i>count</i>
+will repeat the effect, but only
+characters on the current line will be deleted.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Set to the greater of
+- the width of the
+<i>count</i>
+deleted characters)
+or 1.
+<h5><a name = "tag_001_014_2821_086">&nbsp;</a>Yank</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> y <i>motion</i>
+</code>
+</pre>
+<p>
+Copy (yank) the area of text specified by
+<i>count</i>
+and
+<i>motion</i>
+into the unnamed buffer, as well as into
+any named buffer specified by
+<i>buffer</i>.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_087">&nbsp;</a>Yank Current Line</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> Y
+</code>
+</pre>
+<p>
+Copy (yank)
+<i>count</i>
+lines starting with the current line into the unnamed
+buffer, as well as into any named buffer specified by
+<i>buffer</i>;
+equivalent to a:
+<pre>
+<code>
+<b>[</b><i>buffer</i><b>][</b><i>count</i><b>]</b> yy
+</code>
+</pre>
+command.
+<p>
+<i>Current line :</i>
+Unchanged.
+<p>
+<i>Current column :</i>
+Unchanged.
+<h5><a name = "tag_001_014_2821_088">&nbsp;</a>Redraw Window</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   <b>[</b><i>count1</i><b>]</b> z <b>[</b><i>count2</i><b>]</b><i> character</i><b>
+</b></code>
+</pre>
+<p>
+Redraw the screen with a window
+<i>count2</i>
+lines long
+containing line
+<i>count1</i>
+placed as specified by
+<i>character</i>:
+a newline character specifies the top of the screen, "."
+specifies the center of the screen, and "-" specifies
+the bottom of the screen.
+If
+<i>count1</i>
+is not specified,
+it defaults to the current line; if
+<i>count2</i>
+is not
+specified, it defaults to
+<i>window</i>.
+<p>
+<i>Current line :</i>
+<i>count1</i>,
+if specified; otherwise, unchanged.
+<p>
+<i>Current column :</i>
+Move to the first non-blank character of the current line
+or the first character if the line is a blank line.
+<h5><a name = "tag_001_014_2821_089">&nbsp;</a>Exit</h5>
+<pre>
+<code>
+<i>Synopsis</i>:   ZZ
+</code>
+</pre>
+<p>
+Exits the editor, writing out the buffer if it was changed since
+the last write
+to any file.
+This command behaves identically to the
+<i><a href="ex.htm">ex</a></i>
+command
+<b>xit</b>.
+<p>
+The uses described for
+&lt;control&gt;-V
+can also be accomplished with
+&lt;control&gt;-Q,
+which is useful on terminals that use
+&lt;control&gt;-V
+for the down-arrow function.
+However, most historical implementations use
+&lt;control&gt;-Q
+for the
+<b>termios</b>
+START character, so the editor will generally
+not receive the
+&lt;control&gt;-Q
+unless
+<i><a href="stty.htm">stty</a></i>
+<b>-ixon</b>
+mode is set.
+Any of the command characters described in this specification
+can be made ineffective by their selection as
+<b>termios</b>
+control characters, using the
+<i><a href="stty.htm">stty</a></i>
+utility or other methods described in
+the <b>XBD</b> specification, <a href="../xbd/termios.htm"><b>General Terminal Interface</b>&nbsp;</a> .
+</blockquote><h4><a name = "tag_001_014_2822">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2823">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2824">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2825">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2826">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+The IEEE PASC 1003.2 Interpretations Committee has forwarded concerns about
+parts of this interface definition to the IEEE PASC Shell and Utilities Working Group
+which is identifying the corrections.
+A future revision of this specification will align with
+IEEE Std. 1003.2b when finalised.
+</blockquote><h4><a name = "tag_001_014_2827">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="ex.htm">ex</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>msgctl</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_799">&nbsp;</a>NAME</h4><blockquote>
+msgctl - message control operations
+</blockquote><h4><a name = "tag_000_007_800">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysms269.htm">sys/msg.h</a>&gt;
+
+int msgctl(int <i>msqid</i>, int <i>cmd</i>, struct msqid_ds *<i>buf</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_801">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>msgctl()</i>
+function provides message control operations as specified by
+<i>cmd</i>.
+The following values for
+<i>cmd</i>,
+and the message control operations they specify, are:
+<dl compact>
+
+<dt>IPC_STAT<dd>
+Place the current value of each member of the
+<b>msqid_ds</b>
+data structure associated with
+<i>msqid</i>
+into the structure pointed to by
+<i>buf</i>.
+The contents of this structure are defined in
+<i><a href="sysms269.htm">&lt;sys/msg.h&gt;</a></i>.
+
+<dt>IPC_SET<dd>
+Set the value of the following members of the
+<b>msqid_ds</b>
+data structure associated with
+<i>msqid</i>
+to the corresponding value found in the structure pointed to by
+<i>buf</i>:
+<pre>
+<code>
+msg_perm.uid
+msg_perm.gid
+msg_perm.mode
+msg_qbytes
+</code>
+</pre>
+
+IPC_SET can only be executed by a process with appropriate privileges
+or that has an effective user ID equal to the value of
+<b>msg_perm.cuid</b>
+or
+<b>msg_perm.uid</b>
+in the
+<b>msqid_ds</b>
+data structure associated with
+<i>msqid</i>.
+Only a process with appropriate privileges can raise the value of
+<i>msg_qbytes</i>.
+
+<dt>IPC_RMID<dd>
+Remove the message queue identifier specified by
+<i>msqid</i>
+from the system and destroy the message queue and
+<b>msqid_ds</b>
+data structure associated with it.  IPC_RMD
+can only be executed by a process with appropriate privileges
+or one that has an effective user ID equal to the value of
+<b>msg_perm.cuid</b>
+or
+<b>msg_perm.uid</b>
+in the
+<b>msqid_ds</b>
+data structure associated with
+<i>msqid</i>.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_802">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>msgctl()</i>
+returns 0.  Otherwise, it returns -1 and
+<i>errno</i>
+will be set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_803">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>msgctl()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+The argument
+<i>cmd</i>
+is IPC_STAT and the calling process does not have read permission, see
+<a href="ipc.htm">IPC</a>.
+
+<dt>[EINVAL]<dd>
+The value of
+<i>msqid</i>
+is not a valid message queue identifier;
+or the value of
+<i>cmd</i>
+is not a valid command.
+
+
+<dt>[EPERM]<dd>
+The argument
+<i>cmd</i>
+is IPC_RMID or IPC_SET
+and the effective user ID of the
+calling process is not equal to that of a process with appropriate
+privileges and it is not equal to the value of
+<b>msg_perm.cuid</b>
+or
+<b>msg_perm.uid</b>
+in the data structure associated with
+<i>msqid</i>.
+
+
+<dt>[EPERM]<dd>
+The argument
+<i>cmd</i>
+is IPC_SET, an attempt is being made to increase to the value of
+<i>msg_qbytes</i>,
+and the effective user ID of the calling process
+does not have appropriate privileges.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_804">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_805">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The POSIX Realtime Extension defines alternative interfaces for interprocess communication.
+Application developers who need to use IPC should design their
+applications so that modules using the IPC routines described in
+<a href="ipc.htm">IPC</a>
+can be easily modified to use the alternative interfaces.
+</blockquote><h4><a name = "tag_000_007_806">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_807">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mqclo98.htm">mq_close()</a></i>,
+<i><a href="mqget99.htm">mq_getattr()</a></i>,
+<i><a href="mqnot100.htm">mq_notify()</a></i>,
+<i><a href="mqope101.htm">mq_open()</a></i>,
+<i><a href="mqrec102.htm">mq_receive()</a></i>,
+<i><a href="mqsen103.htm">mq_send()</a></i>,
+<i><a href="mqset104.htm">mq_setattr()</a></i>,
+<i><a href="mqunl105.htm">mq_unlink()</a></i>,
+<i><a href="msgget.htm">msgget()</a></i>,
+<i><a href="msgrcv.htm">msgrcv()</a></i>,
+<i><a href="msgsnd.htm">msgsnd()</a></i>,
+<i><a href="sysms269.htm">&lt;sys/msg.h&gt;</a></i>,
+<a href="ipc.htm">IPC</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 2 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

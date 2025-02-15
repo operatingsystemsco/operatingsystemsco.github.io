@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>listen</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+listen - listen for socket connections and limit the queue of incoming connections
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="sysso38.htm">sys/socket.h</a>&gt;
+
+int listen(int <I>socket</I>, int <I>backlog</I>);
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+The
+<i>listen()</i>
+function marks a connection-mode socket, specified by the
+<I>socket</I>
+argument, as accepting connections, and limits the number of outstanding
+connections in the socket's listen queue to the value specified by the
+<I>backlog</I>
+argument.
+<p>
+If
+<i>listen()</i>
+is called with a <I>backlog</I> argument value that is less than 0, the
+function sets the length of the socket's listen queue to 0.
+<p>
+The implementation may include incomplete connections in the
+queue subject to the queue limit. The implementation
+may also increase the specified queue limit internally if it
+includes such incomplete connections in the queue subject to
+this limit.
+<p>
+Implementations may limit the length of the socket's listen queue.  If
+<I>backlog</I> exceeds the implementation-dependent maximum queue length, the
+length of the socket's listen queue will be set to the maximum supported
+value.
+<p>
+The socket in use may require the process to have appropriate
+privileges to use the
+<i>listen()</i>
+function.
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completions,
+<i>listen()</i>
+returns 0.  Otherwise, -1
+is returned and <I>errno</I> is set to indicate the error.
+</blockquote><h4>ERRORS</h4><blockquote>
+The
+<i>listen()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>The <I>socket</I> argument is not a valid file descriptor.
+
+<dt>[EDESTADDRREQ]<dd>The socket is not bound to a local address, and the protocol does not support
+listening on an unbound socket.
+
+<dt>[EINVAL]<dd>The <I>socket</I> is already connected.
+
+<dt>[ENOTSOCK]<dd>The <I>socket</I> argument does not refer to a socket.
+
+<dt>[EOPNOTSUPP]<dd>The socket protocol does not support
+<i>listen()</i>.
+
+</dl>
+<p>
+The
+<i>listen()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>The calling process does not have the appropriate privileges.
+
+<dt>[EINVAL]<dd>The <I>socket</I> has been shut down.
+
+<dt>[ENOBUFS]<dd>Insufficient resources are available in the system to complete the call.
+
+</dl>
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="accept.htm">accept()</a></i>,
+<i><a href="connect.htm">connect()</a></i>,
+<i><a href="socket.htm">socket()</a></i>,
+<i><a href="sysso38.htm">&lt;sys/socket.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

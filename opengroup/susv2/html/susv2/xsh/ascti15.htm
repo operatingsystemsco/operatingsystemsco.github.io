@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>asctime</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_176">&nbsp;</a>NAME</h4><blockquote>
+asctime, asctime_r - convert date and time to a string
+</blockquote><h4><a name = "tag_000_001_177">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="timeh289.htm">time.h</a>&gt;
+
+char *asctime(const struct tm *<i>timeptr</i>);
+char *asctime_r(const struct tm *<i>tm</i>, char *<i>buf</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_178">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>asctime()</i>
+function converts the broken-down time in the structure pointed
+to by
+<i>timeptr</i>
+into a string in the form:
+<pre>
+<code>
+Sun Sep 16 01:03:52 1973\n\0
+</code>
+</pre>
+using the equivalent of the following algorithm:
+<pre>
+<code>
+char *asctime(const struct tm *timeptr)
+{
+    static char wday_name[7][3] = {
+        "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+    };
+    static char mon_name[12][3] = {
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    };
+    static char result[26];
+
+    sprintf(result, "%.3s %.3s%3d %.2d:%.2d:%.2d %d\n",
+        wday_name[timeptr-&gt;tm_wday],
+        mon_name[timeptr-&gt;tm_mon],
+        timeptr-&gt;tm_mday, timeptr-&gt;tm_hour,
+        timeptr-&gt;tm_min, timeptr-&gt;tm_sec,
+        1900 + timeptr-&gt;tm_year);
+    return result;
+}
+</code>
+</pre>
+<p>
+The <b>tm</b> structure is defined in the
+<i><a href="timeh289.htm">&lt;time.h&gt;</a></i>
+header.
+<p>
+The
+<i>asctime()</i>,
+<i><a href="ctime.htm">ctime()</a></i>,
+<i><a href="gmtime.htm">gmtime()</a></i>
+and
+<i><a href="local92.htm">localtime()</a></i>
+functions return values in one of two static objects: a
+broken-down time structure and an array of type
+<b>char</b>.
+Execution of any of the functions may overwrite the information
+returned in either of these objects by any of the other
+functions.
+<p>
+The
+<i>asctime()</i>
+interface need not be reentrant.
+<p>
+The
+<i>asctime_r()</i>
+function converts the broken-down time
+in the structure pointed to by
+<i>tm</i>
+into a string that is placed in
+the user-supplied buffer pointed to by
+<i>buf</i>
+(which contains at least 26 bytes) and then returns
+<i>buf</i>.
+</blockquote><h4><a name = "tag_000_001_179">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>asctime()</i>
+returns a pointer to the string.
+<p>
+Upon successful completion,
+<i>asctime_r()</i>
+returns a pointer to a character string containing the date and time.
+This string is pointed to by the argument
+<i>buf</i>.
+If the function is unsuccessful,
+it returns NULL.
+</blockquote><h4><a name = "tag_000_001_180">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_001_181">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_182">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Values for the broken-down time structure can be obtained by calling
+<i><a href="gmtime.htm">gmtime()</a></i>
+or
+<i><a href="local92.htm">localtime()</a></i>.
+This interface is included for compatibility with older
+implementations, and does not support localised date and time
+formats.
+Applications should use
+<i><a href="strftime.htm">strftime()</a></i>
+to achieve maximum portability.
+<br>
+</blockquote><h4><a name = "tag_000_001_183">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_184">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="clock.htm">clock()</a></i>,
+<i><a href="ctime.htm">ctime()</a></i>,
+<i><a href="difftime.htm">difftime()</a></i>,
+<i><a href="gmtime.htm">gmtime()</a></i>,
+<i><a href="local92.htm">localtime()</a></i>,
+<i><a href="mktime.htm">mktime()</a></i>,
+<i><a href="strftime.htm">strftime()</a></i>,
+<i><a href="strptime.htm">strptime()</a></i>,
+<i><a href="time.htm">time()</a></i>,
+<i><a href="utime.htm">utime()</a></i>,
+<i><a href="timeh289.htm">&lt;time.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+<i>asctime()</i> derived from Issue 1 of the SVID.
+<p>
+<i>asctime_r()</i> derived from the POSIX Threads Extension (1003.1c-1995).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

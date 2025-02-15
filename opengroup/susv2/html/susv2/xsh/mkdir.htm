@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mkdir</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_626">&nbsp;</a>NAME</h4><blockquote>
+mkdir - make a directory
+</blockquote><h4><a name = "tag_000_007_627">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="systy278.htm">sys/types.h</a>&gt;
+#include &lt;<a href="sysst273.htm">sys/stat.h</a>&gt;
+
+int mkdir(const char *<i>path</i>, mode_t <i>mode</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_628">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mkdir()</i>
+function creates a new directory with name
+<i>path</i>.
+The file permission bits of the new directory are initialised from
+<i>mode</i>.
+These file permission bits of the
+<i>mode</i>
+argument are modified by the process' file creation mask.
+<p>
+When bits in <i>mode</i> other than the file permission bits are set, the
+meaning of these additional bits is implementation-dependent.
+<p>
+The directory's user ID is set to the process' effective user ID.
+The directory's group ID is set to the group ID of the parent directory
+or to the effective group ID of the process.
+<p>
+The newly created directory will be an empty directory.
+<p>
+Upon successful completion,
+<i>mkdir()</i>
+will mark for update the
+<i>st_atime</i>,
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the directory.  Also, the
+<i>st_ctime</i>
+and
+<i>st_mtime</i>
+fields of the directory that contains the new entry are marked for update.
+</blockquote><h4><a name = "tag_000_007_629">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>mkdir()</i>
+returns 0.  Otherwise, -1 is returned, no directory is created and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_630">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>mkdir()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied on a component of the path prefix,
+or write permission is denied on the parent directory of the
+directory to be created.
+
+<dt>[EEXIST]<dd>
+The named file exists.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[EMLINK]<dd>
+The link count of the parent directory would exceed {LINK_MAX}.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The length of the
+<i>path</i>
+argument exceeds {PATH_MAX} or a pathname component is longer than
+{NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of the path prefix specified by <i>path</i> does not name an
+existing directory or <i>path</i> is an empty string.
+
+<dt>[ENOSPC]<dd>
+The file system does not contain enough space to hold the
+contents of the new directory or to extend the parent
+directory of the new directory.
+
+<dt>[ENOTDIR]<dd>
+A component of the path prefix is not a directory.
+
+<dt>[EROFS]<dd>
+The parent directory resides on a read-only file system.
+
+</dl>
+<p>
+The
+<i>mkdir()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_631">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_632">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_633">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="umask.htm">umask()</a></i>,
+<i><a href="sysst273.htm">&lt;sys/stat.h&gt;</a></i>,
+<i><a href="systy278.htm">&lt;sys/types.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX.1-1988 standard.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

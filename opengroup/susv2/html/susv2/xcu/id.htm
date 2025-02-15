@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>id</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_966">&nbsp;</a>NAME</h4><blockquote>
+id - return user identity
+</blockquote><h4><a name = "tag_001_014_967">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+id <b>[</b><i>user</i><b>]</b>
+
+id -G<b>[</b>-n<b>] [</b><i>user</i><b>]</b>
+
+id -g<b>[</b>-nr<b>] [</b><i>user</i><b>]</b>
+
+id -u<b>[</b>-nr<b>] [</b><i>user</i><b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_968">&nbsp;</a>DESCRIPTION</h4><blockquote>
+If no
+<i>user</i>
+operand is provided, the
+<i>id</i>
+utility will write the user and group IDs
+and the corresponding user and group names of the
+invoking process to standard output.
+If the effective and real IDs do not match, both will be written.
+If multiple groups are supported by the underlying system
+(see the description of
+{NGROUPS_MAX}
+in the <b>XSH</b> specification), the supplementary group affiliations of the invoking process
+also will be written.
+<p>
+If a
+<i>user</i>
+operand is provided and the process has the appropriate privileges, the
+user and group IDs of the selected user will be written.
+In this case, effective IDs
+will be assumed to be identical to real IDs.
+If the selected user has more than one allowable group membership
+listed in the group database,
+these will be written in the same manner as the
+supplementary groups described in the preceding paragraph.
+</blockquote><h4><a name = "tag_001_014_969">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>id</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-G</b>
+<dd>Output all different group IDs (effective, real and supplementary)
+only, using the format
+%u\n.
+If there is more
+than one distinct group affiliation, output each such
+affiliation, using the format
+&nbsp;%u,
+before the
+newline character
+is output.
+
+<dt><b>-g</b>
+<dd>Output only the effective group ID, using the format
+%u\n.
+
+<dt><b>-n</b>
+<dd>Output the name in the format
+%s
+instead of the numeric ID using the format
+%u.
+
+<dt><b>-r</b>
+<dd>Output the real ID instead of the effective ID.
+
+<dt><b>-u</b>
+<dd>Output only the effective user ID, using the format
+%u\n.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_970">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operand is supported:
+<dl compact>
+
+<dt><i>user</i><dd>The login name for which information is to be written.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_971">&nbsp;</a>STDIN</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_972">&nbsp;</a>INPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_973">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>id</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments).
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale that should be used to affect
+the format and contents of diagnostic
+messages written to standard error
+and informative messages written to standard output.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_974">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_975">&nbsp;</a>STDOUT</h4><blockquote>
+The following formats will be used when the LC_MESSAGES locale category
+specifies the POSIX locale.
+In other locales, the strings
+<b>uid,</b>
+<b>gid,</b>
+<b>euid,</b>
+<b>egid</b>
+and
+<b>groups</b>
+may be replaced with more appropriate strings
+corresponding to the locale.
+<p><code>
+<pre>
+<tt>"uid=%u(%s) gid=%u(%s)\n"</tt>, &lt;<i>real&nbsp;user&nbsp;ID</i>&gt;,
+&lt;<i>user-name</i>&gt;,
+&lt;<i>real&nbsp;group&nbsp;ID</i>&gt;,
+&lt;<i>group-name</i>&gt;
+</pre>
+</code>
+<p>
+If the effective and real user IDs do not match,
+the following will be inserted
+immediately before the
+\n
+character in the previous format:
+<pre>
+<code>
+" euid=%u(%s)"
+</code>
+</pre>
+with the following arguments added at the end of the argument list:
+<p><code>
+<pre>
+&lt;<i>effective user ID</i>&gt;,
+&lt;<i>effective user-name</i>&gt;
+</pre>
+</code>
+<p>
+If the effective and real group IDs do not match,
+the following will be inserted directly before the
+\n
+character in the format string
+(and after any addition
+resulting from the effective and real user IDs not matching):
+<pre>
+<code>
+" egid=%u(%s)"
+</code>
+</pre>
+with the following arguments added at the end of the argument list:
+<p><code>
+<pre>
+&lt;<i>effective group-ID</i>&gt;,
+&lt;<i>effective group name</i>&gt;
+</pre>
+</code>
+<p>
+If the process has supplementary group affiliations
+or the selected user is allowed to belong to multiple groups,
+the first will be
+added directly before the
+newline
+character in the format string:
+<pre>
+<code>
+" groups=%u(%s)"
+</code>
+</pre>
+with the following arguments added at the end of the argument list:
+<p><code>
+&lt;<i>supplementary group ID</i>&gt;,
+&lt;<i>supplementary group name</i>&gt;
+</code>
+and the necessary number of the following added after that for any
+remaining supplementary group IDs:
+<p><code>
+,%u(%s)
+</code>
+and the necessary number of the following arguments added at the end of
+the argument list:
+<p><code>
+&lt;<i>supplementary group ID</i>&gt;,
+&lt;<i>supplementary group name</i>&gt;
+</code>
+<p>
+If any of the user ID, group ID, effective user ID, effective group ID
+or supplementary/multiple
+group IDs cannot be mapped by the system into printable
+user or group names, the corresponding
+(<b>%s</b>)
+and name argument will be
+omitted from the corresponding format string.
+<p>
+When any of the options are specified,
+the output format will be as described in the OPTIONS section.
+</blockquote><h4><a name = "tag_001_014_976">&nbsp;</a>STDERR</h4><blockquote>
+Used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_977">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_978">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_979">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_980">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_981">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Output produced by the
+<b>-G</b>
+option and by the default case could
+potentially produce very long lines on systems that support large numbers
+of supplementary groups.
+(On systems with user and group IDs that are
+32-bit integers and with group names with a maximum of 8 bytes per name,
+93 supplementary groups plus distinct effective and real group and user
+IDs could theoretically overflow the 2048-byte
+{LINE_MAX}
+text file line limit on the default output case.
+It would take about 186 supplementary
+groups to overflow the 2048-byte barrier using
+<i>id</i>
+<b>-G</b>).
+This is not
+expected to be a problem in practice, but in cases where it is a concern,
+applications should consider using
+<i><a href="fold.htm">fold</a></i>
+<b>-s</b>
+before postprocessing the output of
+<i>id</i>.
+</blockquote><h4><a name = "tag_001_014_982">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_983">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_984">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="fold.htm">fold</a></i>,
+<i><a href="logname.htm">logname</a></i>,
+<i><a href="who.htm">who</a></i>,
+the <b>XSH</b> specification description of
+<i><a href="../xsh/getgid.htm">getgid()</a></i>,
+<i><a href="../xsh/getgr60.htm">getgroups()</a></i>,
+<i><a href="../xsh/getuid.htm">getuid()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

@@ -1,0 +1,396 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mv</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_1479">&nbsp;</a>NAME</h4><blockquote>
+mv - move files
+</blockquote><h4><a name = "tag_001_014_1480">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+mv <b>[</b>-fi<b>] </b><i>source_file target_file</i>
+
+mv <b>[</b>-fi<b>] </b><i>source_file</i>... <i>target_file</i>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_1481">&nbsp;</a>DESCRIPTION</h4><blockquote>
+In the first synopsis form, the
+<i>mv</i>
+utility moves the file named by the
+<i>source_file</i>
+operand to the
+<i>destination</i>
+specified by the
+<i>target_file</i>.
+This first synopsis form is assumed when the final operand does not name
+an existing directory.
+<p>
+In the second synopsis form,
+<i>mv</i>
+moves each file named by a
+<i>source_file</i>
+operand to a
+<i>destination</i>
+file in the existing directory named by the
+<i>target_dir</i>
+operand.
+The
+<i>destination</i>
+path for each
+<i>source_file</i>
+is the
+concatenation of the target directory, a single slash character,
+and the last pathname component of the
+<i>source_file.</i>
+This second form is assumed when the final operand names an existing
+directory.
+<p>
+If any operand specifies an existing file of a type not
+specified by the <b>XSH</b> specification, the behaviour is implementation-dependent.
+<p>
+For each
+<i>source_file</i>
+the following steps are taken:
+<ol>
+<p>
+<li>
+If the destination path exists,
+the
+<b>-f</b>
+option is not specified,
+and either of the following conditions is true:
+<ol type = a>
+<p>
+<li>
+The permissions of the destination path do not permit
+writing and the standard input is a terminal.
+<p>
+<li>
+The
+<b>-i</b>
+option is specified.
+<p>
+</ol>
+<p>
+The
+<i>mv</i>
+utility will write a prompt to standard error and
+read a line from standard input.
+If the response is not affirmative,
+<i>mv</i>
+will do nothing more with the current
+<i>source_file</i>
+and go on to any remaining
+<i>source_file</i>s.
+<p>
+<li>
+The
+<i>mv</i>
+utility will perform actions equivalent to the <b>XSH</b> specification
+<i><a href="../xsh/rename.htm">rename()</a></i>
+function, called with the following arguments:
+<ol type = a>
+<p>
+<li>
+The
+<i>source_file</i>
+operand is used as the
+<i>old</i>
+argument.
+<p>
+<li>
+The destination path is used as the
+<i>new</i>
+argument.
+<p>
+</ol>
+<p>
+If this succeeds,
+<i>mv</i>
+will do nothing more with the current
+<i>source_file</i>
+and go on to any remaining
+<i>source_file</i>s.
+If this fails for any reasons other than those described for the
+<i>errno</i>
+[EXDEV]
+in the <b>XSH</b> specification,
+<i>mv</i>
+will write a
+diagnostic message to standard error, do nothing more
+with the current
+<i>source_file</i>,
+and go on to any remaining
+<i>source_file</i>s.
+<p>
+<li>
+If the destination path exists, and it is a file of type
+directory and
+<i>source_file</i>
+is not a file of type directory,
+or it is a file not of type directory and
+<i>source_file</i>
+is a file of type directory,
+<i>mv</i>
+will write a diagnostic message
+to standard error, do nothing more with the current
+<i>source_file</i>,
+and go on to any remaining
+<i>source_file</i>s.
+<p>
+<li>
+If the destination path exists,
+<i>mv</i>
+will attempt to remove it.
+If this fails for any reason,
+<i>mv</i>
+will write a diagnostic message to
+standard error, do nothing more with the current
+<i>source_file,</i>
+and go on to any remaining
+<i>source_file</i>s.
+<p>
+<li>
+The file hierarchy rooted in
+<i>source_file</i>
+will be duplicated as
+a file hierarchy rooted in the destination path.
+The following
+characteristics of each file in the file hierarchy will be
+duplicated:
+<ul>
+<p>
+<li>
+the time of last data modification and time of last access
+<p>
+<li>
+the user ID and group ID
+<p>
+<li>
+the file mode.
+<p>
+</ul>
+<p>
+If the user ID, group ID or file mode of a regular file cannot
+be duplicated, the file mode bits S_ISUID and S_ISGID will not
+be duplicated.
+<p>
+When files are duplicated to another file system,
+the implementation may require that the process invoking
+<i>mv</i>
+has read access to each file being duplicated.
+<p>
+If the duplication of the file hierarchy fails for any reason,
+<i>mv</i>
+will write a
+diagnostic message to standard error, do nothing
+more with the current
+<i>source_file,</i>
+and go on to any remaining
+<i>source_file</i>s.
+<p>
+If the duplication of the file characteristics fails for any reason,
+<i>mv</i>
+will write a diagnostic message to standard error, but this
+failure will not cause
+<i>mv</i>
+to modify its exit status.
+<p>
+<li>
+The file hierarchy rooted in
+<i>source_file</i>
+will be removed.
+If this fails for any reason,
+<i>mv</i>
+will write a diagnostic message
+to the standard error, do nothing more with the current
+<i>source_file,</i>
+and go on to any remaining
+<i>source_file</i>s.
+<p>
+</ol>
+</blockquote><h4><a name = "tag_001_014_1482">&nbsp;</a>OPTIONS</h4><blockquote>
+The
+<i>mv</i>
+utility supports the <b>XBD</b> specification, <a href="../xbd/utilconv.htm#usg"><b>Utility Syntax Guidelines</b>&nbsp;</a> .
+<p>
+The following options are supported:
+<dl compact>
+
+<dt><b>-f</b>
+<dd>Do not prompt for confirmation if the destination path exists.
+Any previous occurrences of the
+<b>-i</b>
+option will be ignored.
+
+<dt><b>-i</b>
+<dd>Prompt for confirmation if the destination path exists.
+Any previous occurrences of the
+<b>-f</b>
+option will be ignored.
+
+</dl>
+<p>
+Specifying more than one of the
+<b>-f</b>
+or
+<b>-i</b>
+options is not considered an error.
+The last option specified will determine the behaviour of
+<i>mv</i>.
+</blockquote><h4><a name = "tag_001_014_1483">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>source_file</i><dd>
+A pathname of a file or directory to be moved.
+
+<dt><i>target_file</i><dd>
+A new pathname for the file or directory being moved.
+
+<dt><i>target_dir</i><dd>
+A pathname of an existing directory into which
+to move the input files.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1484">&nbsp;</a>STDIN</h4><blockquote>
+Used to read an input line in response to each prompt
+specified in the STDERR section.
+Otherwise, the standard input will not be used.
+</blockquote><h4><a name = "tag_001_014_1485">&nbsp;</a>INPUT FILES</h4><blockquote>
+The input files specified by each
+<i>source_file</i>
+operand can be of any file type.
+</blockquote><h4><a name = "tag_001_014_1486">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables affect the execution of
+<i>mv</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files),
+the behaviour of character classes
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale for the processing of affirmative responses
+that should be used to affect the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+</dl>
+</blockquote><h4><a name = "tag_001_014_1487">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_1488">&nbsp;</a>STDOUT</h4><blockquote>
+Not used.
+</blockquote><h4><a name = "tag_001_014_1489">&nbsp;</a>STDERR</h4><blockquote>
+Prompts will be written to the standard error under the conditions
+specified in the DESCRIPTION section.
+The prompts will contain the
+<i>destination</i>
+pathname, but their format is otherwise unspecified.
+Otherwise, the standard error will be used only for diagnostic messages.
+</blockquote><h4><a name = "tag_001_014_1490">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+The output files may be of any file type.
+</blockquote><h4><a name = "tag_001_014_1491">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1492">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>All input files were moved successfully.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_1493">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+If the copying or removal of
+<i>source_file</i>
+is prematurely terminated
+by a signal or error,
+<i>mv</i>
+may leave a partial copy of
+<i>source_file</i>
+at the source or destination.
+The
+<i>mv</i>
+utility will not modify both
+<i>source_file</i>
+and the destination path simultaneously; termination at any point
+will leave either
+<i>source_file</i>
+or the destination path complete.
+</blockquote><h4><a name = "tag_001_014_1494">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+<br>
+</blockquote><h4><a name = "tag_001_014_1495">&nbsp;</a>EXAMPLES</h4><blockquote>
+If the current directory contains only files
+<b>a</b>
+(of any type defined by the <b>XSH</b> specification),
+<b>b</b>
+(also of any type), and a directory
+<b>c</b>:
+<pre>
+<code>
+mv a b c
+mv c d
+</code>
+</pre>
+will result with the original files
+<b>a</b>
+and
+<b>b</b>
+residing in the
+directory
+<b>d</b>
+in the current directory.
+</blockquote><h4><a name = "tag_001_014_1496">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_1497">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="cp.htm">cp</a></i>,
+<i><a href="ln.htm">ln</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

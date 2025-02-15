@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>redrawwin</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_593">&nbsp;</a>NAME</h4><blockquote>
+redrawwin, wredrawln - line update status functions
+</blockquote><h4><a name = "tag_002_001_594">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int redrawwin(WINDOW *<i>win</i>);
+
+int wredrawln(WINDOW *<i>win</i>, int <i>beg_line</i>, int <i>num_lines</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_002_001_595">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>redrawwin()</i>
+and
+<i>wredrawln()</i>
+functions inform the implementation that some or all of the information
+physically displayed for the specified window may have been corrupted.  The
+<i>redrawwin()</i>
+function marks the entire window;
+<i>wredrawln()</i>
+marks only <i>num_lines</i> lines starting at line number <i>beg_line</i>.  The
+functions prevent the next refresh operation on that window from
+performing any optimisation based on assumptions about what is physically
+displayed there.
+</blockquote><h4><a name = "tag_002_001_596">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, these functions return OK.
+Otherwise they return ERR.
+</blockquote><h4><a name = "tag_002_001_597">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_002_001_598">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i>redrawwin()</i>
+and
+<i>wredrawln()</i>
+functions could be used in a text editor to implement a command that redraws
+some or all of the screen.
+</blockquote><h4><a name = "tag_002_001_599">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="clearok.htm">clearok()</a></i>,
+<i><a href="doupdate.htm">doupdate()</a></i>,
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

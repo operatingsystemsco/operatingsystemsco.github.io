@@ -1,0 +1,307 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>signal</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_008_714">&nbsp;</a>NAME</h4><blockquote>
+signal, sigset, sighold, sigrelse, sigignore, sigpause - signal management
+</blockquote><h4><a name = "tag_000_008_715">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="signa248.htm">signal.h</a>&gt;
+
+void (*signal(int <i>sig</i>, void (*<i>func</i>)(int)))(int);
+int sighold(int <i>sig</i>);
+int sigignore(int <i>sig</i>);
+int sigpause(int <i>sig</i>);
+int sigrelse(int <i>sig</i>);
+void (*sigset(int <i>sig</i>, void (*<i>disp</i>)(int)))(int);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_008_716">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Use of any of these functions is unspecified in a multi-threaded process.
+<p>
+The
+<i>signal()</i>
+function chooses one of three ways in which receipt of the signal number
+<i>sig</i>
+is to be subsequently handled.  If the value of
+<i>func</i>
+is SIG_DFL, default handling for that signal will occur.
+If the value of
+<i>func</i>
+is SIG_IGN, the signal will be ignored.
+Otherwise,
+<i>func</i>
+must point to a function to be called when that signal occurs.
+Such a function is called a
+<i>signal handler</i>.
+<p>
+When a signal occurs, if
+<i>func</i>
+points to a function, first the equivalent of a:
+<pre>
+<code>
+signal(<i>sig</i>, SIG_DFL);
+</code>
+</pre>
+<p>
+is executed or an implementation-dependent blocking of the signal is
+performed.  (If the value of
+<i>sig</i>
+is SIGILL, whether the reset to SIG_DFL occurs is implementation-dependent.)
+Next the equivalent of:
+<pre>
+<code>
+(*func)(sig);
+</code>
+</pre>
+is executed.  The
+<i>func</i>
+function may terminate by executing a
+<b>return</b>
+statement or by calling
+<i><a href="abort.htm">abort()</a></i>,
+<i><a href="exit.htm">exit()</a></i>,
+or
+<i><a href="longjmp.htm">longjmp()</a></i>.
+If
+<i>func</i>
+executes a
+<b>return</b>
+statement and the value of
+<i>sig</i>
+was SIGFPE or any other implementation-dependent value corresponding to a
+computational exception, the behaviour is undefined.  Otherwise, the program
+will resume execution at the point it was interrupted.
+<p>
+If the signal occurs other than as the result of calling
+<i><a href="abort.htm">abort()</a></i>,
+<i><a href="kill.htm">kill()</a></i>
+or
+<i><a href="raise.htm">raise()</a></i>,
+the behaviour is undefined if the signal handler calls
+any function in the standard library other than one of the
+functions listed on the
+<i><a href="sigac238.htm">sigaction()</a></i>
+page
+or refers to any object with static storage duration
+other than by assigning a value to a static storage duration
+variable of type
+<b>volatile</b>
+<b>sig_atomic_t</b>.
+Furthermore, if such a call fails,
+the value of
+<i>errno</i>
+is indeterminate.
+<p>
+At program startup, the equivalent of:
+<pre>
+<code>
+signal(<i>sig</i>, SIG_IGN);
+</code>
+</pre>
+<p>
+is executed for some signals, and the equivalent of:
+<pre>
+<code>
+signal(<i>sig</i>, SIG_DFL);
+</code>
+</pre>
+<p>
+is executed for all other signals (see
+<i>exec</i>).
+<p>
+The
+<i>sigset()</i>,
+<i>sighold()</i>,
+<i>sigignore()</i>,
+<i>sigpause()</i>
+and
+<i>sigrelse()</i>
+functions provide simplified signal management.
+<p>
+The
+<i>sigset()</i>
+function is used to modify signal dispositions.  The <i>sig</i> argument
+specifies the signal, which may be any signal except SIGKILL and SIGSTOP.  The
+<i>disp</i> argument specifies the signal's disposition, which may be SIG_DFL,
+SIG_IGN or the address of a signal handler.  If
+<i>sigset()</i>
+is used, and <i>disp</i> is the address of a signal handler, the system will
+add <i>sig</i> to the calling process' signal mask before executing the signal
+handler; when the signal handler returns, the system will restore the calling
+process' signal mask to its state prior the delivery of the signal.  In
+addition, if
+<i>sigset()</i>
+is used, and <i>disp</i> is equal to SIG_HOLD, <i>sig</i> will be added to the
+calling process' signal mask and <i>sig</i>'s disposition will remain
+unchanged.  If
+<i>sigset()</i>
+is used, and disp is not equal to SIG_HOLD, sig will be removed from the
+calling process' signal mask.
+<p>
+The
+<i>sighold()</i>
+function adds <i>sig</i> to the calling process' signal mask.
+<p>
+The
+<i>sigrelse()</i>
+function removes <i>sig</i> from the calling process' signal mask.
+<p>
+The
+<i>sigignore()</i>
+function sets the disposition of <i>sig</i> to SIG_IGN.
+<p>
+The
+<i>sigpause()</i>
+function removes <i>sig</i> from the calling process' signal mask and suspends
+the calling process until a signal is received.
+The
+<i>sigpause()</i>
+function restores the process' signal mask to its original
+state before returning.   
+<p>
+If the action for the SIGCHLD signal is set to SIG_IGN, child processes of the
+calling processes will not be transformed into zombie processes when they
+terminate.  If the calling process subsequently waits for its children, and
+the process has no unwaited for children that were transformed into zombie
+processes, it will block until all of its children terminate, and
+<i><a href="wait.htm">wait()</a></i>,
+<i><a href="wait3.htm">wait3()</a></i>,
+<i><a href="waitid.htm">waitid()</a></i>
+and
+<i><a href="waitpid.htm">waitpid()</a></i>
+will fail and set
+<i>errno</i>
+to [ECHILD].
+</blockquote><h4><a name = "tag_000_008_717">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the request can be honoured,
+<i>signal()</i>
+returns the value of
+<i>func</i>
+for the most recent call to
+<i>signal()</i>
+for the specified signal
+<i>sig</i>.
+Otherwise, SIG_ERR is returned and a positive value is stored in
+<i>errno</i>.
+<p>
+Upon successful completion,
+<i>sigset()</i>
+returns SIG_HOLD if the signal had been blocked and the signal's previous
+disposition if it had not been blocked.  Otherwise, SIG_ERR
+is returned and <i>errno</i> is set to indicate the error.
+<p>
+The 
+<i>sigpause()</i>
+function suspends execution of the thread until a
+signal is received, whereupon it returns -1 and sets 
+<i>errno</i> to [EINTR].
+<p>
+For all other functions, upon successful completion, 0 is returned.
+Otherwise, -1 is returned and <i>errno</i> is set to indicate the error.
+</blockquote><h4><a name = "tag_000_008_718">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>signal()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The
+<i>sig</i>
+argument is not a valid signal number or an attempt is made to
+catch a signal that cannot be caught or ignore a signal that
+cannot be ignored.
+
+</dl>
+<p>
+The
+<i>signal()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+An attempt was made to set the action to SIG_DFL for a signal
+that cannot be caught or ignored (or both).
+
+</dl>
+<p>
+The
+<i>sigset()</i>,
+<i>sighold()</i>,
+<i>sigrelse()</i>,
+<i>sigignore()</i>
+and
+<i>sigpause()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+The <i>sig</i> argument is an illegal signal number.
+
+</dl>
+<p>
+The
+<i>sigset()</i>,
+and
+<i>sigignore()</i>
+functions will fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>An attempt is made to catch a signal that cannot be caught, or to ignore a
+signal that cannot be ignored.
+
+</dl>
+</blockquote><h4><a name = "tag_000_008_719">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_720">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The
+<i><a href="sigac238.htm">sigaction()</a></i>
+function provides a more comprehensive and reliable mechanism for
+controlling signals; new applications should use
+<i><a href="sigac238.htm">sigaction()</a></i>
+rather than
+<i>signal()</i>.
+<p>
+The
+<i>sighold()</i>
+function, in conjunction with
+<i>sigrelse()</i>
+or
+<i>sigpause()</i>,
+may be used to establish critical regions of code that require
+the delivery of a signal to be temporarily deferred.
+<p>
+The
+<i><a href="sigsu252.htm">sigsuspend()</a></i>
+function should be used in preference to
+<i>sigpause()</i>
+for broader portability.
+</blockquote><h4><a name = "tag_000_008_721">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_008_722">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="exec.htm">exec</a></i>,
+<i><a href="pause.htm">pause()</a></i>,
+<i><a href="sigac238.htm">sigaction()</a></i>,
+<i><a href="sigsu252.htm">sigsuspend()</a></i>,
+<i><a href="waitid.htm">waitid()</a></i>,
+<i><a href="signa248.htm">&lt;signal.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

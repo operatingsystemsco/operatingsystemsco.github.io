@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>curs_set</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_000_246">&nbsp;</a>NAME</h4><blockquote>
+curs_set - set the cursor mode
+</blockquote><h4><a name = "tag_000_000_247">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="curse20.htm">curses.h</a>&gt;
+
+int curs_set(int <i>visibility</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_000_248">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>curs_set()</i>
+function sets the appearance of the cursor based on the value of
+<i>visibility</i>:
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Value of <i>visibility</i></b>
+<th align=center><b>Appearance of Cursor</b>
+<tr valign=top><td align=center>0
+<td align=left>Invisible
+<tr valign=top><td align=center>1
+<td align=left>Terminal-specific normal mode
+<tr valign=top><td align=center>2
+<td align=left>Terminal-specific high visibility mode
+</table>
+<p>
+The terminal does not necessarily support all the above values.
+</blockquote><h4><a name = "tag_000_000_249">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the terminal supports the cursor mode specified by
+<i>visibility</i>,
+then
+<i>curs_set()</i>
+returns the previous cursor state.  Otherwise, the function returns ERR.
+</blockquote><h4><a name = "tag_000_000_250">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_000_251">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="curse20.htm">&lt;curses.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

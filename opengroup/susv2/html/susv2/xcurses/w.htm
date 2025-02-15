@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+
+<title>w</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_002_001_178">&nbsp;</a>NAME</h4><blockquote>
+w - pointer page for functions with <i>w</i> prefix
+</blockquote><h4><a name = "tag_002_001_179">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Most uses of the <i>w</i> prefix indicate that a Curses function takes a
+<i>win</i>
+argument that specifies the affected window.
+(The corresponding functions without the <i>w</i> prefix operate on the current
+window.)
+The
+<i><a href="wunctrl.htm">wunctrl()</a></i>
+function is an exception to this rule and has an entry under its own name.
+<p>
+The <i>w</i> functions are discussed together with the corresponding functions
+without the <i>w</i> prefix.  They are found on the following entries:
+<p><table  align=center><tr valign=top><th align=center><i>Function</i>
+<th align=center><b>Refer to</b>
+<tr valign=top><td align=left><i><a href="waddch.htm">waddch()</a></i>
+<td align=left><i><a href="addch.htm">addch()</a></i>
+<tr valign=top><td align=left><i><a href="waddc161.htm">waddchnstr()</a></i>
+<td align=left><i><a href="addchstr.htm">addchstr()</a></i>
+<tr valign=top><td align=left><i><a href="waddc162.htm">waddchstr()</a></i>
+<td align=left><i><a href="addchstr.htm">addchstr()</a></i>
+<tr valign=top><td align=left><i><a href="waddnstr.htm">waddnstr()</a></i>
+<td align=left><i><a href="addnstr.htm">addnstr()</a></i>
+<tr valign=top><td align=left><i><a href="waddstr.htm">waddstr()</a></i>
+<td align=left><i><a href="addnstr.htm">addnstr()</a></i>
+<tr valign=top><td align=left><i><a href="waddn163.htm">waddnwstr()</a></i>
+<td align=left><i><a href="addnwstr.htm">addnwstr()</a></i>
+<tr valign=top><td align=left><i><a href="waddwstr.htm">waddwstr()</a></i>
+<td align=left><i><a href="addnwstr.htm">addnwstr()</a></i>
+<tr valign=top><td align=left><i><a href="waddw158.htm">wadd_wch()</a></i>
+<td align=left><i><a href="addwc4.htm">add_wch()</a></i>
+<tr valign=top><td align=left><i><a href="waddw159.htm">wadd_wchnstr()</a></i>
+<td align=left><i><a href="addwc5.htm">add_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="waddw160.htm">wadd_wchstr()</a></i>
+<td align=left><i><a href="addwc5.htm">add_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="wattroff.htm">wattroff()</a></i>
+<td align=left><i><a href="attroff.htm">attroff()</a></i>
+<tr valign=top><td align=left><i><a href="wattron.htm">wattron()</a></i>
+<td align=left><i><a href="attroff.htm">attroff()</a></i>
+<tr valign=top><td align=left><i><a href="wattrset.htm">wattrset()</a></i>
+<td align=left><i><a href="attroff.htm">attroff()</a></i>
+<tr valign=top><td align=left><i><a href="wattr164.htm">wattr_get()</a></i>
+<td align=left><i><a href="attrg8.htm">attr_get()</a></i>
+<tr valign=top><td align=left><i><a href="wattr165.htm">wattr_off()</a></i>
+<td align=left><i><a href="attrg8.htm">attr_get()</a></i>
+<tr valign=top><td align=left><i><a href="wattr166.htm">wattr_on()</a></i>
+<td align=left><i><a href="attrg8.htm">attr_get()</a></i>
+<tr valign=top><td align=left><i><a href="wattr167.htm">wattr_set()</a></i>
+<td align=left><i><a href="attrg8.htm">attr_get()</a></i>
+<tr valign=top><td align=left><i><a href="wbkgd.htm">wbkgd()</a></i>
+<td align=left><i><a href="bkgd.htm">bkgd()</a></i>
+<tr valign=top><td align=left><i><a href="wbkgdset.htm">wbkgdset()</a></i>
+<td align=left><i><a href="bkgd.htm">bkgd()</a></i>
+<tr valign=top><td align=left><i><a href="wbkgrnd.htm">wbkgrnd()</a></i>
+<td align=left><i><a href="bkgrnd.htm">bkgrnd()</a></i>
+<tr valign=top><td align=left><i><a href="wbkgr168.htm">wbkgrndset()</a></i>
+<td align=left><i><a href="bkgrnd.htm">bkgrnd()</a></i>
+<tr valign=top><td align=left><i><a href="wborder.htm">wborder()</a></i>
+<td align=left><i><a href="border.htm">border()</a></i>
+<tr valign=top><td align=left><i><a href="wbord169.htm">wborder_set()</a></i>
+<td align=left><i><a href="borde13.htm">border_set()</a></i>
+<tr valign=top><td align=left><i><a href="wchgat.htm">wchgat()</a></i>
+<td align=left><i><a href="chgat.htm">chgat()</a></i>
+<tr valign=top><td align=left><i><a href="wclear.htm">wclear()</a></i>
+<td align=left><i><a href="clear.htm">clear()</a></i>
+<tr valign=top><td align=left><i><a href="wclrt170.htm">wclrtobot()</a></i>
+<td align=left><i><a href="clrtobot.htm">clrtobot()</a></i>
+<tr valign=top><td align=left><i><a href="wclrt171.htm">wclrtoeol()</a></i>
+<td align=left><i><a href="clrtoeol.htm">clrtoeol()</a></i>
+<tr valign=top><td align=left><i>wcursyncup() *</i>
+<td align=left><i><a href="syncok.htm">syncok()</a></i>
+<tr valign=top><td align=left><i>There is no corresponding function without the <i>w</i> prefix.</i>
+<tr valign=top><td align=left><i><a href="wdelch.htm">wdelch()</a></i>
+<td align=left><i><a href="delch.htm">delch()</a></i>
+<tr valign=top><td align=left><i><a href="wdele174.htm">wdeleteln()</a></i>
+<td align=left><i><a href="deleteln.htm">deleteln()</a></i>
+<tr valign=top><td align=left><i><a href="wecho176.htm">wechochar()</a></i>
+<td align=left><i><a href="echochar.htm">echochar()</a></i>
+<tr valign=top><td align=left><i><a href="wecho175.htm">wecho_wchar()</a></i>
+<td align=left><i><a href="echow26.htm">echo_wchar()</a></i>
+<tr valign=top><td align=left><i><a href="werase.htm">werase()</a></i>
+<td align=left><i><a href="clear.htm">clear()</a></i>
+<tr valign=top><td align=left><i><a href="wgetb179.htm">wgetbkgrnd()</a></i>
+<td align=left><i><a href="bkgrnd.htm">bkgrnd()</a></i>
+<tr valign=top><td align=left><i><a href="wgetch.htm">wgetch()</a></i>
+<td align=left><i><a href="getch.htm">getch()</a></i>
+<tr valign=top><td align=left><i><a href="wgetnstr.htm">wgetnstr()</a></i>
+<td align=left><i><a href="getnstr.htm">getnstr()</a></i>
+<tr valign=top><td align=left><i><a href="wgetn180.htm">wgetn_wstr()</a></i>
+<td align=left><i><a href="getnw32.htm">getn_wstr()</a></i>
+<tr valign=top><td align=left><i><a href="wgetstr.htm">wgetstr()</a></i>
+<td align=left><i><a href="getnstr.htm">getnstr()</a></i>
+<tr valign=top><td align=left><i><a href="wgetw177.htm">wget_wch()</a></i>
+<td align=left><i><a href="getwc29.htm">get_wch()</a></i>
+<tr valign=top><td align=left><i><a href="wgetw178.htm">wget_wstr()</a></i>
+<td align=left><i><a href="getnw32.htm">getn_wstr()</a></i>
+<tr valign=top><td align=left><i><a href="whline.htm">whline()</a></i>
+<td align=left><i><a href="hline.htm">hline()</a></i>
+<tr valign=top><td align=left><i><a href="whlin181.htm">whline_set()</a></i>
+<td align=left><i><a href="hline37.htm">hline_set()</a></i>
+<tr valign=top><td align=left><i><a href="winch.htm">winch()</a></i>
+<td align=left><i><a href="inch.htm">inch()</a></i>
+<tr valign=top><td align=left><i><a href="winch185.htm">winchnstr()</a></i>
+<td align=left><i><a href="inchnstr.htm">inchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="winchstr.htm">winchstr()</a></i>
+<td align=left><i><a href="inchnstr.htm">inchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="winnstr.htm">winnstr()</a></i>
+<td align=left><i><a href="innstr.htm">innstr()</a></i>
+<tr valign=top><td align=left><i><a href="winnwstr.htm">winnwstr()</a></i>
+<td align=left><i><a href="innwstr.htm">innwstr()</a></i>
+<tr valign=top><td align=left><i><a href="winsch.htm">winsch()</a></i>
+<td align=left><i><a href="insch.htm">insch()</a></i>
+<tr valign=top><td align=left><i><a href="winsd189.htm">winsdelln()</a></i>
+<td align=left><i><a href="insdelln.htm">insdelln()</a></i>
+<tr valign=top><td align=left><i><a href="winse190.htm">winsertln()</a></i>
+<td align=left><i><a href="insertln.htm">insertln()</a></i>
+<tr valign=top><td align=left><i><a href="winsnstr.htm">winsnstr()</a></i>
+<td align=left><i><a href="insnstr.htm">insnstr()</a></i>
+<tr valign=top><td align=left><i><a href="winsstr.htm">winsstr()</a></i>
+<td align=left><i><a href="insnstr.htm">insnstr()</a></i>
+<tr valign=top><td align=left><i><a href="winstr.htm">winstr()</a></i>
+<td align=left><i><a href="innstr.htm">innstr()</a></i>
+<tr valign=top><td align=left><i><a href="winsn186.htm">wins_nwstr()</a></i>
+<td align=left><i><a href="insnw44.htm">ins_nwstr()</a></i>
+<tr valign=top><td align=left><i><a href="winsw187.htm">wins_wch()</a></i>
+<td align=left><i><a href="inswc45.htm">ins_wch()</a></i>
+<tr valign=top><td align=left><i><a href="winsw188.htm">wins_wstr()</a></i>
+<td align=left><i><a href="insnw44.htm">ins_nwstr()</a></i>
+<tr valign=top><td align=left><i><a href="winwstr.htm">winwstr()</a></i>
+<td align=left><i><a href="innwstr.htm">innwstr()</a></i>
+<tr valign=top><td align=left><i><a href="winwc182.htm">win_wch()</a></i>
+<td align=left><i><a href="inwch39.htm">in_wch()</a></i>
+<tr valign=top><td align=left><i><a href="winwc183.htm">win_wchnstr()</a></i>
+<td align=left><i><a href="inwch40.htm">in_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="winwc184.htm">win_wchstr()</a></i>
+<td align=left><i><a href="inwch40.htm">in_wchnstr()</a></i>
+<tr valign=top><td align=left><i><a href="wmove.htm">wmove()</a></i>
+<td align=left><i><a href="move.htm">move()</a></i>
+<tr valign=top><td align=left><i>wnoutrefresh() *</i>
+<td align=left><i><a href="doupdate.htm">doupdate()</a></i>
+<tr valign=top><td align=left><i><a href="wprintw.htm">wprintw()</a></i>
+<td align=left><i><a href="mvprintw.htm">mvprintw()</a></i>
+<tr valign=top><td align=left><i><a href="wredr192.htm">wredrawln()</a></i>
+<td align=left><i><a href="redra113.htm">redrawwin()</a></i>
+<tr valign=top><td align=left><i><a href="wrefresh.htm">wrefresh()</a></i>
+<td align=left><i><a href="doupdate.htm">doupdate()</a></i>
+<tr valign=top><td align=left><i><a href="wscanw.htm">wscanw()</a></i>
+<td align=left><i><a href="mvscanw.htm">mvscanw()</a></i>
+<tr valign=top><td align=left><i><a href="wscrl.htm">wscrl()</a></i>
+<td align=left><i><a href="scrl.htm">scrl()</a></i>
+<tr valign=top><td align=left><i><a href="wsets193.htm">wsetscrreg()</a></i>
+<td align=left><i><a href="clearok.htm">clearok()</a></i>
+<tr valign=top><td align=left><i><a href="wstan194.htm">wstandend()</a></i>
+<td align=left><i><a href="standend.htm">standend()</a></i>
+<tr valign=top><td align=left><i><a href="wstan195.htm">wstandout()</a></i>
+<td align=left><i><a href="standend.htm">standend()</a></i>
+<tr valign=top><td align=left><i>wsyncdown() *</i>
+<td align=left><i><a href="syncok.htm">syncok()</a></i>
+<tr valign=top><td align=left><i>wsyncup() *</i>
+<td align=left><i><a href="syncok.htm">syncok()</a></i>
+<tr valign=top><td align=left><i><a href="wtimeout.htm">wtimeout()</a></i>
+<td align=left><i><a href="notim107.htm">notimeout()</a></i>
+<tr valign=top><td align=left><i>wtouchln() *</i>
+<td align=left><i><a href="islin48.htm">is_linetouched()</a></i>
+<tr valign=top><td align=left><i><a href="wvline.htm">wvline()</a></i>
+<td align=left><i><a href="hline.htm">hline()</a></i>
+<tr valign=top><td align=left><i><a href="wvlin197.htm">wvline_set()</a></i>
+<td align=left><i><a href="hline37.htm">hline_set()</a></i>
+</table>
+<font size=2>
+(*) There is no corresponding function without the <i>w</i> prefix.
+</font>
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

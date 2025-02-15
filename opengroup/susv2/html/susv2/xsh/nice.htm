@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>nice</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_892">&nbsp;</a>NAME</h4><blockquote>
+nice - change nice value of a process
+</blockquote><h4><a name = "tag_000_007_893">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int nice(int <i>incr</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_894">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>nice()</i>
+function adds the value of
+<i>incr</i>
+to the nice value of the calling process.  A process' nice value is a
+non-negative number for which a more positive value results in
+less favourable scheduling.
+<p>
+A maximum nice value of 2 * {NZERO} -1 and a minimum nice value of 0
+are imposed by the system.
+Requests for values above or below these limits result in the nice value
+being set to the corresponding limit. Only a process with appropriate
+privileges can lower the nice value.
+<p>
+Calling the
+<i>nice()</i>
+function has no effect on the priority of processes or threads
+with policy SCHED_FIFO or SCHED_RR.
+The effect on processes or threads with other scheduling policies is
+implementation-dependent.
+<p>
+The nice value set with
+<i>nice()</i>
+is applied to the process.
+If the process is multi-threaded, the nice value affects all
+system scope threads in the process.
+</blockquote><h4><a name = "tag_000_007_895">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion,
+<i>nice()</i>
+returns the new nice value minus {NZERO}.
+Otherwise, -1 is returned,
+the process' nice value is not changed, and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_007_896">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>nice()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EPERM]<dd>
+The
+<i>incr</i>
+argument is negative and the
+calling process does not have appropriate privileges.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_897">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_898">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+As -1 is a
+permissible return value in a successful situation, an application
+wishing to check for error situations should set
+<i>errno</i>
+to 0, then call
+<i>nice()</i>,
+and if it returns -1, check to see if
+<i>errno</i>
+is non-zero.
+</blockquote><h4><a name = "tag_000_007_899">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_900">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="limit88.htm">&lt;limits.h&gt;</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

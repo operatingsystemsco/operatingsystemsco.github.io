@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mbstowcs</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_556">&nbsp;</a>NAME</h4><blockquote>
+mbstowcs - convert a character string to a wide-character string
+</blockquote><h4><a name = "tag_000_007_557">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdli258.htm">stdlib.h</a>&gt;
+
+size_t mbstowcs(wchar_t *<i>pwcs</i>, const char *<i>s</i>, size_t <i>n</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_558">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mbstowcs()</i>
+function converts a sequence of characters that begins
+in the initial shift state from the array pointed to by
+<i>s</i>
+into a sequence of corresponding wide-character codes and stores not more than
+<i>n</i>
+wide-character codes into the array pointed to by
+<i>pwcs</i>.
+No characters that follow a null byte (which is converted into a
+wide-character code with value 0) will be examined or converted.  Each
+character is converted as if by a call to
+<i><a href="mbtowc.htm">mbtowc()</a></i>,
+except that the shift state of
+<i><a href="mbtowc.htm">mbtowc()</a></i>
+is not affected.
+<p>
+No more than
+<i>n</i>
+elements will be modified in the array pointed to by
+<i>pwcs</i>.
+If copying takes place between objects that overlap, the
+behaviour is undefined.
+<p>
+The behaviour of this function is affected by
+the LC_CTYPE category of the current locale.
+If
+<i>pwcs</i>
+is a null pointer,
+<i>mbstowcs()</i>
+returns the length required to convert the entire array regardless of the
+value of
+<i>n</i>,
+but no values are stored.
+</blockquote><h4><a name = "tag_000_007_559">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If an invalid character is encountered,
+<i>mbstowcs()</i>
+returns (<b>size_t</b>)-1 and may set
+<i>errno</i>
+to indicate the error.
+Otherwise,
+<i>mbstowcs()</i>
+returns the number of the array elements modified (or required if
+<i>pwcs</i>
+is null), not including a terminating 0 code, if any.  The array will not be
+zero-terminated if the value returned is
+<i>n</i>.
+</blockquote><h4><a name = "tag_000_007_560">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>mbstowcs()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EILSEQ]<dd>
+Invalid byte sequence is detected.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_561">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_562">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_563">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_564">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mblen.htm">mblen()</a></i>,
+<i><a href="mbtowc.htm">mbtowc()</a></i>,
+<i><a href="wctomb.htm">wctomb()</a></i>,
+<i><a href="wcstombs.htm">wcstombs()</a></i>,
+<i><a href="stdli258.htm">&lt;stdlib.h&gt;</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

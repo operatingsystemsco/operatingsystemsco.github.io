@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_connect</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_connect - establish a connection with another transport user
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_connect(
+    int fd,
+    const struct t_call *sndcall,
+    struct t_call *rcvcall)
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>addr.maxlen
+<td align=center>=
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>addr.len
+<td align=center>x
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>addr.buf
+<td align=center>x (x)
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>opt.maxlen
+<td align=center>=
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>opt.len
+<td align=center>x
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>opt.buf
+<td align=center>x (x)
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>udata.maxlen
+<td align=center>=
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>udata.len
+<td align=center>x
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>udata.buf
+<td align=center>? (?)
+<tr valign=top><td align=left>sndcall-&gt
+<td align=center>sequence
+<td align=center>=
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>addr.maxlen
+<td align=center>x
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>addr.len
+<td align=center>/
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>addr.buf
+<td align=center>?
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>opt.maxlen
+<td align=center>x
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>opt.len
+<td align=center>/
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>opt.buf
+<td align=center>?
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>udata.maxlen
+<td align=center>x
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>udata.len
+<td align=center>/
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>udata.buf
+<td align=center>?
+<tr valign=top><td align=left>rcvcall-&gt
+<td align=center>sequence
+<td align=center>=
+</table>
+</pre>
+<p>
+This function enables a transport user to request a connection to the
+specified destination transport user.
+This function can only be issued in the T_IDLE state.
+The parameter
+<I>fd</I>
+identifies the local transport endpoint where communication will be
+established,
+while
+<I>sndcall</I>
+and
+<I>rcvcall</I>
+point to a
+<B>t_call</B>
+structure which contains the following members:
+<pre>
+<code>
+struct netbuf addr;
+struct netbuf opt;
+struct netbuf udata;
+int sequence;
+</code>
+</pre>
+The parameter
+<I>sndcall</I>
+specifies information
+needed by the transport provider to establish a connection and
+<I>rcvcall</I>
+specifies information that is associated with the
+newly established connection.
+<p>
+In
+<I>sndcall</I>,
+<I>addr</I>
+specifies the protocol address of the destination transport user,
+<I>opt</I>
+presents any protocol-specific information that might be
+needed by the transport provider,
+<I>udata</I>
+points to optional user data that may be passed to
+the destination transport user during connection establishment,
+and
+<I>sequence</I>
+has no meaning for this function.
+<p>
+On return, in
+<I>rcvcall,</I>
+<I>addr</I>
+contains the protocol address associated with the responding
+transport endpoint,
+<I>opt</I>
+represents any protocol-specific information associated with the connection,
+<I>udata</I>
+points to optional user data that may be returned by
+the destination transport user during connection establishment,
+and
+<I>sequence</I>
+has no meaning for this function.
+<p>
+The
+<I>opt</I>
+argument permits users to define the options that may be passed to the
+transport provider.
+These options are specific to underlying protocol of the transport
+provider or XTI interface and are described in 
+<xref href=hands></xref>
+(for the XTI interface) and other protocol-specific appendices
+which are part of this specification.
+The user may choose not to negotiate protocol
+options by setting the
+<I>len</I>
+field of
+<I>opt</I>
+to zero.
+In this case, the provider uses the option
+values currently set for the communications endpoint.
+<p>
+If used,
+<I>sndcall-&gt;opt.buf</I>
+must point to a buffer with the corresponding options,
+and 
+<I>sndcall-&gt;opt.len</I>
+must specify its length.
+The
+<I>maxlen</I>
+and
+<I>buf</I>
+fields of the
+<B>netbuf</B>
+structure pointed by
+<I>rcvcall-&gt;addr</I>
+and
+<I>rcvcall-&gt;opt</I>
+must be set before the call.
+<p>
+The
+<I>udata</I>
+argument enables the caller to pass user data to the destination
+transport user and receive user data
+from the destination user during connection establishment.
+However, the amount of user data must not exceed the limits supported by
+the transport provider as returned in the
+<I>connect</I>
+field of the
+<I>info</I>
+argument of
+<i><a href="topen55.htm">t_open()</a></i>
+or
+<i><a href="tgeti50.htm">t_getinfo()</a></i>.
+If the
+<I>len</I>
+of
+<I>udata</I>
+is zero in
+<I>sndcall</I>,
+no data will be sent to the destination transport user.
+<p>
+On return, the
+<I>addr</I>,
+<I>opt</I>
+and
+<I>udata</I>
+fields of
+<I>rcvcall</I>
+will be updated to reflect values associated with the connection.
+Thus, the
+<I>maxlen</I>
+field of each argument
+must be set before issuing this function to indicate the maximum
+size of the buffer for each.
+However,
+<I>maxlen</I>
+can be set to zero, in which case no
+information to this specific argument is given to the user
+on the return from 
+<i>t_connect()</i>.
+If maxlen is greater than zero and less than the length
+of the value, 
+<i>t_connect()</i>
+fails with 
+<I>t_errno</I>
+set to [TBUFOVFLW].
+If 
+<I>rcvcall</I>
+is set to NULL,
+no information at all is returned.
+<p>
+By default,
+<i>t_connect()</i>
+executes in synchronous mode, and will wait for the destination
+user's response before returning control to the local user.
+A successful return (that is, return value of zero) indicates that the
+requested connection has been established.
+However, if O_NONBLOCK
+is set (via
+<i><a href="topen55.htm">t_open()</a></i>
+or
+<i><a href="fcntl.htm">fcntl()</a></i>),
+<i>t_connect()</i>
+executes in asynchronous mode.
+In this case, the call will not wait for the remote user's
+response, but will return control immediately to the local user
+and return -1 with
+<I>t_errno</I>
+set to [TNODATA]
+to indicate that the connection has not yet been established.
+In this way, the function simply initiates the connection
+establishment procedure by sending a connection request to the
+destination transport user.
+The
+<i><a href="trcvc58.htm">t_rcvconnect()</a></i>
+function is used in conjunction with
+<i>t_connect()</i>
+to determine the status of the requested connection.
+<p>
+When a synchronous
+<i>t_connect()</i>
+call is interrupted by the arrival of a signal, the state of the corresponding
+transport endpoint is T_OUTCON, allowing a further call to either
+<i><a href="trcvc58.htm">t_rcvconnect()</a></i>,
+<i><a href="trcvd59.htm">t_rcvdis()</a></i>
+or
+<i><a href="tsndd67.htm">t_snddis()</a></i>.
+When an asynchronous 
+<i>t_connect()</i>
+call is interrupted by the arrival of a signal, 
+the state of the corresponding transport endpoint is T_IDLE.
+</blockquote><h4>VALID STATES</h4><blockquote>
+T_IDLE
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure,
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TACCES]<dd>The user does not have permission to use the specified address or options.
+
+<dt>[TADDRBUSY]<dd>This transport provider does not support multiple connections with the
+same local and remote addresses. This error indicates that a connection
+already exists.
+
+<dt>[TBADADDR]<dd>The specified protocol address was in an incorrect format or
+contained illegal information.
+
+<dt>[TBADDATA]<dd>The amount of user data specified was not within the bounds allowed by
+the transport provider.
+
+<dt>[TBADF]<dd>The specified file descriptor does not refer to a transport endpoint.
+
+<dt>[TBADOPT]<dd>The specified protocol options were in an incorrect format or contained illegal
+information.
+
+<dt>[TBUFOVFLW]<dd>The number of bytes allocated for an incoming argument
+<I>(maxlen)</I>
+is greater than 0 but not
+sufficient to store the value of that argument.
+If executed in synchronous mode,
+the provider's state, as seen by the user, changes to
+T_DATAXFER, and
+the information to be returned in
+<I>rcvcall</I>
+is discarded.
+
+<dt>[TLOOK]<dd>An asynchronous event has occurred on this transport endpoint and requires
+immediate attention.
+
+<dt>[TNODATA]<dd>O_NONBLOCK
+was set, so the function successfully initiated the connection
+establishment procedure, but did not wait for a response from the remote
+user.
+
+<dt>[TNOTSUPPORT]<dd>This function is not supported by the underlying transport
+provider.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by 
+<I>fd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TPROTO]<dd>This error indicates that a communication problem has been detected between
+XTI and the transport provider for which there is no other suitable XTI
+error
+<I>(t_errno)</I>.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+</blockquote><h4>RETURN VALUE</h4><blockquote>
+Upon successful completion, a value of 0 is returned.  Otherwise,
+a value of -1 is returned and
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="tacce42.htm">t_accept()</a></i>,
+<i><a href="tallo43.htm">t_alloc()</a></i>,
+<i><a href="tgeti50.htm">t_getinfo()</a></i>,
+<i><a href="tlist53.htm">t_listen()</a></i>,
+<i><a href="topen55.htm">t_open()</a></i>,
+<i><a href="toptm56.htm">t_optmgmt()</a></i>,
+<i><a href="trcvc58.htm">t_rcvconnect()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

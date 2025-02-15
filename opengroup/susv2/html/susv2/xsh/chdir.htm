@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>chdir</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_001_431">&nbsp;</a>NAME</h4><blockquote>
+<br>
+chdir - change working directory
+</blockquote><h4><a name = "tag_000_001_432">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int chdir(const char *<i>path</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_001_433">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>chdir()</i>
+function
+causes the directory named by the pathname pointed to by the
+<i>path</i>
+argument to become the current working directory;
+that is, the starting point for path searches for
+pathnames not beginning with /.
+</blockquote><h4><a name = "tag_000_001_434">&nbsp;</a>RETURN VALUE</h4><blockquote>
+Upon successful completion, 0 is returned.  Otherwise, -1 is returned, the
+current working directory remains unchanged and
+<i>errno</i>
+is set to indicate the error.
+</blockquote><h4><a name = "tag_000_001_435">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>chdir()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EACCES]<dd>
+Search permission is denied for any component of the
+pathname.
+
+<dt>[ELOOP]<dd>
+Too many symbolic links were encountered in resolving <i>path</i>.
+
+<dt>[ENAMETOOLONG]<dd>
+
+The
+<i>path</i>
+argument exceeds {PATH_MAX} in length or a pathname component is longer than
+{NAME_MAX}.
+
+<dt>[ENOENT]<dd>
+A component of <i>path</i> does not name an existing directory
+or <i>path</i> is an empty string.
+
+<dt>[ENOTDIR]<dd>
+A component of the pathname is not a directory.
+
+</dl>
+<p>
+The
+<i>chdir()</i>
+function may fail if:
+<dl compact>
+
+<dt>[ENAMETOOLONG]<dd>
+
+Pathname resolution of a symbolic link produced an intermediate result whose
+length exceeds {PATH_MAX}.
+
+</dl>
+</blockquote><h4><a name = "tag_000_001_436">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_437">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_438">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_001_439">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getcwd.htm">getcwd()</a></i>,
+<i><a href="unist299.htm">&lt;unistd.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 1 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

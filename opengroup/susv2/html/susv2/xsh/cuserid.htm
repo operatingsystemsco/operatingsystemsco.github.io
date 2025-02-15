@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>cuserid</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_002_080">&nbsp;</a>NAME</h4><blockquote>
+cuserid - character login name of the user
+(<b>LEGACY</b>)
+</blockquote><h4><a name = "tag_000_002_081">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+char *cuserid(char *<i>s</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_002_082">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>cuserid()</i>
+function generates a character representation of the
+name associated with the real or effective user ID of the process.
+<p>
+If
+<i>s</i>
+is a null pointer, this representation is generated in an area that may be
+static (and thus overwritten by subsequent calls to
+<i>cuserid()</i>),
+the address of which is returned.
+If
+<i>s</i>
+is not a null pointer,
+<i>s</i>
+is assumed to point to an array of at least {L_cuserid} bytes; the
+representation is deposited in this array.
+The symbolic constant {L_cuserid} is defined in
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>
+and has a value greater than 0.
+<p>
+If the application uses any of the 
+_POSIX_THREAD_SAFE_FUNCTIONS or _POSIX_THREADS interfaces, the
+<i>cuserid()</i>
+function must be called with a non-NULL parameter.
+</blockquote><h4><a name = "tag_000_002_083">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If
+<i>s</i>
+is not a null pointer,
+<i>s</i>
+is returned.
+If
+<i>s</i>
+is not a null pointer and the login name cannot be found,
+the null byte `\0' will be placed at
+<i>*s</i>.
+If
+<i>s</i>
+is a null pointer and the login name cannot be found,
+<i>cuserid()</i>
+returns a null pointer.  If
+<i>s</i>
+is a null pointer and the login name can be found, the address of a
+buffer (possibly static) containing the login name is returned.
+</blockquote><h4><a name = "tag_000_002_084">&nbsp;</a>ERRORS</h4><blockquote>
+No errors are defined.
+</blockquote><h4><a name = "tag_000_002_085">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_086">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+The functionality of
+<i>cuserid()</i>
+defined in the POSIX.1-1988 standard (and Issue 3 of this specification)
+differs from that of historical implementations (and Issue 2 of this
+specification).
+In the ISO&nbsp;POSIX-1 standard,
+<i>cuserid()</i>
+is removed completely.
+In this specification, therefore, both functionalities are allowed.
+<p>
+The Issue 2 functionality can be obtained by using:
+<pre>
+<code>
+getpwuid(getuid())
+</code>
+</pre>
+<p>
+The Issue 3 functionality can be obtained by using:
+<pre>
+<code>
+getpwuid(geteuid())
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_002_087">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_002_088">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="getlogin.htm">getlogin()</a></i>,
+<i><a href="getpwnam.htm">getpwnam()</a></i>,
+<i><a href="getpwuid.htm">getpwuid()</a></i>,
+<i><a href="getuid.htm">getuid()</a></i>,
+<i><a href="geteuid.htm">geteuid()</a></i>,
+<i><a href="stdio257.htm">&lt;stdio.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from System V Release 2.0.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

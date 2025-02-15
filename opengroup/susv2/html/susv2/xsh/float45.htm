@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>&lt;float.h&gt;</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_005_095">&nbsp;</a>NAME</h4><blockquote>
+float.h - floating types
+</blockquote><h4><a name = "tag_000_005_096">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;float.h&gt;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_005_097">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The characteristics of floating types are defined in terms of a
+model that describes a representation of floating-point numbers
+and values that provide information about an
+implementation's floating-point arithmetic.
+<p>
+The following parameters are used to define the model for each
+floating-point type:
+<img src="../images/floath1.gif" border=0>
+<p>
+FLT_RADIX will be a constant expression suitable for use in the <b>#if</b>
+preprocessing directives.  All except FLT_RADIX and FLT_ROUNDS have separate
+names for all three floating-point types.  The floating-point model
+representation is provided for all macro names except FLT_ROUNDS.
+<p>
+The rounding mode for floating-point addition is characterised by
+the value of FLT_ROUNDS:
+<dl compact>
+
+<dt>-1<dd>indeterminable
+
+<dt>0<dd>toward 0.0
+
+<dt>1<dd>to nearest
+
+<dt>2<dd>toward positive infinity
+
+<dt>3<dd>toward negative infinity
+
+</dl>
+<p>
+All other values for FLT_ROUNDS characterise implementation-dependent
+rounding behaviour.
+<p>
+The macro names given in the following list will be defined as
+expressions with values that are equal or greater
+in magnitude (absolute value) to those shown, with the same
+sign.
+<p>
+<img src="../images/floath2.gif" border=0>
+<p>
+The macro names given in the following list will be
+defined as expressions with values that will be
+equal to or greater than those shown.
+<br>
+<img src="../images/floath3.gif" border=0>
+<p>
+The macro names given in the following list will be
+defined as expressions with values that will be
+equal to or less than those shown.
+<p>
+<img src="../images/floath4.gif" border=0>
+<br>
+</blockquote><h4><a name = "tag_000_005_098">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_099">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_005_100">&nbsp;</a>SEE ALSO</h4><blockquote>
+None.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

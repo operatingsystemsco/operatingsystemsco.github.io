@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>mbsrtowcs</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_547">&nbsp;</a>NAME</h4><blockquote>
+mbsrtowcs - convert a character string to a wide-character string
+(restartable)
+</blockquote><h4><a name = "tag_000_007_548">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="wchar309.htm">wchar.h</a>&gt;
+
+size_t mbsrtowcs(wchar_t *<i>dst</i>, const char **<i>src</i>, size_t <i>len</i>,
+    mbstate_t *<i>ps</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_549">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>mbsrtowcs()</i>
+function converts a sequence of characters, beginning in the
+conversion state described by the object pointed to by
+<i>ps</i>,
+from the array indirectly pointed to by
+<i>src</i>
+into a sequence of corresponding wide-characters.  If
+<i>dst</i>
+is not a null pointer, the converted characters are stored into the
+array pointed to by 
+<i>dst</i>.
+Conversion continues up to and including a terminating null character,
+which is also stored.  Conversion stops early in either of the
+following cases:
+<ul>
+<p>
+<li>
+When a sequence of bytes is encountered that does not form a valid
+character.
+<p>
+<li>
+When
+<i>len</i>
+codes have been stored into the array pointed to by
+<i>dst</i>
+(and 
+<i>dst</i>
+is not a null pointer).
+<p>
+</ul>
+<p>
+Each conversion takes place as if by a call to the
+<i><a href="mbrtowc.htm">mbrtowc()</a></i>
+function.
+<p>
+If
+<i>dst</i>
+is not a null pointer, the pointer object pointed to by
+<i>src</i>
+is assigned either a null pointer (if conversion stopped due to
+reaching a terminating null character) or the address just past the
+last character converted (if any).  If conversion stopped
+due to reaching a terminating null character, and if
+<i>dst</i>
+is not a null pointer, the resulting state described is the initial
+conversion state.
+<p>
+If
+<i>ps</i>
+is a null pointer, the
+<i>mbsrtowcs()</i>
+function uses its own internal
+<b>mbstate_t</b>
+object, which is initialised at program startup to the initial
+conversion state.  Otherwise, the 
+<b>mbstate_t</b>
+object pointed to by
+<i>ps</i>
+is used to completely describe the current conversion state of the
+associated character sequence.
+The implementation will behave as if no function defined in this
+specification calls
+<i>mbsrtowcs()</i>.
+<p>
+The behaviour of this function is affected by the LC_CTYPE category of
+the current locale.  
+</blockquote><h4><a name = "tag_000_007_550">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If the input conversion encounters a sequence of bytes that do not
+form a valid character, an encoding error occurs.  In this
+case, the
+<i>mbsrtowcs()</i>
+function stores the value of the macro EILSEQ in
+<i>errno</i>
+and returns
+<b>(size_t)-1)</b>;
+the conversion state is undefined.  Otherwise, it returns the number
+of characters successfully converted, not including the
+terminating null (if any).
+</blockquote><h4><a name = "tag_000_007_551">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>mbsrtowcs()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+<i>ps</i>
+points to an object that contains an invalid conversion state.
+
+<dt>[EILSEQ]<dd>
+Invalid character sequence is detected.
+
+</dl>
+</blockquote><h4><a name = "tag_000_007_552">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_553">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_554">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_007_555">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mbsinit.htm">mbsinit()</a></i>,
+<i><a href="mbrtowc.htm">mbrtowc()</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the ISO/IEC 9899:1990/Amendment 1:1995 (E).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

@@ -1,0 +1,386 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>tar</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_001_014_2220">&nbsp;</a>NAME</h4><blockquote>
+tar - file archiver (<b><a href="intro.htm#tag_001_003_003">LEGACY</a></b>)
+</blockquote><h4><a name = "tag_001_014_2221">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+tar <i>key </i><b>[</b><i>file</i>...<b>]</b>
+</code>
+</pre>
+</blockquote><h4><a name = "tag_001_014_2222">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>tar</i>
+utility
+processes archives of files.
+Its actions are controlled by the
+<i>key</i>
+operand.
+</blockquote><h4><a name = "tag_001_014_2223">&nbsp;</a>OPTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2224">&nbsp;</a>OPERANDS</h4><blockquote>
+The following operands are supported:
+<dl compact>
+
+<dt><i>key</i><dd>The
+<i>key</i>
+operand consists of a function letter followed immediately
+by zero or more modifying letters.
+
+The function letter is one of the following:
+
+<dl compact>
+
+<dt><b>r</b><dd>Write the named
+<i>file</i>
+or files
+on the end of the archive.
+If the archive is on a magnetic tape device,
+the results are unspecified.
+
+<dt><b>x</b><dd>Extract the named
+<i>file</i>
+or files
+from the archive.
+If a named file matches a directory whose contents
+had been written onto the archive,
+this directory is (recursively) extracted.
+If a named file in the archive does not exist on the system,
+the file is created with the same mode as
+the one in the archive, except that the
+set-user-ID and set-group-ID modes are not set
+unless the user has appropriate privileges.
+If the files exist, their modes are not changed except as
+described above.
+The owner, group, and modification time are restored (if possible).
+If no
+<i>file</i>
+operand is given, the entire content of the archive is extracted.
+Note that if several files with the same name
+are in the archive, the last one overwrites all earlier ones.
+
+<dt><b>t</b><dd>Write to standard output the names of all the files in the archive.
+
+<dt><b>u</b><dd>Add the named
+<i>file</i>
+or files
+to the archive if they are not already there, or have
+been modified since last written into the archive.
+If the archive is on a magnetic tape device,
+the results are unspecified.
+
+<dt><b>c</b><dd>Create a new archive; writing begins at the beginning
+of the archive, instead of after the last file.
+
+</dl>
+<p>
+The following characters can be
+appended to the function letter.
+Appending the same character more than once
+produces undefined results.
+The order of the
+b
+and
+f
+characters is significant.
+<p>
+<dl compact>
+
+<dt><b>v</b><dd>(Verbose.)
+Write to standard error the name of each file processed,
+preceded by a string indicating the operation being performed,
+as follows:
+<table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Key Letter</b>
+<th align=center><b>String</b>
+<tr valign=top><td align=center>c, r, u
+<td align=center>"a "
+<tr valign=top><td align=center>x
+<td align=center>"x "
+</table>
+
+The filename may be followed by additional
+information, such as the size of the file
+in the archive or file system, in an unspecified format.
+When used with the
+t
+function letter,
+v
+writes to standard output more information about the
+archive entries than just the name.
+
+<dt><b>w</b><dd>Write the action to be taken,
+followed by the name of the file, and then
+wait for the user's confirmation.
+If an affirmative response is given, the action is performed.
+Any other input suppresses the action.
+
+
+<dt><b>f</b><dd>Use the first
+<i>file</i>
+operand (or the second, if
+b
+has already been specified)
+as the name of the archive instead
+of the system-dependent default.
+If the name of the file is -,
+<i>tar</i>
+writes to the standard output or reads
+from the standard input, whichever is appropriate.
+Thus,
+<i>tar</i>
+can be used as the head or tail of a pipeline.
+The
+<i>tar</i>
+utility
+can also be used to move directory
+hierarchies with the command:
+<pre>
+<code>
+(cd fromdir; tar cf - . ) | (cd todir; tar xf -)
+</code>
+</pre>
+
+<dt><b>b</b><dd>Use the first
+<i>file</i>
+operand (or the second, if
+f
+has already been specified)
+as the blocking factor for tape records.
+The default is not greater than 20; the maximum is not less than 20.
+This modifier
+should only be used with raw magnetic tape archives (see
+f
+above).
+The block size is determined automatically when reading
+tapes (function letters
+x
+and
+t).
+
+<dt><b>l</b><dd>Report if all of the links
+to the files being archived cannot be resolved.
+If
+l
+is not specified, no error messages are written.
+
+<dt><b>m</b><dd>Do not restore the modification times.
+The modification time of the file
+will be the time of extraction.
+
+<dt><b>o</b><dd>Assign to extracted files
+the user and group identifier of
+the user running the program
+rather than those on the archive.
+
+</dl>
+<p>
+<dt><i>file</i><dd>A pathname of a regular file or directory to be archived
+(when the
+c,
+r
+or
+u
+function letters are used),
+extracted (<i>x</i> )
+or listed (<i>t</i> ).
+When
+<i>file</i>
+is the pathname of a directory, the action applies to
+all of the files and (recursively) subdirectories of that directory.
+When either or both of the
+b
+or
+f
+letters are used in the
+<i>key</i>
+operand, the initial
+<i>file</i>
+operands are interpreted as a blocking factor or archive name,
+as described previously.
+<p>
+</dl>
+</blockquote><h4><a name = "tag_001_014_2225">&nbsp;</a>STDIN</h4><blockquote>
+When the
+f
+modifier is used with the
+t
+or
+x
+function letter and the pathname is -, the standard input
+is an archive file formatted as specified by
+<i><a href="pax.htm">pax</a></i>
+with the
+<b>-x ustar</b>
+option.
+Otherwise, the standard input is not used.
+</blockquote><h4><a name = "tag_001_014_2226">&nbsp;</a>INPUT FILES</h4><blockquote>
+The files identified by the
+<i>file</i>
+operands are regular files or directories.
+</blockquote><h4><a name = "tag_001_014_2227">&nbsp;</a>ENVIRONMENT VARIABLES</h4><blockquote>
+The following environment variables may affect the execution of
+<i>tar</i>:
+<dl compact>
+
+<dt><i>LANG</i><dd>Provide a default value for the internationalisation variables
+that are unset or null.
+If
+<i>LANG</i>
+is unset or null, the corresponding value from the
+implementation-dependent default locale will be used.
+If any of the internationalisation variables contains an invalid setting, the
+utility will behave as if none of the variables had been defined.
+
+<dt><i>LC_ALL</i><dd>
+If set to a non-empty string value,
+override the values of all the other internationalisation variables.
+
+<dt><i>LC_COLLATE</i><dd>
+Determine the locale for the
+behaviour of ranges, equivalence classes
+and multi-character collating elements
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_CTYPE</i><dd>
+Determine the
+locale for the interpretation of sequences of bytes of text data as
+characters (for example, single- as opposed to multi-byte characters
+in arguments and input files)
+and the behaviour of character classes
+used in the extended regular expression defined for the
+<b>yesexpr</b>
+locale keyword in the LC_MESSAGES category.
+
+<dt><i>LC_MESSAGES</i><dd>
+Determine the locale for the processing of affirmative responses
+and that should be used to affect
+the format and contents of diagnostic
+messages written to standard error.
+
+<dt><i>LC_TIME</i><dd>
+Determine the format of date and time strings output when
+listing the contents of an archive with the
+v
+modifier; for example:
+<pre>
+<code>
+tar&nbsp;tvf&nbsp;/dev/tape
+</code>
+</pre>
+
+<dt><i>NLSPATH</i><dd>
+Determine the location of message catalogues
+for the processing of
+<i>LC_MESSAGES .
+</i>
+<dt><i>TZ</i><dd>Determine the timezone used with date and time strings.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2228">&nbsp;</a>ASYNCHRONOUS EVENTS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2229">&nbsp;</a>STDOUT</h4><blockquote>
+When the
+f
+modifier is used with the
+r,
+u
+or
+c
+function letter and the pathname is -, the standard output
+is an archive file formatted as specified by
+<i><a href="pax.htm">pax</a></i>
+with the
+<b>-x ustar</b>
+option.
+When the
+t
+function letter is used, the standard output
+consists of the names of the files in the archive,
+separated by
+newline characters;
+if
+v
+is used with
+t,
+the standard output includes additional information
+in an unspecified format.
+Otherwise, the standard output is not used.
+</blockquote><h4><a name = "tag_001_014_2230">&nbsp;</a>STDERR</h4><blockquote>
+The standard error is
+used for diagnostic messages and the filename output
+described under the
+v
+modifier (when the
+t
+function letter is not used).
+</blockquote><h4><a name = "tag_001_014_2231">&nbsp;</a>OUTPUT FILES</h4><blockquote>
+Output files are created, as specified by the archive, when the
+x
+function letter is used.
+</blockquote><h4><a name = "tag_001_014_2232">&nbsp;</a>EXTENDED DESCRIPTION</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2233">&nbsp;</a>EXIT STATUS</h4><blockquote>
+The following exit values are returned:
+<dl compact>
+
+<dt>0<dd>Successful completion.
+
+<dt>&gt;0<dd>An error occurred.
+
+</dl>
+</blockquote><h4><a name = "tag_001_014_2234">&nbsp;</a>CONSEQUENCES OF ERRORS</h4><blockquote>
+Default.
+</blockquote><h4><a name = "tag_001_014_2235">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+Some systems have usually had blocking factors in the
+range 1 to at least 127 with a default of 20 while other
+systems have usually had blocking factors in the range 1
+to 20 with a default of 1.
+For maximum portability,
+applications should specify a blocking factor no larger than 20.
+<p>
+For portable communication of data between XSI-conformant systems, it is
+recommended that only characters defined in the
+ISO/IEC&nbsp;646:1991 standard International Reference Version
+(equivalent to ASCII) 7-bit range of
+characters be used and that only characters defined in the Portable
+Filename Character Set be used for naming files.
+This recommendation
+is given because XSI-conformant systems support diverse codesets and run in
+various geographical areas and there is no single, well established
+codeset that incorporates all of the characters of the languages of
+the various geographical areas.
+<p>
+Note that the
+<i>tar</i>
+format can only support files up to 8 gigabytes in size.
+<p>
+Applications should migrate to the
+<i><a href="pax.htm">pax</a></i>
+utility.
+</blockquote><h4><a name = "tag_001_014_2236">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2237">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_001_014_2238">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="cpio.htm">cpio</a></i>,
+<i><a href="pax.htm">pax</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

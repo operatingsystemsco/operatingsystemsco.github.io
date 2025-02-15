@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>fdatasync</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_004_164">&nbsp;</a>NAME</h4><blockquote>
+fdatasync - synchronise the data of a file
+(<b>REALTIME</b>)
+</blockquote><h4><a name = "tag_000_004_165">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="unist299.htm">unistd.h</a>&gt;
+
+int fdatasync(int <i>fildes</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_004_166">&nbsp;</a>DESCRIPTION</h4><blockquote>
+The
+<i>fdatasync()</i>
+function forces all currently queued I/O operations associated with the file
+indicated by file descriptor
+<i>fildes</i>
+to the synchronised I/O completion state.
+<p>
+The functionality is as described for
+<i><a href="fsync.htm">fsync()</a></i>
+(with the symbol _XOPEN_REALTIME defined),
+with the exception that
+all I/O operations are completed as defined for
+synchronised I/O data integrity completion.
+</blockquote><h4><a name = "tag_000_004_167">&nbsp;</a>RETURN VALUE</h4><blockquote>
+If successful, the
+<i>fdatasync()</i>
+function returns the value 0.
+Otherwise, the function returns the value -1 and sets
+<i>errno</i>
+to indicate the error.
+If the
+<i>fdatasync()</i>
+function fails,
+outstanding I/O operations are not guaranteed to have been completed.
+</blockquote><h4><a name = "tag_000_004_168">&nbsp;</a>ERRORS</h4><blockquote>
+The 
+<i>fdatasync()</i>
+function will fail if:
+<dl compact>
+
+<dt>[EBADF]<dd>
+The
+<i>fildes</i>
+argument is not a valid file descriptor open for writing.
+
+<dt>[EINVAL]<dd>
+This implementation does not support synchronised I/O for this file.
+
+<dt>[ENOSYS]<dd>
+The function
+<i>fdatasync()</i>
+is not supported by this implementation.
+
+</dl>
+<p>
+In the event that any of the queued I/O operations fail,
+<i>fdatasync()</i>
+returns the error conditions defined for
+<i><a href="read.htm">read()</a></i>
+and
+<i><a href="write.htm">write()</a></i>.
+</blockquote><h4><a name = "tag_000_004_169">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_170">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_171">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_004_172">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="aiofs10.htm">aio_fsync()</a></i>,
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="fsync.htm">fsync()</a></i>,
+<i><a href="open.htm">open()</a></i>,
+<i><a href="read.htm">read()</a></i>,
+<i><a href="write.htm">write()</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the POSIX Realtime Extension (1003.1b-1993/1003.1i-1995)
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

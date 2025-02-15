@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>loc1</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_007_371">&nbsp;</a>NAME</h4><blockquote>
+loc1, loc2 - pointers to characters matched by regular expressions
+(<b>LEGACY</b>)
+</blockquote><h4><a name = "tag_000_007_372">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="regex205.htm">regexp.h</a>&gt;
+
+extern char *loc1;
+extern char *loc2;
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_007_373">&nbsp;</a>DESCRIPTION</h4><blockquote>
+Refer to
+<i><a href="regexp.htm">regexp()</a></i>.
+</blockquote><h4><a name = "tag_000_007_374">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+These variables are kept for historical reasons, but may be
+withdrawn in a future issue.
+<p>
+New applications should use
+<i><a href="fnmatch.htm">fnmatch()</a></i>,
+<i><a href="glob.htm">glob()</a></i>,
+<i><a href="regcomp.htm">regcomp()</a></i>
+and
+<i><a href="regexec.htm">regexec()</a></i>,
+which provide full internationalised regular expression
+functionality compatible with the ISO POSIX-2 standard, as described in the <b>XBD</b> specification, <a href="../xbd/re.htm"><b>Regular Expressions</b>&nbsp;</a>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from Issue 2 of the SVID.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+

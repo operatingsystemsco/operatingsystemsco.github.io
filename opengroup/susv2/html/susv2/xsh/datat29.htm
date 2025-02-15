@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>Datatypes</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade><blockquote>
+<center>
+<h3><a name = "tag_000_003">&nbsp;</a>Data Types</h3>
+</center>
+<xref type="2" name="data"></xref>
+All of the data types used by various system interfaces are defined
+by the implementation. The following table describes some of
+these types. Other
+types referenced in the description of an interface, not mentioned
+here, can be found in the appropriate header for that interface.
+<p><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Defined Type</b>
+<th align=center><b>Description</b>
+<tr valign=top><td align=left><b>cc_t</b>
+<td align=left><i>Type used for terminal special characters.</i>
+<tr valign=top><td align=left><b>clock_t</b>
+<td align=left><i>Arithmetic type used for processor times.</i>
+<tr valign=top><td align=left><b>clockid_t</b>
+<td align=left><i>Used for clock ID type in some timer functions.</i>
+<tr valign=top><td align=left><b>dev_t</b>
+<td align=left><i>Arithmetic type used for device numbers.</i>
+<tr valign=top><td align=left><b>DIR</b>
+<td align=left><i>Type representing a directory stream.</i>
+<tr valign=top><td align=left><b>div_t</b>
+<td align=left><i>Structure type returned by <i>div</i>() function.</i>
+<tr valign=top><td align=left><b>FILE</b>
+<td align=left><i>A structure containing information about a file.</i>
+<tr valign=top><td align=left><b>glob_t</b>
+<td align=left><i>Structure type used in pathname pattern matching.</i>
+<tr valign=top><td align=left><b>fpos_t</b>
+<td align=left><i> Type containing all information needed to specify uniquely every position within a file. </i>
+<tr valign=top><td align=left><b>gid_t</b>
+<td align=left><i>Arithmetic type used for group IDs.</i>
+<tr valign=top><td align=left><b>iconv_t</b>
+<td align=left><i>Type used for conversion descriptors.</i>
+<tr valign=top><td align=left><b>id_t</b>
+<td align=left><i>Arithmetic type used as a general identifier; can be used to contain at least the largest of a <b>pid_t</b>, <b>uid_t</b> or a <b>gid_t</b>.</i>
+<tr valign=top><td align=left><b>ino_t</b>
+<td align=left><i>Arithmetic type used for file serial numbers.</i>
+<tr valign=top><td align=left><b>key_t</b>
+<td align=left><i>Arithmetic type used for interprocess communication.</i>
+<tr valign=top><td align=left><b>ldiv_t</b>
+<td align=left><i>Structure type returned by <i>ldiv</i>() function.</i>
+<tr valign=top><td align=left><b>mode_t</b>
+<td align=left><i>Arithmetic type used for file attributes.</i>
+<tr valign=top><td align=left><b>mqd_t</b>
+<td align=left><i>Used for message queue descriptors.</i>
+<tr valign=top><td align=left><b>nfds_t</b>
+<td align=left><i>Integral type used for the number of file descriptors.</i>
+<tr valign=top><td align=left><b>nlink_t</b>
+<td align=left><i>Arithmetic type used for link counts.</i>
+<tr valign=top><td align=left><b>off_t</b>
+<td align=left><i>Signed Arithmetic type used for file sizes.</i>
+<tr valign=top><td align=left><b>pid_t</b>
+<td align=left><i>Signed Arithmetic type used for process and process group IDs.</i>
+<tr valign=top><td align=left><b>pthread_attr_t</b>
+<td align=left><i>Used to identify a thread attribute object.</i>
+<tr valign=top><td align=left><b>pthread_cond_t</b>
+<td align=left><i>Used for condition variables.</i>
+<tr valign=top><td align=left><b>pthread_condattr_t</b>
+<td align=left><i>Used to identify a condition attribute object.</i>
+<tr valign=top><td align=left><b>pthread_key_t</b>
+<td align=left><i>Used for thread-specific data keys.</i>
+<tr valign=top><td align=left><b>pthread_mutex_t</b>
+<td align=left><i>Used for mutexes.</i>
+<tr valign=top><td align=left><b>pthread_mutexattr_t</b>
+<td align=left><i>Used to identify a mutex attribute object.</i>
+<tr valign=top><td align=left><b>pthread_once_t</b>
+<td align=left><i>Used for dynamic package initialisation.</i>
+<tr valign=top><td align=left><b>pthread_rwlock_t</b>
+<td align=left><i>Used for read-write locks.</i>
+<tr valign=top><td align=left><b>pthread_rwlockattr_t</b>
+<td align=left><i>Used for read-write lock attributes.</i>
+<tr valign=top><td align=left><b>pthread_t</b>
+<td align=left><i>Used to identify a thread.</i>
+<tr valign=top><td align=left><b>ptrdiff_t</b>
+<td align=left><i>Signed integral type of the result of subtracting two pointers.</i>
+<tr valign=top><td align=left><b>regex_t</b>
+<td align=left><i>Structure type used in regular expression matching.</i>
+<tr valign=top><td align=left><b>regmatch_t</b>
+<td align=left><i>Structure type used in regular expression matching.</i>
+<tr valign=top><td align=left><b>rlim_t</b>
+<td align=left><i>Unsigned arithmetic type used for limit values, to which objects of type <b>int</b> and <b>off_t</b> can be cast without loss of value.</i>
+<tr valign=top><td align=left><b>sem_t</b>
+<td align=left><i>Type used in performing semaphore operations.</i>
+<tr valign=top><td align=left><b>sig_atomic_t</b>
+<td align=left><i>Integral type of an object that can be accessed as an atomic entity, even in the presence of asynchronous interrupts.</i>
+<tr valign=top><td align=left><b>sigset_t</b>
+<td align=left><i>Integral or structure type of an object used to represent sets of signals.</i>
+<tr valign=top><td align=left><b>size_t</b>
+<td align=left><i>Unsigned integral type used for size of objects.</i>
+<tr valign=top><td align=left><b>speed_t</b>
+<td align=left><i>Type used for terminal baud rates.</i>
+<tr valign=top><td align=left><b>ssize_t</b>
+<td align=left><i>Arithmetic type used for a count of bytes or an error indication.</i>
+<tr valign=top><td align=left><b>suseconds_t</b>
+<td align=left><i>A signed arithmetic type used for time in microseconds.</i>
+<tr valign=top><td align=left><b>tcflag_t</b>
+<td align=left><i>Type used for terminal modes.</i>
+<tr valign=top><td align=left><b>time_t</b>
+<td align=left><i>Arithmetic type used for time in seconds.</i>
+<tr valign=top><td align=left><b>timer_t</b>
+<td align=left><i>Used for timer ID returned by <i>timer_create</i>().</i>
+<tr valign=top><td align=left><b>uid_t</b>
+<td align=left><i>Arithmetic type used for user IDs.</i>
+<tr valign=top><td align=left><b>useconds_t</b>
+<td align=left><i>Integral type used for time in microseconds.</i>
+<tr valign=top><td align=left><b>va_list</b>
+<td align=left><i>Type used for traversing variable argument lists.</i>
+<tr valign=top><td align=left><b>wchar_t</b>
+<td align=left><i> Integral type whose range of values can represent distinct codes for all members of the largest extended character set specified by the supported locales. </i>
+<tr valign=top><td align=left><b>wctype_t</b>
+<td align=left><i>Scalar type which represents a character class descriptor.</i>
+<tr valign=top><td align=left><b>wint_t</b>
+<td align=left><i> An integral type capable of storing any valid value of wchar_t, or </i>
+<tr valign=top><td align=left><b>wordexp_t</b>
+<td align=left><i>Structure type used in word expansion.</i>
+</table>
+</blockquote>
+<hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

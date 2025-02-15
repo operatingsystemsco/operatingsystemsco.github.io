@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>t_sndvudata</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4>NAME</h4><blockquote>
+t_sndvudata - send a data unit from one or more noncontiguous buffers
+</blockquote><h4>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="xtih78.htm">xti.h</a>&gt;
+
+int t_sndvudata(
+    int fd,
+    struct t_unitdata *unitdata,
+    struct t_iovec *iov,
+    unsigned int iovcount) 
+</code>
+</pre>
+</blockquote><h4>DESCRIPTION</h4><blockquote>
+<pre>
+<P><table  bordercolor=#000000 border=1 align=center><tr valign=top><th align=center><b>Parameters</b>
+<th align=center><b>Before call</b>
+<th align=center><b>After call</b>
+<tr valign=top><td align=left>fd
+<td align=center>x
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>addr.maxlen
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>addr.len
+<td align=center>x
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>addr.buf
+<td align=center>x(x)
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>opt.maxlen
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>opt.len
+<td align=center>x
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>opt.buf
+<td align=center>?(?)
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>udata.maxlen
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>udata.len
+<td align=center>/
+<tr valign=top><td align=left>unitdata-&gt
+<td align=center>udata.buf
+<td align=center>/
+<tr valign=top><td align=left>iov[0].iov_base
+<td align=center>x(x)
+<td align=center>=(=)
+<tr valign=top><td align=left>iov[0].iov_len
+<td align=center>x
+<td align=center>=
+<tr valign=top><td align=left>   . . . .
+<tr valign=top><td align=left>iov[iovcount-1].iov_base
+<td align=center>x(x)
+<td align=center>=(=)
+<tr valign=top><td align=left>iov[iovcount-1].iov_len
+<td align=center>x
+<td align=center>=
+<tr valign=top><td align=left>iovcount
+<td align=center>x
+<td align=center>/
+</table>
+</pre>
+<p>
+This function is used in connectionless mode to send a data
+unit to another transport user.  The argument 
+<I>fd</I>
+identifies the local transport endpoint through which data will be
+sent, 
+<I>iovcount</I>
+contains the number of non-contiguous 
+<I>udata</I>
+buffers and is limited to an implementation-defined value
+given by T_IOV_MAX which is at least 16, and 
+<I>unitdata</I>
+points to a 
+<B>t_unitdata</B>
+structure containing the following members:
+<pre>
+<code>
+struct netbuf addr;
+struct netbuf opt;
+struct netbuf udata;
+</code>
+</pre>
+<p>
+If the limit on 
+<I>iovcount</I>
+is exceeded, the function fails with [TBADDATA].
+<p>
+In 
+<B>unitdata</B>,
+<I>addr</I>
+specifies the protocol address of the
+destination user, and 
+<I>opt</I>
+identifies options that the user
+wants associated with this request. The 
+<I>udata</I>
+field is not
+used.  The user may choose not to specify what protocol
+options are associated with the transfer by setting the 
+<I>len</I>
+field of 
+<I>opt</I>
+to zero.  In this case, the provider may use default options.
+<p>
+The data to be sent is identified by 
+<I>iov[0]</I>
+through
+<I>iov[iovcount-1]</I>.
+<p>
+<dl><dt><b>Note:</b>
+<dd>The limit on the total number of bytes available
+in all buffers passed (that is:
+<I>iov(0).iov_len + . . + iov(iovcount-1).iov_len ) </I>
+may be constrained by
+implementation limits. If no other constraint applies,
+it will be limited by [INT_MAX]. In practice, the
+availability of memory to an application is likely to
+impose a lower limit on the amount of data that can be
+sent or received using scatter/gather functions.
+</dl>
+<p>
+By default, 
+<i>t_sndvudata()</i>
+operates in synchronous mode and
+may wait if flow control restrictions prevent the data from
+being accepted by the local transport provider at the time
+the call is made.  However, if O_NONBLOCK is set (via
+<i><a href="topen55.htm">t_open()</a></i>
+or 
+<i><a href="fcntl.htm">fcntl()</a></i>),
+<i>t_sndvudata()</i>
+executes in
+asynchronous mode and will fail under such conditions.  The
+process can arrange to be notified of the clearance of a
+flow control restriction via either 
+<i><a href="tlook54.htm">t_look()</a></i>
+or the EM interface.
+<p>
+If the amount of data specified in 
+<I>iov[0]</I>
+through
+<I>iov[iovcount-1]</I>
+exceeds the TSDU size as returned in the 
+<I>tsdu</I>
+field of the 
+<I>info</I>
+argument of 
+<i><a href="topen55.htm">t_open()</a></i>
+or 
+<i><a href="tgeti50.htm">t_getinfo()</a></i>,
+or is
+zero and sending of zero octets is not supported by the
+underlying transport service, a [TBADDATA] error is
+generated.  If 
+<i>t_sndvudata()</i>
+is called before the destination
+user has activated its transport endpoint (see 
+<i><a href="tbind44.htm">t_bind()</a></i>),
+the data unit may be discarded.
+<p>
+If it is not possible for the transport provider to
+immediately detect the conditions that cause the errors
+[TBADDADDR] and [TBADOPT], these errors will alternatively
+be returned by 
+<i><a href="trcvu63.htm">t_rcvuderr()</a></i>.
+An application must therefore
+be prepared to receive these errors in both of these ways.
+</blockquote><h4>VALID STATES</h4><blockquote>
+T_IDLE
+</blockquote><h4>ERRORS</h4><blockquote>
+On failure, 
+<I>t_errno</I>
+is set to one of the following:
+<dl compact>
+
+<dt>[TBADADDR]<dd>The specified protocol address was in an
+incorrect format or contained illegal information.
+
+<dt>[TBADDATA]<dd>Illegal amount of data.
+<ul>
+
+<li>
+A single send was attempted specifying a
+TSDU greater than that specified in the
+<I>info</I>
+argument, or a send of a zero byte
+TSDU is not supported by the provider.
+
+<li>
+<I>iovcount</I>
+is greater than T_IOV_MAX.
+
+</ul>
+
+<dt>[TBADF]<dd>The specified file descriptor does not refer to a transport endpoint.
+
+<dt>[TBADOPT]<dd>The specified options were in an incorrect 
+format or contained illegal information.
+
+<dt>[TFLOW]<dd>O_NONBLOCK was set, but the flow control
+mechanism prevented the transport provider
+from accepting any data at this time.
+
+<dt>[TLOOK]<dd>An asynchronous event has occurred on this transport endpoint.
+
+<dt>[TNOTSUPPORT]<dd>This function is not supported by the underlying transport provider.
+
+<dt>[TOUTSTATE]<dd>The communications endpoint referenced by
+<I>fd</I>
+is not in one of the states in which a call to this function is valid.
+
+<dt>[TPROTO]<dd>This error indicates that a communication
+problem has been detected between XTI and
+the transport provider for which there is no other suitable XTI error
+<I>(t_errno)</I>.
+
+<dt>[TSYSERR]<dd>A system error has occurred during execution of this function.
+
+</dl>
+<br>
+</blockquote><h4>RETURN VALUES</h4><blockquote>
+Upon successful completion, a value of 0 is returned.
+Otherwise, a value of -1 is returned and 
+<I>t_errno</I>
+is set to indicate an error.
+</blockquote><h4>SEE ALSO</h4><blockquote>
+<i><a href="fcntl.htm">fcntl()</a></i>,
+<i><a href="tallo43.htm">t_alloc()</a></i>,
+<i><a href="topen55.htm">t_open()</a></i>,
+<i><a href="trcvu62.htm">t_rcvudata()</a></i>,
+<i><a href="trcvv65.htm">t_rcvvudata()</a></i>,
+<i><a href="trcvu63.htm">t_rcvuderr()</a></i>,
+<i><a href="tsndu70.htm">t_sndudata()</a></i>.
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>

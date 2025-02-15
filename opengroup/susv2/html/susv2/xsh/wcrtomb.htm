@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!-- Copyright 1997 The Open Group, All Rights Reserved -->
+<title>wcrtomb</title>
+</head><body bgcolor=white>
+<center>
+<font size=2>
+The Single UNIX &reg; Specification, Version 2<br>
+Copyright &copy; 1997 The Open Group
+
+</font></center><hr size=2 noshade>
+<h4><a name = "tag_000_010_464">&nbsp;</a>NAME</h4><blockquote>
+wcrtomb - convert a wide-character code to a character (restartable)
+</blockquote><h4><a name = "tag_000_010_465">&nbsp;</a>SYNOPSIS</h4><blockquote>
+<pre><code>
+
+#include &lt;<a href="stdio257.htm">stdio.h</a>&gt;
+
+size_t wcrtomb(char *<i>s</i>, wchar_t <i>wc</i>, mbstate_t *<i>ps</i>);
+</code>
+</pre>
+</blockquote><h4><a name = "tag_000_010_466">&nbsp;</a>DESCRIPTION</h4><blockquote>
+If
+<i>s</i>
+is a null pointer, the
+<i>wcrtomb()</i>
+function is equivalent to the call:
+<pre>
+<code>
+wcrtomb(buf, L'\0', ps)
+</code>
+</pre>
+<p>
+where
+<i>buf</i>
+is an internal buffer.
+<p>
+If
+<i>s</i>
+is not a null pointer, the
+<i>wcrtomb()</i>
+function determines the number of bytes needed to represent the
+character that corresponds to the wide-character given by
+<i>wc</i>
+(including any shift sequences), and stores the resulting bytes in the
+array whose first element is pointed to by
+<i>s</i>.
+At most MB_CUR_MAX bytes are stored.  If
+<i>wc</i>
+is a null wide-character, a null byte is stored, preceded by any shift
+sequence needed to restore the initial shift state.  The resulting
+state described is the initial conversion state.
+<p>
+If
+<i>ps</i>
+is a null pointer, the
+<i>wcrtomb()</i>
+function uses its own internal
+<b>mbstate_t</b>
+object, which is initialised at program startup to the initial
+conversion state.  
+Otherwise, the 
+<b>mbstate_t</b>
+object pointed to by
+<i>ps</i>
+is used to completely describe the current conversion state of the
+associated character sequence.
+The implementation will behave as if no function defined in this
+specification calls
+<i>wcrtomb()</i>.
+<p>
+The behaviour of this function is affected by the LC_CTYPE category of
+the current locale.  
+</blockquote><h4><a name = "tag_000_010_467">&nbsp;</a>RETURN VALUE</h4><blockquote>
+The
+<i>wcrtomb()</i>
+function returns the number of bytes stored in the array object
+(including any shift sequences).  When
+<i>wc</i>
+is not a valid wide-character, an encoding error occurs.  In this
+case, the function stores the value of the macros EILSEQ in
+<i>errno</i>
+and returns
+<b>(size_t)-1</b>;
+the conversion state is undefined.
+</blockquote><h4><a name = "tag_000_010_468">&nbsp;</a>ERRORS</h4><blockquote>
+The
+<i>wcrtomb()</i>
+function may fail if:
+<dl compact>
+
+<dt>[EINVAL]<dd>
+<i>ps</i>
+points to an object that contains an invalid conversion state.
+
+<dt>[EILSEQ]<dd>
+Invalid wide-character code is detected.
+
+</dl>
+</blockquote><h4><a name = "tag_000_010_469">&nbsp;</a>EXAMPLES</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_470">&nbsp;</a>APPLICATION USAGE</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_471">&nbsp;</a>FUTURE DIRECTIONS</h4><blockquote>
+None.
+</blockquote><h4><a name = "tag_000_010_472">&nbsp;</a>SEE ALSO</h4><blockquote>
+<i><a href="mbsinit.htm">mbsinit()</a></i>,
+<i><a href="wchar309.htm">&lt;wchar.h&gt;</a></i>.
+</blockquote><h4>DERIVATION</h4><blockquote>
+Derived from the ISO/IEC 9899:1990/Amendment 1:1995 (E).
+</blockquote><hr size=2 noshade>
+<center><font size=2>
+UNIX &reg; is a registered Trademark of The Open Group.<br>
+Copyright &copy; 1997 The Open Group
+<br> [ <a href="../index.htm">Main Index</a> | <a href="../xshix.htm">XSH</a> | <a href="../xcuix.htm">XCU</a> | <a href="../xbdix.htm">XBD</a> | <a href="../cursesix.htm">XCURSES</a> | <a href="../xnsix.htm">XNS</a> ]
+
+</font></center><hr size=2 noshade>
+</body></html>
+
