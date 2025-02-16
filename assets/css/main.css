@@ -774,10 +774,10 @@ input, select, textarea {
 /* Actions */
 
 	ul.actions {
-		display: -moz-grid;
-		display: -webkit-grid;
-		display: -ms-grid;
-		display: grid;
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
 			
 		cursor: default;
 		list-style: none;
