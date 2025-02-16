@@ -1336,10 +1336,10 @@ input, select, textarea {
 			}
 
 		#header nav ul {
-			display: -moz-grid;
-			display: -webkit-grid;
-			display: -ms-grid;
-			display: grid;
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
 			margin-bottom: 0;
 			list-style: none;
 			padding-left: 0;
